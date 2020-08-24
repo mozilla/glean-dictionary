@@ -1,0 +1,89 @@
+html,
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  color: #333;
+  margin: 0;
+  padding: 8px;
+  box-sizing: border-box;
+
+  /**
+   * This font-family stack is meant to match that of create-react-app.
+   *
+   * On Linux, Firefox consults a third-party tool called fontconfig when
+   * deciding which fonts to display. fontconfig maps the names of proprietary
+   * fonts (e.g., Helvetica) to similar but non-identical free fonts (e.g.,
+   * Nimbus Sans), which Firefox uses instead.[1][2]
+   *
+   * This particular mapping can be a problem. Nimbus Sans is not a great
+   * replacement for Helvetica because it has an em-box which leaves a large
+   * amount of empty space below the baseline. This causes text not to appear
+   * vertically-centered when it should.
+   *
+   * fontconfig does not map the name Helvetica Neue to Nimbus Sans, so it's a
+   * better choice than Helvetica here. Arial has a reasonable replacement and
+   * the default sans-serif font is also fine.
+   *
+   * [1] https://nolanlawson.com/2020/05/02/customizing-fonts-in-firefox-on-linux/
+   * [2] https://bugzilla.mozilla.org/show_bug.cgi?id=553580
+   */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+a {
+  color: rgb(0, 100, 200);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:visited {
+  color: rgb(0, 80, 160);
+}
+
+label {
+  display: block;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0.4em;
+  margin: 0 0 0.5em 0;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+input:disabled {
+  color: #ccc;
+}
+
+button {
+  color: #333;
+  background-color: #f4f4f4;
+  outline: none;
+}
+
+button:disabled {
+  color: #999;
+}
+
+button:not(:disabled):active {
+  background-color: #ddd;
+}
+
+button:focus {
+  border-color: #666;
+}
