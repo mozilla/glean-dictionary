@@ -46,9 +46,13 @@
     "svelte-loader": "2.13.6"
   },
   "dependencies": {
+    "@fullhuman/postcss-purgecss": "^2.3.0",
     "lunr": "^2.3.9",
     "node-fetch": "^2.6.0",
+    "postcss": "^7.0.32",
+    "postcss-load-config": "^2.1.0",
     "sirv-cli": "1.0.5",
+    "svelte-preprocess": "^4.2.1",
     "tailwindcss": "^1.7.6"
   }
 }
