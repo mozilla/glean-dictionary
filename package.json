@@ -53,6 +53,6 @@
     "postcss-load-config": "^2.1.0",
     "sirv-cli": "1.0.5",
     "svelte-preprocess": "^4.2.1",
-    "tailwindcss": "^1.7.6"
+    "tailwindcss": "^1.8.7"
   }
 }
