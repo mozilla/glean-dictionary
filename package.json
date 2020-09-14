@@ -24,7 +24,7 @@
     "@storybook/addon-storysource": "5.3.19",
     "@storybook/svelte": "5.3.19",
     "babel-loader": "8.1.0",
-    "eslint": "7.6.0",
+    "eslint": "7.9.0",
     "eslint-config-airbnb-base": "14.2.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-import": "2.22.0",
