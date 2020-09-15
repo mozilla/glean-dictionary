@@ -23,10 +23,6 @@
 </script>
 
 <style>
-  .active-link {
-    @apply text-blue-100;
-  }
-
   .brand {
     @apply text-gray-100;
   }
