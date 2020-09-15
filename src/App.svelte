@@ -1,7 +1,6 @@
 <script>
-  import Tailwindcss from "./Tailwindcss.svelte";
-
   import page from "page";
+  import Tailwindcss from "./Tailwindcss.svelte";
 
   // Pages
   import Index from "./routes/Index.svelte";
