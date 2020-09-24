@@ -9,20 +9,42 @@ PROBE_INFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org";
 REPO_URL = PROBE_INFO_BASE_URL + "/glean/repositories";
 OUTPUT_DIRECTORY = "public";
 
-const getData = async () => {
+const writeRepoMetadata = async () => {
   const resp = await fetch(REPO_URL);
   const repos = await resp.json();
-  const pings = await Promise.all(
+  const repoMetadata = await Promise.all(
     repos.map(async (repo) => {
       const ping_url = PROBE_INFO_BASE_URL + `/glean/${repo.name}/pings`;
       const resp = await fetch(ping_url);
       const pings = await resp.json();
-      return { app_id: repo.app_id, pings };
+      let base = {
+        app_id: repo.app_id,
+        repo: repo.url,
+        pings: Object.keys(pings),
+      };
+      // FIXME: this code is probably going to hit github's rate
+      // limiting pretty quickly -- we may want to put this in probe scraper
+      if (repo.url.startsWith("https://github.com")) {
+        const githubRepoApiUrl = repo.url.replace(
+          "https://github.com",
+          "https://api.github.com/repos"
+        );
+
+        const resp = await fetch(githubRepoApiUrl);
+        const repoMetadata = await resp.json();
+        base = { ...base, description: repoMetadata.description };
+        console.log(resp);
+      }
+      return base;
     })
+  );
+  fs.writeFileSync(
+    OUTPUT_DIRECTORY + "/data/repos.json",
+    JSON.stringify(repoMetadata)
   );
 };
 
-getData();
+writeRepoMetadata();
 
 return;
 

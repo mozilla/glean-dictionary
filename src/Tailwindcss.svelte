@@ -10,18 +10,17 @@
 
   h1 {
     @apply text-4xl;
+    @apply pb-2;
   }
 
   h2 {
     @apply text-3xl;
-  }
-
-  h2 {
-    @apply text-3xl;
+    @apply pb-2;
   }
 
   h3 {
     @apply text-2xl;
+    @apply pb-2;
   }
 
   a {
@@ -30,6 +29,7 @@
 
   a:hover {
     @apply text-blue-400;
+    cursor: pointer;
   }
 
   ul {

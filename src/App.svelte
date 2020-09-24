@@ -3,8 +3,7 @@
   import Tailwindcss from "./Tailwindcss.svelte";
 
   // Pages
-  import Index from "./routes/Index.svelte";
-  import About from "./routes/About.svelte";
+  import AppList from "./pages/AppList.svelte";
 
   let component;
   let params;
@@ -16,8 +15,7 @@
     };
   }
 
-  page("/", setComponent(Index));
-  page("/about", setComponent(About));
+  page("/", setComponent(AppList));
   page({ hashbang: true });
 </script>
 
@@ -31,7 +29,7 @@
 <nav class="flex items-center justify-between flex-wrap bg-blue-800 p-2">
   <div class="flex items-center flex-shrink-0 mr-6">
     <a class="brand font-semibold text-xl tracking-tight" href="/">
-      Glean Dictionary&nbsp;
+      Glean Dictionary
       <i>Prototype</i>
     </a>
   </div>
