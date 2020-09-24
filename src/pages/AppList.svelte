@@ -1,4 +1,6 @@
 <script>
+  export let params;
+
   const URL = "data/apps.json";
   let apps;
   fetch(URL)
@@ -12,7 +14,7 @@
 {#if apps}
   {#each apps as app}
     <p>
-      <a href="#/{app.app_id}">{app.name}</a>
+      <a href="/apps/{app.name}">{app.name}</a>
       {#if app.description}
         &nbsp;
         <i>{app.description}</i>

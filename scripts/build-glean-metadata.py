@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import copy
 import json
 import os
 
@@ -26,7 +27,11 @@ def snake_case(line: str) -> str:
 # we get the repos ourselves instead of using GleanPing.get_repos()
 # to get all the metadata associated with the repo
 repo_data = requests.get(REPO_URL).json()
-repos = filter(lambda r: "library_names" not in r and r['app_id'] != "glean", repo_data)
+
+# filter out repos that are just libraries, not applications
+repos = list(filter(lambda r: "library_names" not in r and r['app_id'] != "glean", repo_data))
+
+# Write out a list of apps (for the landing page)
 open(os.path.join(OUTPUT_DIRECTORY, "apps.json"), 'w').write(
     json.dumps(
         [
@@ -36,8 +41,21 @@ open(os.path.join(OUTPUT_DIRECTORY, "apps.json"), 'w').write(
     )
 )
 
+# Write out some metadata for each app (for the app detail page)
+for repo in list(repos):
+    app_name = repo["name"]
+    app_dir = os.path.join(OUTPUT_DIRECTORY, app_name)
 
-# glean_products = [repo for repo in GleanPing.get_repos()]
-# print(glean_products)
-# for glean_product in glean_products:
-#    print(glean_product.url)
+    os.makedirs(app_dir, exist_ok=True)
+
+    app_data = copy.copy(repo)
+    app_data['pings'] = []
+    ping_data = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
+    for (ping_name, ping_data) in ping_data.items():
+        app_data["pings"].append({
+            "name": ping_name,
+            "description": ping_data['history'][-1]['description']
+        })
+    open(os.path.join(app_dir, "index.json"), "w").write(
+        json.dumps(app_data)
+    )
