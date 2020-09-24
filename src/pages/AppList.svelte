@@ -1,11 +1,10 @@
 <script>
   const URL = "data/apps.json";
-  let apps = undefined;
-  const request = fetch(URL)
-    .then(r => r.json())
-    .then(ret => {
+  let apps;
+  fetch(URL)
+    .then((r) => r.json())
+    .then((ret) => {
       apps = ret.sort((a, b) => a.app_id > b.app_id);
-      console.log(apps);
     });
 </script>
 
