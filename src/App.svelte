@@ -5,20 +5,20 @@
   // Pages
   import AppList from "./pages/AppList.svelte";
   import AppDetail from "./pages/AppDetail.svelte";
+  import PingDetail from "./pages/PingDetail.svelte";
 
   let component;
   let params;
 
   function setComponent(c) {
     return function setComponentInner({ params: p }) {
-      console.log(c);
-      console.log(params);
       component = c;
       params = p;
     };
   }
 
   page("/", setComponent(AppList));
+  page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app", setComponent(AppDetail));
   page({ hashbang: true });
 </script>

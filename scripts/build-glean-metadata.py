@@ -14,16 +14,6 @@ PINGS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/pings"
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 
 
-def snake_case(line: str) -> str:
-    """Convert a string into a snake_cased string."""
-    # replace non-alphanumeric characters with spaces in the reversed line
-    subbed = re.sub(r"[^\w]|_", " ", line[::-1])
-    # apply the regex on the reversed string
-    words = REV_WORD_BOUND_PAT.split(subbed)
-    # filter spaces between words and snake_case and reverse again
-    return "_".join([w.lower() for w in words if w.strip()])[::-1]
-
-
 # we get the repos ourselves instead of using GleanPing.get_repos()
 # to get all the metadata associated with the repo
 repo_data = requests.get(REPO_URL).json()
@@ -45,8 +35,8 @@ open(os.path.join(OUTPUT_DIRECTORY, "apps.json"), 'w').write(
 for repo in list(repos):
     app_name = repo["name"]
     app_dir = os.path.join(OUTPUT_DIRECTORY, app_name)
-
-    os.makedirs(app_dir, exist_ok=True)
+    app_ping_dir = os.path.join(app_dir, 'pings')
+    os.makedirs(app_ping_dir, exist_ok=True)
 
     app_data = copy.copy(repo)
     app_data['pings'] = []
@@ -56,6 +46,11 @@ for repo in list(repos):
             "name": ping_name,
             "description": ping_data['history'][-1]['description']
         })
+
+        open(os.path.join(app_ping_dir, f'{ping_name}.json'), 'w').write(
+            json.dumps(dict(ping_data['history'][-1], name=ping_name,
+                       history=ping_data['history']))
+        )
     open(os.path.join(app_dir, "index.json"), "w").write(
         json.dumps(app_data)
     )

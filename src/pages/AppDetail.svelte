@@ -1,6 +1,5 @@
 <script>
   export let params;
-
   const URL = `data/${params.app}/index.json`;
   let app;
   fetch(URL)
@@ -18,7 +17,7 @@
   <ul>
     {#each app.pings as ping}
       <li>
-        {ping.name}
+        <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
         <i>{ping.description}</i>
       </li>
     {/each}
