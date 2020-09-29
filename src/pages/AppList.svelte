@@ -1,11 +1,9 @@
 <script>
-  export let params;
-
   const URL = "data/apps.json";
   let apps;
   fetch(URL)
-    .then((r) => r.json())
-    .then((ret) => {
+    .then(r => r.json())
+    .then(ret => {
       apps = ret.sort((a, b) => a.app_id > b.app_id);
     });
 </script>
