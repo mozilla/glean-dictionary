@@ -10,9 +10,9 @@
     const filterTerms = filterText
       .trim()
       .split(" ")
-      .filter(t => t.length > 0);
+      .filter((t) => t.length > 0);
 
-    const addVisibility = node => {
+    const addVisibility = (node) => {
       let modifiedNode = node;
 
       if (modifiedNode.fields) {
@@ -20,10 +20,10 @@
       }
       modifiedNode.visible =
         filterTerms.length === 0 ||
-        filterTerms.every(term => modifiedNode.name.includes(term));
+        filterTerms.every((term) => modifiedNode.name.includes(term));
       modifiedNode.childrenVisible = modifiedNode.fields
         ? modifiedNode.fields.some(
-            child => child.visible || child.childrenVisible
+            (child) => child.visible || child.childrenVisible
           )
         : undefined;
       return modifiedNode;

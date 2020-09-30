@@ -6,10 +6,8 @@
 
 <div style={node.visible ? '' : 'display: none;'}>
   <p>
-    <span class="text-gray-700">
-      {parentFields.join('.')}{parentFields.length ? '.' : ''}
-    </span>
-    <span>{node.name}</span>
+    <span
+      class="text-gray-700">{parentFields.join('.')}{parentFields.length ? '.' : ''}</span><span>{node.name}</span>
   </p>
   {#if node.description}
     <p class="text-gray-600 text-xs ml-2">{node.description}</p>
