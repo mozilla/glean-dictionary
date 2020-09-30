@@ -49,7 +49,7 @@
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "just-throttle": "^1.1.0",
     "lunr": "^2.3.9",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "postcss": "^8.1.0",
     "postcss-load-config": "^2.1.0",
     "sirv-cli": "1.0.5",
