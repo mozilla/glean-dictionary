@@ -22,7 +22,7 @@
     "@rollup/plugin-node-resolve": "8.4.0",
     "@storybook/addon-knobs": "6.0.22",
     "@storybook/addon-storysource": "5.3.19",
-    "@storybook/svelte": "5.3.19",
+    "@storybook/svelte": "6.0.22",
     "babel-loader": "8.1.0",
     "eslint": "7.10.0",
     "eslint-config-airbnb-base": "14.2.0",
