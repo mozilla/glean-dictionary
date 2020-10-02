@@ -9,6 +9,10 @@ export async function getPingData(appName, pingName) {
   return fetchJSON(`data/${appName}/pings/${pingName}.json`);
 }
 
+export async function getMetricData(appName, metricName) {
+  return fetchJSON(`data/${appName}/metrics/${metricName}.json`);
+}
+
 export async function getTableData(appName, pingName) {
   return fetchJSON(`data/${appName}/tables/${pingName}.json`);
 }

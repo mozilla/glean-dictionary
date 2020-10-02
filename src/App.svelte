@@ -6,6 +6,7 @@
   import AppList from "./pages/AppList.svelte";
   import AppDetail from "./pages/AppDetail.svelte";
   import PingDetail from "./pages/PingDetail.svelte";
+  import MetricDetail from "./pages/MetricDetail.svelte";
   import TableDetail from "./pages/TableDetail.svelte";
 
   let component;
@@ -21,6 +22,7 @@
   page("/", setComponent(AppList));
   page("/apps/:app/tables/:ping", setComponent(TableDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
+  page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
   page("/apps/:app", setComponent(AppDetail));
   page({ hashbang: true });
 </script>
