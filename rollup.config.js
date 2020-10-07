@@ -45,7 +45,7 @@ export default {
       // a separate file - better for performance
       preprocess: sveltePreprocess({ postcss: true }),
       css: (css) => {
-        css.write("public/build/bundle.css");
+        css.write("bundle.css");
       },
     }),
 
