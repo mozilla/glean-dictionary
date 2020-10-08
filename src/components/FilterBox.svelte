@@ -4,7 +4,7 @@
   export let onChangeText = null;
   let filterText = "";
 
-  const changeText = (e) => {
+  const changeText = () => {
     onChangeText(filterText);
   };
 </script>
