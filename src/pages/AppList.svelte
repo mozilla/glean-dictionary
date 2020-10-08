@@ -1,5 +1,5 @@
 <script>
-  import FilterBox from "../components/FilterBox.svelte";
+  import FilterInput from "../components/FilterInput.svelte";
 
   const URL = "data/apps.json";
   let apps;
@@ -17,7 +17,7 @@
 </script>
 
 <h2>Applications</h2>
-<FilterBox onChangeText={filterApps} />
+<FilterInput onChangeText={filterApps} />
 {#if apps}
   {#each filteredApps as app}
     <p>

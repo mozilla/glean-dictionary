@@ -1,7 +1,7 @@
 <script>
   import throttle from "just-throttle";
 
-  export let onChangeText = null;
+  export let onChangeText;
   let filterText = "";
 
   const changeText = () => {

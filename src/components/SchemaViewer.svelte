@@ -1,6 +1,6 @@
 <script>
   import SchemaNode from "./SchemaNode.svelte";
-  import FilterBox from "./FilterBox.svelte";
+  import FilterInput from "../components/FilterInput.svelte";
 
   export let app;
   export let nodes = [];
@@ -45,7 +45,7 @@
 </style>
 
 <h2>Schema</h2>
-<FilterBox onChangeText={filterTextChanged} />
+<FilterInput onChangeText={filterTextChanged} />
 <div class="container schema-browser mx-auto">
   <p>
     {#each nodesWithVisibility as node}
