@@ -1,9 +1,9 @@
 <script>
+  import FilterBox from "../components/FilterBox.svelte";
+
   const URL = "data/apps.json";
-  let searchTerm = "";
   let apps;
   let filteredApps;
-
   fetch(URL)
     .then((r) => r.json())
     .then((ret) => {
@@ -11,20 +11,13 @@
       filteredApps = apps;
     });
 
-  const searchTextChange = () => {
-    const searchApps = (appItem) => appItem.name.includes(searchTerm);
-    filteredApps = apps.filter(searchApps);
-  };
+  function filterApps(filterText) {
+    filteredApps = apps.filter((appItem) => appItem.name.includes(filterText));
+  }
 </script>
 
 <h2>Applications</h2>
-<input
-  class="p-2 mb-4"
-  type="text"
-  bind:value={searchTerm}
-  on:input={searchTextChange}
-  placeholder="Search" />
-
+<FilterBox onChangeText={filterApps} />
 {#if apps}
   {#each filteredApps as app}
     <p>
