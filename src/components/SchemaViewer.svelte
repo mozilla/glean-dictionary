@@ -1,6 +1,6 @@
 <script>
   import SchemaNode from "./SchemaNode.svelte";
-  import FilterInput from "../components/FilterInput.svelte";
+  import FilterInput from "./FilterInput.svelte";
 
   export let app;
   export let nodes = [];
