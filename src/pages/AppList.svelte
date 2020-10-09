@@ -12,6 +12,7 @@
 
 <h2>Applications</h2>
 
+
 <label>
   <input type="checkbox" bind:checked={showDeprecated} />
   Show deprecated applications
