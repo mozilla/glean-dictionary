@@ -19,7 +19,7 @@
               <dt>
                 relevant bugs :
                 {#each metric.bugs as bug, i}
-                  {#if (bug).indexOf('http') > -1}
+                  {#if bug.indexOf('http') > -1}
                     <a href={bug} title={bug} target="_blank"> {i + 1} </a>
                   {:else}<span>{bug}</span>{/if}
                 {/each}
@@ -87,7 +87,7 @@
                 <dt>
                   data reviews
                   {#each metric.data_reviews as rev, i}
-                    {#if (rev).indexOf('http') > -1}
+                    {#if rev.indexOf('http') > -1}
                       <a href={rev} title={rev} target="_blank"> {i + 1} </a>
                     {:else}<span>{rev}</span>{/if}
                   {/each}
