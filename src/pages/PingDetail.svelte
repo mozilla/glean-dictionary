@@ -18,8 +18,9 @@
 </style>
 
 {#await pingDataPromise then ping}
+  <p><a href={`/apps/${params.app}/tables/${ping.name}`}>BigQuery table</a></p>
   <h1>{ping.name}</h1>
-  <table class="bg-gray-100 table-header">
+  <table class="table-header">
     <tr>
       <td>Description</td>
       <td>{ping.description}</td>
@@ -39,12 +40,12 @@
       </td>
     </tr>
     <tr>
-      <td>Client Id</td>
+      <td>Includes Client Identifier</td>
       <td>{ping.client_id ? 'Yes' : 'No'}</td>
     </tr>
     <tr>
       <td>
-        notification_email{ping.notification_emails.length > 1 ? 's' : ''}
+        Notification Email{ping.notification_emails.length > 1 ? 's' : ''}
       </td>
       <td>
         {#each ping.notification_emails as email}<span>{email}</span>{/each}
@@ -52,5 +53,4 @@
     </tr>
   </table>
 
-  <p><a href={`/apps/${params.app}/tables/${ping.name}`}>BigQuery table</a></p>
 {/await}
