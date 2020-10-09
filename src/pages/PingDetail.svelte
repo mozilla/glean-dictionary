@@ -52,5 +52,4 @@
       </td>
     </tr>
   </table>
-
 {/await}
