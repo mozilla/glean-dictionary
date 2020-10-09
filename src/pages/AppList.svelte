@@ -1,13 +1,20 @@
 <script>
+  import FilterInput from "../components/FilterInput.svelte";
+
   const URL = "data/apps.json";
   let apps;
+  let filteredApps;
   fetch(URL)
     .then((r) => r.json())
     .then((ret) => {
       apps = ret.sort((a, b) => a.app_id > b.app_id);
+      filteredApps = apps;
     });
-  import { fade } from "svelte/transition";
-  let showDeprecated = true;    
+
+  function filterApps(filterText) {
+    filteredApps = apps.filter((appItem) => appItem.name.includes(filterText));
+  }
+  let showDeprecated = true;
 </script>
 
 <h2>Applications</h2>
@@ -18,8 +25,9 @@
 </label>
 
 {#if showDeprecated}
+  <FilterInput onChangeText={filterApps} />
   {#if apps}
-    {#each apps as app}
+    {#each filteredApps as app}
       <p>
         <a href="/apps/{app.name}">{app.name}</a>
         {#if app.description}<i>{app.description}</i>{/if}
@@ -27,7 +35,8 @@
     {/each}
   {/if}
 {:else if apps}
-  {#each apps as app}
+  <FilterInput onChangeText={filterApps} />
+  {#each filteredApps as app}
     {#if !app.deprecated}
       <p>
         <a href="/apps/{app.name}">{app.name}</a>
