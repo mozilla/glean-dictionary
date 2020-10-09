@@ -1,6 +1,4 @@
 <script>
-  import { fade } from "svelte/transition";
-  let showDeprecated = true;
   const URL = "data/apps.json";
   let apps;
   fetch(URL)
@@ -8,6 +6,8 @@
     .then((ret) => {
       apps = ret.sort((a, b) => a.app_id > b.app_id);
     });
+  import { fade } from "svelte/transition";
+  let showDeprecated = true;    
 </script>
 
 <h2>Applications</h2>
