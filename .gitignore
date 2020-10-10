@@ -2,3 +2,4 @@
 /public/build/
 .probe_cache
 .DS_Store
+venv
