@@ -23,6 +23,7 @@
   Show deprecated applications
 </label>
 
+<FilterInput onChangeText={filterApps} />
 {#if apps}
   {#each filteredApps as app}
     {#if showDeprecated || !app.deprecated}
