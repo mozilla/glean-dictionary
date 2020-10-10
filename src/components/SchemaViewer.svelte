@@ -14,13 +14,21 @@
 
     const addVisibility = (node) => {
       let modifiedNode = node;
+      let parentName = '';
 
       if (modifiedNode.fields) {
-        modifiedNode.fields.forEach(addVisibility);
+        parentName = modifiedNode.name;
+        modifiedNode.fields.forEach((newField) => {
+          newField.parentName = parentName;
+          return addVisibility(newField);
+        });
       }
       modifiedNode.visible =
         filterTerms.length === 0 ||
-        filterTerms.every((term) => modifiedNode.name.includes(term));
+        filterTerms.every((term) => modifiedNode.parentName
+          ? (modifiedNode.parentName.includes(term) || modifiedNode.name.includes(term))
+          : modifiedNode.name.includes(term)
+        )
       modifiedNode.childrenVisible = modifiedNode.fields
         ? modifiedNode.fields.some(
             (child) => child.visible || child.childrenVisible
