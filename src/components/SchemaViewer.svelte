@@ -14,21 +14,24 @@
 
     const addVisibility = (node) => {
       let modifiedNode = node;
-      let parentName = '';
+      let parentName = "";
 
       if (modifiedNode.fields) {
         parentName = modifiedNode.name;
-        modifiedNode.fields.forEach((newField) => {
-          newField.parentName = parentName;
-          return addVisibility(newField);
+        modifiedNode.fields.forEach((field) => {
+          let modifiedNodeField = field;
+          modifiedNodeField.parentName = parentName;
+          return addVisibility(modifiedNodeField);
         });
       }
       modifiedNode.visible =
         filterTerms.length === 0 ||
-        filterTerms.every((term) => modifiedNode.parentName
-          ? (modifiedNode.parentName.includes(term) || modifiedNode.name.includes(term))
-          : modifiedNode.name.includes(term)
-        )
+        filterTerms.every((term) =>
+          modifiedNode.parentName
+            ? modifiedNode.parentName.includes(term) ||
+              modifiedNode.name.includes(term)
+            : modifiedNode.name.includes(term)
+        );
       modifiedNode.childrenVisible = modifiedNode.fields
         ? modifiedNode.fields.some(
             (child) => child.visible || child.childrenVisible
