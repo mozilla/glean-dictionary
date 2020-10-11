@@ -1,17 +1,14 @@
 <script>
+  import { fetchJSON } from "../state/api";
+
   export let params;
   const URL = `data/${params.app}/index.json`;
-  let app;
-  fetch(URL)
-    .then((r) => r.json())
-    .then((ret) => {
-      app = ret;
-    });
+  let app = fetchJSON(URL);
 </script>
 
 <h1>{params.app}</h1>
 
-{#if app}
+{#await app then app}
   <p>{app.description}</p>
   <h2>Pings</h2>
   <ul>
@@ -31,4 +28,4 @@
       </li>
     {/each}
   </ul>
-{/if}
+{/await}
