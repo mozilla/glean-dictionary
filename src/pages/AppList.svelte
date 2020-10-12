@@ -18,11 +18,11 @@
 </script>
 
 <h2>Applications</h2>
+
 <label>
   <input type="checkbox" bind:checked={showDeprecated} />
   Show deprecated applications
 </label>
-
 {#if apps}
   <FilterInput onChangeText={filterApps} />
   {#each filteredApps as app}
