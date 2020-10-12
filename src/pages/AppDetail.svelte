@@ -11,8 +11,8 @@
   });
 </script>
 
+<h1>{params.app}</h1>
 {#if app}
-  <h1>{params.app}</h1>
   <p>{app.description}</p>
   <h2>Pings</h2>
   <ul>
