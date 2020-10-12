@@ -14,7 +14,7 @@
   function filterApps(filterText) {
     filteredApps = apps.filter((appItem) => appItem.name.includes(filterText));
   }
-  let showDeprecated = true;
+  let showDeprecated = false;
 </script>
 
 <h2>Applications</h2>
@@ -23,8 +23,8 @@
   Show deprecated applications
 </label>
 
-<FilterInput onChangeText={filterApps} />
 {#if apps}
+  <FilterInput onChangeText={filterApps} />
   {#each filteredApps as app}
     {#if showDeprecated || !app.deprecated}
       <p>
