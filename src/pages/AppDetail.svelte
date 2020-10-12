@@ -1,14 +1,18 @@
 <script>
   import { fetchJSON } from "../state/api";
+  import { onMount } from "svelte";
 
   export let params;
   const URL = `data/${params.app}/index.json`;
-  let app = fetchJSON(URL);
+  let app;
+
+  onMount(async () => {
+    app = await fetchJSON(URL);
+  });
 </script>
 
-<h1>{params.app}</h1>
-
-{#await app then app}
+{#if app}
+  <h1>{params.app}</h1>
   <p>{app.description}</p>
   <h2>Pings</h2>
   <ul>
@@ -28,4 +32,4 @@
       </li>
     {/each}
   </ul>
-{/await}
+{/if}
