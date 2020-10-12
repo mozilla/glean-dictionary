@@ -1,6 +1,6 @@
 <script>
-  import FilterInput from "../components/FilterInput.svelte";
   import { onMount } from "svelte";
+  import FilterInput from "../components/FilterInput.svelte";
   import { fetchJSON } from "../state/api";
 
   const URL = "data/apps.json";

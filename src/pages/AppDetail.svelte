@@ -1,6 +1,6 @@
 <script>
-  import { fetchJSON } from "../state/api";
   import { onMount } from "svelte";
+  import { fetchJSON } from "../state/api";
 
   export let params;
   const URL = `data/${params.app}/index.json`;
