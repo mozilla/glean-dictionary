@@ -1,5 +1,7 @@
 # Glean Dictionary
 
+[![CircleCI](https://circleci.com/gh/mozilla/glean-dictionary.svg?style=svg)](https://circleci.com/gh/mozilla/glean-dictionary)
+
 The Glean dictionary aims to provide a comprehensive index of datasets generated
 inside Mozilla for newer applications using the
 [Glean SDK](https://mozilla.github.io/glean/book/index.html).
@@ -32,3 +34,13 @@ npm run dev
 
 If that worked, you should be able to see a local version of Glean at
 http://localhost:5000
+
+## Storybook
+
+We use [Storybook](https://storybook.js.org/) for developing and validating
+Svelte components used throughout the app. To view the existing list of stories,
+run:
+
+```bash
+npm run storybook
+```
