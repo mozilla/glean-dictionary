@@ -7,11 +7,11 @@
 </script>
 
 <style>
-  .table-header {
+  .metrics-table {
     @apply table-auto;
     @apply my-4;
   }
-  .table-header td {
+  .metrics-table td {
     @apply border;
     @apply p-2;
   }
@@ -20,7 +20,7 @@
 {#await metricDataPromise then metric}
   <h1>{metric.name}</h1>
   <p>{metric.description}</p>
-  <table class="table-header">
+  <table class="metrics-table">
     <tr>
       <td>Relevant Bugs</td>
       <td>
@@ -33,7 +33,10 @@
     </tr>
     <tr>
       <td>Send In Pings</td>
-      <td>{metric.send_in_pings.join(', ')}</td>
+      <td>
+        <a
+          href={`/apps/${params.app}/tables/${metric.send_in_pings}`}>{metric.send_in_pings.join(', ')}</a>
+      </td>
     </tr>
     {#if metric.lifetime}
       <tr>
@@ -93,35 +96,29 @@
       <td>Disabled</td>
       <td>{metric.disabled}</td>
     </tr>
-    {#if metric.data_reviews && metric.data_reviews.length}
-      <tr>
-        <td>Data Reviews</td>
-        <td>
-          {#each metric.data_reviews as rev, i}
-            {#if rev.indexOf('http') > -1}
-              <a href={rev} title={rev} target="_blank"> {i + 1} </a>
-            {:else}<span>{rev}</span>{/if}
-          {/each}
-        </td>
-      </tr>
-    {/if}
-    {#if metric.no_lint && metric.no_lint.length}
-      <tr>
-        <td>No_lint</td>
-        <td>{metric.no_lint.join(', ')}</td>
-      </tr>
-    {/if}
+    <tr>
+      <td>Data Reviews</td>
+      <td>
+        {#each metric.data_reviews as rev, i}
+          {#if rev.indexOf('http') > -1}
+            <a href={rev} title={rev} target="_blank"> {i + 1} </a>
+          {:else}<span>{rev}</span>{/if}
+        {/each}
+      </td>
+    </tr>
     {#if metric.labels && metric.labels.length}
       <tr>
         <td>Labels</td>
         <td>{metric.labels.join(', ')}</td>
       </tr>
     {/if}
-    {#if metric.version || metric.version === 0}
-      <tr>
-        <td>Version</td>
-        <td>{metric.version}</td>
-      </tr>
-    {/if}
+    <tr>
+      <td>Version</td>
+      <td>
+        {#if metric.version || metric.version === 0}
+          {metric.version}
+        {:else}<span>0</span>{/if}
+      </td>
+    </tr>
   </table>
 {/await}
