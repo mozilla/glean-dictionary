@@ -6,29 +6,35 @@
   export let nodes = [];
   let filterText = "";
   let nodesWithVisibility;
+
   const filterTextChanged = () => {
     const filterTerms = filterText
       .trim()
       .split(" ")
       .filter((t) => t.length > 0);
 
-    const addVisibility = (node) => {
+    const addVisibility = (node, parentNodeNames) => {
       let modifiedNode = node;
-      let parentName = "";
+      const parentNames =
+        parentNodeNames.length > 0 ? [...parentNodeNames] : [];
 
       if (modifiedNode.fields) {
-        parentName = modifiedNode.name;
-        modifiedNode.fields.forEach((field) => {
-          let modifiedNodeField = field;
-          modifiedNodeField.parentName = parentName;
-          return addVisibility(modifiedNodeField);
+        if (parentNames.length > 0) {
+          parentNames.push(`${parentNames.slice(-1)}.${modifiedNode.name}`);
+        } else {
+          parentNames.push(`${modifiedNode.name}`);
+        }
+
+        modifiedNode.fields.forEach((modifiedNodeField) => {
+          modifiedNodeField.parentNames = parentNames;
+          return addVisibility(modifiedNodeField, parentNames);
         });
       }
       modifiedNode.visible =
         filterTerms.length === 0 ||
         filterTerms.every((term) =>
-          modifiedNode.parentName
-            ? modifiedNode.parentName.includes(term) ||
+          modifiedNode.parentNames && modifiedNode.parentNames.length > 0
+            ? modifiedNode.parentNames.some((val) => val.includes(term)) ||
               modifiedNode.name.includes(term)
             : modifiedNode.name.includes(term)
         );
