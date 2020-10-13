@@ -34,3 +34,13 @@ npm run dev
 
 If that worked, you should be able to see a local version of Glean at
 http://localhost:5000
+
+## Storybook
+
+We use [Storybook](https://storybook.js.org/) for developing and validating
+Svelte components used throughout the app. To view the existing list of stories,
+run:
+
+```bash
+npm run storybook
+```
