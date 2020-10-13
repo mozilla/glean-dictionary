@@ -18,7 +18,6 @@
       metric.name.includes(filterText)
     );
   }
-
 </script>
 
 <h1>{params.app}</h1>
