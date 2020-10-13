@@ -3,14 +3,6 @@
 
   export let params;
   const pingDataPromise = getPingData(params.app, params.ping);
-  const URL = `data/${params.app}/index.json`;
-  let app;
-
-  fetch(URL)
-    .then((r) => r.json())
-    .then((ret) => {
-      app = ret;
-    });
 </script>
 
 <style>
@@ -60,16 +52,14 @@
       </td>
     </tr>
   </table>
-{/await}
 
-{#if app}
   <h2>Metrics</h2>
   <ul>
-    {#each app.metrics as metric}
+    {#each ping.metrics as metric}
       <li>
         <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
         <i>{metric.description}</i>
       </li>
     {/each}
   </ul>
-{/if}
+{/await}
