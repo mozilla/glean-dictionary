@@ -23,7 +23,8 @@
           parentNames.push(`${modifiedNode.name}`);
         }
 
-        modifiedNode.fields.forEach((modifiedNodeField) => {
+        modifiedNode.fields.forEach((field) => {
+          let modifiedNodeField = field;
           modifiedNodeField.parentNames = parentNames;
           return addVisibility(modifiedNodeField, parentNames);
         });
