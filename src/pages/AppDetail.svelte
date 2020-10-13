@@ -1,16 +1,17 @@
 <script>
+  import { onMount } from "svelte";
+  import { fetchJSON } from "../state/api";
+
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
-  fetch(URL)
-    .then((r) => r.json())
-    .then((ret) => {
-      app = ret;
-    });
+
+  onMount(async () => {
+    app = await fetchJSON(URL);
+  });
 </script>
 
 <h1>{params.app}</h1>
-
 {#if app}
   <p>{app.description}</p>
   <h2>Pings</h2>

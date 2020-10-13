@@ -1,4 +1,7 @@
 /node_modules/
 /public/build/
+venv
+*.pyc
+__pycache__/
 .probe_cache
 .DS_Store
