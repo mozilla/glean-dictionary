@@ -7,24 +7,24 @@
   function getMetricDocumentationURI(type) {
     const sourceDocs = "https://mozilla.github.io/glean/book/user/metrics/";
     const links = {
-      memory_distribution: `${sourceDocs}memory_distribution.html`,
-      quantity: `${sourceDocs}quantity.html`,
-      custom_distribution: `${sourceDocs}custom_distribution.html`,
-      string_list: `${sourceDocs}string_list.html`,
-      labeled_string: `${sourceDocs}labeled_strings.html`,
-      timespan: `${sourceDocs}timespan.html`,
-      datetime: `${sourceDocs}datetime.html`,
-      string: `${sourceDocs}string.html`,
-      timing_distribution: `${sourceDocs}timing_distribution.html`,
-      boolean: `${sourceDocs}boolean.html`,
-      labeled_counter: `${sourceDocs}labeled_counters.html`,
-      uuid: `${sourceDocs}uuid.html`,
-      counter: `${sourceDocs}counter.html`,
-      event: `${sourceDocs}event.html`,
-      jwe: `${sourceDocs}jwe.html`,
+      memory_distribution: "memory_distribution.html",
+      quantity: "quantity.html",
+      custom_distribution: "custom_distribution.html",
+      string_list: "string_list.html",
+      labeled_string: "labeled_strings.html",
+      timespan: "timespan.html",
+      datetime: "datetime.html",
+      string: "string.html",
+      timing_distribution: "timing_distribution.html",
+      boolean: "boolean.html",
+      labeled_counter: "labeled_counters.html",
+      uuid: "uuid.html",
+      counter: "counter.html",
+      event: "event.html",
+      jwe: "jwe.html",
     };
 
-    return links[type] || sourceDocs;
+    return `${sourceDocs}${links[type]}` || sourceDocs;
   }
 
   function getExpiryInfo(expiry) {
@@ -50,6 +50,8 @@
     <a
       href={getMetricDocumentationURI(metric.type)}
       target="_blank">{metric.type}</a>
+    in
+    <a href={`/apps/${params.app}`}>{params.app}</a>
     that
     {getExpiryInfo(metric.expires)}
   </p>
