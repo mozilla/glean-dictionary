@@ -83,11 +83,6 @@ for repo in list(repos):
                 "description": ping_data["history"][-1]["description"]}
         )
 
-        def filter_metrics(metric):
-            return ping_name in metric['pings']
-
-        filtered_metrics = list(filter(filter_metrics, metric_pings["data"]))
-
         # write ping description
         open(os.path.join(app_ping_dir, f"{ping_name}.json"), "w").write(
             json.dumps(
@@ -95,7 +90,7 @@ for repo in list(repos):
                     ping_data["history"][-1],
                     name=ping_name,
                     history=ping_data["history"],
-                    metrics=filtered_metrics
+                    metrics=[metric for metric in metric_pings["data"] if ping_name in metric['pings']]
                 )
             )
         )
