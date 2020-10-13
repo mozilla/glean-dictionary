@@ -81,8 +81,9 @@
     <tr>
       <td>Send In Pings</td>
       <td>
-        <a
-          href={`/apps/${params.app}/tables/${metric.send_in_pings}`}>{metric.send_in_pings.join(', ')}</a>
+        {#each metric.send_in_pings as mping}
+          <a href={`/apps/${params.app}/pings/${mping}`}> {mping} </a>
+        {/each}
       </td>
     </tr>
     {#if metric.lifetime}
