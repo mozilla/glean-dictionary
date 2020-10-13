@@ -9,7 +9,7 @@
 
   onMount(async () => {
     apps = await fetchJSON(URL);
-    apps.sort((a, b) => (a.app_id > b.app_id ? 1 : -1));
+    apps.sort((a, b) => (a.name > b.name ? 1 : -1));
     filteredApps = apps;
   });
 
