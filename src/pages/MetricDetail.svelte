@@ -102,7 +102,10 @@
         {#each metric.data_reviews as rev, i}
           {#if rev.indexOf('http') > -1}
             <a href={rev} title={rev} target="_blank"> {i + 1} </a>
-          {:else}<span>{rev}</span>{/if}
+          {:else}
+            <a
+              href="https://bugzilla.mozilla.org/show_bug.cgi?id={rev}">{i + 1}</a>
+          {/if}
         {/each}
       </td>
     </tr>
@@ -114,11 +117,7 @@
     {/if}
     <tr>
       <td>Version</td>
-      <td>
-        {#if metric.version || metric.version === 0}
-          {metric.version}
-        {:else}<span>0</span>{/if}
-      </td>
+      <td>{metric.version || 0}</td>
     </tr>
   </table>
 {/await}
