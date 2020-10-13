@@ -167,5 +167,4 @@
       <td>{metric.version || 0}</td>
     </tr>
   </table>
-
 {/await}
