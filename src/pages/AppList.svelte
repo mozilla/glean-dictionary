@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import FilterInput from "../components/FilterInput.svelte";
+  import Pill from "../components/Pill.svelte";
   import { fetchJSON } from "../state/api";
 
   const URL = "data/apps.json";
@@ -25,14 +26,16 @@
   <input type="checkbox" bind:checked={showDeprecated} />
   Show deprecated applications
 </label>
-
 {#if apps}
   <FilterInput onChangeText={filterApps} />
   {#each filteredApps as app}
     {#if showDeprecated || !app.deprecated}
-      <p>
+      <p class="mb-2">
         <a href="/apps/{app.name}">{app.name}</a>
         {#if app.description}<i>{app.description}</i>{/if}
+        {#if app.deprecated}
+          <Pill message="Deprecated" bgColor="#4a5568" />
+        {/if}
       </p>
     {/if}
   {/each}
