@@ -1,3 +1,3 @@
 <style global>
-    @import 'tailwind.css';
-  </style>
+    @import "main.css";
+</style>
