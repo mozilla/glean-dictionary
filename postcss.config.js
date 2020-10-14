@@ -6,10 +6,12 @@ const purgecss = require("@fullhuman/postcss-purgecss")({
   defaultExtractor: (content) => content.match(/[A-Za-z0-9-_:/]+/g) || [],
 });
 
+const postCssImport = require("postcss-import");
+
 const tailwindcss = require("tailwindcss");
 
 const production = !process.env.ROLLUP_WATCH;
 
 module.exports = {
-  plugins: [tailwindcss, ...(production ? [purgecss] : [])],
+  plugins: [postCssImport, tailwindcss, ...(production ? [purgecss] : [])],
 };
