@@ -1,1 +1,1 @@
-<style global>@import "main.css";</style>;
+<style global>@import "main.css";</style>
