@@ -15,22 +15,19 @@
       let modifiedNode = node;
       let parentNames = [...parentNodeNames];
 
-      if (modifiedNode.fields) {
-        parentNames = modifiedNode.parentNames
-          ? `${modifiedNode.parentNames}.${modifiedNode.name}`
-          : modifiedNode.name;
+      parentNames.push(`${parentNames.slice(-1)}.${modifiedNode.name}`);
 
+      if (modifiedNode.fields) {
         modifiedNode.fields.forEach((field) => {
           let modifiedNodeField = field;
-          modifiedNodeField.parentNames = parentNames;
           return addVisibility(modifiedNodeField, parentNames);
         });
       }
       modifiedNode.visible =
         filterTerms.length === 0 ||
         filterTerms.every((term) =>
-          modifiedNode.parentNames
-            ? modifiedNode.parentNames.includes(term) ||
+          parentNames
+            ? parentNames.some((val) => val.includes(term)) ||
               modifiedNode.name.includes(term)
             : modifiedNode.name.includes(term)
         );
