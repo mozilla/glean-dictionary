@@ -11,7 +11,7 @@
       .split(" ")
       .filter((t) => t.length > 0);
 
-    const addVisibility = (node, parentNodeNames = [`${node.name}`]) => {
+    const addVisibility = (node, parentNodeNames = ["__root__"]) => {
       let modifiedNode = node;
       let allParentNames = [...parentNodeNames];
       let { name, parentNames, fields } = modifiedNode;
