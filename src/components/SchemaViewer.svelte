@@ -13,31 +13,31 @@
 
     const addVisibility = (node, parentNodeNames = ["__root__"]) => {
       let modifiedNode = node;
-      let allParentNames = [...parentNodeNames];
-      let { name, parentNames, fields } = modifiedNode;
+      let parentNames = [...parentNodeNames];
 
-      if (fields) {
-        allParentNames = parentNames ? `${parentNames}.${name}` : name;
+      if (modifiedNode.fields) {
+        parentNames = modifiedNode.parentNames
+          ? `${modifiedNode.parentNames}.${modifiedNode.name}`
+          : modifiedNode.name;
 
-        fields.forEach((field) => {
+        modifiedNode.fields.forEach((field) => {
           let modifiedNodeField = field;
-          const parentNameArr = [];
-
-          modifiedNodeField.parentNames = allParentNames;
-          parentNameArr.push(`${allParentNames}.${modifiedNodeField.name}`);
-
-          return addVisibility(modifiedNodeField, parentNameArr);
+          modifiedNodeField["parentNames"] = parentNames;
+          return addVisibility(modifiedNodeField, parentNames);
         });
       }
       modifiedNode.visible =
         filterTerms.length === 0 ||
         filterTerms.every((term) =>
-          parentNames
-            ? parentNames.includes(term) || name.includes(term)
-            : name.includes(term)
+          modifiedNode.parentNames
+            ? modifiedNode.parentNames.includes(term) ||
+              modifiedNode.name.includes(term)
+            : modifiedNode.name.includes(term)
         );
-      modifiedNode.childrenVisible = fields
-        ? fields.some((child) => child.visible || child.childrenVisible)
+      modifiedNode.childrenVisible = modifiedNode.fields
+        ? modifiedNode.fields.some(
+            (child) => child.visible || child.childrenVisible
+          )
         : undefined;
       return modifiedNode;
     };
