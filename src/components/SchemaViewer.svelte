@@ -11,41 +11,38 @@
       .split(" ")
       .filter((t) => t.length > 0);
 
-    const addVisibility = (node, parentNodeNames) => {
+    const addVisibility = (node, parentNodeNames = [`${node.name}`]) => {
       let modifiedNode = node;
-      const parentNames =
-        parentNodeNames.length > 0 ? [...parentNodeNames] : [];
+      let allParentNames = [...parentNodeNames];
+      let { name, parentNames, fields } = modifiedNode;
 
-      if (modifiedNode.fields) {
-        if (parentNames.length > 0) {
-          parentNames.push(`${parentNames.slice(-1)}.${modifiedNode.name}`);
-        } else {
-          parentNames.push(`${modifiedNode.name}`);
-        }
+      if (fields) {
+        allParentNames = parentNames ? `${parentNames}.${name}` : name;
 
-        modifiedNode.fields.forEach((field) => {
+        fields.forEach((field) => {
           let modifiedNodeField = field;
-          modifiedNodeField.parentNames = parentNames;
-          return addVisibility(modifiedNodeField, parentNames);
+          const parentNameArr = [];
+
+          modifiedNodeField.parentNames = allParentNames;
+          parentNameArr.push(`${allParentNames}.${modifiedNodeField.name}`);
+
+          return addVisibility(modifiedNodeField, parentNameArr);
         });
       }
       modifiedNode.visible =
         filterTerms.length === 0 ||
         filterTerms.every((term) =>
-          modifiedNode.parentNames && modifiedNode.parentNames.length > 0
-            ? modifiedNode.parentNames.some((val) => val.includes(term)) ||
-              modifiedNode.name.includes(term)
-            : modifiedNode.name.includes(term)
+          parentNames
+            ? parentNames.includes(term) || name.includes(term)
+            : name.includes(term)
         );
-      modifiedNode.childrenVisible = modifiedNode.fields
-        ? modifiedNode.fields.some(
-            (child) => child.visible || child.childrenVisible
-          )
+      modifiedNode.childrenVisible = fields
+        ? fields.some((child) => child.visible || child.childrenVisible)
         : undefined;
       return modifiedNode;
     };
 
-    nodesWithVisibility = nodes.map(addVisibility, filterTerms);
+    nodesWithVisibility = nodes.map((node) => addVisibility(node), filterTerms);
   };
 
   filterTextChanged();
