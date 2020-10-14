@@ -1,5 +1,6 @@
 <script>
   import page from "page";
+  import Tailwindcss from "./Tailwindcss.svelte";
 
   // Pages
   import AppList from "./pages/AppList.svelte";
@@ -32,6 +33,7 @@
   }
 </style>
 
+<Tailwindcss />
 <nav class="flex items-center justify-between flex-wrap bg-blue-800 p-2">
   <div class="flex items-center flex-shrink-0 mr-6">
     <a class="brand font-semibold text-xl tracking-tight" href="/">
