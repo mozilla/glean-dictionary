@@ -1,6 +1,7 @@
 <script>
   import page from "page";
   import Tailwindcss from "./Tailwindcss.svelte";
+  import Breadcrumb from "./components/Breadcrumb.svelte";
 
   // Pages
   import AppList from "./pages/AppList.svelte";
@@ -24,6 +25,7 @@
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
   page("/apps/:app", setComponent(AppDetail));
+  page("*", setComponent(Breadcrumb));
   page({ hashbang: true });
 </script>
 
@@ -41,6 +43,7 @@
       <i>Prototype</i>
     </a>
   </div>
+  <Breadcrumb {params} />
 </nav>
 
 <div class="container py-4 mx-auto">
