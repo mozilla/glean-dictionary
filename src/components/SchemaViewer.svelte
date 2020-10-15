@@ -25,11 +25,10 @@
       }
       modifiedNode.visible =
         filterTerms.length === 0 ||
-        filterTerms.every((term) =>
-          parentNames
-            ? parentNames.some((val) => val.includes(term)) ||
-              modifiedNode.name.includes(term)
-            : modifiedNode.name.includes(term)
+        filterTerms.every(
+          (term) =>
+            parentNames.some((val) => val.includes(term)) ||
+            modifiedNode.name.includes(term)
         );
       modifiedNode.childrenVisible = modifiedNode.fields
         ? modifiedNode.fields.some(
