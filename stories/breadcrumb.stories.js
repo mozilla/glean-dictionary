@@ -1,18 +1,37 @@
 import Breadcrumb from "../src/components/Breadcrumb.svelte";
 
-const pingParams = { app: "fenix", ping: "activation" };
-const metricParams = { app: "fenix", metric: "activation.activation_id" };
+const AppsLinks = [{ url: "/", name: "apps" }];
+
+const PingLinks = [
+  { url: "/", name: "apps" },
+  { url: "/apps/fenix/", name: "fenix" },
+  { url: "/apps/fenix/pings/activation", name: "pings / activation" },
+];
+
+const MetricLinks = [
+  { url: "/", name: "apps" },
+  { url: "/apps/fenix/", name: "fenix" },
+  {
+    url: "/apps/fenix/metrics/about_page.libraries_tapped",
+    name: "metrics / about_page.libraries_tapped",
+  },
+];
 
 export default {
   title: "Breadcrumb",
 };
 
-export const Ping = () => ({
+export const AppsListPage = () => ({
   Component: Breadcrumb,
-  props: { params: pingParams },
+  props: { links: AppsLinks },
 });
 
-export const Metric = () => ({
+export const PingPage = () => ({
   Component: Breadcrumb,
-  props: { params: metricParams },
+  props: { links: PingLinks },
+});
+
+export const MetricPage = () => ({
+  Component: Breadcrumb,
+  props: { links: MetricLinks },
 });
