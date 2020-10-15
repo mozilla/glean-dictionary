@@ -11,15 +11,25 @@
       .split(" ")
       .filter((t) => t.length > 0);
 
-    const addVisibility = (node) => {
+    const addVisibility = (node, parentNodeNames = ["__root__"]) => {
       let modifiedNode = node;
+      let parentNames = [...parentNodeNames];
+
+      parentNames.push(`${parentNames.slice(-1)}.${modifiedNode.name}`);
 
       if (modifiedNode.fields) {
-        modifiedNode.fields.forEach(addVisibility);
+        modifiedNode.fields.forEach((field) => {
+          let modifiedNodeField = field;
+          return addVisibility(modifiedNodeField, parentNames);
+        });
       }
       modifiedNode.visible =
         filterTerms.length === 0 ||
-        filterTerms.every((term) => modifiedNode.name.includes(term));
+        filterTerms.every(
+          (term) =>
+            parentNames.some((val) => val.includes(term)) ||
+            modifiedNode.name.includes(term)
+        );
       modifiedNode.childrenVisible = modifiedNode.fields
         ? modifiedNode.fields.some(
             (child) => child.visible || child.childrenVisible
@@ -28,7 +38,7 @@
       return modifiedNode;
     };
 
-    nodesWithVisibility = nodes.map(addVisibility, filterTerms);
+    nodesWithVisibility = nodes.map((node) => addVisibility(node), filterTerms);
   };
 
   filterTextChanged();
