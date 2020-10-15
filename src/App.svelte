@@ -13,12 +13,13 @@
 
   let component;
   let params;
-  let links = [{ url: "/", name: "apps" }];
+  let links = [];
 
   afterUpdate(() => {
     const { app, ping, metric } = params;
 
-    links = [];
+    links = [{ url: "/", name: "apps" }];
+
     if (app) {
       links.push({ url: `/apps/${app}/`, name: app });
     }
