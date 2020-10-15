@@ -1,4 +1,5 @@
 <script>
+  import { afterUpdate } from "svelte";
   import page from "page";
   import Tailwindcss from "./Tailwindcss.svelte";
   import Breadcrumb from "./components/Breadcrumb.svelte";
@@ -12,6 +13,28 @@
 
   let component;
   let params;
+  let links = [{ url: "/", name: "apps" }];
+
+  afterUpdate(() => {
+    const { app, ping, metric } = params;
+
+    links = [];
+    if (app) {
+      links.push({ url: `/apps/${app}/`, name: app });
+    }
+
+    if (ping) {
+      links.push({
+        url: `/apps/${app}/pings/${ping}`,
+        name: `pings / ${ping}`,
+      });
+    } else if (metric) {
+      links.push({
+        url: `/apps/${app}/metrics/${metric}`,
+        name: `metrics / ${metric}`,
+      });
+    }
+  });
 
   function setComponent(c) {
     return function setComponentInner({ params: p }) {
@@ -43,7 +66,7 @@
       <i>Prototype</i>
     </a>
   </div>
-  <Breadcrumb {params} />
+  <Breadcrumb {links} />
 </nav>
 
 <div class="container py-4 mx-auto">

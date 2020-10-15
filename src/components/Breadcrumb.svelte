@@ -1,5 +1,5 @@
 <script>
-  export let params;
+  export let links;
 </script>
 
 <style>
@@ -7,23 +7,7 @@
 
 <ol class="flex bg-white divide-x divide-indigo-400">
   <li class="px-4"><a href="/"> apps </a></li>
-  {#if params.app}
-    <li class="px-4"><a href="/apps/{params.app}"> {params.app} </a></li>
-    {#if params.ping}
-      <li class="px-4">
-        <a href="/apps/{params.app}/pings/{params.ping}">
-          pings /
-          {params.ping}
-        </a>
-      </li>
-    {/if}
-    {#if params.metric}
-      <li class="px-4">
-        <a href="/apps/{params.app}/metrics/{params.metric}">
-          metric /
-          {params.metric}
-        </a>
-      </li>
-    {/if}
-  {/if}
+  {#each links as link}
+    <li class="px-4"><a href={link.url}>{link.name}</a></li>
+  {/each}
 </ol>
