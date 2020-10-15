@@ -38,6 +38,9 @@
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}
+  {#if app.prototype}
+    <Pill message="Prototype" bgColor="#ff0000" />
+  {/if}
   <p class="mt-2">{app.description}</p>
   <table class="table-header">
     <tr>

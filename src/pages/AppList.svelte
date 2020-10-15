@@ -18,6 +18,7 @@
     filteredApps = apps.filter((appItem) => appItem.name.includes(filterText));
   }
   let showDeprecated = false;
+  let showPrototype = false;
 </script>
 
 <h2>Applications</h2>
@@ -26,15 +27,22 @@
   <input type="checkbox" bind:checked={showDeprecated} />
   Show deprecated applications
 </label>
+<label>
+  <input type="checkbox" bind:checked={showPrototype} />
+  Show prototype applications
+</label>
 {#if apps}
   <FilterInput onChangeText={filterApps} />
   {#each filteredApps as app}
-    {#if showDeprecated || !app.deprecated}
+    {#if (showDeprecated || !app.deprecated) && (showPrototype || !app.prototype)}
       <p class="mb-2">
         <a href="/apps/{app.name}">{app.name}</a>
         {#if app.description}<i>{app.description}</i>{/if}
         {#if app.deprecated}
           <Pill message="Deprecated" bgColor="#4a5568" />
+        {/if}
+        {#if app.prototype}
+          <Pill message="Prototype" bgColor="#ff0000" />
         {/if}
       </p>
     {/if}
