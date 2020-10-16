@@ -17,6 +17,7 @@
 
   afterUpdate(() => {
     const { app, ping, metric } = params;
+    // console.log(params)
 
     links = [{ url: "/", name: "apps" }];
 
@@ -45,7 +46,7 @@
   }
 
   page("/", setComponent(AppList));
-  page("/apps/:app/tables/:ping", setComponent(TableDetail));
+  page("/apps/:app/tables/:ping/:bigquery", setComponent(TableDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
   page("/apps/:app", setComponent(AppDetail));
