@@ -3,15 +3,46 @@
   import Pill from "../components/Pill.svelte";
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
+  import Pagination from "../components/Pagination.svelte";
 
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
   let filteredMetrics;
+  let metrics = [];
+  let currentPage = 1;
+  let from = 1;
+  let to = 100;
+  let perPage = 100;
+  let lastPage = 1;
+  let total = 0;
+
+  function breakUp(array, parts) {
+    let result = [];
+    for (let i = parts; i > 0; i -= 1) {
+      result.push(array.splice(0, Math.ceil(array.length / i)));
+    }
+    return result;
+  }
+
+  let loadPage = async (data) => {
+    if (metrics.length === 0) {
+      app = await fetchJSON(URL);
+      total = app.metrics.length;
+      currentPage = data.page;
+      lastPage = Math.ceil(total / perPage);
+      from = data.page + perPage * (data.page - 1);
+      to = perPage * data.page;
+      metrics = breakUp(app.metrics, lastPage);
+    }
+    from = data.page + perPage * (data.page - 1);
+    to = perPage * data.page;
+    currentPage = data.page;
+    filteredMetrics = metrics[data.page - 1];
+  };
 
   onMount(async () => {
-    app = await fetchJSON(URL);
-    filteredMetrics = app.metrics;
+    loadPage({ page: 1 });
   });
 
   function filterMetrics(filterText) {
@@ -69,4 +100,15 @@
       </li>
     {/each}
   </ul>
+
+  {#if total > perPage}
+    <Pagination
+      {currentPage}
+      {from}
+      {lastPage}
+      {perPage}
+      {to}
+      {total}
+      on:changePage={(ev) => loadPage({ page: ev.detail })} />
+  {/if}
 {/if}
