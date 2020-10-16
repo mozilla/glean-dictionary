@@ -30,7 +30,7 @@ open(os.path.join(OUTPUT_DIRECTORY, "apps.json"), "w").write(
     json.dumps(
         [
             {k: repo[k]
-                for k in ["app_id", "deprecated", "description", "name", "url","prototype"]}
+                for k in ["app_id", "deprecated", "description", "name", "url", "prototype"]}
             for repo in repos
         ]
     )

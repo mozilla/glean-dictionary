@@ -3,7 +3,7 @@
   import Pill from "../components/Pill.svelte";
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
-  import AppBanner from "../components/AppBanner.svelte";
+  import AppAlert from "../components/AppAlert.svelte";
 
   export let params;
   const URL = `data/${params.app}/index.json`;
@@ -34,13 +34,6 @@
   }
 </style>
 
-{#if app}
-  {#if app.prototype}
-    <AppBanner
-      message="The glean-js application is in prototype stage. The metrics listed below may contain inconsistencies and testing string."
-      bgColor="#808895" />
-  {/if}
-{/if}
 <h1>{params.app}</h1>
 {#if app}
   {#if app.deprecated}
@@ -57,7 +50,11 @@
       <td><code>{app.app_id}</code></td>
     </tr>
   </table>
-
+  {#if app.prototype}
+    <AppAlert
+      message="The glean-js application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
+      bgColor="#808895" />
+  {/if}
   <h2>Pings</h2>
   <ul>
     {#each app.pings as ping}
