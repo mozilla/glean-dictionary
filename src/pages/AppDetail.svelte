@@ -33,12 +33,11 @@
   }
 </style>
 {#if app}
-{#if app.prototype}
-  <AppBanner
-    message="The glean-js application is in prototype stage. The metrics listed below may contain inconsistencies and testing string changes."
-    bgColor="#808895"
-  />
-{/if}
+  {#if app.prototype}
+    <AppBanner 
+    message="The glean-js application is in prototype stage. The metrics listed below may contain inconsistencies and testing string changes." 
+    bgColor="#808895" />
+  {/if}
 {/if}
 <h1>{params.app}</h1>
 {#if app}
