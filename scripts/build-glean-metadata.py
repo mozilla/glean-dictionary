@@ -10,6 +10,7 @@ PROBE_INFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org"
 REPO_URL = PROBE_INFO_BASE_URL + "/glean/repositories"
 PINGS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/pings"
 METRICS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/metrics"
+DEPENDENCIES_URL_TEMPLATE= PROBE_INFO_BASE_URL + "/glean/{}/dependencies"
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 
 
@@ -122,3 +123,17 @@ for repo in list(repos):
         )
 
     open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))
+
+dependencies_data = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json()
+
+dependency_library_names = list(dependencies_data.keys())
+repos_by_dependency_name = {}
+
+for dependency_repo in repo_data: 
+    for library_name in dependency_repo.get('library_names', []):
+        repos_by_dependency_name[library_name] = dependency_repo['name']
+
+dependencies_data = []
+for name in dependency_library_names:
+    if name in repos_by_dependency_name:
+        dependencies_data.append(repos_by_dependency_name[name])    
