@@ -37,7 +37,7 @@
 {#if app}
   {#if app.prototype}
     <AppBanner
-      message="The glean-js application is in prototype stage. The metrics listed below may contain inconsistencies and testing string changes."
+      message="The glean-js application is in prototype stage. The metrics listed below may contain inconsistencies and testing string."
       bgColor="#808895" />
   {/if}
 {/if}
