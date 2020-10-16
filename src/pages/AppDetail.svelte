@@ -3,7 +3,7 @@
   import Pill from "../components/Pill.svelte";
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
-  import AppBanner from "../components/AppBanner.svelte"
+  import AppBanner from "../components/AppBanner.svelte";
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
@@ -32,11 +32,12 @@
     @apply p-2;
   }
 </style>
+
 {#if app}
   {#if app.prototype}
-    <AppBanner 
-    message="The glean-js application is in prototype stage. The metrics listed below may contain inconsistencies and testing string changes." 
-    bgColor="#808895" />
+    <AppBanner
+      message="The glean-js application is in prototype stage. The metrics listed below may contain inconsistencies and testing string changes."
+      bgColor="#808895" />
   {/if}
 {/if}
 <h1>{params.app}</h1>

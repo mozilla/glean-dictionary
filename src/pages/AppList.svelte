@@ -30,7 +30,7 @@
 {#if apps}
   <FilterInput onChangeText={filterApps} />
   {#each filteredApps as app}
-    {#if (showDeprecated || !app.deprecated)}
+    {#if showDeprecated || !app.deprecated}
       <p class="mb-2">
         <a href="/apps/{app.name}">{app.name}</a>
         {#if app.description}<i>{app.description}</i>{/if}
