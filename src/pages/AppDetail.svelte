@@ -4,6 +4,7 @@
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
   import AppBanner from "../components/AppBanner.svelte";
+
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
