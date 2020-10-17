@@ -48,7 +48,7 @@
         Notification Email{ping.notification_emails.length > 1 ? 's' : ''}
       </td>
       <td>
-        {#each ping.notification_emails as email}<span>{email}</span>{/each}
+        {#each ping.notification_emails as email}<span>{email + " "}</span>{/each}
       </td>
     </tr>
   </table>
