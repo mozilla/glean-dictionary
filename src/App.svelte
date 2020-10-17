@@ -16,26 +16,27 @@
   let links = [];
 
   afterUpdate(() => {
-    const { app, ping, metric } = params;
-    // console.log(params)
+    const { app, ping, metric, bigquery } = params;
 
     links = [{ url: "/", name: "apps" }];
 
-    if (app) {
-      links.push({ url: `/apps/${app}/`, name: app });
-    }
+    let link = app && { url: `/apps/${app}/`, name: app };
+    links.push(link);
 
-    if (ping) {
-      links.push({
-        url: `/apps/${app}/pings/${ping}`,
-        name: `pings / ${ping}`,
-      });
-    } else if (metric) {
-      links.push({
-        url: `/apps/${app}/metrics/${metric}`,
-        name: `metrics / ${metric}`,
-      });
-    }
+    link =
+      (ping && { url: `/apps/${app}/pings/${ping}/`, name: ping }) ||
+      (metric && { url: `/apps/${app}/metrics/${metric}/`, name: metric });
+    links.push(activeLink);
+
+    link = ping &&
+      bigquery && {
+        url: `/apps/${app}/tables/${ping}/bigquery`,
+        name: bigquery,
+      };
+    links.push(link);
+
+    // remove unwanted values
+    links = links.filter(Boolean);
   });
 
   function setComponent(c) {
