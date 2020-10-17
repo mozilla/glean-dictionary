@@ -26,7 +26,7 @@
     link =
       (ping && { url: `/apps/${app}/pings/${ping}/`, name: ping }) ||
       (metric && { url: `/apps/${app}/metrics/${metric}/`, name: metric });
-    links.push(activeLink);
+    links.push(link);
 
     link = ping &&
       bigquery && {

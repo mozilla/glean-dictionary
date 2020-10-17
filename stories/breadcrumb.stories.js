@@ -1,25 +1,45 @@
 import Breadcrumb from "../src/components/Breadcrumb.svelte";
 
-const AppsLinks = [{ url: "/", name: "apps" }];
-
-const PingLinks = [
-  { url: "/", name: "apps" },
-  { url: "/apps/fenix/", name: "fenix" },
-  { url: "/apps/fenix/pings/activation", name: "pings / activation" },
-];
-
-const MetricLinks = [
-  { url: "/", name: "apps" },
-  { url: "/apps/fenix/", name: "fenix" },
-  {
-    url: "/apps/fenix/metrics/about_page.libraries_tapped",
-    name: "metrics / about_page.libraries_tapped",
-  },
+const [AppsLinks, AppDetailsLinks, PingsLinks, MetricsLinks, TableLinks] = [
+  [{ url: "/", name: "apps" }],
+  [
+    { url: "/", name: "apps" },
+    { url: "/apps/fenix/", name: "fenix" },
+  ],
+  [
+    { url: "/", name: "apps" },
+    { url: "/apps/fenix/", name: "fenix" },
+    { url: "/apps/fenix/pings/activation", name: "activation" },
+  ],
+  [
+    { url: "/", name: "apps" },
+    { url: "/apps/fenix/", name: "fenix" },
+    {
+      url: "/apps/fenix/metrics/about_page.libraries_tapped",
+      name: "about_page.libraries_tapped",
+    },
+  ],
+  [
+    { url: "/", name: "apps" },
+    { url: "/apps/fenix/", name: "fenix" },
+    { url: "/apps/fenix/pings/activation", name: "activation" },
+    { url: "/apps/fenix/tables/activation/bigquery", name: "bigquery" },
+  ],
 ];
 
 export default {
   title: "Breadcrumb",
 };
+
+export const AppDetailsPage = () => ({
+  Component: Breadcrumb,
+  props: { links: AppDetailsLinks },
+});
+
+export const BigQueryTablePage = () => ({
+  Component: Breadcrumb,
+  props: { links: TableLinks },
+});
 
 export const AppsListPage = () => ({
   Component: Breadcrumb,
@@ -28,10 +48,10 @@ export const AppsListPage = () => ({
 
 export const PingPage = () => ({
   Component: Breadcrumb,
-  props: { links: PingLinks },
+  props: { links: PingsLinks },
 });
 
 export const MetricPage = () => ({
   Component: Breadcrumb,
-  props: { links: MetricLinks },
+  props: { links: MetricsLinks },
 });
