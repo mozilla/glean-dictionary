@@ -8,16 +8,21 @@
   const URL = `data/${params.app}/index.json`;
   let app;
   let filteredMetrics;
+  let filteredPings;
 
   onMount(async () => {
     app = await fetchJSON(URL);
     filteredMetrics = app.metrics;
+    filteredPings = app.pings;
   });
 
   function filterMetrics(filterText) {
     filteredMetrics = app.metrics.filter((metric) =>
       metric.name.includes(filterText)
     );
+  }
+  function filterPings(filterText) {
+    filteredPings = app.pings.filter((ping) => ping.name.includes(filterText));
   }
 </script>
 
@@ -51,14 +56,16 @@
   </table>
 
   <h2>Pings</h2>
+  <FilterInput onChangeText={filterPings} />
   <ul>
-    {#each app.pings as ping}
+    {#each filteredPings as ping}
       <li>
         <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
         <i>{ping.description}</i>
       </li>
     {/each}
   </ul>
+
   <h2>Metrics</h2>
   <FilterInput onChangeText={filterMetrics} />
   <ul>
