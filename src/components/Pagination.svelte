@@ -1,7 +1,7 @@
 <script context="module">
   export const paginateData = (array, totalPages) => {
     let result = [];
-    let localData = array.slice(); // Don't fuckup the array!
+    let localData = array.slice();
     for (let i = totalPages; i > 0; i -= 1) {
       result.push(localData.splice(0, Math.ceil(localData.length / i)));
     }
