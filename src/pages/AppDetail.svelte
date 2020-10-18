@@ -3,48 +3,45 @@
   import Pill from "../components/Pill.svelte";
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
-  import Pagination from "../components/Pagination.svelte";
-
+  import Pagination, {
+    makePages,
+    goToPage,
+  } from "../components/Pagination.svelte";
+  
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
-  let filteredMetrics;
+  let to;
+  let from;
+  let total;
   let metrics = [];
-  let currentPage = 1;
-  let from = 1;
-  let to = 100;
+  let pages = [];
+  let paginationData;
+  let lastPage;
   let perPage = 100;
-  let lastPage = 1;
-  let total = 0;
+  let currentPage = 1;
+  let filteredMetrics;
 
-  function breakUp(array, parts) {
-    let result = [];
-    for (let i = parts; i > 0; i -= 1) {
-      result.push(array.splice(0, Math.ceil(array.length / i)));
-    }
-    return result;
+  function loadPage(args) {
+    let tempPaginationData = goToPage(args.page, pages);
+    from = tempPaginationData.from;
+    to = tempPaginationData.to;
+    filteredMetrics = tempPaginationData.page;
+    currentPage = args.page;
   }
 
-  let loadPage = async (data) => {
-    if (metrics.length === 0) {
-      app = await fetchJSON(URL);
-      total = app.metrics.length;
-      currentPage = data.page;
-      lastPage = Math.ceil(total / perPage);
-      from = data.page + perPage * (data.page - 1);
-      to = perPage * data.page;
-      metrics = breakUp(app.metrics, lastPage);
-    }
-    from = data.page + perPage * (data.page - 1);
-    to = perPage * data.page;
-    currentPage = data.page;
-    filteredMetrics = metrics[data.page - 1];
-  };
-
   onMount(async () => {
-    loadPage({ page: 1 });
+    app = await fetchJSON(URL);
+    metrics = app.metrics;
+    paginationData = makePages(currentPage, perPage, metrics);
+    pages = paginationData.pages;
+    to = paginationData.to;
+    from = paginationData.from;
+    total = paginationData.total;
+    lastPage = paginationData.lastPage;
+    currentPage = paginationData.currentPage;
+    filteredMetrics = paginationData.pages[currentPage - 1];
   });
-
   function filterMetrics(filterText) {
     filteredMetrics = app.metrics.filter((metric) =>
       metric.name.includes(filterText)
@@ -57,7 +54,6 @@
     @apply table-auto;
     @apply my-4;
   }
-
   .table-header td {
     @apply border;
     @apply p-2;
