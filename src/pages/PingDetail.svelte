@@ -20,6 +20,11 @@
 {#await pingDataPromise then ping}
   <p><a href={`/apps/${params.app}/tables/${ping.name}`}>BigQuery table</a></p>
   <h1>{ping.name}</h1>
+  <p>
+    This ping is produced by
+    <a href={`/apps/${params.app}`}>{params.app}</a>
+  </p>
+
   <table class="table-header">
     <tr>
       <td>Description</td>
