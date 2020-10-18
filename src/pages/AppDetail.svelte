@@ -7,7 +7,7 @@
     makePages,
     goToPage,
   } from "../components/Pagination.svelte";
-  
+
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
