@@ -31,7 +31,7 @@
     <tr>
       <td>BigQuery definition</td>
       <td>
-        <a target="_blank" href={data.table.bq_definition}>
+        <a href={data.table.bq_definition} target="_blank">
           {data.table.bq_definition.split('/').slice(-1)}
         </a>
       </td>
