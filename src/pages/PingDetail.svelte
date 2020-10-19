@@ -1,7 +1,7 @@
 <script>
   import { getPingData } from "../state/api";
   
-  import NotFound from "../components/NotFoundPage.svelte";
+  import NotFound from "../components/NotFound.svelte";
 
   export let params;
   const pingDataPromise = getPingData(params.app, params.ping);

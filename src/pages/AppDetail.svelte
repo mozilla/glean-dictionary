@@ -1,5 +1,5 @@
 <script>
-  import NotFound from "../components/NotFoundPage.svelte";
+  import NotFound from "../components/NotFound.svelte";
 
   export let params;
   const URL = `data/${params.app}/index.json`;

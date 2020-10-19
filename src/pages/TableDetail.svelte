@@ -2,7 +2,7 @@
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { fetchJSON, getTableData } from "../state/api";
   
-  import NotFound from "../components/NotFoundPage.svelte";
+  import NotFound from "../components/NotFound.svelte";
 
   export let params;
   const pingDataPromise = getTableData(params.app, params.ping).then(

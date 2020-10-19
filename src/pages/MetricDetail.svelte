@@ -1,7 +1,7 @@
 <script>
   import { getMetricData } from "../state/api";
   
-  import NotFound from "../components/NotFoundPage.svelte";
+  import NotFound from "../components/NotFound.svelte";
 
   export let params;
   const metricDataPromise = getMetricData(params.app, params.metric);
