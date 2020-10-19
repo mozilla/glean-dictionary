@@ -72,7 +72,7 @@
       <td>Relevant Bugs</td>
       <td>
         {#each metric.bugs as bug, i}
-          {#if bug.indexOf('http') > -1}
+          {#if typeof bug !== 'number' && bug.indexOf('http') > -1}
             <a href={bug} title={bug} target="_blank"> {i + 1} </a>
           {:else}<span>{bug}</span>{/if}
         {/each}
