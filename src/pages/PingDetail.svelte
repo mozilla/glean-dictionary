@@ -28,7 +28,9 @@
     <tr>
       <td>Related Bugs</td>
       <td>
-        {#each ping.bugs as bug}<a class="mr-2" target="_blank" href={bug}>{bug}</a>{/each}
+        {#each ping.bugs as bug}
+          <a class="mr-2" target="_blank" href={bug}>{bug}</a>
+        {/each}
       </td>
     </tr>
     <tr>
