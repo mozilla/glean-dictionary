@@ -52,7 +52,7 @@
   </table>
   {#if app.prototype}
     <AppAlert
-      message="The glean-js application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
+      message="The {params.app} application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
       bgColor="#808895" />
   {/if}
   <h2>Pings</h2>
