@@ -9,6 +9,6 @@
 {#await metricDataPromise then metric}
   <h1>{metric.name}</h1>
   <p>{metric.description}</p>
-  {:catch}
-  <NotFoundPage pageName = {params.metric} itemType = "metric"/>
+{:catch}
+  <NotFoundPage pageName={params.metric} itemType="metric" />
 {/await}

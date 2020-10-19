@@ -1,7 +1,7 @@
 <script>
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { fetchJSON, getTableData } from "../state/api";
-  // import NotFoundPage from ".../components/NotFoundPage.svelte";
+  import NotFoundPage from "../components/NotFoundPage.svelte";
 
   export let params;
   const pingDataPromise = getTableData(params.app, params.ping).then(
@@ -47,6 +47,6 @@
     </tr>
   </table>
   <SchemaViewer app={params.app} nodes={data.schema} />
-  <!-- {:catch}
-  <NotFoundPage pageName = {params.app} itemType = "table"/> -->
+{:catch}
+  <NotFoundPage pageName={params.app} itemType="table" />
 {/await}

@@ -1,14 +1,13 @@
 <script>
-    export let pageName;
-    export let itemType;
+  export let pageName;
+  export let itemType;
 </script>
 
 <style>
-    h2 {
-        color: darkgray;
-        font-style: italic;
-    }
-
+  h2 {
+    color: darkgray;
+    font-style: italic;
+  }
 </style>
 
 <h1>Sorry!</h1>

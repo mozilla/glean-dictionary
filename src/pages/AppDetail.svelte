@@ -31,6 +31,6 @@
       </li>
     {/each}
   </ul>
-  {:else}
-  <NotFoundPage pageName = {params.app} itemType = "application"/>
+{:else}
+  <NotFoundPage pageName={params.app} itemType="application" />
 {/if}
