@@ -1,5 +1,6 @@
 <script>
-  import NotFoundPage from "../components/NotFoundPage.svelte";
+  import NotFound from "../components/NotFoundPage.svelte";
+
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
@@ -32,5 +33,5 @@
     {/each}
   </ul>
 {:else}
-  <NotFoundPage pageName={params.app} itemType="application" />
+  <NotFound pageName={params.app} itemType="application" />
 {/if}
