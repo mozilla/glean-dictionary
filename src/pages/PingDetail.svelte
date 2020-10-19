@@ -28,7 +28,13 @@
     <tr>
       <td>Related Bugs</td>
       <td>
-        {#each ping.bugs as bug}<a class="mr-2" href={bug}>{bug}</a>{/each}
+        {#each ping.bugs as bug}
+          {#if bug > 1}
+            <a
+              class="mr-2"
+              href={`https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}>{bug}</a>
+          {:else}<a class="mr-2" href={bug}>{bug}</a>{/if}
+        {/each}
       </td>
     </tr>
     <tr>
