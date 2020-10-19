@@ -28,14 +28,14 @@
     <tr>
       <td>Related Bugs</td>
       <td>
-        {#each ping.bugs as bug}<a class="mr-2" href={bug}>{bug}</a>{/each}
+        {#each ping.bugs as bug}<a class="mr-2" target="_blank" href={bug}>{bug}</a>{/each}
       </td>
     </tr>
     <tr>
       <td>Reviews Data</td>
       <td>
         {#each ping.data_reviews as review}
-          <a class="mr-2" href={review}>{review}</a>
+          <a class="mr-2" target="_blank" href={review}>{review}</a>
         {/each}
       </td>
     </tr>
