@@ -63,17 +63,18 @@
     {/each}
   </ul>
   <h2>Metrics</h2>
-  {#if app.metrics.length}
-    <FilterInput onChangeText={filterMetrics} />
-  {:else}
+  {#if !app.metrics.length}
     <p>Currently, there are no metrics available for {app.name}</p>
+  {:else}
+    <FilterInput onChangeText={filterMetrics} />
+    <ul>
+      {#each filteredMetrics as metric}
+        <li>
+          <a
+            href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
+          <i>{metric.description}</i>
+        </li>
+      {/each}
+    </ul>
   {/if}
-  <ul>
-    {#each filteredMetrics as metric}
-      <li>
-        <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-        <i>{metric.description}</i>
-      </li>
-    {/each}
-  </ul>
 {/if}
