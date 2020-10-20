@@ -1,7 +1,7 @@
 <script>
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { fetchJSON, getTableData } from "../state/api";
-  
+
   import NotFound from "../components/NotFound.svelte";
 
   export let params;

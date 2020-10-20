@@ -1,6 +1,6 @@
 <script>
   import { getPingData } from "../state/api";
-  
+
   import NotFound from "../components/NotFound.svelte";
 
   export let params;
