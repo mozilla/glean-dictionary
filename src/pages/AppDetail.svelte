@@ -3,6 +3,7 @@
   import Pill from "../components/Pill.svelte";
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
+  import AppAlert from "../components/AppAlert.svelte";
 
   export let params;
   const URL = `data/${params.app}/index.json`;
@@ -49,7 +50,11 @@
       <td><code>{app.app_id}</code></td>
     </tr>
   </table>
-
+  {#if app.prototype}
+    <AppAlert
+      message="The {params.app} application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
+      bgColor="#808895" />
+  {/if}
   <h2>Pings</h2>
   <ul>
     {#each app.pings as ping}
@@ -68,7 +73,7 @@
         <i>{metric.description}</i>
       </li>
     {:else}
-      <p>Your search didn't match any metric.</p>    
+      <p>Your search didn't match any metric.</p>
     {/each}
   </ul>
 {/if}
