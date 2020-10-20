@@ -67,6 +67,8 @@
         <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
         <i>{metric.description}</i>
       </li>
+    {:else}
+      <p>Your search didn't match any metric.</p>    
     {/each}
   </ul>
 {/if}
