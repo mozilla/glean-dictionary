@@ -16,27 +16,32 @@
   let links = [];
 
   afterUpdate(() => {
-    const { app, ping, metric, bigquery } = params;
+    const { app, ping, metric, table } = params;
 
-    links = [{ url: "/", name: "apps" }];
-
-    let link = app && { url: `/apps/${app}/`, name: app };
-    links.push(link);
-
-    link =
-      (ping && { url: `/apps/${app}/pings/${ping}/`, name: ping }) ||
-      (metric && { url: `/apps/${app}/metrics/${metric}/`, name: metric });
-    links.push(link);
-
-    link = ping &&
-      bigquery && {
-        url: `/apps/${app}/tables/${ping}/bigquery`,
-        name: bigquery,
-      };
-    links.push(link);
-
-    // remove unwanted values
-    links = links.filter(Boolean);
+    links = [
+      ...(app
+        ? [
+            { url: "/", name: "apps" },
+            { url: `/apps/${app}/`, name: app },
+          ]
+        : []),
+      ...(ping ? [{ url: `/apps/${app}/pings/${ping}/`, name: ping }] : []),
+      ...(metric
+        ? [{ url: `/apps/${app}/metrics/${metric}/`, name: metric }]
+        : []),
+      ...(table
+        ? [
+            {
+              url: `/apps/${app}/pings/${table}/`,
+              name: table,
+            },
+            {
+              url: `/apps/${app}/tables/${table}/`,
+              name: `${table} table`,
+            },
+          ]
+        : []),
+    ].filter(Boolean);
   });
 
   function setComponent(c) {
@@ -47,11 +52,10 @@
   }
 
   page("/", setComponent(AppList));
-  page("/apps/:app/tables/:ping/:bigquery", setComponent(TableDetail));
+  page("/apps/:app/tables/:table", setComponent(TableDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
   page("/apps/:app", setComponent(AppDetail));
-  page("*", setComponent(Breadcrumb));
   page({ hashbang: true });
 </script>
 
@@ -69,8 +73,8 @@
       <i>Prototype</i>
     </a>
   </div>
-  <Breadcrumb {links} />
 </nav>
+<Breadcrumb {links} />
 
 <div class="container py-4 mx-auto">
   <svelte:component this={component} bind:params />
