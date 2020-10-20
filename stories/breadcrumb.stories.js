@@ -23,7 +23,7 @@ const [AppsLinks, AppDetailsLinks, PingsLinks, MetricsLinks, TableLinks] = [
     { url: "/", name: "apps" },
     { url: "/apps/fenix/", name: "fenix" },
     { url: "/apps/fenix/pings/activation", name: "activation" },
-    { url: "/apps/fenix/tables/activation/bigquery", name: "bigquery" },
+    { url: "/apps/fenix/tables/activation/", name: "activation table" },
   ],
 ];
 
