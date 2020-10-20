@@ -66,12 +66,21 @@
   </ul>
   <h2>Metrics</h2>
   <FilterInput onChangeText={filterMetrics} />
-  <ul>
-    {#each filteredMetrics as metric}
-      <li>
-        <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-        <i>{metric.description}</i>
-      </li>
-    {/each}
-  </ul>
+  {#if filteredMetrics.length > 0}
+    <ul>
+      {#each filteredMetrics as metric}
+        <li>
+          <a
+            href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
+          <i>{metric.description}</i>
+        </li>
+      {/each}
+    </ul>
+  {:else}
+    <div
+      class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3"
+      role="alert">
+      <p>Nothing matched your query. :)</p>
+    </div>
+  {/if}
 {/if}
