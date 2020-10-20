@@ -36,9 +36,12 @@
         {#if app.deprecated}
           <Pill message="Deprecated" bgColor="#4a5568" />
         {/if}
+        {#if app.prototype}
+          <Pill message="Prototype" bgColor="#808895" />
+        {/if}
       </p>
     {/if}
-    {:else}
-      <p>Your search didn't match any metric.</p>
+  {:else}
+    <p>Your search didn't match any application.</p>
   {/each}
 {/if}
