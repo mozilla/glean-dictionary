@@ -38,5 +38,7 @@
         {/if}
       </p>
     {/if}
+    {:else}
+      <p>Your search didn't match any metric.</p>
   {/each}
 {/if}
