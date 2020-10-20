@@ -51,7 +51,7 @@
   </table>
 
   <h2>Pings</h2>
-  {#if app.pings.length === 0}
+  {#if !app.pings.length}
     <p>Currently, there are no pings available for {app.name}</p>
   {/if}
   <ul>
@@ -63,10 +63,10 @@
     {/each}
   </ul>
   <h2>Metrics</h2>
-  {#if app.metrics.length === 0}
-    <p>Currently, there are no metrics available for {app.name}</p>
-  {:else}
+  {#if app.metrics.length}
     <FilterInput onChangeText={filterMetrics} />
+  {:else}
+    <p>Currently, there are no metrics available for {app.name}</p>
   {/if}
   <ul>
     {#each filteredMetrics as metric}
