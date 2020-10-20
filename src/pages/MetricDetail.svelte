@@ -71,12 +71,12 @@
     <tr>
       <td>Relevant Bugs</td>
       <td>
-        {#each metric.bugs as bug, i}
+        {#each metric.bugs as bug}
           <a
             href={typeof bug !== 'number' ? bug : `https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}
             title={bug}
             target="_blank">
-            {i + 1}
+            {typeof bug !== 'number' ? bug : `https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}
           </a>
         {/each}
       </td>
