@@ -44,3 +44,8 @@ run:
 ```bash
 npm run storybook
 ```
+
+## Contributing
+
+For more information on contributing, see [CONTRIBUTING.md](./CONTRIBUTING.md)
+in the root of this repository.
