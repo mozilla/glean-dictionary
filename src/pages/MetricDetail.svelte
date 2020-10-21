@@ -71,10 +71,13 @@
     <tr>
       <td>Relevant Bugs</td>
       <td>
-        {#each metric.bugs as bug, i}
-          {#if bug.indexOf('http') > -1}
-            <a href={bug} title={bug} target="_blank"> {i + 1} </a>
-          {:else}<span>{bug}</span>{/if}
+        {#each metric.bugs as bug}
+          <a
+            href={typeof bug !== 'number' ? bug : `https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}
+            title={bug}
+            target="_blank">
+            {typeof bug !== 'number' ? bug : `https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}
+          </a>
         {/each}
       </td>
     </tr>
