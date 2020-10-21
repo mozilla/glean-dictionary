@@ -4,6 +4,7 @@
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
   import AppAlert from "../components/AppAlert.svelte";
+  import NotFound from "../components/NotFound.svelte";
 
   export let params;
   const URL = `data/${params.app}/index.json`;
@@ -39,8 +40,8 @@
   }
 </style>
 
-<h1>{params.app}</h1>
 {#if app}
+  <h1>{params.app}</h1>
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}
@@ -81,4 +82,6 @@
       </li>
     {/each}
   </ul>
+{:else}
+  <NotFound pageName={params.app} itemType="application" />
 {/if}

@@ -1,6 +1,8 @@
 <script>
   import { getMetricData } from "../state/api";
 
+  import NotFound from "../components/NotFound.svelte";
+
   export let params;
 
   const metricDataPromise = getMetricData(params.app, params.metric);
@@ -171,4 +173,6 @@
       <td>{metric.version || 0}</td>
     </tr>
   </table>
+{:catch}
+  <NotFound pageName={params.metric} itemType="metric" />
 {/await}
