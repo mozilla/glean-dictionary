@@ -21,14 +21,16 @@ repo_data = requests.get(REPO_URL).json()
 
 # filter out repos that are just libraries, not applications
 repos = list(
-    filter(lambda r: "library_names" not in r and r["app_id"] != "glean", repo_data)
+    filter(
+        lambda r: "library_names" not in r and r["app_id"] != "glean", repo_data)
 )
 
 # Write out a list of apps (for the landing page)
 open(os.path.join(OUTPUT_DIRECTORY, "apps.json"), "w").write(
     json.dumps(
         [
-            {k: repo[k] for k in ["app_id", "deprecated", "description", "name", "url"]}
+            {k: repo[k]
+                for k in ["app_id", "deprecated", "description", "name", "url", "prototype"]}
             for repo in repos
         ]
     )
@@ -45,11 +47,42 @@ for repo in list(repos):
         os.makedirs(directory, exist_ok=True)
 
     app_data = dict(repo, pings=[], metrics=[])
+
+    # metrics data
+    metrics_data = requests.get(METRICS_URL_TEMPLATE.format(app_name)).json()
+    metric_pings = dict(data=[])
+    for (metric_name, metric_data) in metrics_data.items():
+
+        # metrics with associated pings
+        metric_pings["data"].append({
+            "name": metric_name,
+            "description": metric_data["history"][-1]["description"],
+            "pings": metric_data["history"][0]["send_in_pings"]
+        })
+
+        app_data["metrics"].append(
+            {
+                "name": metric_name,
+                "description": metric_data["history"][-1]["description"],
+            }
+        )
+        open(os.path.join(app_metrics_dir, f"{metric_name}.json"), "w").write(
+            json.dumps(
+                dict(
+                    metric_data["history"][-1],
+                    name=metric_name,
+                    history=metric_data["history"],
+                )
+            )
+        )
+
     ping_data = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
     for (ping_name, ping_data) in ping_data.items():
         app_data["pings"].append(
-            {"name": ping_name, "description": ping_data["history"][-1]["description"]}
+            {"name": ping_name,
+                "description": ping_data["history"][-1]["description"]}
         )
+
         # write ping description
         open(os.path.join(app_ping_dir, f"{ping_name}.json"), "w").write(
             json.dumps(
@@ -57,6 +90,7 @@ for repo in list(repos):
                     ping_data["history"][-1],
                     name=ping_name,
                     history=ping_data["history"],
+                    metrics=[metric for metric in metric_pings["data"] if ping_name in metric['pings']]
                 )
             )
         )
@@ -83,25 +117,6 @@ for repo in list(repos):
                     live_table=live_ping_table_name,
                     name=ping_name,
                     stable_table=stable_ping_table_name,
-                )
-            )
-        )
-
-    # metrics data
-    metrics_data = requests.get(METRICS_URL_TEMPLATE.format(app_name)).json()
-    for (metric_name, metric_data) in metrics_data.items():
-        app_data["metrics"].append(
-            {
-                "name": metric_name,
-                "description": metric_data["history"][-1]["description"],
-            }
-        )
-        open(os.path.join(app_metrics_dir, f"{metric_name}.json"), "w").write(
-            json.dumps(
-                dict(
-                    metric_data["history"][-1],
-                    name=metric_name,
-                    history=metric_data["history"],
                 )
             )
         )
