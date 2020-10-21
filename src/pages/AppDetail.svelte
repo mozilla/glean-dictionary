@@ -40,8 +40,8 @@
   }
 </style>
 
-<h1>{params.app}</h1>
 {#if app}
+  <h1>{params.app}</h1>
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}
