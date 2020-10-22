@@ -5,8 +5,6 @@ import os
 
 import requests
 import stringcase
-from mozilla_schema_generator.glean_ping import GleanPing
-
 
 PROBE_INFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org"
 REPO_URL = PROBE_INFO_BASE_URL + "/glean/repositories"
@@ -20,17 +18,16 @@ OUTPUT_DIRECTORY = os.path.join("public", "data")
 repo_data = requests.get(REPO_URL).json()
 
 # filter out repos that are just libraries, not applications
-repos = list(
-    filter(
-        lambda r: "library_names" not in r and r["app_id"] != "glean", repo_data)
-)
+repos = list(filter(lambda r: "library_names" not in r and r["app_id"] != "glean", repo_data))
 
 # Write out a list of apps (for the landing page)
 open(os.path.join(OUTPUT_DIRECTORY, "apps.json"), "w").write(
     json.dumps(
         [
-            {k: repo[k]
-                for k in ["app_id", "deprecated", "description", "name", "url", "prototype"]}
+            {
+                k: repo[k]
+                for k in ["app_id", "deprecated", "description", "name", "url", "prototype"]
+            }
             for repo in repos
         ]
     )
@@ -54,11 +51,13 @@ for repo in list(repos):
     for (metric_name, metric_data) in metrics_data.items():
 
         # metrics with associated pings
-        metric_pings["data"].append({
-            "name": metric_name,
-            "description": metric_data["history"][-1]["description"],
-            "pings": metric_data["history"][0]["send_in_pings"]
-        })
+        metric_pings["data"].append(
+            {
+                "name": metric_name,
+                "description": metric_data["history"][-1]["description"],
+                "pings": metric_data["history"][0]["send_in_pings"],
+            }
+        )
 
         app_data["metrics"].append(
             {
@@ -79,8 +78,7 @@ for repo in list(repos):
     ping_data = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
     for (ping_name, ping_data) in ping_data.items():
         app_data["pings"].append(
-            {"name": ping_name,
-                "description": ping_data["history"][-1]["description"]}
+            {"name": ping_name, "description": ping_data["history"][-1]["description"]}
         )
 
         # write ping description
@@ -90,7 +88,9 @@ for repo in list(repos):
                     ping_data["history"][-1],
                     name=ping_name,
                     history=ping_data["history"],
-                    metrics=[metric for metric in metric_pings["data"] if ping_name in metric['pings']]
+                    metrics=[
+                        metric for metric in metric_pings["data"] if ping_name in metric["pings"]
+                    ],
                 )
             )
         )
@@ -102,11 +102,11 @@ for repo in list(repos):
         live_ping_table_name = f"{app_id_snakecase}_live_v1.{ping_name_snakecase}"
         bq_path = f"{app_id}/{ping_name}/{ping_name}.1.bq"
         bq_definition = (
-            "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"
+            "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"  # noqa
             + bq_path
         )
         bq_definition_raw_json = (
-            "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"
+            "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"  # noqa
             + bq_path
         )
         open(os.path.join(app_table_dir, f"{ping_name}.json"), "w").write(
