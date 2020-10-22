@@ -1,5 +1,5 @@
-import FilterableList from "./FilterableList.svelte";
 import { withKnobs, array } from "@storybook/addon-knobs";
+import FilterableList from "./FilterableList.svelte";
 
 const listItems = ["foo", "bar", "foobar", "lorem", "ipsum"];
 

@@ -1,8 +1,9 @@
 <script>
   import FilterInput from "../src/components/FilterInput.svelte";
-  export let listItems;
 
+  export let listItems;
   let filteredItems = listItems;
+
   function filterList(filterText = "") {
     filteredItems = listItems.filter((item) => item.includes(filterText));
   }

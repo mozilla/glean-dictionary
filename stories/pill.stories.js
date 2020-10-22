@@ -1,5 +1,5 @@
-import Pill from "../src/components/Pill.svelte";
 import { withKnobs, text, color } from "@storybook/addon-knobs";
+import Pill from "../src/components/Pill.svelte";
 
 export default {
   title: "Pill",
