@@ -62,26 +62,34 @@
       bgColor="#808895" />
   {/if}
   <h2>Pings</h2>
-  <FilterInput onChangeText={filterPings} />
-  <ul>
-    {#each filteredPings as ping}
-      <li>
-        <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
-        <i>{ping.description}</i>
-      </li>
-    {/each}
-  </ul>
-
+  {#if !app.pings.length}
+    <p>Currently, there are no pings available for {app.name}</p>
+  {:else}
+    <FilterInput onChangeText={filterPings} />
+    <ul>
+      {#each filteredPings as ping}
+        <li>
+          <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
+          <i>{ping.description}</i>
+        </li>
+      {/each}
+    </ul>
+  {/if}
   <h2>Metrics</h2>
-  <FilterInput onChangeText={filterMetrics} />
-  <ul>
-    {#each filteredMetrics as metric}
-      <li>
-        <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-        <i>{metric.description}</i>
-      </li>
-    {/each}
-  </ul>
+  {#if !app.metrics.length}
+    <p>Currently, there are no metrics available for {app.name}</p>
+  {:else}
+    <FilterInput onChangeText={filterMetrics} />
+    <ul>
+      {#each filteredMetrics as metric}
+        <li>
+          <a
+            href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
+          <i>{metric.description}</i>
+        </li>
+      {/each}
+    </ul>
+  {/if}
 {:else}
   <NotFound pageName={params.app} itemType="application" />
 {/if}
