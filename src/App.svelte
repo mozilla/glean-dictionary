@@ -41,7 +41,7 @@
             },
           ]
         : []),
-    ].filter(Boolean);
+    ];
   });
 
   function setComponent(c) {
