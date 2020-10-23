@@ -69,11 +69,12 @@
     <FilterInput onChangeText={filterPings} />
     <ul>
       {#each filteredPings as ping}
-        <PingDescription
-          app={params.app}
-          name={ping.name}
-          description={ping.description}
-        />
+        <li>
+          <PingDescription
+            app={params.app}
+            name={ping.name}
+            description={ping.description} />
+        </li>
       {/each}
     </ul>
   {/if}
