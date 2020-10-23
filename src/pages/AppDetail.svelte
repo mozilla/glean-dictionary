@@ -4,6 +4,7 @@
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
   import AppAlert from "../components/AppAlert.svelte";
+  import PingDescription from "../components/PingDescription.svelte";
   import NotFound from "../components/NotFound.svelte";
 
   export let params;
@@ -68,10 +69,11 @@
     <FilterInput onChangeText={filterPings} />
     <ul>
       {#each filteredPings as ping}
-        <li>
-          <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
-          <i>{ping.description}</i>
-        </li>
+        <PingDescription
+          app={params.app}
+          name={ping.name}
+          description={ping.description}
+        />
       {/each}
     </ul>
   {/if}
