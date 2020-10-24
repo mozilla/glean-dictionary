@@ -3,7 +3,7 @@
     let result = [];
     let localData = array.slice();
     for (let i = totalPages; i > 0; i -= 1) {
-      result.push(localData.splice(0, Math.ceil(localData.length / i)));
+      result.push(localData.splice(0, Math.max(Math.floor(localData.length / i), 100)));
     }
     return result;
   };
@@ -13,9 +13,9 @@
     let total = data.length;
     let currentPage = page;
     let lastPage = Math.ceil(total / perPage);
+    let pages = paginateData(data, lastPage);
     let from = page + perPage * (page - 1);
     let to = page * perPage;
-    let pages = paginateData(data, lastPage);
     return {
       total,
       currentPage,
@@ -27,7 +27,7 @@
   };
 
   export const goToPage = (page, pages) => {
-    let from = 0;
+    let from = 1;
     for (let i = 0; i < page - 1; i += 1) {
       from += pages[i].length;
     }
