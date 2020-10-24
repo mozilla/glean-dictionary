@@ -31,7 +31,7 @@
     for (let i = 0; i < page - 1; i += 1) {
       from += pages[i].length;
     }
-    let to = from + pages[page - 1].length;
+    let to = from + pages[page - 1].length - 1;
     return {
       currentPage: page,
       from,
