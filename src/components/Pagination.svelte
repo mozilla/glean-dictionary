@@ -3,7 +3,9 @@
     let result = [];
     let localData = array.slice();
     for (let i = totalPages; i > 0; i -= 1) {
-      result.push(localData.splice(0, Math.max(Math.floor(localData.length / i), 100)));
+      result.push(
+        localData.splice(0, Math.max(Math.floor(localData.length / i), 100))
+      );
     }
     return result;
   };
