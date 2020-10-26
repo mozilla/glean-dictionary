@@ -6,7 +6,7 @@
   import AppAlert from "../components/AppAlert.svelte";
   import NotFound from "../components/NotFound.svelte";
   import EmailAddress from "../components/EmailAddress.svelte";
-  
+
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
