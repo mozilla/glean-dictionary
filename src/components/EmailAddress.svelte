@@ -13,7 +13,7 @@
   <td>Notification Email{emails.length > 1 ? 's' : ''}</td>
   <td>
     {#each emails as email}
-      <a href="mailto:{email}" target="_blank" {...$$props}>{email}</a>
+      <a href="mailto:{email}" target="_blank">{email}</a>
       <br />
     {/each}
   </td>
