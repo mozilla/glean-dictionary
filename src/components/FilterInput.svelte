@@ -2,7 +2,7 @@
   import throttle from "just-throttle";
 
   export let onChangeText;
-  let filterText = "";
+  export let filterText;
 
   const changeText = () => {
     onChangeText(filterText);
