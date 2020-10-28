@@ -2,7 +2,7 @@
   import { getPingData } from "../state/api";
 
   import NotFound from "../components/NotFound.svelte";
-  import EmailAddress from "../components/EmailAddress.svelte";
+  import EmailAddresses from "../components/EmailAddresses.svelte";
 
   export let params;
   const pingDataPromise = getPingData(params.app, params.ping);
@@ -54,7 +54,14 @@
       <td>Includes Client Identifier</td>
       <td>{ping.client_id ? 'Yes' : 'No'}</td>
     </tr>
-    <EmailAddress emails={ping.notification_emails} />
+    <tr>
+      <td>
+        Notification Email{ping.notification_emails.length > 1 ? 's' : ''}
+      </td>
+      <td>
+        <EmailAddresses emails={ping.notification_emails} />
+      </td>
+    </tr>
   </table>
 
   <h2>Metrics</h2>
