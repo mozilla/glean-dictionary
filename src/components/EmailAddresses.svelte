@@ -3,6 +3,5 @@
 </script>
 
 {#each emails as email}
-  <span class="block">
-    <a href="mailto:{email}" target="_blank">{email}</a></span>
+  <span class="block"> <a href="mailto:{email}">{email}</a></span>
 {/each}
