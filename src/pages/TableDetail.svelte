@@ -2,8 +2,10 @@
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { fetchJSON, getTableData } from "../state/api";
 
+  import NotFound from "../components/NotFound.svelte";
+
   export let params;
-  const pingDataPromise = getTableData(params.app, params.ping).then(
+  const pingDataPromise = getTableData(params.app, params.table).then(
     async (table) => {
       return {
         table,
@@ -45,6 +47,7 @@
       <td><code>{data.table.stable_table}</code></td>
     </tr>
   </table>
-
   <SchemaViewer app={params.app} nodes={data.schema} />
+{:catch}
+  <NotFound pageName={params.app} itemType="table" />
 {/await}

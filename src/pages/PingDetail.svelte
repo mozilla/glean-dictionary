@@ -1,6 +1,9 @@
 <script>
   import { getPingData } from "../state/api";
 
+  import NotFound from "../components/NotFound.svelte";
+  import EmailAddresses from "../components/EmailAddresses.svelte";
+
   export let params;
   const pingDataPromise = getPingData(params.app, params.ping);
 </script>
@@ -18,7 +21,9 @@
 </style>
 
 {#await pingDataPromise then ping}
-  <p><a href={`/apps/${params.app}/tables/${ping.name}`}>BigQuery table</a></p>
+  <p>
+    <a href={`/apps/${params.app}/tables/${params.ping}`}>BigQuery table</a>
+  </p>
   <h1>{ping.name}</h1>
   <table class="table-header">
     <tr>
@@ -28,7 +33,13 @@
     <tr>
       <td>Related Bugs</td>
       <td>
-        {#each ping.bugs as bug}<a class="mr-2" href={bug}>{bug}</a>{/each}
+        {#each ping.bugs as bug}
+          {#if typeof bug === 'number'}
+            <a
+              class="mr-2"
+              href={`https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}>{bug}</a>
+          {:else}<a class="mr-2" href={bug}>{bug}</a>{/if}
+        {/each}
       </td>
     </tr>
     <tr>
@@ -48,7 +59,7 @@
         Notification Email{ping.notification_emails.length > 1 ? 's' : ''}
       </td>
       <td>
-        {#each ping.notification_emails as email}<span>{email}</span>{/each}
+        <EmailAddresses emails={ping.notification_emails} />
       </td>
     </tr>
   </table>
@@ -62,4 +73,6 @@
       </li>
     {/each}
   </ul>
+{:catch}
+  <NotFound pageName={params.ping} itemType="ping" />
 {/await}
