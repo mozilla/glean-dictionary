@@ -5,6 +5,7 @@
   import FilterInput from "../components/FilterInput.svelte";
   import AppAlert from "../components/AppAlert.svelte";
   import NotFound from "../components/NotFound.svelte";
+  import EmailAddresses from "../components/EmailAddresses.svelte";
 
   export let params;
   const URL = `data/${params.app}/index.json`;
@@ -54,6 +55,12 @@
     <tr>
       <td>Application id</td>
       <td><code>{app.app_id}</code></td>
+    </tr>
+    <tr>
+      <td>Notification Email{app.notification_emails.length > 1 ? 's' : ''}</td>
+      <td>
+        <EmailAddresses emails={app.notification_emails} />
+      </td>
     </tr>
   </table>
   {#if app.prototype}
