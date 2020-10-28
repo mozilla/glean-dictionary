@@ -1,6 +1,7 @@
 <script>
   import { getMetricData } from "../state/api";
 
+  import MarkDescription from "../components/MarkDescription.svelte";
   import NotFound from "../components/NotFound.svelte";
 
   export let params;
@@ -59,7 +60,9 @@
 
 {#await metricDataPromise then metric}
   <h1>{metric.name}</h1>
-  <p>{metric.description}</p>
+  <p>
+    <MarkDescription description={metric.description} />
+  </p>
   <p>
     <a
       href={getMetricDocumentationURI(metric.type)}

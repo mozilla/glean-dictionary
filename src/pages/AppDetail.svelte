@@ -4,7 +4,7 @@
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
   import AppAlert from "../components/AppAlert.svelte";
-  import PingDescription from "../components/PingDescription.svelte";
+  import MarkDescription from "../components/MarkDescription.svelte";
   import NotFound from "../components/NotFound.svelte";
 
   export let params;
@@ -70,10 +70,10 @@
     <ul>
       {#each filteredPings as ping}
         <li>
-          <PingDescription
-            app={params.app}
-            name={ping.name}
-            description={ping.description} />
+          <a href={`/apps/${app.name}/pings/${ping.name}`}>{ping.name}</a>
+          <i>
+            <MarkDescription description={ping.description} />
+          </i>
         </li>
       {/each}
     </ul>
@@ -88,7 +88,9 @@
         <li>
           <a
             href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-          <i>{metric.description}</i>
+          <i>
+            <MarkDescription description={metric.description} />
+          </i>
         </li>
       {/each}
     </ul>

@@ -1,6 +1,7 @@
 <script>
   import { getPingData } from "../state/api";
 
+  import MarkDescription from "../components/MarkDescription.svelte";
   import NotFound from "../components/NotFound.svelte";
 
   export let params;
@@ -27,7 +28,9 @@
   <table class="table-header">
     <tr>
       <td>Description</td>
-      <td>{ping.description}</td>
+      <td>
+        <MarkDescription description={ping.description} />
+      </td>
     </tr>
     <tr>
       <td>Related Bugs</td>
@@ -70,7 +73,9 @@
     {#each ping.metrics as metric}
       <li>
         <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-        <i>{metric.description}</i>
+        <i>
+          <MarkDescription description={metric.description} />
+        </i>
       </li>
     {/each}
   </ul>
