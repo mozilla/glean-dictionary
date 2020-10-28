@@ -1,106 +1,44 @@
 <script>
   import { onMount } from "svelte";
+  import FilterInput from "../components/FilterInput.svelte";
   import Pill from "../components/Pill.svelte";
   import { fetchJSON } from "../state/api";
-  import FilterInput from "../components/FilterInput.svelte";
-  import AppAlert from "../components/AppAlert.svelte";
-  import NotFound from "../components/NotFound.svelte";
-  import EmailAddresses from "../components/EmailAddresses.svelte";
-
-  export let params;
-  const URL = `data/${params.app}/index.json`;
-  let app;
-  let filteredMetrics;
-  let filteredPings;
-
+  const URL = "data/apps.json";
+  let apps;
+  let filteredApps;
   onMount(async () => {
-    app = await fetchJSON(URL);
-    filteredMetrics = app.metrics;
-    filteredPings = app.pings;
+    apps = await fetchJSON(URL);
+    apps.sort((a, b) => (a.name > b.name ? 1 : -1));
+    filteredApps = apps;
   });
-
-  function filterMetrics(filterText) {
-    filteredMetrics = app.metrics.filter((metric) =>
-      metric.name.includes(filterText)
-    );
+  function filterApps(filterText) {
+    filteredApps = apps.filter((appItem) => appItem.name.includes(filterText));
   }
-  function filterPings(filterText) {
-    filteredPings = app.pings.filter((ping) => ping.name.includes(filterText));
-  }
+  let showDeprecated = false;
 </script>
 
-<style>
-  .table-header {
-    @apply table-auto;
-    @apply my-4;
-  }
+<h2>Applications</h2>
 
-  .table-header td {
-    @apply border;
-    @apply p-2;
-  }
-</style>
-
-{#if app}
-  <h1>{params.app}</h1>
-  {#if app.deprecated}
-    <Pill message="Deprecated" bgColor="#4a5568" />
-  {/if}
-  <p class="mt-2">{app.description}</p>
-  <table class="table-header">
-    <tr>
-      <td>Source code Url</td>
-      <td><a href={app.url}>{app.url}</a></td>
-    </tr>
-    <tr>
-      <td>Application id</td>
-      <td><code>{app.app_id}</code></td>
-    </tr>
-    <tr>
-      <td>Notification Email{app.notification_emails.length > 1 ? 's' : ''}</td>
-      <td>
-        <EmailAddresses emails={app.notification_emails} />
-      </td>
-    </tr>
-  </table>
-  {#if app.prototype}
-    <AppAlert
-      message="The {params.app} application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
-      bgColor="#808895" />
-  {/if}
-  <h2>Pings</h2>
-  {#if !app.pings.length}
-    <p>Currently, there are no pings available for {app.name}</p>
+<label>
+  <input type="checkbox" bind:checked={showDeprecated} />
+  Show deprecated applications
+</label>
+{#if apps}
+  <FilterInput onChangeText={filterApps} />
+  {#each filteredApps as app}
+    {#if showDeprecated || !app.deprecated}
+      <p class="mb-2">
+        <a href="/apps/{app.name}">{app.name}</a>
+        {#if app.description}<i>{app.description}</i>{/if}
+        {#if app.deprecated}
+          <Pill message="Deprecated" bgColor="#4a5568" />
+        {/if}
+        {#if app.prototype}
+          <Pill message="Prototype" bgColor="#808895" />
+        {/if}
+      </p>
+    {/if}
   {:else}
-    <FilterInput onChangeText={filterPings} />
-    <ul>
-      {#each filteredPings as ping}
-        <li>
-          <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
-          <i>{ping.description}</i>
-        </li>
-      {:else}
-        <p>Your search didn't match any ping.</p>
-      {/each}
-    </ul>
-  {/if}
-  <h2>Metrics</h2>
-  {#if !app.metrics.length}
-    <p>Currently, there are no metrics available for {app.name}</p>
-  {:else}
-    <FilterInput onChangeText={filterMetrics} />
-    <ul>
-      {#each filteredMetrics as metric}
-        <li>
-          <a
-            href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-          <i>{metric.description}</i>
-        </li>
-      {:else}
-        <p>Your search didn't match any metric.</p>
-      {/each}
-    </ul>
-  {/if}
-{:else}
-  <NotFound pageName={params.app} itemType="application" />
+    <p>Your search didn't match any application.</p>
+  {/each}
 {/if}
