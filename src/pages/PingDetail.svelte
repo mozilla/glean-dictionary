@@ -1,7 +1,7 @@
 <script>
   import { getPingData } from "../state/api";
 
-  import MarkDescription from "../components/MarkDescription.svelte";
+  import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
 
   export let params;
@@ -29,7 +29,7 @@
     <tr>
       <td>Description</td>
       <td>
-        <MarkDescription description={ping.description} />
+        <Markdown>{ping.description}</Markdown>
       </td>
     </tr>
     <tr>
@@ -74,7 +74,7 @@
       <li>
         <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
         <i>
-          <MarkDescription description={metric.description} />
+          <Markdown>{metric.description}</Markdown>
         </i>
       </li>
     {/each}

@@ -1,7 +1,7 @@
 <script>
   import { getMetricData } from "../state/api";
 
-  import MarkDescription from "../components/MarkDescription.svelte";
+  import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
 
   export let params;
@@ -61,7 +61,7 @@
 {#await metricDataPromise then metric}
   <h1>{metric.name}</h1>
   <p>
-    <MarkDescription description={metric.description} />
+    <Markdown>{metric.description}</Markdown>
   </p>
   <p>
     <a
