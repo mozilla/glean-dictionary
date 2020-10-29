@@ -80,7 +80,7 @@
           <i>{ping.description}</i>
         </li>
       {:else}
-        <p>Your search didn't match any ping.</p>      
+        <p>Your search didn't match any ping.</p>
       {/each}
     </ul>
   {/if}
@@ -97,7 +97,7 @@
           <i>{metric.description}</i>
         </li>
       {:else}
-        <p>Your search didn't match any metric.</p>      
+        <p>Your search didn't match any metric.</p>
       {/each}
     </ul>
   {/if}
