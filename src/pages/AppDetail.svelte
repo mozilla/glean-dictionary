@@ -79,6 +79,8 @@
           <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
           <i>{ping.description}</i>
         </li>
+      {:else}
+        <p>Your search didn't match any ping.</p>
       {/each}
     </ul>
   {/if}
@@ -94,6 +96,8 @@
             href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
           <i>{metric.description}</i>
         </li>
+      {:else}
+        <p>Your search didn't match any metric.</p>
       {/each}
     </ul>
   {/if}
