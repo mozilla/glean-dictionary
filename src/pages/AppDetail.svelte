@@ -3,21 +3,29 @@
   import Pill from "../components/Pill.svelte";
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
+  import AppAlert from "../components/AppAlert.svelte";
+  import NotFound from "../components/NotFound.svelte";
+  import EmailAddresses from "../components/EmailAddresses.svelte";
 
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
   let filteredMetrics;
+  let filteredPings;
 
   onMount(async () => {
     app = await fetchJSON(URL);
     filteredMetrics = app.metrics;
+    filteredPings = app.pings;
   });
 
   function filterMetrics(filterText) {
     filteredMetrics = app.metrics.filter((metric) =>
       metric.name.includes(filterText)
     );
+  }
+  function filterPings(filterText) {
+    filteredPings = app.pings.filter((ping) => ping.name.includes(filterText));
   }
 </script>
 
@@ -33,8 +41,8 @@
   }
 </style>
 
-<h1>{params.app}</h1>
 {#if app}
+  <h1>{params.app}</h1>
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}
@@ -48,29 +56,51 @@
       <td>Application id</td>
       <td><code>{app.app_id}</code></td>
     </tr>
+    <tr>
+      <td>Notification Email{app.notification_emails.length > 1 ? 's' : ''}</td>
+      <td>
+        <EmailAddresses emails={app.notification_emails} />
+      </td>
+    </tr>
   </table>
-
+  {#if app.prototype}
+    <AppAlert
+      message="The {params.app} application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
+      bgColor="#808895" />
+  {/if}
   <h2>Pings</h2>
-  <ul>
-    {#each app.pings as ping}
-      <li>
-        <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
-        <i>{ping.description}</i>
-      </li>
-    {:else}
-      <p>Your search didn't match any ping.</p>
-    {/each}
-  </ul>
+  {#if !app.pings.length}
+    <p>Currently, there are no pings available for {app.name}</p>
+  {:else}
+    <FilterInput onChangeText={filterPings} />
+    <ul>
+      {#each filteredPings as ping}
+        <li>
+          <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
+          <i>{ping.description}</i>
+        </li>
+      {:else}
+        <p>Your search didn't match any ping.</p>      
+      {/each}
+    </ul>
+  {/if}
   <h2>Metrics</h2>
-  <FilterInput onChangeText={filterMetrics} />
-  <ul>
-    {#each filteredMetrics as metric}
-      <li>
-        <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-        <i>{metric.description}</i>
-      </li>
-    {:else}
-      <p>Your search didn't match any metric.</p>
-    {/each}
-  </ul>
+  {#if !app.metrics.length}
+    <p>Currently, there are no metrics available for {app.name}</p>
+  {:else}
+    <FilterInput onChangeText={filterMetrics} />
+    <ul>
+      {#each filteredMetrics as metric}
+        <li>
+          <a
+            href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
+          <i>{metric.description}</i>
+        </li>
+      {:else}
+        <p>Your search didn't match any metric.</p>      
+      {/each}
+    </ul>
+  {/if}
+{:else}
+  <NotFound pageName={params.app} itemType="application" />
 {/if}
