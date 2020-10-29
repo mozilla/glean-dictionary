@@ -3,14 +3,17 @@
   import FilterInput from "../components/FilterInput.svelte";
   import Pill from "../components/Pill.svelte";
   import { fetchJSON } from "../state/api";
+
   const URL = "data/apps.json";
   let apps;
   let filteredApps;
+
   onMount(async () => {
     apps = await fetchJSON(URL);
     apps.sort((a, b) => (a.name > b.name ? 1 : -1));
     filteredApps = apps;
   });
+
   function filterApps(filterText) {
     filteredApps = apps.filter((appItem) => appItem.name.includes(filterText));
   }
@@ -32,9 +35,6 @@
         {#if app.description}<i>{app.description}</i>{/if}
         {#if app.deprecated}
           <Pill message="Deprecated" bgColor="#4a5568" />
-        {/if}
-        {#if app.prototype}
-          <Pill message="Prototype" bgColor="#808895" />
         {/if}
       </p>
     {/if}
