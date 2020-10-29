@@ -7,7 +7,6 @@
   import NotFound from "../components/NotFound.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
 
-
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
@@ -81,7 +80,7 @@
           <i>{ping.description}</i>
         </li>
       {:else}
-        <p>Your search didn't match any ping.</p>      
+        <p>Your search didn't match any ping.</p>
       {/each}
     </ul>
   {/if}
@@ -98,9 +97,9 @@
             href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
           <i>{metric.description}</i>
         </li>
-    {:else}
-      <p>Your search didn't match any metric.</p>
-    {/each}      
+      {:else}
+        <p>Your search didn't match any metric.</p>
+      {/each}
     </ul>
   {/if}
 {:else}
