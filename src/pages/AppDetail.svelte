@@ -4,6 +4,7 @@
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
   import AppAlert from "../components/AppAlert.svelte";
+  import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
 
@@ -76,8 +77,10 @@
     <ul>
       {#each filteredPings as ping}
         <li>
-          <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
-          <i>{ping.description}</i>
+          <a href={`/apps/${app.name}/pings/${ping.name}`}>{ping.name}</a>
+          <i>
+            <Markdown>{ping.description}</Markdown>
+          </i>
         </li>
       {:else}
         <p>Your search didn't match any ping.</p>
@@ -94,7 +97,9 @@
         <li>
           <a
             href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-          <i>{metric.description}</i>
+          <i>
+            <Markdown>{metric.description}</Markdown>
+          </i>
         </li>
       {:else}
         <p>Your search didn't match any metric.</p>
