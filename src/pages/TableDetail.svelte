@@ -5,7 +5,7 @@
   import NotFound from "../components/NotFound.svelte";
 
   export let params;
-  const pingDataPromise = getTableData(params.app, params.ping).then(
+  const pingDataPromise = getTableData(params.app, params.table).then(
     async (table) => {
       return {
         table,

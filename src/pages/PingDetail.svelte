@@ -1,7 +1,9 @@
 <script>
   import { getPingData } from "../state/api";
 
+  import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
+  import EmailAddresses from "../components/EmailAddresses.svelte";
 
   export let params;
   const pingDataPromise = getPingData(params.app, params.ping);
@@ -20,12 +22,16 @@
 </style>
 
 {#await pingDataPromise then ping}
-  <p><a href={`/apps/${params.app}/tables/${ping.name}`}>BigQuery table</a></p>
+  <p>
+    <a href={`/apps/${params.app}/tables/${params.ping}`}>BigQuery table</a>
+  </p>
   <h1>{ping.name}</h1>
   <table class="table-header">
     <tr>
       <td>Description</td>
-      <td>{ping.description}</td>
+      <td>
+        <Markdown>{ping.description}</Markdown>
+      </td>
     </tr>
     <tr>
       <td>Related Bugs</td>
@@ -56,9 +62,7 @@
         Notification Email{ping.notification_emails.length > 1 ? 's' : ''}
       </td>
       <td>
-        {#each ping.notification_emails as email}
-          <span class="block">{email}</span>
-        {/each}
+        <EmailAddresses emails={ping.notification_emails} />
       </td>
     </tr>
   </table>
@@ -68,7 +72,9 @@
     {#each ping.metrics as metric}
       <li>
         <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-        <i>{metric.description}</i>
+        <i>
+          <Markdown>{metric.description}</Markdown>
+        </i>
       </li>
     {/each}
   </ul>

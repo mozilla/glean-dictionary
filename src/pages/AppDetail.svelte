@@ -4,45 +4,36 @@
   import { fetchJSON } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
   import AppAlert from "../components/AppAlert.svelte";
+  import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
   import Pagination, {
     makePages,
     goToPage,
   } from "../components/Pagination.svelte";
+  import EmailAddresses from "../components/EmailAddresses.svelte";
 
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
-  let to;
-  let from;
-  let total;
   let metrics = [];
-  let pages = [];
-  let paginationData;
-  let lastPage;
-  let currentPage = 1;
+  let paginationState = {
+    pages: [],
+    currentPage: 1,
+  };
   let filteredMetrics;
   let filteredPings;
 
   function loadPage(args) {
-    let tempPaginationData = goToPage(args.page, pages);
-    from = tempPaginationData.from;
-    to = tempPaginationData.to;
-    filteredMetrics = tempPaginationData.page;
-    currentPage = args.page;
+    let tempState = goToPage(args.page, paginationState.pages);
+    paginationState = Object.assign(paginationState, tempState);
+    filteredMetrics = tempState.page;
   }
 
   onMount(async () => {
     app = await fetchJSON(URL);
     metrics = app.metrics;
-    paginationData = makePages(currentPage, metrics);
-    pages = paginationData.pages;
-    to = paginationData.to;
-    from = paginationData.from;
-    total = paginationData.total;
-    lastPage = paginationData.lastPage;
-    currentPage = paginationData.currentPage;
-    filteredMetrics = paginationData.pages[currentPage - 1];
+    paginationState = makePages(paginationState.currentPage, metrics);
+    filteredMetrics = paginationState.pages[paginationState.currentPage - 1];
     filteredPings = app.pings;
   });
   function filterMetrics(filterText) {
@@ -81,6 +72,12 @@
       <td>Application id</td>
       <td><code>{app.app_id}</code></td>
     </tr>
+    <tr>
+      <td>Notification Email{app.notification_emails.length > 1 ? 's' : ''}</td>
+      <td>
+        <EmailAddresses emails={app.notification_emails} />
+      </td>
+    </tr>
   </table>
   {#if app.prototype}
     <AppAlert
@@ -88,16 +85,23 @@
       bgColor="#808895" />
   {/if}
   <h2>Pings</h2>
-  <FilterInput onChangeText={filterPings} />
-  <ul>
-    {#each filteredPings as ping}
-      <li>
-        <a href={`/apps/${params.app}/pings/${ping.name}`}>{ping.name}</a>
-        <i>{ping.description}</i>
-      </li>
-    {/each}
-  </ul>
-
+  {#if !app.pings.length}
+    <p>Currently, there are no pings available for {app.name}</p>
+  {:else}
+    <FilterInput onChangeText={filterPings} />
+    <ul>
+      {#each filteredPings as ping}
+        <li>
+          <a href={`/apps/${app.name}/pings/${ping.name}`}>{ping.name}</a>
+          <i>
+            <Markdown>{ping.description}</Markdown>
+          </i>
+        </li>
+      {:else}
+        <p>Your search didn't match any ping.</p>
+      {/each}
+    </ul>
+  {/if}
   <h2>Metrics</h2>
   <FilterInput onChangeText={filterMetrics} />
   <ul>
@@ -109,15 +113,30 @@
     {/each}
   </ul>
 
-  {#if total > 100}
-    <Pagination
-      {currentPage}
-      {from}
-      {lastPage}
-      {to}
-      {total}
-      on:changePage={(ev) => loadPage({ page: ev.detail })} />
+  {#if !app.metrics.length}
+    <p>Currently, there are no metrics available for {app.name}</p>
+  {:else}
+    <FilterInput onChangeText={filterMetrics} />
+    <ul>
+      {#each filteredMetrics as metric}
+        <li>
+          <a
+            href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
+          <i>
+            <Markdown>{metric.description}</Markdown>
+          </i>
+        </li>
+      {:else}
+        <p>Your search didn't match any metric.</p>
+      {/each}
+    </ul>
   {/if}
 {:else}
   <NotFound pageName={params.app} itemType="application" />
+{/if}
+
+{#if paginationState.total > 100}
+  <Pagination
+    {...paginationState}
+    on:changePage={(ev) => loadPage({ page: ev.detail })} />
 {/if}
