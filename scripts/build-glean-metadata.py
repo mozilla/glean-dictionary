@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from requests import HTTPError
 import json
 import os
 
@@ -10,9 +11,12 @@ PROBE_INFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org"
 REPO_URL = PROBE_INFO_BASE_URL + "/glean/repositories"
 PINGS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/pings"
 METRICS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/metrics"
-DEPENDENCIES_URL_TEMPLATE= PROBE_INFO_BASE_URL + "/glean/{}/dependencies"
+DEPENDENCIES_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/dependencies"
+
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 
+default_dependencies = ['glean']
+ignore_pings = {"all-pings", "all_pings", "default", "glean_ping_info", "glean_client_info"}
 
 # we get the repos ourselves instead of using GleanPing.get_repos()
 # to get all the metadata associated with the repo
@@ -76,7 +80,38 @@ for repo in list(repos):
             )
         )
 
-    ping_data = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
+    def get_dependencies():
+        try:
+            dependencies = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json() 
+
+        except HTTPError:
+            return default_dependencies
+
+        dependency_library_names = list(dependencies.keys()) 
+        repos_by_dependency_name = {}
+
+        for repo in repos:
+            for library_name in repo.get('library_names', []):
+                repos_by_dependency_name[library_name] = repo['name'] 
+
+        dependencies = []
+
+        for name in dependency_library_names:
+            if name in repos_by_dependency_name:
+                dependencies.append(repos_by_dependency_name[name])               
+
+        if len(dependencies) == 0:
+            return default_dependencies
+        
+        return dependencies 
+
+    app_ping = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
+    
+    for dependency in get_dependencies():
+        dependency_ping = requests.get(PINGS_URL_TEMPLATE.format(dependency)).json()        
+
+    ping_data = {**app_ping, **dependency_ping}    
+    
     for (ping_name, ping_data) in ping_data.items():
         app_data["pings"].append(
             {"name": ping_name, "description": ping_data["history"][-1]["description"]}
@@ -123,17 +158,3 @@ for repo in list(repos):
         )
 
     open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))
-
-dependencies_data = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json()
-
-dependency_library_names = list(dependencies_data.keys())
-repos_by_dependency_name = {}
-
-for dependency_repo in repo_data: 
-    for library_name in dependency_repo.get('library_names', []):
-        repos_by_dependency_name[library_name] = dependency_repo['name']
-
-dependencies_data = []
-for name in dependency_library_names:
-    if name in repos_by_dependency_name:
-        dependencies_data.append(repos_by_dependency_name[name])    
