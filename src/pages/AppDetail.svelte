@@ -40,8 +40,10 @@
     filteredMetrics = app.metrics.filter((metric) =>
       metric.name.includes(filterText)
     );
-    paginationState = makePages(paginationState.currentPage, filteredMetrics);
-    filteredMetrics = paginationState.pages[paginationState.currentPage - 1];
+    if (filteredMetrics.length > 0) {
+      paginationState = makePages(paginationState.currentPage, filteredMetrics);
+      filteredMetrics = paginationState.pages[paginationState.currentPage - 1];
+    }
   }
   function filterPings(filterText) {
     filteredPings = app.pings.filter((ping) => ping.name.includes(filterText));
