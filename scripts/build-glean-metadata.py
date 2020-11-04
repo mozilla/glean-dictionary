@@ -82,36 +82,36 @@ for repo in list(repos):
 
     def get_dependencies():
         try:
-            dependencies = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json() 
+            dependencies = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json()
 
         except HTTPError:
             return default_dependencies
 
-        dependency_library_names = list(dependencies.keys()) 
+        dependency_library_names = list(dependencies.keys())
         repos_by_dependency_name = {}
 
         for repo in repos:
             for library_name in repo.get('library_names', []):
-                repos_by_dependency_name[library_name] = repo['name'] 
+                repos_by_dependency_name[library_name] = repo['name']
 
         dependencies = []
 
         for name in dependency_library_names:
             if name in repos_by_dependency_name:
-                dependencies.append(repos_by_dependency_name[name])               
+                dependencies.append(repos_by_dependency_name[name])
 
         if len(dependencies) == 0:
             return default_dependencies
-        
-        return dependencies 
+
+        return dependencies
 
     app_ping = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
-    
-    for dependency in get_dependencies():
-        dependency_ping = requests.get(PINGS_URL_TEMPLATE.format(dependency)).json()        
 
-    ping_data = {**app_ping, **dependency_ping}    
-    
+    for dependency in get_dependencies():
+        dependency_ping = requests.get(PINGS_URL_TEMPLATE.format(dependency)).json()
+
+    ping_data = {**app_ping, **dependency_ping}
+
     for (ping_name, ping_data) in ping_data.items():
         app_data["pings"].append(
             {"name": ping_name, "description": ping_data["history"][-1]["description"]}
