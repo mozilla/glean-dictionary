@@ -40,6 +40,8 @@
     filteredMetrics = app.metrics.filter((metric) =>
       metric.name.includes(filterText)
     );
+    paginationState = makePages(paginationState.currentPage, filteredMetrics);
+    filteredMetrics = paginationState.pages[paginationState.currentPage - 1];
   }
   function filterPings(filterText) {
     filteredPings = app.pings.filter((ping) => ping.name.includes(filterText));
@@ -103,16 +105,6 @@
     </ul>
   {/if}
   <h2>Metrics</h2>
-  <FilterInput onChangeText={filterMetrics} />
-  <ul>
-    {#each filteredMetrics as metric}
-      <li>
-        <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-        <i>{metric.description}</i>
-      </li>
-    {/each}
-  </ul>
-
   {#if !app.metrics.length}
     <p>Currently, there are no metrics available for {app.name}</p>
   {:else}

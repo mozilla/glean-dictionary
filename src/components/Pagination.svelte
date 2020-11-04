@@ -1,21 +1,26 @@
 <script context="module">
-  export const paginateData = (array, totalPages) => {
+  let DEFAULT_ITEMS_PER_PAGE = 20;
+  export const paginateData = (
+    array,
+    totalPages,
+    perPage = DEFAULT_ITEMS_PER_PAGE
+  ) => {
     let result = [];
     let localData = array.slice();
     for (let i = totalPages; i > 0; i -= 1) {
       result.push(
-        localData.splice(0, Math.max(Math.floor(localData.length / i), 100))
+        localData.splice(0, Math.max(Math.floor(localData.length / i), perPage))
       );
     }
     return result;
   };
 
-  export const makePages = (page, data, perPage = 100) => {
+  export const makePages = (page, data, perPage = DEFAULT_ITEMS_PER_PAGE) => {
     if (data.length === 0) return [];
     let total = data.length;
     let currentPage = page;
     let lastPage = Math.ceil(total / perPage);
-    let pages = paginateData(data, lastPage);
+    let pages = paginateData(data, lastPage, perPage);
     let from = page + perPage * (page - 1);
     let to = page * perPage;
     return {
