@@ -14,6 +14,7 @@
   let component;
   let params;
   let links = [];
+  let queryString;
 
   afterUpdate(() => {
     const { app, ping, metric, table } = params;
@@ -51,6 +52,18 @@
     };
   }
 
+  function parseQuery(ctx, next) {
+    queryString = ctx.querystring;
+    queryString = queryString !== "" ? queryString.split("=")[1] : "";
+    next();
+  }
+
+  function updateURL({ detail: searchQuery }) {
+    let hash = window.location.hash.split("?")[0];
+    page(`${hash}?search=${searchQuery}`);
+  }
+
+  page("*", parseQuery);
   page("/", setComponent(AppList));
   page("/apps/:app/tables/:table", setComponent(TableDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
@@ -77,5 +90,9 @@
 <Breadcrumb {links} />
 
 <div class="container py-4 mx-auto">
-  <svelte:component this={component} bind:params />
+  <svelte:component
+    this={component}
+    bind:params
+    bind:queryString
+    on:updateURL={updateURL} />
 </div>
