@@ -1,7 +1,6 @@
 <script>
-  import { onMount } from "svelte";
   import Pill from "../components/Pill.svelte";
-  import { fetchJSON } from "../state/api";
+  import { getAppData } from "../state/api";
   import FilterInput from "../components/FilterInput.svelte";
   import AppAlert from "../components/AppAlert.svelte";
   import Markdown from "../components/Markdown.svelte";
@@ -13,9 +12,7 @@
   import EmailAddresses from "../components/EmailAddresses.svelte";
 
   export let params;
-  const URL = `data/${params.app}/index.json`;
   let app;
-  let metrics = [];
   let paginationState = {
     pages: [],
     currentPage: 1,
@@ -29,12 +26,12 @@
     filteredMetrics = tempState.page;
   }
 
-  onMount(async () => {
-    app = await fetchJSON(URL);
-    metrics = app.metrics;
-    paginationState = makePages(paginationState.currentPage, metrics);
+  const appDataPromise = getAppData(params.app).then((appData) => {
+    app = Object.assign(appData);
+    paginationState = makePages(paginationState.currentPage, app.metrics);
     filteredMetrics = paginationState.pages[paginationState.currentPage - 1];
     filteredPings = app.pings;
+    return app;
   });
   function filterMetrics(filterText) {
     filteredMetrics = app.metrics.filter((metric) =>
@@ -62,7 +59,7 @@
   }
 </style>
 
-{#if app}
+{#await appDataPromise then app}
   <h1>{params.app}</h1>
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
@@ -126,12 +123,11 @@
       {/each}
     </ul>
   {/if}
-{:else}
+  {#if paginationState.total > 20 && filteredMetrics.length}
+    <Pagination
+      {...paginationState}
+      on:changePage={(ev) => loadPage({ page: ev.detail })} />
+  {/if}
+{:catch}
   <NotFound pageName={params.app} itemType="application" />
-{/if}
-
-{#if paginationState.total > 20 && filteredMetrics.length}
-  <Pagination
-    {...paginationState}
-    on:changePage={(ev) => loadPage({ page: ev.detail })} />
-{/if}
+{/await}

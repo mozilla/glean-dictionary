@@ -5,6 +5,10 @@ export async function fetchJSON(uri) {
   return res.json();
 }
 
+export async function getAppData(appName) {
+  return fetchJSON(`data/${appName}/index.json`);
+}
+
 export async function getPingData(appName, pingName) {
   return fetchJSON(`data/${appName}/pings/${pingName}.json`);
 }
