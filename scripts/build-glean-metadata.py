@@ -15,8 +15,7 @@ DEPENDENCIES_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/dependencies"
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 
-default_dependencies = ['glean']
-ignore_pings = {"all-pings", "all_pings", "default", "glean_ping_info", "glean_client_info"}
+DEFAULT_DEPENDENCIES = ["glean"]
 
 # we get the repos ourselves instead of using GleanPing.get_repos()
 # to get all the metadata associated with the repo
@@ -80,36 +79,35 @@ for repo in list(repos):
             )
         )
 
-    def get_dependencies():
-        try:
-            dependencies = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json()
+    # Original source of dependency function:
+    # https://github.com/mozilla/mozilla-schema-generator/blob/master/mozilla_schema_generator/glean_ping.py
+    try:
+        dependencies = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json()
 
-        except HTTPError:
-            return default_dependencies
+    except HTTPError:
+        dependencies = DEFAULT_DEPENDENCIES
 
-        dependency_library_names = list(dependencies.keys())
-        repos_by_dependency_name = {}
+    dependency_library_names = list(dependencies.keys())
+    repos_by_dependency_name = {}
 
-        for repo in repos:
-            for library_name in repo.get('library_names', []):
-                repos_by_dependency_name[library_name] = repo['name']
+    for repo in repos:
+        for library_name in repo.get("library_names", []):
+            repos_by_dependency_name[library_name] = repo["name"]
 
-        dependencies = []
+    dependencies = []
 
-        for name in dependency_library_names:
-            if name in repos_by_dependency_name:
-                dependencies.append(repos_by_dependency_name[name])
+    for name in dependency_library_names:
+        if name in repos_by_dependency_name:
+            dependencies.append(repos_by_dependency_name[name])
 
-        if len(dependencies) == 0:
-            return default_dependencies
+    if len(dependencies) == 0:
+        dependencies = DEFAULT_DEPENDENCIES
 
-        return dependencies
-
-    app_ping = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
-
-    for dependency in get_dependencies():
+    for dependency in dependencies:
         dependency_ping = requests.get(PINGS_URL_TEMPLATE.format(dependency)).json()
 
+    # pings data
+    app_ping = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
     ping_data = {**app_ping, **dependency_ping}
 
     for (ping_name, ping_data) in ping_data.items():
