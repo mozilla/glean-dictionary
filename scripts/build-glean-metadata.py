@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-from requests import HTTPError
 import json
 import os
 
 import requests
 import stringcase
+from requests import HTTPError
 
 PROBE_INFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org"
 REPO_URL = PROBE_INFO_BASE_URL + "/glean/repositories"
