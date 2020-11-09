@@ -81,6 +81,8 @@ for repo in list(repos):
 
     # Original source of dependency function:
     # https://github.com/mozilla/mozilla-schema-generator/blob/master/mozilla_schema_generator/glean_ping.py
+    ping_data = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
+
     try:
         dependencies = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json()
 
@@ -94,6 +96,8 @@ for repo in list(repos):
         for library_name in repo.get("library_names", []):
             repos_by_dependency_name[library_name] = repo["name"]
 
+    dependencies = []
+
     for name in dependency_library_names:
         if name in repos_by_dependency_name:
             dependencies.append(repos_by_dependency_name[name])
@@ -102,11 +106,8 @@ for repo in list(repos):
         dependencies = DEFAULT_DEPENDENCIES
 
     for dependency in dependencies:
-        dependency_ping = requests.get(PINGS_URL_TEMPLATE.format(dependency)).json()
-
-    # pings data
-    app_ping = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
-    ping_data = {**app_ping, **dependency_ping}
+        dependency_pings = requests.get(PINGS_URL_TEMPLATE.format(dependency)).json()
+        ping_data = {**ping_data, **dependency_pings}
 
     for (ping_name, ping_data) in ping_data.items():
         app_data["pings"].append(
