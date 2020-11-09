@@ -94,8 +94,6 @@ for repo in list(repos):
         for library_name in repo.get("library_names", []):
             repos_by_dependency_name[library_name] = repo["name"]
 
-    dependencies = []
-
     for name in dependency_library_names:
         if name in repos_by_dependency_name:
             dependencies.append(repos_by_dependency_name[name])
