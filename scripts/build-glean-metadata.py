@@ -92,9 +92,9 @@ for repo in list(repos):
     dependency_library_names = list(dependencies.keys())
     repos_by_dependency_name = {}
 
-    for repo in repos:
-        for library_name in repo.get("library_names", []):
-            repos_by_dependency_name[library_name] = repo["name"]
+    for dependency_repo in repos:
+        for library_name in dependency_repo.get("library_names", []):
+            repos_by_dependency_name[library_name] = dependency_repo["name"]
 
     dependencies = []
 
