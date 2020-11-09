@@ -5,13 +5,17 @@ import os
 
 import requests
 import stringcase
+from requests import HTTPError
 
 PROBE_INFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org"
 REPO_URL = PROBE_INFO_BASE_URL + "/glean/repositories"
 PINGS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/pings"
 METRICS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/metrics"
+DEPENDENCIES_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/dependencies"
+
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 
+DEFAULT_DEPENDENCIES = ["glean"]
 
 # we get the repos ourselves instead of using GleanPing.get_repos()
 # to get all the metadata associated with the repo
@@ -75,7 +79,36 @@ for repo in list(repos):
             )
         )
 
+    # Original source of dependency function:
+    # https://github.com/mozilla/mozilla-schema-generator/blob/master/mozilla_schema_generator/glean_ping.py
     ping_data = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
+
+    try:
+        dependencies = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json()
+
+    except HTTPError:
+        dependencies = DEFAULT_DEPENDENCIES
+
+    dependency_library_names = list(dependencies.keys())
+    repos_by_dependency_name = {}
+
+    for repo in repos:
+        for library_name in repo.get("library_names", []):
+            repos_by_dependency_name[library_name] = repo["name"]
+
+    dependencies = []
+
+    for name in dependency_library_names:
+        if name in repos_by_dependency_name:
+            dependencies.append(repos_by_dependency_name[name])
+
+    if len(dependencies) == 0:
+        dependencies = DEFAULT_DEPENDENCIES
+
+    for dependency in dependencies:
+        dependency_pings = requests.get(PINGS_URL_TEMPLATE.format(dependency)).json()
+        ping_data = {**ping_data, **dependency_pings}
+
     for (ping_name, ping_data) in ping_data.items():
         app_data["pings"].append(
             {"name": ping_name, "description": ping_data["history"][-1]["description"]}
