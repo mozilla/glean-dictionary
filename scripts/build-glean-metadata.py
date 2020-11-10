@@ -114,19 +114,6 @@ for repo in list(repos):
             {"name": ping_name, "description": ping_data["history"][-1]["description"]}
         )
 
-        # write ping description
-        open(os.path.join(app_ping_dir, f"{ping_name}.json"), "w").write(
-            json.dumps(
-                dict(
-                    ping_data["history"][-1],
-                    name=ping_name,
-                    history=ping_data["history"],
-                    metrics=[
-                        metric for metric in metric_pings["data"] if ping_name in metric["pings"]
-                    ],
-                )
-            )
-        )
         # write table description
         app_id = repo["app_id"]
         app_id_snakecase = stringcase.snakecase(app_id)
@@ -150,6 +137,21 @@ for repo in list(repos):
                     live_table=live_ping_table_name,
                     name=ping_name,
                     stable_table=stable_ping_table_name,
+                )
+            )
+        )
+
+        # write ping description
+        open(os.path.join(app_ping_dir, f"{ping_name}.json"), "w").write(
+            json.dumps(
+                dict(
+                    ping_data["history"][-1],
+                    name=ping_name,
+                    history=ping_data["history"],
+                    metrics=[
+                        metric for metric in metric_pings["data"] if ping_name in metric["pings"]
+                    ],
+                    stable_table_name=stable_ping_table_name,
                 )
             )
         )
