@@ -18,7 +18,6 @@
 </style>
 
 {#await pingDataPromise then ping}
-  <p><a href={`/apps/${params.app}/tables/${ping.name}`}>BigQuery table</a></p>
   <h1>{ping.name}</h1>
   <table class="table-header">
     <tr>
@@ -49,6 +48,13 @@
       </td>
       <td>
         {#each ping.notification_emails as email}<span>{email}</span>{/each}
+      </td>
+    </tr>
+    <tr>
+      <td>BigQuery table</td>
+      <td>
+        <a
+          href={`/apps/${params.app}/tables/${params.ping}`}>{ping.stable_table_name}</a>
       </td>
     </tr>
   </table>
