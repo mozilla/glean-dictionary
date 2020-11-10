@@ -63,7 +63,7 @@
       </td>
     </tr>
     <tr>
-      <td>BigQuery table</td>
+      <td>BigQuery Table</td>
       <td>
         <a
           href={`/apps/${params.app}/tables/${params.ping}`}>{ping.stable_table_name}</a>
