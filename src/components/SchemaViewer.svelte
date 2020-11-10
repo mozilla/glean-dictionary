@@ -1,11 +1,22 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import SchemaNode from "./SchemaNode.svelte";
   import FilterInput from "./FilterInput.svelte";
 
   export let app;
   export let nodes = [];
+  export let searchText;
   let nodesWithVisibility;
-  const filterTextChanged = (filterText = "") => {
+
+  const dispatch = createEventDispatcher();
+
+  function updateSearchText(filterText) {
+    searchText = filterText;
+    dispatch("updateURL");
+  }
+
+  const filterTextChanged = (filterText = searchText || "") => {
+    updateSearchText(filterText);
     const filterTerms = filterText
       .trim()
       .split(" ")
@@ -55,7 +66,7 @@
 </style>
 
 <h2>Schema</h2>
-<FilterInput onChangeText={filterTextChanged} />
+<FilterInput onChangeText={filterTextChanged} filterText={searchText} />
 <div class="container schema-browser mx-auto">
   <p>
     {#each nodesWithVisibility as node}

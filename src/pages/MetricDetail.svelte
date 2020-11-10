@@ -1,6 +1,9 @@
 <script>
   import { getMetricData } from "../state/api";
 
+  import Markdown from "../components/Markdown.svelte";
+  import NotFound from "../components/NotFound.svelte";
+
   export let params;
 
   const metricDataPromise = getMetricData(params.app, params.metric);
@@ -57,7 +60,9 @@
 
 {#await metricDataPromise then metric}
   <h1>{metric.name}</h1>
-  <p>{metric.description}</p>
+  <p>
+    <Markdown>{metric.description}</Markdown>
+  </p>
   <p>
     <a
       href={getMetricDocumentationURI(metric.type)}
@@ -71,10 +76,13 @@
     <tr>
       <td>Relevant Bugs</td>
       <td>
-        {#each metric.bugs as bug, i}
-          {#if bug.indexOf('http') > -1}
-            <a href={bug} title={bug} target="_blank"> {i + 1} </a>
-          {:else}<span>{bug}</span>{/if}
+        {#each metric.bugs as bug}
+          <a
+            href={typeof bug !== 'number' ? bug : `https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}
+            title={bug}
+            target="_blank">
+            {typeof bug !== 'number' ? bug : `https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}
+          </a>
         {/each}
       </td>
     </tr>
@@ -168,4 +176,6 @@
       <td>{metric.version || 0}</td>
     </tr>
   </table>
+{:catch}
+  <NotFound pageName={params.metric} itemType="metric" />
 {/await}

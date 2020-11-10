@@ -5,32 +5,33 @@ import os
 
 import requests
 import stringcase
-from mozilla_schema_generator.glean_ping import GleanPing
-
+from requests import HTTPError
 
 PROBE_INFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org"
 REPO_URL = PROBE_INFO_BASE_URL + "/glean/repositories"
 PINGS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/pings"
 METRICS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/metrics"
+DEPENDENCIES_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/dependencies"
+
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 
+DEFAULT_DEPENDENCIES = ["glean"]
 
 # we get the repos ourselves instead of using GleanPing.get_repos()
 # to get all the metadata associated with the repo
 repo_data = requests.get(REPO_URL).json()
 
 # filter out repos that are just libraries, not applications
-repos = list(
-    filter(
-        lambda r: "library_names" not in r and r["app_id"] != "glean", repo_data)
-)
+repos = list(filter(lambda r: "library_names" not in r and r["app_id"] != "glean", repo_data))
 
 # Write out a list of apps (for the landing page)
 open(os.path.join(OUTPUT_DIRECTORY, "apps.json"), "w").write(
     json.dumps(
         [
-            {k: repo[k]
-                for k in ["app_id", "deprecated", "description", "name", "url"]}
+            {
+                k: repo[k]
+                for k in ["app_id", "deprecated", "description", "name", "url", "prototype"]
+            }
             for repo in repos
         ]
     )
@@ -54,11 +55,13 @@ for repo in list(repos):
     for (metric_name, metric_data) in metrics_data.items():
 
         # metrics with associated pings
-        metric_pings["data"].append({
-            "name": metric_name,
-            "description": metric_data["history"][-1]["description"],
-            "pings": metric_data["history"][0]["send_in_pings"]
-        })
+        metric_pings["data"].append(
+            {
+                "name": metric_name,
+                "description": metric_data["history"][-1]["description"],
+                "pings": metric_data["history"][0]["send_in_pings"],
+            }
+        )
 
         app_data["metrics"].append(
             {
@@ -76,11 +79,39 @@ for repo in list(repos):
             )
         )
 
+    # Original source of dependency function:
+    # https://github.com/mozilla/mozilla-schema-generator/blob/master/mozilla_schema_generator/glean_ping.py
     ping_data = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
+
+    try:
+        dependencies = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json()
+
+    except HTTPError:
+        dependencies = DEFAULT_DEPENDENCIES
+
+    dependency_library_names = list(dependencies.keys())
+    repos_by_dependency_name = {}
+
+    for dependency_repo in repos:
+        for library_name in dependency_repo.get("library_names", []):
+            repos_by_dependency_name[library_name] = dependency_repo["name"]
+
+    dependencies = []
+
+    for name in dependency_library_names:
+        if name in repos_by_dependency_name:
+            dependencies.append(repos_by_dependency_name[name])
+
+    if len(dependencies) == 0:
+        dependencies = DEFAULT_DEPENDENCIES
+
+    for dependency in dependencies:
+        dependency_pings = requests.get(PINGS_URL_TEMPLATE.format(dependency)).json()
+        ping_data = {**ping_data, **dependency_pings}
+
     for (ping_name, ping_data) in ping_data.items():
         app_data["pings"].append(
-            {"name": ping_name,
-                "description": ping_data["history"][-1]["description"]}
+            {"name": ping_name, "description": ping_data["history"][-1]["description"]}
         )
 
         # write table description
@@ -91,11 +122,11 @@ for repo in list(repos):
         live_ping_table_name = f"{app_id_snakecase}_live_v1.{ping_name_snakecase}"
         bq_path = f"{app_id}/{ping_name}/{ping_name}.1.bq"
         bq_definition = (
-            "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"
+            "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"  # noqa
             + bq_path
         )
         bq_definition_raw_json = (
-            "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"
+            "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"  # noqa
             + bq_path
         )
         open(os.path.join(app_table_dir, f"{ping_name}.json"), "w").write(

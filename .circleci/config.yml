@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@2.0.1
+  python: circleci/python@0.2.1
 jobs:
   build-and-test:
     executor:
@@ -11,7 +12,16 @@ jobs:
       - node/install-packages
       - run: npm install
       - run: npm test
+  python-build-and-test:
+    executor: python/default
+    steps:
+      - checkout
+      - python/install-deps
+      - run:
+          name: Run lint
+          command: make lint
 workflows:
   build-and-test:
     jobs:
       - build-and-test
+      - python-build-and-test

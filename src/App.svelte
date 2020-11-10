@@ -1,6 +1,8 @@
 <script>
+  import { afterUpdate } from "svelte";
   import page from "page";
   import Tailwindcss from "./Tailwindcss.svelte";
+  import Breadcrumb from "./components/Breadcrumb.svelte";
 
   // Pages
   import AppList from "./pages/AppList.svelte";
@@ -11,6 +13,37 @@
 
   let component;
   let params;
+  let links = [];
+  let queryString;
+
+  afterUpdate(() => {
+    const { app, ping, metric, table } = params;
+
+    links = [
+      ...(app
+        ? [
+            { url: "/", name: "apps" },
+            { url: `/apps/${app}/`, name: app },
+          ]
+        : []),
+      ...(ping ? [{ url: `/apps/${app}/pings/${ping}/`, name: ping }] : []),
+      ...(metric
+        ? [{ url: `/apps/${app}/metrics/${metric}/`, name: metric }]
+        : []),
+      ...(table
+        ? [
+            {
+              url: `/apps/${app}/pings/${table}/`,
+              name: table,
+            },
+            {
+              url: `/apps/${app}/tables/${table}/`,
+              name: `${table} table`,
+            },
+          ]
+        : []),
+    ];
+  });
 
   function setComponent(c) {
     return function setComponentInner({ params: p }) {
@@ -19,8 +52,20 @@
     };
   }
 
+  function parseQuery(ctx, next) {
+    queryString = ctx.querystring;
+    queryString = queryString !== "" ? queryString.split("=")[1] : "";
+    next();
+  }
+
+  function updateURL({ detail: searchQuery }) {
+    let hash = window.location.hash.split("?")[0];
+    page(`${hash}?search=${searchQuery}`);
+  }
+
+  page("*", parseQuery);
   page("/", setComponent(AppList));
-  page("/apps/:app/tables/:ping", setComponent(TableDetail));
+  page("/apps/:app/tables/:table", setComponent(TableDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
   page("/apps/:app", setComponent(AppDetail));
@@ -42,7 +87,12 @@
     </a>
   </div>
 </nav>
+<Breadcrumb {links} />
 
 <div class="container py-4 mx-auto">
-  <svelte:component this={component} bind:params />
+  <svelte:component
+    this={component}
+    bind:params
+    bind:queryString
+    on:updateURL={updateURL} />
 </div>

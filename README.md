@@ -11,6 +11,10 @@ incomplete. For now, please see the
 [project proposal](https://docs.google.com/document/d/1OkTWA3rsSJ0m5g9GDnxXVUMkJP-xJMQk_bDgDq-Z9xM/edit#heading=h.jwawftif1tt5)
 for more details on the Glean Dictionary's ambitions and goals.
 
+You can play with an early version of the Glean Dictionary at:
+
+https://glean-dictionary-dev.netlify.app
+
 ## Getting Started
 
 You should be able to create your own local copy of the dictionary so long as
@@ -44,3 +48,8 @@ run:
 ```bash
 npm run storybook
 ```
+
+## Contributing
+
+For more information on contributing, see [CONTRIBUTING.md](./CONTRIBUTING.md)
+in the root of this repository.

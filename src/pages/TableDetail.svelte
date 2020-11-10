@@ -1,9 +1,16 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { fetchJSON, getTableData } from "../state/api";
 
+  import NotFound from "../components/NotFound.svelte";
+
   export let params;
-  const pingDataPromise = getTableData(params.app, params.ping).then(
+  export let queryString;
+
+  const dispatch = createEventDispatcher();
+
+  const pingDataPromise = getTableData(params.app, params.table).then(
     async (table) => {
       return {
         table,
@@ -11,6 +18,8 @@
       };
     }
   );
+
+  const updateURL = () => dispatch("updateURL", queryString);
 </script>
 
 <style>
@@ -45,6 +54,11 @@
       <td><code>{data.table.stable_table}</code></td>
     </tr>
   </table>
-
-  <SchemaViewer app={params.app} nodes={data.schema} />
+  <SchemaViewer
+    app={params.app}
+    nodes={data.schema}
+    bind:searchText={queryString}
+    on:updateURL={updateURL} />
+{:catch}
+  <NotFound pageName={params.app} itemType="table" />
 {/await}
