@@ -6,24 +6,45 @@
   import AppAlert from "../components/AppAlert.svelte";
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
+  import Pagination, {
+    makePages,
+    goToPage,
+  } from "../components/Pagination.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
 
   export let params;
   const URL = `data/${params.app}/index.json`;
   let app;
+  let metrics = [];
+  let paginationState = {
+    pages: [],
+    currentPage: 1,
+  };
   let filteredMetrics;
   let filteredPings;
 
+  function loadPage(args) {
+    let tempState = goToPage(args.page, paginationState.pages);
+    paginationState = Object.assign(paginationState, tempState);
+    filteredMetrics = tempState.page;
+  }
+
   onMount(async () => {
     app = await fetchJSON(URL);
-    filteredMetrics = app.metrics;
+    metrics = app.metrics;
+    paginationState = makePages(paginationState.currentPage, metrics);
+    filteredMetrics = paginationState.pages[paginationState.currentPage - 1];
     filteredPings = app.pings;
   });
-
   function filterMetrics(filterText) {
     filteredMetrics = app.metrics.filter((metric) =>
       metric.name.includes(filterText)
     );
+    if (filteredMetrics.length > 0) {
+      paginationState.currentPage = 1;
+      paginationState = makePages(paginationState.currentPage, filteredMetrics);
+      filteredMetrics = paginationState.pages[paginationState.currentPage - 1];
+    }
   }
   function filterPings(filterText) {
     filteredPings = app.pings.filter((ping) => ping.name.includes(filterText));
@@ -35,7 +56,6 @@
     @apply table-auto;
     @apply my-4;
   }
-
   .table-header td {
     @apply border;
     @apply p-2;
@@ -108,4 +128,10 @@
   {/if}
 {:else}
   <NotFound pageName={params.app} itemType="application" />
+{/if}
+
+{#if paginationState.total > 20 && filteredMetrics.length}
+  <Pagination
+    {...paginationState}
+    on:changePage={(ev) => loadPage({ page: ev.detail })} />
 {/if}
