@@ -61,7 +61,7 @@
 {#await metricDataPromise then metric}
   <h1>{metric.name}</h1>
   <p>
-    <Markdown>{metric.description}</Markdown>
+    <Markdown text={metric.description} />
   </p>
   <p>
     <a
