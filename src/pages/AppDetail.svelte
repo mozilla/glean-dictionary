@@ -41,8 +41,8 @@
       metric.name.includes(filterText)
     );
     if (filteredMetrics.length > 0) {
-      paginationState = makePages(paginationState.currentPage, filteredMetrics);
-      filteredMetrics = paginationState.pages[paginationState.currentPage - 1];
+      paginationState = makePages(1, filteredMetrics);
+      filteredMetrics = paginationState.pages[0];
     }
   }
   function filterPings(filterText) {
@@ -129,7 +129,7 @@
   <NotFound pageName={params.app} itemType="application" />
 {/if}
 
-{#if paginationState.total > 100}
+{#if paginationState.total > 20 && filteredMetrics.length }
   <Pagination
     {...paginationState}
     on:changePage={(ev) => loadPage({ page: ev.detail })} />

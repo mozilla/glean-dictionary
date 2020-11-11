@@ -16,7 +16,7 @@
   };
 
   export const makePages = (page, data, perPage = DEFAULT_ITEMS_PER_PAGE) => {
-    if (data.length === 0) return [];
+    if (data.length === 0) return {};
     let total = data.length;
     let currentPage = page;
     let lastPage = Math.ceil(total / perPage);
