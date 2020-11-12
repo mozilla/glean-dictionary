@@ -95,9 +95,7 @@
       {#each filteredPings as ping}
         <li>
           <a href={`/apps/${app.name}/pings/${ping.name}`}>{ping.name}</a>
-          <i>
-            <Markdown>{ping.description}</Markdown>
-          </i>
+          <i><Markdown text={ping.description} /></i>
         </li>
       {:else}
         <p>Your search didn't match any ping.</p>
@@ -114,9 +112,7 @@
         <li>
           <a
             href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-          <i>
-            <Markdown>{metric.description}</Markdown>
-          </i>
+          <i><Markdown text={metric.description} /></i>
         </li>
       {:else}
         <p>Your search didn't match any metric.</p>

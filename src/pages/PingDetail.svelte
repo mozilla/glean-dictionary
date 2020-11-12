@@ -27,7 +27,7 @@
     <tr>
       <td>Description</td>
       <td>
-        <Markdown>{ping.description}</Markdown>
+        <Markdown text={ping.description} />
       </td>
     </tr>
     <tr>
@@ -77,7 +77,7 @@
       <li>
         <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
         <i>
-          <Markdown>{metric.description}</Markdown>
+          <Markdown text={metric.description} />
         </i>
       </li>
     {/each}
