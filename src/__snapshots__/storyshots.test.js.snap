@@ -224,6 +224,64 @@ exports[`Storyshots Email Addresses Single Email 1`] = `
 </section>
 `;
 
+exports[`Storyshots FilterInput Basic 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="container"
+  >
+    <div
+      class="container py-4 mx-auto"
+    >
+      <input
+        class="shadow appearance-none border rounded w-full p-2 text-gray-700
+    leading-tight focus:outline-none focus:shadow-outline"
+        placeholder="filter terms"
+        type="text"
+      />
+    </div>
+     
+    <ul>
+      <li>
+        foo
+      </li>
+      <li>
+        bar
+      </li>
+      <li>
+        foobar
+      </li>
+      <li>
+        lorem
+      </li>
+      <li>
+        ipsum
+      </li>
+    </ul>
+  </div>
+</section>
+`;
+
+exports[`Storyshots Markdown Text 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  A 
+  <em>
+    text
+  </em>
+   in markdown 
+  <a
+    href="https://mozilla.org"
+  >
+    moz
+  </a>
+  .
+  
+</section>
+`;
+
 exports[`Storyshots Pill Deprecated 1`] = `
 <section
   class="storybook-snapshot-container"
@@ -233,6 +291,150 @@ exports[`Storyshots Pill Deprecated 1`] = `
     style="background-color: rgb(74, 85, 104);"
   >
     Deprecated
+  </div>
+</section>
+`;
+
+exports[`Storyshots Schema Viewer Basic 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <h2>
+    Schema
+  </h2>
+   
+  <div
+    class="container py-4 mx-auto"
+  >
+    <input
+      class="shadow appearance-none border rounded w-full p-2 text-gray-700
+    leading-tight focus:outline-none focus:shadow-outline"
+      placeholder="filter terms"
+      type="text"
+    />
+  </div>
+   
+  <div
+    class="container schema-browser mx-auto svelte-gyw6bu"
+  >
+    <p>
+      <div
+        style=""
+      >
+        <p>
+          <span
+            class="text-gray-700"
+          >
+            
+            
+          </span>
+          <span>
+            additional_properties
+          </span>
+        </p>
+         
+        <p
+          class="text-gray-600 text-xs ml-2"
+        >
+          A JSON string containing any payload properties not present in the schema
+        </p>
+         
+      </div>
+       
+      
+      <div
+        style=""
+      >
+        <p>
+          <span
+            class="text-gray-700"
+          >
+            
+            
+          </span>
+          <span>
+            client_info
+          </span>
+        </p>
+         
+         
+      </div>
+       
+      <div
+        style=""
+      >
+        <p>
+          <span
+            class="text-gray-700"
+          >
+            client_info
+            .
+          </span>
+          <span>
+            os_version
+          </span>
+        </p>
+         
+        <p
+          class="text-gray-600 text-xs ml-2"
+        >
+          The user-visible version of the operating system (e.g. "1.2.3"). If the version detection fails, this metric gets set to \`Unknown\`.
+        </p>
+         
+      </div>
+       
+      
+      <div
+        style=""
+      >
+        <p>
+          <span
+            class="text-gray-700"
+          >
+            client_info
+            .
+          </span>
+          <span>
+            telemetry_sdk_build
+          </span>
+        </p>
+         
+        <p
+          class="text-gray-600 text-xs ml-2"
+        >
+          The version of the Glean SDK
+        </p>
+         
+      </div>
+       
+      
+      
+      
+      <div
+        style=""
+      >
+        <p>
+          <span
+            class="text-gray-700"
+          >
+            
+            
+          </span>
+          <span>
+            document_id
+          </span>
+        </p>
+         
+        <p
+          class="text-gray-600 text-xs ml-2"
+        >
+          The document ID specified in the URI when the client sent this message
+        </p>
+         
+      </div>
+       
+      
+    </p>
   </div>
 </section>
 `;

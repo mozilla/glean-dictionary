@@ -1,5 +1,5 @@
 <script>
-  import throttle from "just-throttle";
+  const throttle = require("just-throttle");
 
   export let onChangeText;
   export let filterText;

@@ -1,5 +1,5 @@
 <script>
-  import marked from "marked";
+  const marked = require("marked");
 
   export let text;
 </script>
