@@ -1,0 +1,238 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Breadcrumb App Details Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="flex border-b-2 py-2 divide-x "
+  >
+    <li
+      class="px-2"
+    >
+      <a
+        href="/"
+      >
+        apps
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/"
+      >
+        fenix
+      </a>
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Apps List Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="flex border-b-2 py-2 divide-x "
+  >
+    <li
+      class="px-2"
+    >
+      <a
+        href="/"
+      >
+        apps
+      </a>
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="flex border-b-2 py-2 divide-x "
+  >
+    <li
+      class="px-2"
+    >
+      <a
+        href="/"
+      >
+        apps
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/"
+      >
+        fenix
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/pings/activation"
+      >
+        activation
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/tables/activation/"
+      >
+        activation table
+      </a>
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Metric Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="flex border-b-2 py-2 divide-x "
+  >
+    <li
+      class="px-2"
+    >
+      <a
+        href="/"
+      >
+        apps
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/"
+      >
+        fenix
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/metrics/about_page.libraries_tapped"
+      >
+        about_page.libraries_tapped
+      </a>
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Ping Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="flex border-b-2 py-2 divide-x "
+  >
+    <li
+      class="px-2"
+    >
+      <a
+        href="/"
+      >
+        apps
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/"
+      >
+        fenix
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/pings/activation"
+      >
+        activation
+      </a>
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Email Addresses Multiple Emails 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <span
+    class="block"
+  >
+    <a
+      href="mailto:example@example.com"
+    >
+      example@example.com
+    </a>
+  </span>
+  <span
+    class="block"
+  >
+    <a
+      href="mailto:email@email.com"
+    >
+      email@email.com
+    </a>
+  </span>
+  <span
+    class="block"
+  >
+    <a
+      href="mailto:post@pigeon.com"
+    >
+      post@pigeon.com
+    </a>
+  </span>
+  
+</section>
+`;
+
+exports[`Storyshots Email Addresses Single Email 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <span
+    class="block"
+  >
+    <a
+      href="mailto:glean@mozilla.com"
+    >
+      glean@mozilla.com
+    </a>
+  </span>
+  
+</section>
+`;
+
+exports[`Storyshots Pill Deprecated 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="inline-block border rounded-full text-xs py-1 px-3 w-15 text-white"
+    style="background-color: rgb(74, 85, 104);"
+  >
+    Deprecated
+  </div>
+</section>
+`;
