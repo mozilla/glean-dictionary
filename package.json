@@ -50,7 +50,7 @@
     "lunr": "^2.3.9",
     "marked": "^1.2.2",
     "node-fetch": "^2.6.1",
-    "postcss": "^8.1.2",
+    "postcss": "^8.1.7",
     "postcss-import": "^12.0.1",
     "postcss-load-config": "^3.0.0",
     "sirv-cli": "1.0.8",
