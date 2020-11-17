@@ -10,6 +10,7 @@
     goToPage,
   } from "../components/Pagination.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
+  import Tabs from "../components/Tabs.svelte";
 
   export let params;
   let app;
@@ -19,6 +20,12 @@
   };
   let filteredMetrics;
   let filteredPings;
+  let tabItems = ["Metrics", "Pings"];
+  let activeTab = "Metrics";
+
+  const tabChange = (e) => {
+    activeTab = e.detail;
+  };
 
   function loadPage(args) {
     let tempState = goToPage(args.page, paginationState.pages);
@@ -86,43 +93,49 @@
       message="The {params.app} application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
       bgColor="#808895" />
   {/if}
-  <h2>Pings</h2>
-  {#if !app.pings.length}
-    <p>Currently, there are no pings available for {app.name}</p>
-  {:else}
-    <FilterInput onChangeText={filterPings} />
-    <ul>
-      {#each filteredPings as ping}
-        <li>
-          <a href={`/apps/${app.name}/pings/${ping.name}`}>{ping.name}</a>
-          <i><Markdown text={ping.description} /></i>
-        </li>
-      {:else}
-        <p>Your search didn't match any ping.</p>
-      {/each}
-    </ul>
+
+  <Tabs {activeTab} {tabItems} on:tabChange={tabChange} />
+  {#if activeTab === 'Pings'}
+    <h2>Pings</h2>
+    {#if !app.pings.length}
+      <p>Currently, there are no pings available for {app.name}</p>
+    {:else}
+      <FilterInput onChangeText={filterPings} />
+      <ul>
+        {#each filteredPings as ping}
+          <li>
+            <a href={`/apps/${app.name}/pings/${ping.name}`}>{ping.name}</a>
+            <i><Markdown text={ping.description} /></i>
+          </li>
+        {:else}
+          <p>Your search didn't match any ping.</p>
+        {/each}
+      </ul>
+    {/if}
   {/if}
-  <h2>Metrics</h2>
-  {#if !app.metrics.length}
-    <p>Currently, there are no metrics available for {app.name}</p>
-  {:else}
-    <FilterInput onChangeText={filterMetrics} />
-    <ul>
-      {#each filteredMetrics as metric}
-        <li>
-          <a
-            href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-          <i><Markdown text={metric.description} /></i>
-        </li>
-      {:else}
-        <p>Your search didn't match any metric.</p>
-      {/each}
-    </ul>
-  {/if}
-  {#if paginationState.total > 20 && filteredMetrics.length}
-    <Pagination
-      {...paginationState}
-      on:changePage={(ev) => loadPage({ page: ev.detail })} />
+  {#if activeTab === 'Metrics'}
+    <h2>Metrics</h2>
+    {#if !app.metrics.length}
+      <p>Currently, there are no metrics available for {app.name}</p>
+    {:else}
+      <FilterInput onChangeText={filterMetrics} />
+      <ul>
+        {#each filteredMetrics as metric}
+          <li>
+            <a
+              href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
+            <i><Markdown text={metric.description} /></i>
+          </li>
+        {:else}
+          <p>Your search didn't match any metric.</p>
+        {/each}
+      </ul>
+    {/if}
+    {#if paginationState.total > 20 && filteredMetrics.length}
+      <Pagination
+        {...paginationState}
+        on:changePage={(ev) => loadPage({ page: ev.detail })} />
+    {/if}
   {/if}
 {:catch}
   <NotFound pageName={params.app} itemType="application" />
