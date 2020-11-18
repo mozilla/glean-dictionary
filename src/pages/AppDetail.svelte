@@ -10,6 +10,7 @@
     goToPage,
   } from "../components/Pagination.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
+  import { TabGroup, Tab, TabContent } from "../components/tabs";
 
   export let params;
   let app;
@@ -86,44 +87,55 @@
       message="The {params.app} application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
       bgColor="#808895" />
   {/if}
-  <h2>Pings</h2>
-  {#if !app.pings.length}
-    <p>Currently, there are no pings available for {app.name}</p>
-  {:else}
-    <FilterInput onChangeText={filterPings} />
-    <ul>
-      {#each filteredPings as ping}
-        <li>
-          <a href={`/apps/${app.name}/pings/${ping.name}`}>{ping.name}</a>
-          <i><Markdown text={ping.description} /></i>
-        </li>
+
+  <TabGroup active="Metrics">
+    <div slot="tabs">
+      <Tab key="Metrics">Metrics</Tab>
+      <Tab key="Pings">Pings</Tab>
+    </div>
+
+    <TabContent key="Pings">
+      {#if !app.pings.length}
+        <p>Currently, there are no pings available for {app.name}</p>
       {:else}
-        <p>Your search didn't match any ping.</p>
-      {/each}
-    </ul>
-  {/if}
-  <h2>Metrics</h2>
-  {#if !app.metrics.length}
-    <p>Currently, there are no metrics available for {app.name}</p>
-  {:else}
-    <FilterInput onChangeText={filterMetrics} />
-    <ul>
-      {#each filteredMetrics as metric}
-        <li>
-          <a
-            href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
-          <i><Markdown text={metric.description} /></i>
-        </li>
+        <FilterInput onChangeText={filterPings} />
+        <ul>
+          {#each filteredPings as ping}
+            <li>
+              <a href={`/apps/${app.name}/pings/${ping.name}`}>{ping.name}</a>
+              <i><Markdown text={ping.description} /></i>
+            </li>
+          {:else}
+            <p>Your search didn't match any ping.</p>
+          {/each}
+        </ul>
+      {/if}
+    </TabContent>
+
+    <TabContent key="Metrics">
+      {#if !app.metrics.length}
+        <p>Currently, there are no metrics available for {app.name}</p>
       {:else}
-        <p>Your search didn't match any metric.</p>
-      {/each}
-    </ul>
-  {/if}
-  {#if paginationState.total > 20 && filteredMetrics.length}
-    <Pagination
-      {...paginationState}
-      on:changePage={(ev) => loadPage({ page: ev.detail })} />
-  {/if}
+        <FilterInput onChangeText={filterMetrics} />
+        <ul>
+          {#each filteredMetrics as metric}
+            <li>
+              <a
+                href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
+              <i><Markdown text={metric.description} /></i>
+            </li>
+          {:else}
+            <p>Your search didn't match any metric.</p>
+          {/each}
+        </ul>
+      {/if}
+      {#if paginationState.total > 20 && filteredMetrics.length}
+        <Pagination
+          {...paginationState}
+          on:changePage={(ev) => loadPage({ page: ev.detail })} />
+      {/if}
+    </TabContent>
+  </TabGroup>
 {:catch}
   <NotFound pageName={params.app} itemType="application" />
 {/await}
