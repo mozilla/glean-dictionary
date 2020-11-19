@@ -7,9 +7,10 @@
 
 <style>
   .box {
-    padding: 40px;
-    border: 1px solid #dee2e6;
-    border-radius: 0 0 0.5rem 0.5rem;
+    @apply p-8;
+    @apply border;
+    @apply border-gray-200;
+    @apply rounded-b-lg;
   }
 </style>
 
