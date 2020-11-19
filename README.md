@@ -49,6 +49,21 @@ run:
 npm run storybook
 ```
 
+### Storybook Snapshot Testing
+
+To run snapshot tests, run:
+
+```bash
+npm run test:jest
+```
+
+If intended change is made to the markup, re-generate snapshots using the
+following command:
+
+```bash
+npm run test:jest -- -u
+```
+
 ## Contributing
 
 For more information on contributing, see [CONTRIBUTING.md](./CONTRIBUTING.md)
