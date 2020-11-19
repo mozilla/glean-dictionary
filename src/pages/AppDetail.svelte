@@ -89,10 +89,8 @@
   {/if}
 
   <TabGroup active="Metrics">
-    <div slot="tabs">
-      <Tab key="Metrics">Metrics</Tab>
-      <Tab key="Pings">Pings</Tab>
-    </div>
+    <Tab key="Metrics">Metrics</Tab>
+    <Tab key="Pings">Pings</Tab>
 
     <TabContent key="Pings">
       {#if !app.pings.length}
