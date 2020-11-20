@@ -57,8 +57,9 @@ To run snapshot tests, run:
 npm run test:jest
 ```
 
-If intended change is made to the markup, re-generate snapshots using the
-following command:
+If you intentionally made a change to a component that results in a change 
+to the output of the storybook snapshots, you can re-generate them using 
+the following command:
 
 ```bash
 npm run test:jest -- -u
