@@ -438,3 +438,37 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
   </div>
 </section>
 `;
+
+exports[`Storyshots Tab Basic 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="tabs"
+  />
+   
+  <div
+    class="tab-content"
+  >
+    <div
+      class="title svelte-19v3j9g active"
+    >
+      A
+    </div>
+    <div
+      class="title svelte-19v3j9g"
+    >
+      B
+    </div>
+     
+    <div
+      class="box svelte-w20ggk"
+    >
+      Content for Tab A
+    </div>
+    
+    
+    
+  </div>
+</section>
+`;
