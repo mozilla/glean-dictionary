@@ -1,8 +1,8 @@
 <script>
-  import throttle from "just-throttle";
+  import { throttle } from "lodash";
 
   export let onChangeText;
-  export let filterText;
+  export let filterText = "";
 
   const changeText = () => {
     onChangeText(filterText);

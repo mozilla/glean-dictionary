@@ -1,0 +1,440 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Breadcrumb App Details Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="flex border-b-2 py-2 divide-x "
+  >
+    <li
+      class="px-2"
+    >
+      <a
+        href="/"
+      >
+        apps
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/"
+      >
+        fenix
+      </a>
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Apps List Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="flex border-b-2 py-2 divide-x "
+  >
+    <li
+      class="px-2"
+    >
+      <a
+        href="/"
+      >
+        apps
+      </a>
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="flex border-b-2 py-2 divide-x "
+  >
+    <li
+      class="px-2"
+    >
+      <a
+        href="/"
+      >
+        apps
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/"
+      >
+        fenix
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/pings/activation"
+      >
+        activation
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/tables/activation/"
+      >
+        activation table
+      </a>
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Metric Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="flex border-b-2 py-2 divide-x "
+  >
+    <li
+      class="px-2"
+    >
+      <a
+        href="/"
+      >
+        apps
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/"
+      >
+        fenix
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/metrics/about_page.libraries_tapped"
+      >
+        about_page.libraries_tapped
+      </a>
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Ping Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="flex border-b-2 py-2 divide-x "
+  >
+    <li
+      class="px-2"
+    >
+      <a
+        href="/"
+      >
+        apps
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/"
+      >
+        fenix
+      </a>
+    </li>
+    <li
+      class="px-2"
+    >
+      <a
+        href="/apps/fenix/pings/activation"
+      >
+        activation
+      </a>
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Email Addresses Multiple Emails 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <span
+    class="block"
+  >
+    <a
+      href="mailto:example@example.com"
+    >
+      example@example.com
+    </a>
+  </span>
+  <span
+    class="block"
+  >
+    <a
+      href="mailto:email@email.com"
+    >
+      email@email.com
+    </a>
+  </span>
+  <span
+    class="block"
+  >
+    <a
+      href="mailto:post@pigeon.com"
+    >
+      post@pigeon.com
+    </a>
+  </span>
+  
+</section>
+`;
+
+exports[`Storyshots Email Addresses Single Email 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <span
+    class="block"
+  >
+    <a
+      href="mailto:glean@mozilla.com"
+    >
+      glean@mozilla.com
+    </a>
+  </span>
+  
+</section>
+`;
+
+exports[`Storyshots FilterInput Basic 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="container"
+  >
+    <div
+      class="container py-4 mx-auto"
+    >
+      <input
+        class="shadow appearance-none border rounded w-full p-2 text-gray-700
+    leading-tight focus:outline-none focus:shadow-outline"
+        placeholder="filter terms"
+        type="text"
+      />
+    </div>
+     
+    <ul>
+      <li>
+        foo
+      </li>
+      <li>
+        bar
+      </li>
+      <li>
+        foobar
+      </li>
+      <li>
+        lorem
+      </li>
+      <li>
+        ipsum
+      </li>
+    </ul>
+  </div>
+</section>
+`;
+
+exports[`Storyshots Markdown Text 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  A 
+  <em>
+    text
+  </em>
+   in markdown 
+  <a
+    href="https://mozilla.org"
+  >
+    moz
+  </a>
+  .
+  
+</section>
+`;
+
+exports[`Storyshots Pill Deprecated 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="inline-block border rounded-full text-xs py-1 px-3 w-15 text-white"
+    style="background-color: rgb(74, 85, 104);"
+  >
+    Deprecated
+  </div>
+</section>
+`;
+
+exports[`Storyshots Schema Viewer Basic 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <h2>
+    Schema
+  </h2>
+   
+  <div
+    class="container py-4 mx-auto"
+  >
+    <input
+      class="shadow appearance-none border rounded w-full p-2 text-gray-700
+    leading-tight focus:outline-none focus:shadow-outline"
+      placeholder="filter terms"
+      type="text"
+    />
+  </div>
+   
+  <div
+    class="container schema-browser mx-auto svelte-gyw6bu"
+  >
+    <p>
+      <div
+        style=""
+      >
+        <p>
+          <span
+            class="text-gray-700"
+          >
+            
+            
+          </span>
+          <span>
+            additional_properties
+          </span>
+        </p>
+         
+        <p
+          class="text-gray-600 text-xs ml-2"
+        >
+          A JSON string containing any payload properties not present in the schema
+        </p>
+         
+      </div>
+       
+      
+      <div
+        style=""
+      >
+        <p>
+          <span
+            class="text-gray-700"
+          >
+            
+            
+          </span>
+          <span>
+            client_info
+          </span>
+        </p>
+         
+         
+      </div>
+       
+      <div
+        style=""
+      >
+        <p>
+          <span
+            class="text-gray-700"
+          >
+            client_info
+            .
+          </span>
+          <span>
+            os_version
+          </span>
+        </p>
+         
+        <p
+          class="text-gray-600 text-xs ml-2"
+        >
+          The user-visible version of the operating system (e.g. "1.2.3"). If the version detection fails, this metric gets set to \`Unknown\`.
+        </p>
+         
+      </div>
+       
+      
+      <div
+        style=""
+      >
+        <p>
+          <span
+            class="text-gray-700"
+          >
+            client_info
+            .
+          </span>
+          <span>
+            telemetry_sdk_build
+          </span>
+        </p>
+         
+        <p
+          class="text-gray-600 text-xs ml-2"
+        >
+          The version of the Glean SDK
+        </p>
+         
+      </div>
+       
+      
+      
+      
+      <div
+        style=""
+      >
+        <p>
+          <span
+            class="text-gray-700"
+          >
+            
+            
+          </span>
+          <span>
+            document_id
+          </span>
+        </p>
+         
+        <p
+          class="text-gray-600 text-xs ml-2"
+        >
+          The document ID specified in the URI when the client sent this message
+        </p>
+         
+      </div>
+       
+      
+    </p>
+  </div>
+</section>
+`;

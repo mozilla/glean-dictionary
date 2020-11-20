@@ -1,9 +1,9 @@
 <script>
-  import marked from "marked";
+  import { parseInline } from "marked";
 
   export let text;
 </script>
 
 <slot>
-  {@html marked.parseInline(text)}
+  {@html parseInline(text)}
 </slot>
