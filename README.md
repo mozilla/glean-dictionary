@@ -51,7 +51,9 @@ npm run storybook
 
 ### Storybook Snapshot Testing
 
-To run snapshot tests, run:
+To give us more confidence that changes don't unintentionally break the UI, we run [storybook snapshot tests](https://storybook.js.org/docs/react/workflows/snapshot-testing).
+
+You can run them manually as follows:
 
 ```bash
 npm run test:jest
