@@ -51,7 +51,9 @@ npm run storybook
 
 ### Storybook Snapshot Testing
 
-To give us more confidence that changes don't unintentionally break the UI, we run [storybook snapshot tests](https://storybook.js.org/docs/react/workflows/snapshot-testing).
+To give us more confidence that changes don't unintentionally break the UI, we
+run
+[storybook snapshot tests](https://storybook.js.org/docs/react/workflows/snapshot-testing).
 
 You can run them manually as follows:
 
@@ -59,9 +61,9 @@ You can run them manually as follows:
 npm run test:jest
 ```
 
-If you intentionally made a change to a component that results in a change 
-to the output of the storybook snapshots, you can re-generate them using 
-the following command:
+If you intentionally made a change to a component that results in a change to
+the output of the storybook snapshots, you can re-generate them using the
+following command:
 
 ```bash
 npm run test:jest -- -u
