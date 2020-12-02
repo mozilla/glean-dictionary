@@ -3,43 +3,37 @@
 import json
 import os
 
-import requests
+import glean
 import stringcase
-from requests import HTTPError
-
-PROBE_INFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org"
-REPO_URL = PROBE_INFO_BASE_URL + "/glean/repositories"
-PINGS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/pings"
-METRICS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/metrics"
-DEPENDENCIES_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/dependencies"
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 
-DEFAULT_DEPENDENCIES = ["glean"]
 
-# we get the repos ourselves instead of using GleanPing.get_repos()
-# to get all the metadata associated with the repo
-repo_data = requests.get(REPO_URL).json()
+def _serialize_sets(obj):
+    if isinstance(obj, set):
+        return list(obj)
+    return obj
 
-# filter out repos that are just libraries, not applications
-repos = list(filter(lambda r: "library_names" not in r and r["app_id"] != "glean", repo_data))
+
+# First, get the apps we're using
+apps = [app for app in glean.GleanApp.get_apps()]
 
 # Write out a list of apps (for the landing page)
 open(os.path.join(OUTPUT_DIRECTORY, "apps.json"), "w").write(
     json.dumps(
         [
             {
-                k: repo[k]
+                k: app.repo[k]
                 for k in ["app_id", "deprecated", "description", "name", "url", "prototype"]
             }
-            for repo in repos
+            for app in apps
         ]
     )
 )
 
 # Write out some metadata for each app (for the app detail page)
-for repo in list(repos):
-    app_name = repo["name"]
+for app in apps:
+    app_name = app.repo_name
     app_dir = os.path.join(OUTPUT_DIRECTORY, app_name)
     (app_ping_dir, app_table_dir, app_metrics_dir) = (
         os.path.join(app_dir, subtype) for subtype in ("pings", "tables", "metrics")
@@ -47,80 +41,50 @@ for repo in list(repos):
     for directory in (app_ping_dir, app_table_dir, app_metrics_dir):
         os.makedirs(directory, exist_ok=True)
 
-    app_data = dict(repo, pings=[], metrics=[])
+    app_data = dict(app.repo, pings=[], metrics=[])
 
     # metrics data
-    metrics_data = requests.get(METRICS_URL_TEMPLATE.format(app_name)).json()
+    metrics = app.get_metrics()
     metric_pings = dict(data=[])
-    for (metric_name, metric_data) in metrics_data.items():
-
+    for metric in metrics:  # (metric_name, metric_data) in metrics_data.items():
         # metrics with associated pings
         metric_pings["data"].append(
             {
-                "name": metric_name,
-                "description": metric_data["history"][-1]["description"],
-                "pings": metric_data["history"][0]["send_in_pings"],
+                "name": metric.identifier,
+                "description": metric.description,
+                "pings": metric.definition["send_in_pings"],
             }
         )
 
         app_data["metrics"].append(
             {
-                "name": metric_name,
-                "description": metric_data["history"][-1]["description"],
+                "name": metric.identifier,
+                "description": metric.description,
             }
         )
-        open(os.path.join(app_metrics_dir, f"{metric_name}.json"), "w").write(
+        open(os.path.join(app_metrics_dir, f"{metric.identifier}.json"), "w").write(
             json.dumps(
                 dict(
-                    metric_data["history"][-1],
-                    name=metric_name,
-                    history=metric_data["history"],
-                )
+                    metric.definition,
+                    name=metric.identifier,
+                    history=metric.definition_history,
+                ),
+                default=_serialize_sets,
             )
         )
 
-    # Original source of dependency function:
-    # https://github.com/mozilla/mozilla-schema-generator/blob/master/mozilla_schema_generator/glean_ping.py
-    ping_data = requests.get(PINGS_URL_TEMPLATE.format(app_name)).json()
-
-    try:
-        dependencies = requests.get(DEPENDENCIES_URL_TEMPLATE.format(app_name)).json()
-
-    except HTTPError:
-        dependencies = DEFAULT_DEPENDENCIES
-
-    dependency_library_names = list(dependencies.keys())
-    repos_by_dependency_name = {}
-
-    for dependency_repo in repos:
-        for library_name in dependency_repo.get("library_names", []):
-            repos_by_dependency_name[library_name] = dependency_repo["name"]
-
-    dependencies = []
-
-    for name in dependency_library_names:
-        if name in repos_by_dependency_name:
-            dependencies.append(repos_by_dependency_name[name])
-
-    if len(dependencies) == 0:
-        dependencies = DEFAULT_DEPENDENCIES
-
-    for dependency in dependencies:
-        dependency_pings = requests.get(PINGS_URL_TEMPLATE.format(dependency)).json()
-        ping_data = {**ping_data, **dependency_pings}
-
-    for (ping_name, ping_data) in ping_data.items():
+    for ping in app.get_pings():
         app_data["pings"].append(
-            {"name": ping_name, "description": ping_data["history"][-1]["description"]}
+            {"name": ping.identifier, "description": ping.definition["description"]}
         )
 
         # write table description
-        app_id = repo["app_id"]
+        app_id = app.app_id
         app_id_snakecase = stringcase.snakecase(app_id)
-        ping_name_snakecase = stringcase.snakecase(ping_name)
+        ping_name_snakecase = stringcase.snakecase(ping.identifier)
         stable_ping_table_name = f"{app_id_snakecase}.{ping_name_snakecase}"
         live_ping_table_name = f"{app_id_snakecase}_live_v1.{ping_name_snakecase}"
-        bq_path = f"{app_id}/{ping_name}/{ping_name}.1.bq"
+        bq_path = f"{app_id}/{ping.identifier}/{ping.identifier}.1.bq"
         bq_definition = (
             "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"  # noqa
             + bq_path
@@ -129,30 +93,33 @@ for repo in list(repos):
             "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"  # noqa
             + bq_path
         )
-        open(os.path.join(app_table_dir, f"{ping_name}.json"), "w").write(
+        open(os.path.join(app_table_dir, f"{ping.identifier}.json"), "w").write(
             json.dumps(
                 dict(
                     bq_definition=bq_definition,
                     bq_definition_raw_json=bq_definition_raw_json,
                     live_table=live_ping_table_name,
-                    name=ping_name,
+                    name=ping.identifier,
                     stable_table=stable_ping_table_name,
                 )
             )
         )
 
         # write ping description
-        open(os.path.join(app_ping_dir, f"{ping_name}.json"), "w").write(
+        open(os.path.join(app_ping_dir, f"{ping.identifier}.json"), "w").write(
             json.dumps(
                 dict(
-                    ping_data["history"][-1],
-                    name=ping_name,
-                    history=ping_data["history"],
+                    ping.definition,
+                    name=ping.identifier,
+                    history=ping.definition_history,
                     metrics=[
-                        metric for metric in metric_pings["data"] if ping_name in metric["pings"]
+                        metric
+                        for metric in metric_pings["data"]
+                        if ping.identifier in metric["pings"]
                     ],
                     stable_table_name=stable_ping_table_name,
-                )
+                ),
+                default=_serialize_sets,
             )
         )
 
