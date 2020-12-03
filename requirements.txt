@@ -1,7 +1,7 @@
 autoflake
 black
+cachecontrol
 flake8
 flake8-black
 isort
-mozilla-schema-generator
 stringcase
