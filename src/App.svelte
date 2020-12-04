@@ -3,6 +3,7 @@
   import page from "page";
   import Tailwindcss from "./Tailwindcss.svelte";
   import Breadcrumb from "./components/Breadcrumb.svelte";
+  import Footer from "./components/Footer.svelte";
 
   // Pages
   import AppList from "./pages/AppList.svelte";
@@ -96,3 +97,5 @@
     bind:queryString
     on:updateURL={updateURL} />
 </div>
+
+<Footer />
