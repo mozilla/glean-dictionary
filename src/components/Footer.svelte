@@ -33,7 +33,9 @@
       <a
         href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org">Chat</a>
     </li>
-    <li><a href="https://github.com/mozilla/glean-dictionary/issues">Issues</a></li>
+    <li>
+      <a href="https://github.com/mozilla/glean-dictionary/issues">Issues</a>
+    </li>
     <li><a href="https://github.com/mozilla/glean-dictionary">Source</a></li>
   </ul>
 </footer>
