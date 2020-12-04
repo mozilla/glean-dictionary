@@ -50,15 +50,16 @@
     "svelte-loader": "2.13.6"
   },
   "dependencies": {
+    "autoprefixer": "^9.8.6",
     "lodash": "^4.17.20",
     "lunr": "^2.3.9",
     "marked": "^1.2.5",
     "node-fetch": "^2.6.1",
-    "postcss": "^8.1.10",
-    "postcss-import": "^13.0.0",
+    "postcss": "^7.0.35",
+    "postcss-import": "^12.0.1",
     "postcss-load-config": "^3.0.0",
     "sirv-cli": "1.0.8",
     "svelte-preprocess": "^4.6.1",
-    "tailwindcss": "^1.9.6"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1"
   }
 }
