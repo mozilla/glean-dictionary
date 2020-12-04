@@ -1,5 +1,6 @@
 /node_modules/
 /public/build/
+/storybook-static/
 venv
 *.pyc
 __pycache__/

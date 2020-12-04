@@ -4,3 +4,5 @@
 public/build/bundle.js
 scripts/build-glean-metadata.js
 src/Tailwindcss.svelte
+storybook-static/*
+venv/*
