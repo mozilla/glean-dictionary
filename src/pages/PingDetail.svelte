@@ -4,6 +4,7 @@
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
+  import { getMetricURL } from "../state/urls";
 
   export let params;
   const pingDataPromise = getPingData(params.app, params.ping);
@@ -75,7 +76,7 @@
   <ul>
     {#each ping.metrics as metric}
       <li>
-        <a href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
+        <a href={getMetricURL(params.app, metric.name)}>{metric.name}</a>
         <i>
           <Markdown text={metric.description} />
         </i>

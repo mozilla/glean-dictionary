@@ -11,6 +11,7 @@
   } from "../components/Pagination.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
+  import { getMetricURL } from "../state/urls";
 
   export let params;
   let app;
@@ -118,8 +119,7 @@
         <ul>
           {#each filteredMetrics as metric}
             <li>
-              <a
-                href={`/apps/${params.app}/metrics/${metric.name}`}>{metric.name}</a>
+              <a href={getMetricURL(app.name, metric.name)}>{metric.name}</a>
               <i><Markdown text={metric.description} /></i>
             </li>
           {:else}

@@ -13,7 +13,7 @@
   import TableDetail from "./pages/TableDetail.svelte";
 
   let component;
-  let params;
+  let params = {};
   let links = [];
   let queryString;
 
@@ -60,8 +60,8 @@
   }
 
   function updateURL({ detail: searchQuery }) {
-    let hash = window.location.hash.split("?")[0];
-    page(`${hash}?search=${searchQuery}`);
+    const urlParams = searchQuery.length ? `?search=${searchQuery}` : "";
+    page(`${window.location.pathname}${urlParams}`);
   }
 
   page("*", parseQuery);
@@ -70,7 +70,7 @@
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
   page("/apps/:app", setComponent(AppDetail));
-  page({ hashbang: true });
+  page();
 </script>
 
 <style>

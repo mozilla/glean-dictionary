@@ -5,8 +5,9 @@
   import NotFound from "../components/NotFound.svelte";
 
   export let params;
+  let metricName = params.metric.replaceAll("-", ".");
 
-  const metricDataPromise = getMetricData(params.app, params.metric);
+  const metricDataPromise = getMetricData(params.app, metricName);
 
   function getMetricDocumentationURI(type) {
     const sourceDocs = "https://mozilla.github.io/glean/book/user/metrics/";
@@ -177,5 +178,5 @@
     </tr>
   </table>
 {:catch}
-  <NotFound pageName={params.metric} itemType="metric" />
+  <NotFound pageName={metricName} itemType="metric" />
 {/await}
