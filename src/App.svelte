@@ -29,7 +29,12 @@
         : []),
       ...(ping ? [{ url: `/apps/${app}/pings/${ping}/`, name: ping }] : []),
       ...(metric
-        ? [{ url: `/apps/${app}/metrics/${metric}/`, name: metric }]
+        ? [
+            {
+              url: `/apps/${app}/metrics/${metric}/`,
+              name: metric.replaceAll("-", "."),
+            },
+          ]
         : []),
       ...(table
         ? [
