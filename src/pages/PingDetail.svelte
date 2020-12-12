@@ -53,7 +53,7 @@
     </tr>
     <tr>
       <td>Includes Client Identifier</td>
-      <td>{ping.client_id ? 'Yes' : 'No'}</td>
+      <td>{ping.include_client_id ? 'Yes' : 'No'}</td>
     </tr>
     <tr>
       <td>
