@@ -58,7 +58,7 @@
     "postcss": "^7.0.35",
     "postcss-import": "^12.0.1",
     "postcss-load-config": "^3.0.0",
-    "sirv-cli": "1.0.8",
+    "sirv-cli": "1.0.10",
     "svelte-preprocess": "^4.6.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1"
   }
