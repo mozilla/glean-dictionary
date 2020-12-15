@@ -1,4 +1,5 @@
 <script>
+  import { _ } from "lodash";
   import Pagination, { makePages, goToPage } from "./Pagination.svelte";
   import FilterInput from "./FilterInput.svelte";
   import Markdown from "./Markdown.svelte";
@@ -9,11 +10,11 @@
   };
 
   export let appName;
-  export let data;
+  export let items;
   export let filteredItems;
   export let itemType;
 
-  paginationState = makePages(paginationState.currentPage, data[itemType]);
+  paginationState = makePages(paginationState.currentPage, items[itemType]);
   filteredItems = paginationState.pages[paginationState.currentPage - 1];
 
   function loadPage(args) {
@@ -23,7 +24,7 @@
   }
 
   function filterItems(filterText) {
-    filteredItems = data[itemType].filter((item) =>
+    filteredItems = items[itemType].filter((item) =>
       item.name.includes(filterText)
     );
     if (filteredItems.length > 0) {
@@ -32,22 +33,18 @@
       filteredItems = paginationState.pages[paginationState.currentPage - 1];
     }
   }
-
-  const capitalize = (s) => {
-    return s.charAt(0).toUpperCase() + s.slice(1);
-  };
 </script>
 
-<h2>{capitalize(itemType)}</h2>
-{#if !data[itemType].length}
-  <p>Currently, there are no {itemType} available for {data.name}</p>
+<h2>{_.capitalize(itemType)}</h2>
+{#if !items[itemType].length}
+  <p>Currently, there are no {itemType} available for {items.name}</p>
 {:else}
   <FilterInput onChangeText={filterItems} />
   <ul>
     {#each filteredItems as item}
       <li>
         <a
-          href={`/apps/${appName || data.name}/${itemType}/${item.name}`}>{item.name}</a>
+          href={`/apps/${appName || items.name}/${itemType}/${item.name}`}>{item.name}</a>
         <i><Markdown text={item.description} /></i>
       </li>
     {:else}

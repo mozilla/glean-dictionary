@@ -2,7 +2,7 @@
   import { getPingData } from "../state/api";
 
   import EmailAddresses from "../components/EmailAddresses.svelte";
-  import DisplayData from "../components/DisplayData.svelte";
+  import ItemList from "../components/ItemList.svelte";
   import NotFound from "../components/NotFound.svelte";
   import Markdown from "../components/Markdown.svelte";
 
@@ -72,7 +72,7 @@
     </tr>
   </table>
 
-  <DisplayData itemType="metrics" data={ping} appName={params.app} />
+  <ItemList itemType="metrics" items={ping} appName={params.app} />
 {:catch}
   <NotFound pageName={params.ping} itemType="ping" />
 {/await}

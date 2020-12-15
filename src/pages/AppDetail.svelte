@@ -2,7 +2,7 @@
   import { getAppData } from "../state/api";
 
   import AppAlert from "../components/AppAlert.svelte";
-  import DisplayData from "../components/DisplayData.svelte";
+  import ItemList from "../components/ItemList.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
   import NotFound from "../components/NotFound.svelte";
   import Pill from "../components/Pill.svelte";
@@ -57,11 +57,11 @@
     <Tab key="Pings">Pings</Tab>
 
     <TabContent key="Pings">
-      <DisplayData itemType="pings" data={app} />
+      <ItemList itemType="pings" items={app} />
     </TabContent>
 
     <TabContent key="Metrics">
-      <DisplayData itemType="metrics" data={app} />
+      <ItemList itemType="metrics" items={app} />
     </TabContent>
   </TabGroup>
 {:catch}

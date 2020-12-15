@@ -172,349 +172,6 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
 </section>
 `;
 
-exports[`Storyshots DisplayData Default 1`] = `
-<section
-  class="storybook-snapshot-container"
->
-  <h2>
-    Metrics
-  </h2>
-   
-  <div
-    class="container py-4 mx-auto"
-  >
-    <input
-      class="shadow appearance-none border rounded w-full p-2 text-gray-700
-    leading-tight focus:outline-none focus:shadow-outline"
-      placeholder="filter terms"
-      type="text"
-    />
-  </div>
-   
-  <ul>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 1"
-      >
-        Test metric 1
-      </a>
-       
-      <i>
-        This is a metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 2"
-      >
-        Test metric 2
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 3"
-      >
-        Test metric 3
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 4"
-      >
-        Test metric 4
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 5"
-      >
-        Test metric 5
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 6"
-      >
-        Test metric 6
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 7"
-      >
-        Test metric 7
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 8"
-      >
-        Test metric 8
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 9"
-      >
-        Test metric 9
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 10"
-      >
-        Test metric 10
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 11"
-      >
-        Test metric 11
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 12"
-      >
-        Test metric 12
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 13"
-      >
-        Test metric 13
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 14"
-      >
-        Test metric 14
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 15"
-      >
-        Test metric 15
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 16"
-      >
-        Test metric 16
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 17"
-      >
-        Test metric 17
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 18"
-      >
-        Test metric 18
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 19"
-      >
-        Test metric 19
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-    <li>
-      <a
-        href="/apps/Test data/metrics/Test metric 20"
-      >
-        Test metric 20
-      </a>
-       
-      <i>
-        This is another metric
-        
-      </i>
-       
-    </li>
-  </ul>
-   
-  <p>
-    Page
-  
-    <code>
-      1
-    </code>
-    
-  of
-  
-    <code>
-      2
-    </code>
-    
-  (
-    <code>
-      1
-    </code>
-    
-  -
-  
-    <code>
-      20
-    </code>
-    
-  on
-  
-    <code>
-      21
-    </code>
-    
-  items)
-  </p>
-   
-  <div
-    class="flex flex-col items-center my-12"
-  >
-    <div
-      class="flex text-gray-700"
-    >
-      <div
-        class="flex h-12 font-medium bg-gray-200"
-      >
-        <div
-          class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 bg-teal-600 text-white"
-        >
-          1
-           
-        </div>
-        <div
-          class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 "
-        >
-          2
-           
-        </div>
-      </div>
-    </div>
-  </div>
-  
-</section>
-`;
-
 exports[`Storyshots Email Addresses Multiple Emails 1`] = `
 <section
   class="storybook-snapshot-container"
@@ -603,6 +260,349 @@ exports[`Storyshots FilterInput Basic 1`] = `
       </li>
     </ul>
   </div>
+</section>
+`;
+
+exports[`Storyshots ItemList Default 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <h2>
+    Metrics
+  </h2>
+   
+  <div
+    class="container py-4 mx-auto"
+  >
+    <input
+      class="shadow appearance-none border rounded w-full p-2 text-gray-700
+    leading-tight focus:outline-none focus:shadow-outline"
+      placeholder="filter terms"
+      type="text"
+    />
+  </div>
+   
+  <ul>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 0"
+      >
+        Test metric 0
+      </a>
+       
+      <i>
+        This is test metric 0
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 1"
+      >
+        Test metric 1
+      </a>
+       
+      <i>
+        This is test metric 1
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 2"
+      >
+        Test metric 2
+      </a>
+       
+      <i>
+        This is test metric 2
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 3"
+      >
+        Test metric 3
+      </a>
+       
+      <i>
+        This is test metric 3
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 4"
+      >
+        Test metric 4
+      </a>
+       
+      <i>
+        This is test metric 4
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 5"
+      >
+        Test metric 5
+      </a>
+       
+      <i>
+        This is test metric 5
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 6"
+      >
+        Test metric 6
+      </a>
+       
+      <i>
+        This is test metric 6
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 7"
+      >
+        Test metric 7
+      </a>
+       
+      <i>
+        This is test metric 7
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 8"
+      >
+        Test metric 8
+      </a>
+       
+      <i>
+        This is test metric 8
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 9"
+      >
+        Test metric 9
+      </a>
+       
+      <i>
+        This is test metric 9
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 10"
+      >
+        Test metric 10
+      </a>
+       
+      <i>
+        This is test metric 10
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 11"
+      >
+        Test metric 11
+      </a>
+       
+      <i>
+        This is test metric 11
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 12"
+      >
+        Test metric 12
+      </a>
+       
+      <i>
+        This is test metric 12
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 13"
+      >
+        Test metric 13
+      </a>
+       
+      <i>
+        This is test metric 13
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 14"
+      >
+        Test metric 14
+      </a>
+       
+      <i>
+        This is test metric 14
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 15"
+      >
+        Test metric 15
+      </a>
+       
+      <i>
+        This is test metric 15
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 16"
+      >
+        Test metric 16
+      </a>
+       
+      <i>
+        This is test metric 16
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 17"
+      >
+        Test metric 17
+      </a>
+       
+      <i>
+        This is test metric 17
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 18"
+      >
+        Test metric 18
+      </a>
+       
+      <i>
+        This is test metric 18
+        
+      </i>
+       
+    </li>
+    <li>
+      <a
+        href="/apps/Test data/metrics/Test metric 19"
+      >
+        Test metric 19
+      </a>
+       
+      <i>
+        This is test metric 19
+        
+      </i>
+       
+    </li>
+  </ul>
+   
+  <p>
+    Page
+  
+    <code>
+      1
+    </code>
+    
+  of
+  
+    <code>
+      2
+    </code>
+    
+  (
+    <code>
+      1
+    </code>
+    
+  -
+  
+    <code>
+      20
+    </code>
+    
+  on
+  
+    <code>
+      21
+    </code>
+    
+  items)
+  </p>
+   
+  <div
+    class="flex flex-col items-center my-12"
+  >
+    <div
+      class="flex text-gray-700"
+    >
+      <div
+        class="flex h-12 font-medium bg-gray-200"
+      >
+        <div
+          class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 bg-teal-600 text-white"
+        >
+          1
+           
+        </div>
+        <div
+          class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 "
+        >
+          2
+           
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </section>
 `;
 
