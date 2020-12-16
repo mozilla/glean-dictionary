@@ -71,8 +71,7 @@
       </td>
     </tr>
   </table>
-
-  <ItemList itemType="metrics" items={ping} appName={params.app} />
+  <ItemList itemType="metrics" items={ping.metrics} appName={params.app} />
 {:catch}
   <NotFound pageName={params.ping} itemType="ping" />
 {/await}

@@ -14,7 +14,8 @@ export default {
 export const Default = () => ({
   Component: ItemList,
   props: {
-    items: testData,
+    items: testData.metrics,
     itemType: "metrics",
+    appName: "app-name",
   },
 });

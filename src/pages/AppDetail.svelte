@@ -57,11 +57,11 @@
     <Tab key="Pings">Pings</Tab>
 
     <TabContent key="Pings">
-      <ItemList itemType="pings" items={app} />
+      <ItemList itemType="pings" items={app.pings} appName={app.name} />
     </TabContent>
 
     <TabContent key="Metrics">
-      <ItemList itemType="metrics" items={app} />
+      <ItemList itemType="metrics" items={app.metrics} appName={app.name} />
     </TabContent>
   </TabGroup>
 {:catch}
