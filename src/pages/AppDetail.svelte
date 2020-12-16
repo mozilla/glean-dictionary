@@ -1,53 +1,16 @@
 <script>
-  import Pill from "../components/Pill.svelte";
   import { getAppData } from "../state/api";
-  import FilterInput from "../components/FilterInput.svelte";
+
   import AppAlert from "../components/AppAlert.svelte";
-  import Markdown from "../components/Markdown.svelte";
-  import NotFound from "../components/NotFound.svelte";
-  import Pagination, {
-    makePages,
-    goToPage,
-  } from "../components/Pagination.svelte";
+  import ItemList from "../components/ItemList.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
+  import NotFound from "../components/NotFound.svelte";
+  import Pill from "../components/Pill.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
-  import { getMetricURL } from "../state/urls";
 
   export let params;
-  let app;
-  let paginationState = {
-    pages: [],
-    currentPage: 1,
-  };
-  let filteredMetrics;
-  let filteredPings;
 
-  function loadPage(args) {
-    let tempState = goToPage(args.page, paginationState.pages);
-    paginationState = Object.assign(paginationState, tempState);
-    filteredMetrics = tempState.page;
-  }
-
-  const appDataPromise = getAppData(params.app).then((appData) => {
-    app = Object.assign(appData);
-    paginationState = makePages(paginationState.currentPage, app.metrics);
-    filteredMetrics = paginationState.pages[paginationState.currentPage - 1];
-    filteredPings = app.pings;
-    return app;
-  });
-  function filterMetrics(filterText) {
-    filteredMetrics = app.metrics.filter((metric) =>
-      metric.name.includes(filterText)
-    );
-    if (filteredMetrics.length > 0) {
-      paginationState.currentPage = 1;
-      paginationState = makePages(paginationState.currentPage, filteredMetrics);
-      filteredMetrics = paginationState.pages[paginationState.currentPage - 1];
-    }
-  }
-  function filterPings(filterText) {
-    filteredPings = app.pings.filter((ping) => ping.name.includes(filterText));
-  }
+  const appDataPromise = getAppData(params.app);
 </script>
 
 <style>
@@ -94,44 +57,11 @@
     <Tab key="Pings">Pings</Tab>
 
     <TabContent key="Pings">
-      {#if !app.pings.length}
-        <p>Currently, there are no pings available for {app.name}</p>
-      {:else}
-        <FilterInput onChangeText={filterPings} />
-        <ul>
-          {#each filteredPings as ping}
-            <li>
-              <a href={`/apps/${app.name}/pings/${ping.name}`}>{ping.name}</a>
-              <i><Markdown text={ping.description} /></i>
-            </li>
-          {:else}
-            <p>Your search didn't match any ping.</p>
-          {/each}
-        </ul>
-      {/if}
+      <ItemList itemType="pings" items={app.pings} appName={app.name} />
     </TabContent>
 
     <TabContent key="Metrics">
-      {#if !app.metrics.length}
-        <p>Currently, there are no metrics available for {app.name}</p>
-      {:else}
-        <FilterInput onChangeText={filterMetrics} />
-        <ul>
-          {#each filteredMetrics as metric}
-            <li>
-              <a href={getMetricURL(app.name, metric.name)}>{metric.name}</a>
-              <i><Markdown text={metric.description} /></i>
-            </li>
-          {:else}
-            <p>Your search didn't match any metric.</p>
-          {/each}
-        </ul>
-      {/if}
-      {#if paginationState.total > 20 && filteredMetrics.length}
-        <Pagination
-          {...paginationState}
-          on:changePage={(ev) => loadPage({ page: ev.detail })} />
-      {/if}
+      <ItemList itemType="metrics" items={app.metrics} appName={app.name} />
     </TabContent>
   </TabGroup>
 {:catch}

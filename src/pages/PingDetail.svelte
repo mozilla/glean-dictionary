@@ -1,10 +1,10 @@
 <script>
   import { getPingData } from "../state/api";
 
-  import Markdown from "../components/Markdown.svelte";
-  import NotFound from "../components/NotFound.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
-  import { getMetricURL } from "../state/urls";
+  import ItemList from "../components/ItemList.svelte";
+  import NotFound from "../components/NotFound.svelte";
+  import Markdown from "../components/Markdown.svelte";
 
   export let params;
   const pingDataPromise = getPingData(params.app, params.ping);
@@ -71,18 +71,7 @@
       </td>
     </tr>
   </table>
-
-  <h2>Metrics</h2>
-  <ul>
-    {#each ping.metrics as metric}
-      <li>
-        <a href={getMetricURL(params.app, metric.name)}>{metric.name}</a>
-        <i>
-          <Markdown text={metric.description} />
-        </i>
-      </li>
-    {/each}
-  </ul>
+  <ItemList itemType="metrics" items={ping.metrics} appName={params.app} />
 {:catch}
   <NotFound pageName={params.ping} itemType="ping" />
 {/await}
