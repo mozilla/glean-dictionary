@@ -3,6 +3,7 @@
   import Pagination, { makePages, goToPage } from "./Pagination.svelte";
   import FilterInput from "./FilterInput.svelte";
   import Markdown from "./Markdown.svelte";
+  import { getItemURL } from "../state/urls";
 
   export let paginationState = {
     pages: [],
@@ -41,7 +42,7 @@
   <ul>
     {#each filteredItems as item}
       <li>
-        <a href={`/apps/${appName}/${itemType}/${item.name}`}>{item.name}</a>
+        <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
         <i><Markdown text={item.description} /></i>
       </li>
     {:else}
