@@ -1,5 +1,6 @@
 <script>
   import { getMetricData } from "../state/api";
+  import { getMetricBigQueryURL } from "../state/urls";
 
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
@@ -175,6 +176,16 @@
     <tr>
       <td>Version</td>
       <td>{metric.version || 0}</td>
+    </tr>
+    <tr>
+      <td>BigQuery</td>
+      <td>
+        {#each metric.send_in_pings as mping}
+          <a href={getMetricBigQueryURL(params.app, mping, metricName)}>
+            {mping}
+          </a>
+        {/each}
+      </td>
     </tr>
   </table>
 {:catch}

@@ -4,3 +4,10 @@ export function getItemURL(appName, itemType, itemName) {
   // schema doesn't allow `-`'s in metrics, so this should be ok
   return `/apps/${appName}/${itemType}/${itemName.replace(/\./g, "-")}`;
 }
+
+export function getMetricBigQueryURL(appName, pingName, metricName) {
+  return `/apps/${appName}/tables/${pingName}?search=${metricName.replace(
+    /\./g,
+    "_"
+  )}`;
+}
