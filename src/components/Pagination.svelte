@@ -1,26 +1,14 @@
 <script context="module">
+  import { chunk } from "lodash";
+
   let DEFAULT_ITEMS_PER_PAGE = 20;
-  export const paginateData = (
-    array,
-    totalPages,
-    perPage = DEFAULT_ITEMS_PER_PAGE
-  ) => {
-    let result = [];
-    let localData = array.slice();
-    for (let i = totalPages; i > 0; i -= 1) {
-      result.push(
-        localData.splice(0, Math.max(Math.floor(localData.length / i), perPage))
-      );
-    }
-    return result;
-  };
 
   export const makePages = (page, data, perPage = DEFAULT_ITEMS_PER_PAGE) => {
     if (data.length === 0) return {};
     let total = data.length;
     let currentPage = page;
     let lastPage = Math.ceil(total / perPage);
-    let pages = paginateData(data, lastPage, perPage);
+    let pages = chunk([...data], perPage);
     let from = page + perPage * (page - 1);
     let to = page * perPage;
     return {
@@ -58,9 +46,30 @@
   export let total;
   const dispatch = createEventDispatcher();
 
-  function range(size, startAt = 0) {
-    return [...Array(size).keys()].map((i) => i + startAt);
-  }
+  export const truncatedPagination = (current, last) => {
+    // Source: https://gist.github.com/kottenator/9d936eb3e4e3c3e02598#gistcomment-3413141
+    const center = [
+      current - 2,
+      current - 1,
+      current,
+      current + 1,
+      current + 2,
+    ];
+    const filteredCenter = center.filter((p) => p > 1 && p < last);
+    const includeThreeLeft = current === 5;
+    const includeThreeRight = current === last - 4;
+    const includeLeftDots = current > 5;
+    const includeRightDots = current < last - 4;
+
+    if (includeThreeLeft) filteredCenter.unshift(2);
+    if (includeThreeRight) filteredCenter.push(total - 1);
+
+    if (includeLeftDots) filteredCenter.unshift("...");
+    if (includeRightDots) filteredCenter.push("...");
+
+    if (total <= 1) return [1];
+    return [1, ...filteredCenter, last];
+  };
 
   function changePage(page) {
     if (page !== currentPage) {
@@ -85,10 +94,10 @@
 <div class="flex flex-col items-center my-12">
   <div class="flex text-gray-700">
     <div class="flex h-12 font-medium bg-gray-200">
-      {#each range(lastPage, 1) as page}
+      {#each truncatedPagination(currentPage, lastPage) as page}
         <div
           on:click|preventDefault={() => changePage(page)}
-          class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 {page === currentPage ? 'bg-teal-600 text-white' : ''}">
+          class="m-4 md:flex justify-center items-center cursor-pointer leading-5 {page === currentPage ? 'bg-teal-600 text-white' : ''}">
           {page}
         </div>
       {/each}

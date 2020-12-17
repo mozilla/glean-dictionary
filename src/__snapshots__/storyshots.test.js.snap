@@ -588,13 +588,13 @@ exports[`Storyshots ItemList Default 1`] = `
         class="flex h-12 font-medium bg-gray-200"
       >
         <div
-          class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 bg-teal-600 text-white"
+          class="m-4 md:flex justify-center items-center cursor-pointer leading-5 bg-teal-600 text-white"
         >
           1
            
         </div>
         <div
-          class="w-12 md:flex justify-center items-center hidden cursor-pointer leading-5 "
+          class="m-4 md:flex justify-center items-center cursor-pointer leading-5 "
         >
           2
            
