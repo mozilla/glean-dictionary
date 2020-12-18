@@ -1,3 +1,4 @@
+import replace from "@rollup/plugin-replace";
 import svelte from "rollup-plugin-svelte";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
@@ -48,7 +49,11 @@ export default {
         css.write("bundle.css");
       },
     }),
-
+    // only use google analytics on production builds
+    replace({
+      __GOOGLE_ANALYTICS_ID__:
+        process.env.CONTEXT === "production" && process.env.GOOGLE_ANALYTICS_ID,
+    }),
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
     // some cases you'll need additional configuration -
