@@ -7,6 +7,9 @@ module.exports = {
     browser: true,
     es6: true,
   },
+  globals: {
+    ga: "readonly",
+  },
   extends: ["airbnb-base"],
   plugins: ["jest", "svelte3"],
   rules: {
