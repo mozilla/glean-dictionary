@@ -93,14 +93,48 @@
 
 <div class="flex flex-col items-center my-12">
   <div class="flex text-gray-700">
-    <div class="flex h-12 font-medium bg-gray-200">
+    <div
+      on:click|preventDefault={() => changePage(currentPage !== 1 ? currentPage - 1 : 1)}
+      class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer {currentPage === 1 ? 'bg-teal-600 text-white' : ''}">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-chevron-left w-6 h-6">
+        <polyline points="15 18 9 12 15 6" />
+      </svg>
+    </div>
+    <div class="flex h-12 font-medium rounded-full bg-gray-200">
       {#each truncatedPagination(currentPage, lastPage) as page}
         <div
           on:click|preventDefault={() => changePage(page)}
-          class="m-4 md:flex justify-center items-center cursor-pointer leading-5 {page === currentPage ? 'bg-teal-600 text-white' : ''}">
+          class="w-12 md:flex justify-center items-center hidden cursor-pointer {page === currentPage ? 'bg-teal-600 text-white' : ''}">
           {page}
         </div>
       {/each}
+    </div>
+    <div
+      on:click|preventDefault={() => changePage(currentPage !== lastPage ? currentPage + 1 : lastPage)}
+      class="h-12 w-12 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer {currentPage === lastPage ? 'bg-teal-600 text-white' : ''}">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="100%"
+        height="100%"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-chevron-right w-6 h-6">
+        <polyline points="9 18 15 12 9 6" />
+      </svg>
     </div>
   </div>
 </div>
