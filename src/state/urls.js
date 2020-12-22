@@ -6,8 +6,7 @@ export function getItemURL(appName, itemType, itemName) {
 }
 
 export function getMetricBigQueryURL(appName, pingName, metricName) {
-  return `/apps/${appName}/tables/${pingName}?search=${metricName.replace(
-    /\./g,
-    "_"
-  )}`;
+  return metricName
+    ? `/apps/${appName}/tables/${pingName}?search=${metricName}`
+    : `/apps/${appName}/tables/${pingName}`;
 }

@@ -91,8 +91,8 @@
     <tr>
       <td>Send In Pings</td>
       <td>
-        {#each metric.send_in_pings as mping}
-          <a href={`/apps/${params.app}/pings/${mping}`}> {mping} </a>
+        {#each metric.send_in_pings as name}
+          <a href={`/apps/${params.app}/pings/${name}`}> {name} </a>
         {/each}
       </td>
     </tr>
@@ -180,10 +180,15 @@
     <tr>
       <td>BigQuery</td>
       <td>
-        {#each metric.send_in_pings as mping}
-          <a href={getMetricBigQueryURL(params.app, mping, metricName)}>
-            {mping}
-          </a>
+        {#each metric.bigquery_names.stable_ping_table_names as name}
+          {#if name[0] !== 'events'}
+            <a
+              href={getMetricBigQueryURL(params.app, name[0], metric.bigquery_names.metric_table_name)}>
+              {name[1]}{metric.bigquery_names.stable_ping_table_names.indexOf(name) === metric.bigquery_names.stable_ping_table_names.length - 1 ? '' : ','}
+            </a>
+          {:else}
+            <a href={getMetricBigQueryURL(params.app, name[0])}> {name[1]} </a>
+          {/if}
         {/each}
       </td>
     </tr>

@@ -43,6 +43,9 @@ for app in apps:
 
     app_data = dict(app.repo, pings=[], metrics=[])
 
+    app_id = app.app_id
+    app_id_snakecase = stringcase.snakecase(app_id)
+    
     # metrics data
     metrics = app.get_metrics()
     metric_pings = dict(data=[])
@@ -62,12 +65,25 @@ for app in apps:
                 "description": metric.description,
             }
         )
+
+        stable_ping_table_names = []
+        for ping in metric.definition["send_in_pings"]:
+            stable_ping_table_names.append([ping, f"{app_id_snakecase}.{stringcase.snakecase(ping)}"])
+        
+        metric_type = metric.definition["type"]
+        metric_name_snakecase = stringcase.snakecase(metric.identifier)
+        bigquery_names = dict(
+            stable_ping_table_names = stable_ping_table_names,
+            metric_table_name = f"metrics.{metric_type}.{metric_name_snakecase}"
+        )
+
         open(os.path.join(app_metrics_dir, f"{metric.identifier}.json"), "w").write(
             json.dumps(
                 dict(
                     metric.definition,
                     name=metric.identifier,
                     history=metric.definition_history,
+                    bigquery_names=bigquery_names
                 ),
                 default=_serialize_sets,
             )
@@ -79,8 +95,6 @@ for app in apps:
         )
 
         # write table description
-        app_id = app.app_id
-        app_id_snakecase = stringcase.snakecase(app_id)
         ping_name_snakecase = stringcase.snakecase(ping.identifier)
         stable_ping_table_name = f"{app_id_snakecase}.{ping_name_snakecase}"
         live_ping_table_name = f"{app_id_snakecase}_live_v1.{ping_name_snakecase}"
