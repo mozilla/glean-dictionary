@@ -267,10 +267,6 @@ exports[`Storyshots ItemList Default 1`] = `
 <section
   class="storybook-snapshot-container"
 >
-  <h2>
-    Metrics
-  </h2>
-   
   <div
     class="container py-4 mx-auto"
   >
