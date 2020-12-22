@@ -181,14 +181,17 @@
       <td>BigQuery</td>
       <td>
         {#each metric.bigquery_names.stable_ping_table_names as name}
-          {#if name[0] !== 'events'}
-            <a
-              href={getMetricBigQueryURL(params.app, name[0], metric.bigquery_names.metric_table_name)}>
-              {name[1]}{metric.bigquery_names.stable_ping_table_names.indexOf(name) === metric.bigquery_names.stable_ping_table_names.length - 1 ? '' : ','}
-            </a>
-          {:else}
-            <a href={getMetricBigQueryURL(params.app, name[0])}> {name[1]} </a>
-          {/if}
+          <div>
+            In
+            <a href={getMetricBigQueryURL(params.app, name[0])}>{name[1]}</a>
+            {#if name[0] !== 'events'}
+              as
+              <a
+                href={getMetricBigQueryURL(params.app, name[0], metric.bigquery_names.metric_table_name)}>
+                {metric.bigquery_names.metric_table_name}
+              </a>
+            {/if}
+          </div>
         {/each}
       </td>
     </tr>
