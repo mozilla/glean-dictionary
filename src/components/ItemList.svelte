@@ -1,5 +1,4 @@
 <script>
-  import { capitalize } from "lodash";
   import Pagination, { makePages, goToPage } from "./Pagination.svelte";
   import FilterInput from "./FilterInput.svelte";
   import Markdown from "./Markdown.svelte";
@@ -34,7 +33,6 @@
   }
 </script>
 
-<h2>{capitalize(itemType)}</h2>
 {#if !items.length}
   <p>Currently, there are no {itemType} available for {items.name}</p>
 {:else}
