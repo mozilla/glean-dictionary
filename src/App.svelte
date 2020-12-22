@@ -87,25 +87,46 @@
   .brand {
     @apply text-gray-100;
   }
+  .logo {
+    background-image: url("https://glean-dictionary.netlify.app/img/glean_logo.png");
+  }
+
+  .c-sub-navigation {
+    background: #f9f9fa;
+    box-shadow: inset 0 10px 2px -10px rgba(29, 17, 51, 0.04),
+      inset 0 10px 4px -10px rgba(9, 32, 77, 0.12),
+      inset 0 10px 3px -10px rgba(29, 17, 51, 0.12);
+  }
 </style>
 
 <Tailwindcss />
-<nav class="flex items-center justify-between flex-wrap bg-blue-800 p-2">
-  <div class="flex items-center flex-shrink-0 mr-6">
-    <a class="brand font-semibold text-xl tracking-tight" href="/">
-      Glean Dictionary
-      <i>Prototype</i>
-    </a>
+
+<div class="mzp-c-navigation mzp-is-sticky">
+  <div class="mzp-c-navigation-l-content">
+    <div class="mzp-c-navigation-container">
+      <div class="mzp-c-navigation-logo">
+        <a class="logo" href="/">Glean Dictionary</a>
+      </div>
+    </div>
+  </div>
+</div>
+<nav class="mzp-c-navigation c-sub-navigation">
+  <div class="mzp-c-navigation-l-content">
+    <div class="mzp-c-navigation-container">
+      <Breadcrumb {links} />
+    </div>
   </div>
 </nav>
-<Breadcrumb {links} />
-
-<div class="container py-4 mx-auto">
-  <svelte:component
-    this={component}
-    bind:params
-    bind:queryString
-    on:updateURL={updateURL} />
-</div>
+<main>
+  <div class="mzp-l-content">
+    <article class="mzp-c-article">
+      <svelte:component
+        this={component}
+        bind:params
+        bind:queryString
+        on:updateURL={updateURL} />
+    </article>
+  </div>
+</main>
 
 <Footer />
