@@ -84,9 +84,6 @@
 </script>
 
 <style>
-  .brand {
-    @apply text-gray-100;
-  }
   .logo {
     background-image: url("https://glean-dictionary.netlify.app/img/glean_logo.png");
   }

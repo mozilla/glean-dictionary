@@ -5,7 +5,7 @@ exports[`Storyshots Breadcrumb App Details Page 1`] = `
   class="storybook-snapshot-container"
 >
   <ol
-    class="flex border-b-2 py-2 divide-x "
+    class="flex py-2 divide-x "
   >
     <li
       class="px-2"
@@ -34,7 +34,7 @@ exports[`Storyshots Breadcrumb Apps List Page 1`] = `
   class="storybook-snapshot-container"
 >
   <ol
-    class="flex border-b-2 py-2 divide-x "
+    class="flex py-2 divide-x "
   >
     <li
       class="px-2"
@@ -54,7 +54,7 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
   class="storybook-snapshot-container"
 >
   <ol
-    class="flex border-b-2 py-2 divide-x "
+    class="flex py-2 divide-x "
   >
     <li
       class="px-2"
@@ -101,7 +101,7 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
   class="storybook-snapshot-container"
 >
   <ol
-    class="flex border-b-2 py-2 divide-x "
+    class="flex py-2 divide-x "
   >
     <li
       class="px-2"
@@ -139,7 +139,7 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
   class="storybook-snapshot-container"
 >
   <ol
-    class="flex border-b-2 py-2 divide-x "
+    class="flex py-2 divide-x "
   >
     <li
       class="px-2"
