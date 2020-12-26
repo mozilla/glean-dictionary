@@ -1,8 +1,5 @@
 <script>
   import MozillaLogo from "./icons/MozillaLogo.svelte";
-
-  let rev = "__GLEAN_VERSION__";
-  let revLink = `https://github.com/mozilla/glean-dictionary/tree/${rev}`;
 </script>
 
 <style>
@@ -39,7 +36,8 @@
     </li>
     <li><a href="https://github.com/mozilla/glean-dictionary">Source</a></li>
     <li>
-      <span>Glean - revision </span><a href={revLink}>{rev.substring(0, 10)}</a>
+      <span>Source - </span><a
+        href="https://github.com/mozilla/glean-dictionary/tree/__VERSION__">{'__VERSION__'.substring(0, 10)}</a>
     </li>
   </ul>
 </footer>

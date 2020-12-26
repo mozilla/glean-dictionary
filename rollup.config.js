@@ -53,7 +53,7 @@ export default {
     replace({
       __GOOGLE_ANALYTICS_ID__:
         process.env.CONTEXT === "production" && process.env.GOOGLE_ANALYTICS_ID,
-      __GLEAN_VERSION__: execSync("git rev-list HEAD --max-count=1")
+      __VERSION__: execSync("git rev-list HEAD --max-count=1")
         .toString()
         .trim(),
     }),
