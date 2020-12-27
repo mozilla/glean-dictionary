@@ -1,5 +1,7 @@
 <script>
   import MozillaLogo from "./icons/MozillaLogo.svelte";
+
+  const rev = "__VERSION__";
 </script>
 
 <style>
@@ -11,12 +13,10 @@
     @apply py-4;
   }
   .project-links {
-    @apply grid;
-    @apply grid-cols-4;
-    @apply justify-items-center;
-    @apply p-0;
-    @apply m-0;
-    @apply gap-2;
+    @apply flex;
+  }
+  .project-links li {
+    @apply ml-2;
   }
   .mozilla-logo {
     @apply text-black;
@@ -37,5 +37,9 @@
       <a href="https://github.com/mozilla/glean-dictionary/issues">Issues</a>
     </li>
     <li><a href="https://github.com/mozilla/glean-dictionary">Source</a></li>
+    <li>
+      <span>Source - </span><a
+        href="https://github.com/mozilla/glean-dictionary/tree/{rev}">{rev.substring(0, 10)}</a>
+    </li>
   </ul>
 </footer>

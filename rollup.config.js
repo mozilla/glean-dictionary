@@ -4,7 +4,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
-import { spawn } from "child_process";
+import { spawn, execSync } from "child_process";
 import sveltePreprocess from "svelte-preprocess";
 
 const production = !process.env.ROLLUP_WATCH;
@@ -53,6 +53,9 @@ export default {
     replace({
       __GOOGLE_ANALYTICS_ID__:
         process.env.CONTEXT === "production" && process.env.GOOGLE_ANALYTICS_ID,
+      __VERSION__: execSync("git rev-list HEAD --max-count=1")
+        .toString()
+        .trim(),
     }),
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
