@@ -11,7 +11,7 @@
 </style>
 
 <div style={node.visible ? '' : 'display: none;'}>
-  <p class="node-name">
+  <p>
     <span
       class="text-gray-700">{parentFields.join('.')}{parentFields.length ? '.' : ''}</span><span>{node.name}</span>
   </p>
