@@ -4,8 +4,14 @@
   export let parentFields = [];
 </script>
 
+<style>
+  p {
+    margin: 0;
+  }
+</style>
+
 <div style={node.visible ? '' : 'display: none;'}>
-  <p>
+  <p class="node-name">
     <span
       class="text-gray-700">{parentFields.join('.')}{parentFields.length ? '.' : ''}</span><span>{node.name}</span>
   </p>

@@ -2,40 +2,42 @@
   import MozillaLogo from "./icons/MozillaLogo.svelte";
 </script>
 
-<style>
-  .glean-footer {
-    @apply flex;
-    @apply items-center;
-    @apply justify-between;
-    @apply px-8;
-    @apply py-4;
-  }
-  .project-links {
-    @apply grid;
-    @apply grid-cols-4;
-    @apply justify-items-center;
-    @apply p-0;
-    @apply m-0;
-    @apply gap-2;
-  }
-  .mozilla-logo {
-    @apply text-black;
-  }
-</style>
-
-<footer class="glean-footer">
-  <a class="mozilla-logo" href="https://www.mozilla.org/"><MozillaLogo /></a>
-  <ul class="project-links">
-    <li>
-      <a href="https://www.mozilla.org/privacy/websites/#cookies">Cookies</a>
-    </li>
-    <li>
-      <a
-        href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org">Chat</a>
-    </li>
-    <li>
-      <a href="https://github.com/mozilla/glean-dictionary/issues">Issues</a>
-    </li>
-    <li><a href="https://github.com/mozilla/glean-dictionary">Source</a></li>
-  </ul>
+<footer class="mzp-c-footer">
+  <div class="mzp-l-content">
+    <nav class="mzp-c-footer-secondary">
+      <div class="mzp-c-footer-primary-logo">
+        <a
+          href="https://www.mozilla.org/"
+          data-link-type="footer"
+          data-link-name="Mozilla"><MozillaLogo /></a>
+      </div>
+      <div class="mzp-c-footer-legal">
+        <ul class="mzp-c-footer-terms">
+          <li>
+            <a
+              href="https://www.mozilla.org/privacy/websites/#cookies">Cookies</a>
+          </li>
+          <li>
+            <a
+              href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org">Chat</a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/mozilla/glean-dictionary/issues">Issues</a>
+          </li>
+          <li>
+            <a href="https://github.com/mozilla/glean-dictionary">Source</a>
+          </li>
+        </ul>
+        <p class="mzp-c-footer-license">
+          Portions of this content are ©1998–2018 by individual mozilla.org
+          contributors. Content available under a
+          <a
+            rel="license"
+            href="https://www.mozilla.org/foundation/licensing/website-content/">Creative
+            Commons license.</a>
+        </p>
+      </div>
+    </nav>
+  </div>
 </footer>
