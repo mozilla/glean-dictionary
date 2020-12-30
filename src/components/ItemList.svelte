@@ -33,20 +33,29 @@
   }
 </script>
 
+<style>
+  .item-browser {
+    max-height: 400px;
+    overflow: scroll;
+  }
+</style>
+
 {#if !items.length}
   <p>Currently, there are no {itemType} available for {items.name}</p>
 {:else}
   <FilterInput onChangeText={filterItems} />
-  <ul>
-    {#each filteredItems as item}
-      <li>
-        <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
-        <i><Markdown text={item.description} /></i>
-      </li>
-    {:else}
-      <p>Your search didn't match any {itemType}.</p>
-    {/each}
-  </ul>
+  <div class="item-browser mx-auto my-4 p-2">
+    <ul>
+      {#each filteredItems as item}
+        <li>
+          <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
+          <i><Markdown text={item.description} /></i>
+        </li>
+      {:else}
+        <p>Your search didn't match any {itemType}.</p>
+      {/each}
+    </ul>
+  </div>
 {/if}
 {#if paginationState.total > 20 && filteredItems.length}
   <Pagination
