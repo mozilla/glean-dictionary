@@ -76,6 +76,7 @@ for app in apps:
         metric_name_snakecase = stringcase.snakecase(metric.identifier)
         bigquery_names = dict(
             stable_ping_table_names=stable_ping_table_names,
+            metric_type=metric_type,
             metric_table_name=f"metrics.{metric_type}.{metric_name_snakecase}",
         )
 

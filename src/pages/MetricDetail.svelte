@@ -180,14 +180,16 @@
     <tr>
       <td>BigQuery</td>
       <td>
-        {#each metric.bigquery_names.stable_ping_table_names as name}
+        {#each metric.bigquery_names.stable_ping_table_names as [sendInPing, tableName]}
           <div>
             In
-            <a href={getMetricBigQueryURL(params.app, name[0])}>{name[1]}</a>
-            {#if name[0] !== 'events'}
+            <a
+              href={getMetricBigQueryURL(params.app, sendInPing)}>{tableName}</a>
+            <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
+            {#if metric.bigquery_names.metric_type !== 'event'}
               as
               <a
-                href={getMetricBigQueryURL(params.app, name[0], metric.bigquery_names.metric_table_name)}>
+                href={getMetricBigQueryURL(params.app, sendInPing, metric.bigquery_names.metric_table_name)}>
                 {metric.bigquery_names.metric_table_name}
               </a>
             {/if}
