@@ -1,5 +1,6 @@
 <script>
   import { getMetricData } from "../state/api";
+  import { getMetricBigQueryURL } from "../state/urls";
 
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
@@ -90,8 +91,8 @@
     <tr>
       <td>Send In Pings</td>
       <td>
-        {#each metric.send_in_pings as mping}
-          <a href={`/apps/${params.app}/pings/${mping}`}> {mping} </a>
+        {#each metric.send_in_pings as name}
+          <a href={`/apps/${params.app}/pings/${name}`}> {name} </a>
         {/each}
       </td>
     </tr>
@@ -175,6 +176,26 @@
     <tr>
       <td>Version</td>
       <td>{metric.version || 0}</td>
+    </tr>
+    <tr>
+      <td>BigQuery</td>
+      <td>
+        {#each metric.bigquery_names.stable_ping_table_names as [sendInPing, tableName]}
+          <div>
+            In
+            <a
+              href={getMetricBigQueryURL(params.app, sendInPing)}>{tableName}</a>
+            <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
+            {#if metric.bigquery_names.metric_type !== 'event'}
+              as
+              <a
+                href={getMetricBigQueryURL(params.app, sendInPing, metric.bigquery_names.metric_table_name)}>
+                {metric.bigquery_names.metric_table_name}
+              </a>
+            {/if}
+          </div>
+        {/each}
+      </td>
     </tr>
   </table>
 {:catch}
