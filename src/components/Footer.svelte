@@ -30,12 +30,7 @@
           </li>
         </ul>
         <p class="mzp-c-footer-license">
-          Portions of this content are ©1998–2018 by individual mozilla.org
-          contributors. Content available under a
-          <a
-            rel="license"
-            href="https://www.mozilla.org/foundation/licensing/website-content/">Creative
-            Commons license.</a>
+          © 2020 Mozilla and other contributors.
         </p>
       </div>
     </nav>
