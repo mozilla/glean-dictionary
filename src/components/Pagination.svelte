@@ -1,52 +1,13 @@
-<script context="module">
-  import { chunk } from "lodash";
-
-  let DEFAULT_ITEMS_PER_PAGE = 20;
-
-  export const makePages = (page, data, perPage = DEFAULT_ITEMS_PER_PAGE) => {
-    if (data.length === 0) return {};
-    let total = data.length;
-    let currentPage = page;
-    let lastPage = Math.ceil(total / perPage);
-    let pages = chunk([...data], perPage);
-    let from = page + perPage * (page - 1);
-    let to = page * perPage;
-    return {
-      total,
-      currentPage,
-      lastPage,
-      from,
-      to,
-      pages,
-    };
-  };
-
-  export const goToPage = (page, pages) => {
-    let from = 1;
-    for (let i = 0; i < page - 1; i += 1) {
-      from += pages[i].length;
-    }
-    let to = from + pages[page - 1].length - 1;
-    return {
-      currentPage: page,
-      from,
-      to,
-      page: pages[page - 1],
-    };
-  };
-</script>
-
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { currentPage } from "../state/stores";
   import BackButton from "./icons/BackButton.svelte";
   import ForwardButton from "./icons/ForwardButton.svelte";
 
-  export let currentPage;
-  export let lastPage;
   export let from;
   export let to;
-  export let total;
-  const dispatch = createEventDispatcher();
+  export let lastPage;
+  export let totalItems;
+  export let itemsPerPage;
 
   export const truncatedPagination = (current, last) => {
     // Source: https://gist.github.com/kottenator/9d936eb3e4e3c3e02598#gistcomment-3413141
@@ -64,55 +25,66 @@
     const includeRightDots = current < last - 4;
 
     if (includeThreeLeft) filteredCenter.unshift(2);
-    if (includeThreeRight) filteredCenter.push(total - 1);
+    if (includeThreeRight) filteredCenter.push(last - 1);
 
     if (includeLeftDots) filteredCenter.unshift("...");
     if (includeRightDots) filteredCenter.push("...");
 
-    if (total <= 1) return [1];
     return [1, ...filteredCenter, last];
   };
 
   function changePage(page) {
     if (page !== currentPage) {
-      dispatch("changePage", page);
+      currentPage.set(page);
+    }
+  }
+
+  $: {
+    lastPage = Math.ceil(totalItems / itemsPerPage);
+    from = 1 + itemsPerPage * ($currentPage - 1);
+    if ($currentPage * itemsPerPage > totalItems) {
+      to = totalItems;
+    } else {
+      to = $currentPage * itemsPerPage;
     }
   }
 </script>
 
 <p>
   Page
-  <code>{currentPage}</code>
+  <code>{$currentPage}</code>
   of
   <code>{lastPage}</code>
   (<code>{from}</code>
   -
   <code>{to}</code>
   on
-  <code>{total}</code>
+  <code>{totalItems}</code>
   items)
 </p>
 
-<div class="flex flex-col items-center my-12">
-  <div class="flex text-gray-700">
-    <div
-      on:click|preventDefault={() => changePage(currentPage !== 1 ? currentPage - 1 : 1)}
-      class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer {currentPage === 1 ? 'bg-teal-600 text-white' : ''}">
-      <BackButton />
-    </div>
-    <div class="flex h-12 font-medium rounded-full bg-gray-200">
-      {#each truncatedPagination(currentPage, lastPage) as page}
-        <div
-          on:click|preventDefault={() => changePage(page)}
-          class="w-12 md:flex justify-center items-center hidden cursor-pointer {page === currentPage ? 'bg-teal-600 text-white' : ''}">
-          {page}
-        </div>
-      {/each}
-    </div>
-    <div
-      on:click|preventDefault={() => changePage(currentPage !== lastPage ? currentPage + 1 : lastPage)}
-      class="h-12 w-12 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer {currentPage === lastPage ? 'bg-teal-600 text-white' : ''}">
-      <ForwardButton />
+{#if itemsPerPage < totalItems}
+  <div class="flex flex-col items-center my-12">
+    <div class="flex text-gray-700">
+      <div
+        on:click|preventDefault={() => changePage($currentPage !== 1 ? $currentPage - 1 : 1)}
+        class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer {$currentPage === 1 ? 'bg-teal-600 text-white' : ''}">
+        <BackButton />
+      </div>
+      <div class="flex h-12 font-medium rounded-full bg-gray-200">
+        {#each truncatedPagination($currentPage, lastPage) as page}
+          <div
+            on:click|preventDefault={() => changePage(Number.isInteger(page) ? page : $currentPage)}
+            class="w-12 md:flex justify-center items-center hidden cursor-pointer {page === $currentPage ? 'bg-teal-600 text-white' : ''}">
+            {page}
+          </div>
+        {/each}
+      </div>
+      <div
+        on:click|preventDefault={() => changePage($currentPage !== lastPage ? $currentPage + 1 : lastPage)}
+        class="h-12 w-12 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer {currentPage === lastPage ? 'bg-teal-600 text-white' : ''}">
+        <ForwardButton />
+      </div>
     </div>
   </div>
-</div>
+{/if}

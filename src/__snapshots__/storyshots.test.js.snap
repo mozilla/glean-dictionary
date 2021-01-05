@@ -645,6 +645,7 @@ exports[`Storyshots ItemList Default 1`] = `
     </div>
   </div>
   
+  
 </section>
 `;
 
@@ -681,7 +682,7 @@ exports[`Storyshots Pagination Default 1`] = `
   of
   
     <code>
-      21
+      11
     </code>
     
   (
@@ -692,13 +693,13 @@ exports[`Storyshots Pagination Default 1`] = `
   -
   
     <code>
-      8
+      20
     </code>
     
   on
   
     <code>
-      204
+      210
     </code>
     
   items)
@@ -761,7 +762,7 @@ exports[`Storyshots Pagination Default 1`] = `
         <div
           class="w-12 md:flex justify-center items-center hidden cursor-pointer "
         >
-          21
+          11
            
         </div>
       </div>
@@ -788,6 +789,7 @@ exports[`Storyshots Pagination Default 1`] = `
       </div>
     </div>
   </div>
+  
 </section>
 `;
 
