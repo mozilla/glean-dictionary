@@ -830,7 +830,9 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
       <div
         style=""
       >
-        <p>
+        <p
+          class="svelte-10zy88m"
+        >
           <span
             class="text-gray-700"
           >
@@ -843,7 +845,7 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
         </p>
          
         <p
-          class="text-gray-600 text-xs ml-2"
+          class="text-gray-600 text-xs ml-2 svelte-10zy88m"
         >
           A JSON string containing any payload properties not present in the schema
         </p>
@@ -854,7 +856,9 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
       <div
         style=""
       >
-        <p>
+        <p
+          class="svelte-10zy88m"
+        >
           <span
             class="text-gray-700"
           >
@@ -872,7 +876,9 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
       <div
         style=""
       >
-        <p>
+        <p
+          class="svelte-10zy88m"
+        >
           <span
             class="text-gray-700"
           >
@@ -885,7 +891,7 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
         </p>
          
         <p
-          class="text-gray-600 text-xs ml-2"
+          class="text-gray-600 text-xs ml-2 svelte-10zy88m"
         >
           The user-visible version of the operating system (e.g. "1.2.3"). If the version detection fails, this metric gets set to \`Unknown\`.
         </p>
@@ -896,7 +902,9 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
       <div
         style=""
       >
-        <p>
+        <p
+          class="svelte-10zy88m"
+        >
           <span
             class="text-gray-700"
           >
@@ -909,7 +917,7 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
         </p>
          
         <p
-          class="text-gray-600 text-xs ml-2"
+          class="text-gray-600 text-xs ml-2 svelte-10zy88m"
         >
           The version of the Glean SDK
         </p>
@@ -922,7 +930,9 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
       <div
         style=""
       >
-        <p>
+        <p
+          class="svelte-10zy88m"
+        >
           <span
             class="text-gray-700"
           >
@@ -935,7 +945,7 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
         </p>
          
         <p
-          class="text-gray-600 text-xs ml-2"
+          class="text-gray-600 text-xs ml-2 svelte-10zy88m"
         >
           The document ID specified in the URI when the client sent this message
         </p>
