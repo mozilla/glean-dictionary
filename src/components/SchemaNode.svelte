@@ -4,6 +4,12 @@
   export let parentFields = [];
 </script>
 
+<style>
+  p {
+    margin: 0;
+  }
+</style>
+
 <div style={node.visible ? '' : 'display: none;'}>
   <p>
     <span
