@@ -11,6 +11,32 @@
 
   const metricDataPromise = getMetricData(params.app, metricName);
 
+  function getGlamUrl(app, metric) {
+    const map = {
+      fenix: {
+        product: "fenix",
+        app_id: "",
+      },
+      "firefox-android-beta": {
+        product: "fenix",
+        app_id: "beta",
+      },
+      "firefox-android-release": {
+        product: "fenix",
+        app_id: "release",
+      },
+    };
+    if (Object.keys(map).includes(app)) {
+      const p = map[app];
+      return `https://glam.telemetry.mozilla.org/${p.product}/probe/${metric}/export?app_id=${p.app_id}`;
+    }
+
+    // The app isn't one GLAM supports so return nothing.
+    return null;
+  }
+
+  const glamUrl = getGlamUrl(params.app, metricName);
+
   function getMetricDocumentationURI(type) {
     const sourceDocs = "https://mozilla.github.io/glean/book/user/metrics/";
     const links = {
@@ -209,6 +235,12 @@
         {/each}
       </td>
     </tr>
+    {#if glamUrl}
+      <tr>
+        <td>GLAM</td>
+        <td><a href={glamUrl}>{glamUrl}</a></td>
+      </tr>
+    {/if}
   </table>
 {:catch}
   <NotFound pageName={metricName} itemType="metric" />
