@@ -1,7 +1,8 @@
 <script>
+  import { setContext } from "svelte";
+  import { writable } from "svelte/store";
   import { chunk } from "lodash";
 
-  import { currentPage } from "../state/stores";
   import { getItemURL } from "../state/urls";
 
   import Pagination from "./Pagination.svelte";
@@ -17,10 +18,11 @@
   export let totalItems;
   export let paginatedItems;
 
+  let currentPage = writable(1);
+  setContext("currentPage", currentPage);
+
   totalItems = items.length;
   paginatedItems = chunk([...items], DEFAULT_ITEMS_PER_PAGE);
-
-  currentPage.set(1);
 
   function filterItems(filterText) {
     filteredItems = items.filter((item) => item.name.includes(filterText));
@@ -31,9 +33,7 @@
     }
   }
 
-  $: {
-    filteredItems = paginatedItems[$currentPage - 1];
-  }
+  $: filteredItems = paginatedItems[$currentPage - 1];
 </script>
 
 <style>

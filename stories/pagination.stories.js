@@ -1,5 +1,5 @@
 import { text } from "@storybook/addon-knobs";
-import Pagination from "../src/components/Pagination.svelte";
+import Pagination from "./Pagination.svelte";
 
 const items = {
   total: 210,
