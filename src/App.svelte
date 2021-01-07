@@ -2,7 +2,7 @@
   import { afterUpdate } from "svelte";
   import page from "page";
   import Tailwindcss from "./Tailwindcss.svelte";
-  import Breadcrumb from "./components/Breadcrumb.svelte";
+  import Header from "./components/Header.svelte";
   import Footer from "./components/Footer.svelte";
 
   // Pages
@@ -83,37 +83,10 @@
   page();
 </script>
 
-<style>
-  .logo {
-    background-image: url("https://glean-dictionary.netlify.app/img/glean_logo.png");
-  }
-
-  .c-sub-navigation {
-    background: #f9f9fa;
-    box-shadow: inset 0 10px 2px -10px rgba(29, 17, 51, 0.04),
-      inset 0 10px 4px -10px rgba(9, 32, 77, 0.12),
-      inset 0 10px 3px -10px rgba(29, 17, 51, 0.12);
-  }
-</style>
-
 <Tailwindcss />
 
-<div class="mzp-c-navigation mzp-is-sticky">
-  <div class="mzp-c-navigation-l-content">
-    <div class="mzp-c-navigation-container">
-      <div class="mzp-c-navigation-logo">
-        <a class="logo" href="/">Glean Dictionary</a>
-      </div>
-    </div>
-  </div>
-</div>
-<nav class="mzp-c-navigation c-sub-navigation">
-  <div class="mzp-c-navigation-l-content">
-    <div class="mzp-c-navigation-container">
-      <Breadcrumb {links} />
-    </div>
-  </div>
-</nav>
+<Header {links} />
+
 <main>
   <div class="mzp-l-content">
     <article class="mzp-c-article">
