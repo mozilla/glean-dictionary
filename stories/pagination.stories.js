@@ -1,12 +1,9 @@
 import { text } from "@storybook/addon-knobs";
-import Pagination from "../src/components/Pagination.svelte";
+import Pagination from "./Pagination.svelte";
 
-const paginationState = {
-  total: 204,
-  currentPage: 1,
-  lastPage: 21,
-  from: 1,
-  to: 8,
+const items = {
+  total: 210,
+  perPage: 20,
 };
 
 export default {
@@ -16,10 +13,7 @@ export default {
 export const Default = () => ({
   Component: Pagination,
   props: {
-    currentPage: text("Current page number", paginationState.currentPage),
-    lastPage: text("Last page number", paginationState.lastPage),
-    from: text("From item", paginationState.from),
-    to: text("To item", paginationState.to),
-    total: text("Total number of items", paginationState.total),
+    itemsPerPage: items.perPage,
+    totalItems: text("Total number of items", items.total),
   },
 });

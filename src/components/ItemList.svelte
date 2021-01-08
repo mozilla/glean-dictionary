@@ -1,36 +1,39 @@
 <script>
-  import Pagination, { makePages, goToPage } from "./Pagination.svelte";
-  import FilterInput from "./FilterInput.svelte";
-  import Markdown from "./Markdown.svelte";
+  import { setContext } from "svelte";
+  import { writable } from "svelte/store";
+  import { chunk } from "lodash";
+
   import { getItemURL } from "../state/urls";
 
-  export let paginationState = {
-    pages: [],
-    currentPage: 1,
-  };
+  import Pagination from "./Pagination.svelte";
+  import FilterInput from "./FilterInput.svelte";
+  import Markdown from "./Markdown.svelte";
+
+  let DEFAULT_ITEMS_PER_PAGE = 20;
 
   export let appName;
   export let items;
-  export let filteredItems;
   export let itemType;
+  export let filteredItems;
+  export let totalItems;
+  export let paginatedItems;
 
-  paginationState = makePages(paginationState.currentPage, items);
-  filteredItems = paginationState.pages[paginationState.currentPage - 1];
+  let currentPage = writable(1);
+  setContext("currentPage", currentPage);
 
-  function loadPage(args) {
-    let tempState = goToPage(args.page, paginationState.pages);
-    paginationState = Object.assign(paginationState, tempState);
-    filteredItems = tempState.page;
-  }
+  totalItems = items.length;
+  paginatedItems = chunk([...items], DEFAULT_ITEMS_PER_PAGE);
 
   function filterItems(filterText) {
     filteredItems = items.filter((item) => item.name.includes(filterText));
     if (filteredItems.length > 0) {
-      paginationState.currentPage = 1;
-      paginationState = makePages(paginationState.currentPage, filteredItems);
-      filteredItems = paginationState.pages[paginationState.currentPage - 1];
+      currentPage.set(1);
+      paginatedItems = chunk([...filteredItems], DEFAULT_ITEMS_PER_PAGE);
+      totalItems = filteredItems.length;
     }
   }
+
+  $: filteredItems = paginatedItems[$currentPage - 1];
 </script>
 
 <style>
@@ -57,8 +60,6 @@
     </ul>
   </div>
 {/if}
-{#if paginationState.total > 20 && filteredItems.length}
-  <Pagination
-    {...paginationState}
-    on:changePage={(ev) => loadPage({ page: ev.detail })} />
+{#if filteredItems.length}
+  <Pagination {totalItems} itemsPerPage={DEFAULT_ITEMS_PER_PAGE} />
 {/if}
