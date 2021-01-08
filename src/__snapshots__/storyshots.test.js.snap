@@ -798,7 +798,7 @@ exports[`Storyshots Pill Deprecated 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="inline-block border rounded-full text-xs py-1 px-3 w-15 text-white"
+    class="pill svelte-1ohi0f1"
     style="background-color: rgb(74, 85, 104);"
   >
     Deprecated
