@@ -48,7 +48,15 @@ export default {
       dev: !production,
       // we'll extract any component CSS out into
       // a separate file - better for performance
-      preprocess: sveltePreprocess({ postcss: true }),
+      preprocess: sveltePreprocess({
+        postcss: true,
+        defaults: {
+          style: "scss",
+        },
+        scss: {
+          prependData: `@import 'src/scss/protocol/includes/_lib.scss';`,
+        },
+      }),
       css: (css) => {
         css.write("bundle.css");
       },

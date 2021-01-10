@@ -57,6 +57,7 @@
     "lunr": "^2.3.9",
     "marked": "^1.2.7",
     "node-fetch": "^2.6.1",
+    "node-sass": "^5.0.0",
     "postcss": "^7.0.35",
     "postcss-import": "^12.0.1",
     "postcss-load-config": "^3.0.0",

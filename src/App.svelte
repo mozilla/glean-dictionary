@@ -1,9 +1,9 @@
 <script>
   import { afterUpdate } from "svelte";
   import page from "page";
-  import Tailwindcss from "./Tailwindcss.svelte";
   import Breadcrumb from "./components/Breadcrumb.svelte";
   import Footer from "./components/Footer.svelte";
+  import GlobalStyles from "./scss/GlobalStyles.svelte";
 
   // Pages
   import AppList from "./pages/AppList.svelte";
@@ -96,7 +96,7 @@
   }
 </style>
 
-<Tailwindcss />
+<GlobalStyles />
 
 <div class="mzp-c-navigation mzp-is-sticky">
   <div class="mzp-c-navigation-l-content">
