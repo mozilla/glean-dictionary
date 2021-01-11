@@ -1,6 +1,4 @@
 <script>
-  import MozillaLogo from "./icons/MozillaLogo.svelte";
-
   const rev = "__VERSION__";
 </script>
 
@@ -11,7 +9,7 @@
         <a
           href="https://www.mozilla.org/"
           data-link-type="footer"
-          data-link-name="Mozilla"><MozillaLogo /></a>
+          data-link-name="Mozilla">Mozilla</a>
       </div>
       <div class="mzp-c-footer-legal">
         <ul class="mzp-c-footer-terms">

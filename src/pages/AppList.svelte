@@ -20,6 +20,13 @@
   let showDeprecated = false;
 </script>
 
+<style>
+  a {
+    @include text-title-xs;
+    text-decoration: none;
+  }
+</style>
+
 <h2>Applications</h2>
 
 <label>
@@ -30,7 +37,7 @@
   <FilterInput onChangeText={filterApps} />
   {#each filteredApps as app}
     {#if showDeprecated || !app.deprecated}
-      <p class="mb-2">
+      <p>
         <a href="/apps/{app.name}">{app.name}</a>
         {#if app.description}<i>{app.description}</i>{/if}
         {#if app.deprecated}

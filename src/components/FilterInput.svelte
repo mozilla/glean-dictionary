@@ -9,11 +9,19 @@
   };
 </script>
 
-<div class="container py-4 mx-auto">
+<style>
+  div {
+    margin: $spacing-xs 0 $spacing-xs 0;
+  }
+  input {
+    width: 100%;
+  }
+</style>
+
+<div>
   <input
-    class="shadow appearance-none border rounded w-full p-2 text-gray-700
-    leading-tight focus:outline-none focus:shadow-outline"
     type="text"
+    id="filter-input"
     bind:value={filterText}
     on:input={throttle(changeText, 200)}
     placeholder="filter terms" />

@@ -1,4 +1,5 @@
 const sveltePreprocess = require("svelte-preprocess");
+const autoPrefixer = require("autoprefixer");
 
 module.exports = {
   stories: ["../stories/**/*.stories.js"],
@@ -10,8 +11,25 @@ module.exports = {
     );
     svelteLoader.options = {
       ...svelteLoader.options,
-      preprocess: sveltePreprocess({ postcss: true }),
+      preprocess: sveltePreprocess({
+        postcss: true,
+        defaults: {
+          style: "scss",
+        },
+        scss: {
+          prependData: `@import 'src/scss/protocol/includes/_lib.scss';`,
+        },
+        postcss: {
+          plugins: [autoPrefixer],
+        },
+      }),
     };
+
+    config.module.rules.push({
+      // this is for both less and scss
+      test: /.*\.(?:le|c|sc)ss$/,
+      loaders: ["style-loader", "css-loader", "sass-loader"],
+    });
 
     return config;
   },

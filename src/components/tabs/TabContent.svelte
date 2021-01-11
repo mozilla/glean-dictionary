@@ -5,12 +5,12 @@
   const activeTab = getContext("activeTab");
 </script>
 
-<style>
+<style lang="scss">
   .box {
-    @apply p-8;
-    @apply border;
-    @apply border-gray-200;
-    @apply rounded-b-lg;
+    padding: 2rem;
+    border: 1px solid $color-light-gray-40;
+    border-bottom-right-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
   }
 </style>
 

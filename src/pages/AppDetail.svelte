@@ -14,13 +14,16 @@
 </script>
 
 <style>
-  .table-header {
-    @apply table-auto;
-    @apply my-4;
+  a {
+    text-decoration: none;
   }
-  .table-header td {
-    @apply border;
-    @apply p-2;
+  .mzp-u-data-table {
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-md;
+    td {
+      border: 1px solid $color-light-gray-40;
+      padding: 0.5rem;
+    }
   }
 </style>
 
@@ -29,14 +32,14 @@
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}
-  <p class="mt-2">{app.description}</p>
-  <table class="table-header">
+  <p>{app.description}</p>
+  <table class="mzp-u-data-table">
     <tr>
-      <td>Source code Url</td>
+      <td>Source Code URL</td>
       <td><a href={app.url}>{app.url}</a></td>
     </tr>
     <tr>
-      <td>Application id</td>
+      <td>Application ID</td>
       <td><code>{app.app_id}</code></td>
     </tr>
     <tr>

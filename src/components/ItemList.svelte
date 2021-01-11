@@ -40,6 +40,10 @@
   .item-browser {
     max-height: 400px;
     overflow: scroll;
+    margin: $spacing-md auto $spacing-md auto;
+    a {
+      text-decoration: none;
+    }
   }
 </style>
 
@@ -47,7 +51,7 @@
   <p>Currently, there are no {itemType} available for {items.name}</p>
 {:else}
   <FilterInput onChangeText={filterItems} />
-  <div class="item-browser mx-auto my-4 p-2">
+  <div class="item-browser">
     <ul>
       {#each filteredItems as item}
         <li>

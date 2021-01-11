@@ -4,3 +4,4 @@ public/data/*
 storybook-static/*
 venv
 src/ga.js
+src/scss/

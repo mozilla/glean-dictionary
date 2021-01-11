@@ -56,21 +56,27 @@
 </script>
 
 <style>
-  .schema-browser {
-    @apply p-2;
-    @apply border-4;
-    @apply border-gray-400;
-    max-height: 400px;
-    overflow: scroll;
+  .schema-viewer {
+    margin-top: 2rem;
+    .schema-browser {
+      padding: $spacing-sm;
+      border: 0.25rem solid $color-light-gray-60;
+      max-height: 400px;
+      overflow: scroll;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 </style>
 
-<h2>Schema</h2>
-<FilterInput onChangeText={filterTextChanged} filterText={searchText} />
-<div class="container schema-browser mx-auto">
-  <p>
-    {#each nodesWithVisibility as node}
-      <SchemaNode {app} {node} />
-    {/each}
-  </p>
+<div class="schema-viewer">
+  <h1>Schema</h1>
+  <FilterInput onChangeText={filterTextChanged} filterText={searchText} />
+  <div class="schema-browser">
+    <p>
+      {#each nodesWithVisibility as node}
+        <SchemaNode {app} {node} />
+      {/each}
+    </p>
+  </div>
 </div>

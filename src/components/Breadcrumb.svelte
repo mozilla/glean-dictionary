@@ -2,8 +2,24 @@
   export let links;
 </script>
 
-<ol class="flex py-2 divide-x {!links.length ? 'hidden' : ''}">
+<style>
+  ol {
+    display: flex;
+  }
+  li {
+    padding-left: $spacing-xs;
+  }
+  a {
+    text-decoration: none;
+    @include text-title-xs;
+  }
+</style>
+
+<ol style={!links.length ? 'display: none;' : ''}>
   {#each links as link}
-    <li class="px-2"><a href={link.url}>{link.name}</a></li>
+    <li>
+      <a href={link.url}>{link.name}
+      </a>{links.indexOf(link) === links.length - 1 ? '' : '/'}
+    </li>
   {/each}
 </ol>

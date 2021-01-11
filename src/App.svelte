@@ -87,7 +87,6 @@
   .logo {
     background-image: url("https://glean-dictionary.netlify.app/img/glean_logo.png");
   }
-
   .c-sub-navigation {
     background: #f9f9fa;
     box-shadow: inset 0 10px 2px -10px rgba(29, 17, 51, 0.04),
@@ -114,6 +113,7 @@
     </div>
   </div>
 </nav>
+
 <main>
   <div class="mzp-l-content">
     <article class="mzp-c-article">

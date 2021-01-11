@@ -51,13 +51,16 @@
 </script>
 
 <style>
-  .metrics-table {
-    @apply table-auto;
-    @apply my-4;
+  a {
+    text-decoration: none;
   }
-  .metrics-table td {
-    @apply border;
-    @apply p-2;
+  .mzp-u-data-table {
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-md;
+    td {
+      border: 1px solid $color-light-gray-40;
+      padding: 0.5rem;
+    }
   }
 </style>
 
@@ -75,7 +78,7 @@
     that
     {getExpiryInfo(metric.expires)}
   </p>
-  <table class="metrics-table">
+  <table class="mzp-u-data-table">
     <tr>
       <td>
         Relevant Bugs

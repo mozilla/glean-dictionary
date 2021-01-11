@@ -11,19 +11,20 @@
 
 <style>
   .title {
-    @apply border-b-0;
-    @apply rounded-t-lg;
-    @apply p-4;
-    @apply bg-white;
-    @apply text-black;
-    @apply inline-block;
-  }
-  .title.active {
-    @apply bg-gray-300;
-  }
-  .title:not(.active):hover {
-    @apply bg-gray-100;
-    @apply cursor-pointer;
+    border-top-width: 0px;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    padding: 1rem;
+    background-color: $color-light-gray-10;
+    display: inline-block;
+    @include text-title-xs;
+    &.active {
+      background-color: $color-light-gray-40;
+    }
+    &:not(.active):hover {
+      background-color: $color-light-gray-20;
+      cursor: pointer;
+    }
   }
 </style>
 

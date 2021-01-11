@@ -11,20 +11,22 @@
 </script>
 
 <style>
-  .table-header {
-    @apply table-auto;
-    @apply my-4;
+  a {
+    text-decoration: none;
   }
-
-  .table-header td {
-    @apply border;
-    @apply p-2;
+  .mzp-u-data-table {
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-md;
+    td {
+      border: 1px solid $color-light-gray-40;
+      padding: 0.5rem;
+    }
   }
 </style>
 
 {#await pingDataPromise then ping}
   <h1>{ping.name}</h1>
-  <table class="table-header">
+  <table class="mzp-u-data-table">
     <tr>
       <td>Description</td>
       <td>
@@ -37,18 +39,15 @@
         {#each ping.bugs as bug}
           {#if typeof bug === 'number'}
             <a
-              class="mr-2"
               href={`https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}>{bug}</a>
-          {:else}<a class="mr-2" href={bug}>{bug}</a>{/if}
+          {:else}<a href={bug}>{bug}</a>{/if}
         {/each}
       </td>
     </tr>
     <tr>
       <td>Reviews Data</td>
       <td>
-        {#each ping.data_reviews as review}
-          <a class="mr-2" href={review}>{review}</a>
-        {/each}
+        {#each ping.data_reviews as review}<a href={review}>{review}</a>{/each}
       </td>
     </tr>
     <tr>
