@@ -4,7 +4,7 @@
 
   export let content;
   export let link;
-  export let props = {
+  let props = {
     content,
     allowHTML: true,
     placement: "top",
