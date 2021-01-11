@@ -1,9 +1,10 @@
 <script>
   import { getMetricData } from "../state/api";
   import { getMetricBigQueryURL } from "../state/urls";
-
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
+  import HelpHoverable from "../components/HelpHoverable.svelte";
+  import helpText from "../data/help";
 
   export let params;
   let metricName = params.metric.replaceAll("-", ".");
@@ -76,7 +77,10 @@
   </p>
   <table class="metrics-table">
     <tr>
-      <td>Relevant Bugs</td>
+      <td>
+        Relevant Bugs
+        <HelpHoverable content={helpText.bugs.text} link={helpText.bugs.link} />
+      </td>
       <td>
         {#each metric.bugs as bug}
           <a
@@ -89,7 +93,12 @@
       </td>
     </tr>
     <tr>
-      <td>Send In Pings</td>
+      <td>
+        Send In Pings
+        <HelpHoverable
+          content={helpText.send_in_pings.text}
+          link={helpText.send_in_pings.link} />
+      </td>
       <td>
         {#each metric.send_in_pings as name}
           <a href={`/apps/${params.app}/pings/${name}`}> {name} </a>
@@ -104,6 +113,9 @@
             target="_blank">
             Lifetime
           </a>
+          <HelpHoverable
+            content={helpText.lifetime.text}
+            link={helpText.lifetime.link} />
         </td>
         <td>{metric.lifetime}</td>
       </tr>
