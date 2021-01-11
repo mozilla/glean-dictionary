@@ -1,5 +1,6 @@
 import replace from "@rollup/plugin-replace";
 import svelte from "rollup-plugin-svelte";
+import postcss from "rollup-plugin-postcss";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
@@ -39,6 +40,9 @@ export default {
     file: "public/build/bundle.js",
   },
   plugins: [
+    postcss({
+      plugins: [],
+    }),
     svelte({
       // enable run-time checks when not in production
       dev: !production,
@@ -56,6 +60,10 @@ export default {
       __VERSION__: execSync("git rev-list HEAD --max-count=1")
         .toString()
         .trim(),
+      // workaround the way sveltejs-tippy imports tippy: https://github.com/mdauner/sveltejs-tippy/issues/117
+      "process.env.NODE_ENV": JSON.stringify(
+        production ? "production" : "development"
+      ),
     }),
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
