@@ -59,7 +59,7 @@
   .pagination-bar {
     display: flex;
     justify-content: center;
-    color: $color-dark-gray-40;
+    color: $color-dark-gray-70;
     .pagination-button {
       height: 2.5rem;
       width: 2.5rem;

@@ -34,13 +34,8 @@
     "eslint-config-prettier": "6.15.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jest": "24.1.3",
-<<<<<<< HEAD
     "eslint-plugin-prettier": "3.3.1",
     "eslint-plugin-svelte3": "3.0.0",
-=======
-    "eslint-plugin-prettier": "3.3.0",
-    "eslint-plugin-svelte3": "^3.0.0",
->>>>>>> Replace Tailwindcss with SCSS and Protocol
     "jest": "^26.6.3",
     "lerna": "3.22.1",
     "npm-run-all": "4.1.5",
@@ -52,10 +47,10 @@
     "rollup-plugin-postcss": "3.1.8",
     "rollup-plugin-svelte": "6.0.1",
     "rollup-plugin-terser": "7.0.2",
+    "sass-loader": "^10.1.1",
     "svelte": "3.29.0",
     "svelte-jester": "^1.3.0",
-    "svelte-loader": "2.13.6",
-    "identity-obj-proxy": "^3.0.0"
+    "svelte-loader": "2.13.6"
   },
   "dependencies": {
     "autoprefixer": "^9.8.6",
@@ -67,14 +62,9 @@
     "postcss": "^7.0.35",
     "postcss-import": "^12.0.1",
     "postcss-load-config": "^3.0.0",
-    "sass-loader": "^10.1.0",
     "sirv-cli": "1.0.10",
-<<<<<<< HEAD
     "svelte-preprocess": "^4.6.1",
     "sveltejs-tippy": "^3.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.1"
-=======
-    "svelte-preprocess": "^4.6.1"
->>>>>>> Update snapshot test & improve breadcrumb styling
   }
 }

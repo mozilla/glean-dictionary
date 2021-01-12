@@ -17,7 +17,7 @@
     padding: 1rem;
     background-color: $color-light-gray-10;
     display: inline-block;
-    @include text-title-2xs;
+    @include text-title-3xs;
     &.active {
       background-color: $color-light-gray-40;
     }

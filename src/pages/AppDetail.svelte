@@ -8,6 +8,7 @@
   import Pill from "../components/Pill.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
   import Title from "../components/Title.svelte";
+
   export let params;
 
   const appDataPromise = getAppData(params.app);

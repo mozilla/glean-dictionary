@@ -3,7 +3,7 @@
   import page from "page";
   import Breadcrumb from "./components/Breadcrumb.svelte";
   import Footer from "./components/Footer.svelte";
-  import GlobalStyles from "./scss/GlobalStyles.svelte";
+  import GlobalStyles from "./GlobalStyles.svelte";
 
   // Pages
   import AppList from "./pages/AppList.svelte";
@@ -94,13 +94,13 @@
       .glean-logo {
         text-decoration: none;
         img {
-          max-width: 126px;
+          max-width: 113px;
         }
       }
       h5 {
         display: inline-block;
         color: #e0e3e0;
-        line-height: 0.8;
+        line-height: 0.7;
         padding-left: $spacing-xs;
       }
     }
@@ -122,7 +122,7 @@
       <div class="mzp-c-navigation-logo-glean">
         <a class="glean-logo" href="/">
           <img
-            src="https://i.imgur.com/cQeuA3g.png"
+            src="/img/logos/glean_logo_bw.png"
             alt="Glean Dictionary logo" /></a>
         <a href="/"><h5>Dictionary</h5></a>
       </div>

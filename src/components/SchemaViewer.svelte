@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import SchemaNode from "./SchemaNode.svelte";
   import FilterInput from "./FilterInput.svelte";
+  import Title from "./Title.svelte";
 
   export let app;
   export let nodes = [];

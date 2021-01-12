@@ -3,12 +3,9 @@
   import { getMetricBigQueryURL } from "../state/urls";
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
-<<<<<<< HEAD
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import helpText from "../data/help";
-=======
   import Title from "../components/Title.svelte";
->>>>>>> Style header
 
   export let params;
   let metricName = params.metric.replaceAll("-", ".");
