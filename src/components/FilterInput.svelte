@@ -11,7 +11,8 @@
 
 <style>
   div {
-    margin: $spacing-xs 0 $spacing-xs 0;
+    margin-top: $spacing-xs;
+    margin-bottom: $spacing-xs;
   }
   input {
     width: 100%;

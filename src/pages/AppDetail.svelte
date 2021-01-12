@@ -7,7 +7,7 @@
   import NotFound from "../components/NotFound.svelte";
   import Pill from "../components/Pill.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
-
+  import Title from "../components/Title.svelte";
   export let params;
 
   const appDataPromise = getAppData(params.app);
@@ -19,7 +19,7 @@
   }
   .mzp-u-data-table {
     margin-top: $spacing-md;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
     td {
       border: 1px solid $color-light-gray-40;
       padding: 0.5rem;
@@ -28,7 +28,8 @@
 </style>
 
 {#await appDataPromise then app}
-  <h1>{params.app}</h1>
+  <Title text={params.app} />
+
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}

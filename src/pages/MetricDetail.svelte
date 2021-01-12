@@ -3,8 +3,12 @@
   import { getMetricBigQueryURL } from "../state/urls";
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
+<<<<<<< HEAD
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import helpText from "../data/help";
+=======
+  import Title from "../components/Title.svelte";
+>>>>>>> Style header
 
   export let params;
   let metricName = params.metric.replaceAll("-", ".");
@@ -56,7 +60,7 @@
   }
   .mzp-u-data-table {
     margin-top: $spacing-md;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
     td {
       border: 1px solid $color-light-gray-40;
       padding: 0.5rem;
@@ -65,7 +69,7 @@
 </style>
 
 {#await metricDataPromise then metric}
-  <h1>{metric.name}</h1>
+  <Title text={metric.name} />
   <p>
     <Markdown text={metric.description} />
   </p>

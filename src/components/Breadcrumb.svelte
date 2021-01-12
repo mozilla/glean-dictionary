@@ -6,14 +6,15 @@
   ol {
     display: flex;
     li {
-      padding-left: $spacing-xs;
-      @include text-title-sm;
+      padding-bottom: $spacing-md;
+      padding-left: $spacing-sm;
+      @include text-title-3xs;
       font-weight: bold;
-      a {
+      .link-name {
         text-decoration: none;
       }
       span {
-        color: $color-dark-gray-20;
+        color: $color-dark-gray-10;
       }
     }
   }
@@ -22,7 +23,7 @@
 <ol style={!links.length ? 'display: none;' : ''}>
   {#each links as link}
     <li>
-      <a href={link.url}>{link.name} </a><span
+      <a class="link-name" href={link.url}>{link.name} </a><span
         class>{links.indexOf(link) === links.length - 1 ? '' : '/'}</span>
     </li>
   {/each}

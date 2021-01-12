@@ -84,9 +84,28 @@
 </script>
 
 <style>
-  .logo {
-    background-image: url("https://glean-dictionary.netlify.app/img/glean_logo.png");
+  .mzp-c-navigation {
+    background-color: black;
+    padding-top: $spacing-md;
+    .mzp-c-navigation-logo-glean {
+      width: 100%;
+      display: flex;
+      padding-top: $spacing-xs;
+      .glean-logo {
+        text-decoration: none;
+        img {
+          max-width: 126px;
+        }
+      }
+      h5 {
+        display: inline-block;
+        color: #e0e3e0;
+        line-height: 0.8;
+        padding-left: $spacing-xs;
+      }
+    }
   }
+
   .c-sub-navigation {
     background: #f9f9fa;
     box-shadow: inset 0 10px 2px -10px rgba(29, 17, 51, 0.04),
@@ -100,12 +119,17 @@
 <div class="mzp-c-navigation mzp-is-sticky">
   <div class="mzp-c-navigation-l-content">
     <div class="mzp-c-navigation-container">
-      <div class="mzp-c-navigation-logo">
-        <a class="logo" href="/">Glean Dictionary</a>
+      <div class="mzp-c-navigation-logo-glean">
+        <a class="glean-logo" href="/">
+          <img
+            src="https://i.imgur.com/cQeuA3g.png"
+            alt="Glean Dictionary logo" /></a>
+        <a href="/"><h5>Dictionary</h5></a>
       </div>
     </div>
   </div>
 </div>
+
 <nav class="mzp-c-navigation c-sub-navigation">
   <div class="mzp-c-navigation-l-content">
     <div class="mzp-c-navigation-container">

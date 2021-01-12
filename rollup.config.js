@@ -54,7 +54,7 @@ export default {
           style: "scss",
         },
         scss: {
-          prependData: `@import 'src/scss/protocol/includes/_lib.scss';`,
+          prependData: `@import 'node_modules/@mozilla-protocol/core/protocol/css/protocol.scss';`,
         },
       }),
       css: (css) => {

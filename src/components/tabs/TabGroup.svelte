@@ -7,6 +7,12 @@
   setContext("activeTab", store);
 </script>
 
+<style>
+  .tab-content {
+    margin-top: $spacing-lg;
+  }
+</style>
+
 <div class="tabs">
   <slot name="tabs" />
 </div>

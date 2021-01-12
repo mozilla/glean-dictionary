@@ -70,7 +70,8 @@
 </style>
 
 <div class="schema-viewer">
-  <h1>Schema</h1>
+  <Title text={'Schema'} />
+
   <FilterInput onChangeText={filterTextChanged} filterText={searchText} />
   <div class="schema-browser">
     <p>

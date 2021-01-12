@@ -4,6 +4,7 @@
   import { fetchJSON, getTableData } from "../state/api";
 
   import NotFound from "../components/NotFound.svelte";
+  import Title from "../components/Title.svelte";
 
   export let params;
   export let queryString;
@@ -28,7 +29,7 @@
   }
   .mzp-u-data-table {
     margin-top: $spacing-md;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
     td {
       border: 1px solid $color-light-gray-40;
       padding: 0.5rem;
@@ -37,7 +38,7 @@
 </style>
 
 {#await pingDataPromise then data}
-  <h1>Table <code>{data.table.name}</code> for {params.app}</h1>
+  <Title text={`Table <code>${data.table.name}</code> for ${params.app}`} />
   <table class="mzp-u-data-table">
     <tr>
       <td>BigQuery Definition</td>

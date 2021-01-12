@@ -1,3 +1,3 @@
 <style global>
-  @import "protocol/index";
+  @import "@mozilla-protocol/core/protocol/css/protocol.scss";
 </style>

@@ -5,6 +5,7 @@
   import ItemList from "../components/ItemList.svelte";
   import NotFound from "../components/NotFound.svelte";
   import Markdown from "../components/Markdown.svelte";
+  import Title from "../components/Title.svelte";
 
   export let params;
   const pingDataPromise = getPingData(params.app, params.ping);
@@ -16,7 +17,7 @@
   }
   .mzp-u-data-table {
     margin-top: $spacing-md;
-    margin-bottom: $spacing-md;
+    margin-bottom: $spacing-lg;
     td {
       border: 1px solid $color-light-gray-40;
       padding: 0.5rem;
@@ -25,7 +26,7 @@
 </style>
 
 {#await pingDataPromise then ping}
-  <h1>{ping.name}</h1>
+  <Title text={ping.name} />
   <table class="mzp-u-data-table">
     <tr>
       <td>Description</td>

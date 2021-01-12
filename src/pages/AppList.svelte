@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import FilterInput from "../components/FilterInput.svelte";
   import Pill from "../components/Pill.svelte";
+  import Title from "../components/Title.svelte";
   import { fetchJSON } from "../state/api";
 
   const URL = "data/apps.json";
@@ -21,23 +22,33 @@
 </script>
 
 <style>
-  a {
-    @include text-title-xs;
-    text-decoration: none;
+  .app-detail {
+    @include text-title-3xs;
+    a {
+      text-decoration: none;
+    }
+    i {
+      @include text-body-md;
+    }
+  }
+  .deprecation-checkbox {
+    margin-bottom: $spacing-sm;
   }
 </style>
 
-<h2>Applications</h2>
+<Title text="Applications" />
 
-<label>
-  <input type="checkbox" bind:checked={showDeprecated} />
-  Show deprecated applications
-</label>
+<div class="deprecation-checkbox">
+  <label>
+    <input type="checkbox" bind:checked={showDeprecated} />
+    Show deprecated applications
+  </label>
+</div>
 {#if apps}
   <FilterInput onChangeText={filterApps} />
   {#each filteredApps as app}
     {#if showDeprecated || !app.deprecated}
-      <p>
+      <p class="app-detail">
         <a href="/apps/{app.name}">{app.name}</a>
         {#if app.description}<i>{app.description}</i>{/if}
         {#if app.deprecated}
