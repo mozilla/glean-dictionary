@@ -34,7 +34,7 @@
     }
 
     // The app isn't one GLAM supports so return nothing.
-    return null;
+    return undefined;
   }
 
   const glamUrl = getGlamUrlTemplate(params.app);
@@ -237,12 +237,12 @@
         {/each}
       </td>
     </tr>
-    {#if glamUrl}
+    {#if glamUrl && metric.bigquery_names.metric_type !== 'event'}
       <tr>
         <td>GLAM</td>
         <td>
           <a
-            href={glamUrl(metric.bigquery_names.glam_etl_name)}>{glamUrl(metric.bigquery_names.glam_etl_name)}</a>
+            href={glamUrl(metric.bigquery_names.glam_etl_name)}>{metric.bigquery_names.glam_etl_name}</a>
         </td>
       </tr>
     {/if}
