@@ -1,9 +1,9 @@
 <script>
   import { afterUpdate } from "svelte";
   import page from "page";
-  import Tailwindcss from "./Tailwindcss.svelte";
   import Breadcrumb from "./components/Breadcrumb.svelte";
   import Footer from "./components/Footer.svelte";
+  import GlobalStyles from "./GlobalStyles.svelte";
 
   // Pages
   import AppList from "./pages/AppList.svelte";
@@ -84,28 +84,68 @@
 </script>
 
 <style>
-  .brand {
-    @apply text-gray-100;
+  .mzp-c-navigation {
+    background-color: black;
+    padding-top: $spacing-md;
+    .mzp-c-navigation-logo-glean {
+      width: 100%;
+      display: flex;
+      padding-top: $spacing-xs;
+      .glean-logo {
+        text-decoration: none;
+        img {
+          max-width: 113px;
+        }
+      }
+      h5 {
+        display: inline-block;
+        color: #e0e3e0;
+        line-height: 0.7;
+        padding-left: $spacing-xs;
+      }
+    }
+  }
+
+  .c-sub-navigation {
+    background: #f9f9fa;
+    box-shadow: inset 0 10px 2px -10px rgba(29, 17, 51, 0.04),
+      inset 0 10px 4px -10px rgba(9, 32, 77, 0.12),
+      inset 0 10px 3px -10px rgba(29, 17, 51, 0.12);
   }
 </style>
 
-<Tailwindcss />
-<nav class="flex items-center justify-between flex-wrap bg-blue-800 p-2">
-  <div class="flex items-center flex-shrink-0 mr-6">
-    <a class="brand font-semibold text-xl tracking-tight" href="/">
-      Glean Dictionary
-      <i>Prototype</i>
-    </a>
+<GlobalStyles />
+
+<div class="mzp-c-navigation mzp-is-sticky">
+  <div class="mzp-c-navigation-l-content">
+    <div class="mzp-c-navigation-container">
+      <div class="mzp-c-navigation-logo-glean">
+        <a class="glean-logo" href="/">
+          <img src="/glean_logo.png" alt="Glean Dictionary Logo" /></a>
+        <a href="/"><h5>Dictionary</h5></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav class="mzp-c-navigation c-sub-navigation">
+  <div class="mzp-c-navigation-l-content">
+    <div class="mzp-c-navigation-container">
+      <Breadcrumb {links} />
+    </div>
   </div>
 </nav>
-<Breadcrumb {links} />
 
-<div class="container py-4 mx-auto">
-  <svelte:component
-    this={component}
-    bind:params
-    bind:queryString
-    on:updateURL={updateURL} />
-</div>
+<main>
+  <div class="mzp-l-content">
+    <article class="mzp-c-article">
+      <svelte:component
+        this={component}
+        bind:params
+        bind:queryString
+        on:updateURL={updateURL} />
+    </article>
+  </div>
+</main>
 
 <Footer />

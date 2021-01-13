@@ -1,3 +1,11 @@
+<style>
+  svg {
+    display: inline-block;
+    width: 15px;
+    color: $color-light-gray-50;
+  }
+</style>
+
 <svg
   xmlns="http://www.w3.org/2000/svg"
   viewBox="0 0 20 20"

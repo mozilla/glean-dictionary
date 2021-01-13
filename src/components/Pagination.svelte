@@ -52,41 +52,72 @@
   }
 </script>
 
-<p>
-  Page
-  <code>{$currentPage}</code>
-  of
-  <code>{lastPage}</code>
-  (<code>{from}</code>
-  -
-  <code>{to}</code>
-  on
-  <code>{totalItems}</code>
-  items)
-</p>
+<style>
+  .pagination-position {
+    margin-top: $spacing-md;
+  }
+  .pagination-bar {
+    display: flex;
+    justify-content: center;
+    color: $color-dark-gray-70;
+    .pagination-button {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+
+    .pages {
+      display: flex;
+      justify-content: center;
+      .page {
+        @include text-body-md;
+        height: 3rem;
+        font-weight: bold;
+        margin: 0.5rem;
+        cursor: pointer;
+      }
+    }
+    .current-page {
+      color: $color-light-gray-50;
+      cursor: not-allowed;
+    }
+  }
+</style>
+
+<div class="pagination-position">
+  <p>
+    Page
+    <code>{$currentPage}</code>
+    of
+    <code>{lastPage}</code>
+    (<code>{from}</code>
+    -
+    <code>{to}</code>
+    on
+    <code>{totalItems}</code>
+    items)
+  </p>
+</div>
 
 {#if itemsPerPage < totalItems}
-  <div class="flex flex-col items-center my-12">
-    <div class="flex text-gray-700">
-      <div
-        on:click|preventDefault={() => changePage($currentPage !== 1 ? $currentPage - 1 : 1)}
-        class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer {$currentPage === 1 ? 'bg-teal-600 text-white' : ''}">
-        <BackButton />
-      </div>
-      <div class="flex h-12 font-medium rounded-full bg-gray-200">
-        {#each truncatedPagination($currentPage, lastPage) as page}
-          <div
-            on:click|preventDefault={() => changePage(Number.isInteger(page) ? page : $currentPage)}
-            class="w-12 md:flex justify-center items-center hidden cursor-pointer {page === $currentPage ? 'bg-teal-600 text-white' : ''}">
-            {page}
-          </div>
-        {/each}
-      </div>
-      <div
-        on:click|preventDefault={() => changePage($currentPage !== lastPage ? $currentPage + 1 : lastPage)}
-        class="h-12 w-12 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer {currentPage === lastPage ? 'bg-teal-600 text-white' : ''}">
-        <ForwardButton />
-      </div>
+  <div class="pagination-bar">
+    <div
+      on:click|preventDefault={() => changePage($currentPage !== 1 ? $currentPage - 1 : 1)}
+      class="pagination-button {$currentPage === 1 ? 'current-page' : ''}">
+      <BackButton />
+    </div>
+    <div class="pages">
+      {#each truncatedPagination($currentPage, lastPage) as page}
+        <div
+          on:click|preventDefault={() => changePage(Number.isInteger(page) ? page : $currentPage)}
+          class="page {page === $currentPage ? 'current-page' : ''}">
+          {page}
+        </div>
+      {/each}
+    </div>
+    <div
+      on:click|preventDefault={() => changePage($currentPage !== lastPage ? $currentPage + 1 : lastPage)}
+      class="pagination-button {$currentPage === lastPage ? 'current-page' : ''}">
+      <ForwardButton />
     </div>
   </div>
 {/if}

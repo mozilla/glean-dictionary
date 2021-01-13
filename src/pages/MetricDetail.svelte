@@ -5,6 +5,7 @@
   import NotFound from "../components/NotFound.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import helpText from "../data/help";
+  import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
   let metricName = params.metric.replaceAll("-", ".");
@@ -51,18 +52,21 @@
 </script>
 
 <style>
-  .metrics-table {
-    @apply table-auto;
-    @apply my-4;
+  a {
+    text-decoration: none;
   }
-  .metrics-table td {
-    @apply border;
-    @apply p-2;
+  .mzp-u-data-table {
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-lg;
+    td {
+      border: 1px solid $color-light-gray-40;
+      padding: 0.5rem;
+    }
   }
 </style>
 
 {#await metricDataPromise then metric}
-  <h1>{metric.name}</h1>
+  <PageTitle text={metric.name} />
   <p>
     <Markdown text={metric.description} />
   </p>
@@ -75,7 +79,7 @@
     that
     {getExpiryInfo(metric.expires)}
   </p>
-  <table class="metrics-table">
+  <table class="mzp-u-data-table">
     <tr>
       <td>
         Relevant Bugs

@@ -1,45 +1,43 @@
 <script>
-  import MozillaLogo from "./icons/MozillaLogo.svelte";
-
   const rev = "__VERSION__";
 </script>
 
-<style>
-  .glean-footer {
-    @apply flex;
-    @apply items-center;
-    @apply justify-between;
-    @apply px-8;
-    @apply py-4;
-  }
-  .project-links {
-    @apply flex;
-  }
-  .project-links li {
-    @apply ml-2;
-  }
-  .mozilla-logo {
-    @apply text-black;
-  }
-</style>
-
-<footer class="glean-footer">
-  <a class="mozilla-logo" href="https://www.mozilla.org/"><MozillaLogo /></a>
-  <ul class="project-links">
-    <li>
-      <a href="https://www.mozilla.org/privacy/websites/#cookies">Cookies</a>
-    </li>
-    <li>
-      <a
-        href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org">Chat</a>
-    </li>
-    <li>
-      <a href="https://github.com/mozilla/glean-dictionary/issues">Issues</a>
-    </li>
-    <li><a href="https://github.com/mozilla/glean-dictionary">Source</a></li>
-    <li>
-      <span>Source - </span><a
-        href="https://github.com/mozilla/glean-dictionary/tree/{rev}">{rev.substring(0, 10)}</a>
-    </li>
-  </ul>
+<footer class="mzp-c-footer">
+  <div class="mzp-l-content">
+    <nav class="mzp-c-footer-secondary">
+      <div class="mzp-c-footer-primary-logo">
+        <a
+          href="https://www.mozilla.org/"
+          data-link-type="footer"
+          data-link-name="Mozilla">Mozilla</a>
+      </div>
+      <div class="mzp-c-footer-legal">
+        <ul class="mzp-c-footer-terms">
+          <li>
+            <a
+              href="https://www.mozilla.org/privacy/websites/#cookies">Cookies</a>
+          </li>
+          <li>
+            <a
+              href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org">Chat</a>
+          </li>
+          <li>
+            <a
+              href="https://github.com/mozilla/glean-dictionary/issues">Issues</a>
+          </li>
+          <li>
+            <a href="https://github.com/mozilla/glean-dictionary">Source</a>
+          </li>
+        </ul>
+        <p>
+          Alpha Software - revision
+          <a
+            href="https://github.com/mozilla/glean-dictionary/tree/{rev}">{rev.substring(0, 10)}</a>
+        </p>
+        <p class="mzp-c-footer-license">
+          © 2020 - 2021 Mozilla and other contributors.
+        </p>
+      </div>
+    </nav>
+  </div>
 </footer>

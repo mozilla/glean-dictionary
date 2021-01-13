@@ -3,6 +3,12 @@
   const height = Math.floor((36 * width) / 100);
 </script>
 
+<style>
+  svg {
+    display: block;
+  }
+</style>
+
 <svg
   xmlns="http://www.w3.org/2000/svg"
   fill="currentColor"

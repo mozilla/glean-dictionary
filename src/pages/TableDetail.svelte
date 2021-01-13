@@ -4,6 +4,7 @@
   import { fetchJSON, getTableData } from "../state/api";
 
   import NotFound from "../components/NotFound.svelte";
+  import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
   export let queryString;
@@ -23,22 +24,24 @@
 </script>
 
 <style>
-  .table-header {
-    @apply table-auto;
-    @apply my-4;
+  a {
+    text-decoration: none;
   }
-
-  .table-header td {
-    @apply border;
-    @apply p-2;
+  .mzp-u-data-table {
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-lg;
+    td {
+      border: 1px solid $color-light-gray-40;
+      padding: 0.5rem;
+    }
   }
 </style>
 
 {#await pingDataPromise then data}
-  <h1>Table <code>{data.table.name}</code> for {params.app}</h1>
-  <table class="table-header">
+  <PageTitle text={`Table <code>${data.table.name}</code> for ${params.app}`} />
+  <table class="mzp-u-data-table">
     <tr>
-      <td>BigQuery definition</td>
+      <td>BigQuery Definition</td>
       <td>
         <a href={data.table.bq_definition}>
           {data.table.bq_definition.split('/').slice(-1)}

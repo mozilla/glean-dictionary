@@ -7,6 +7,7 @@
   import NotFound from "../components/NotFound.svelte";
   import Pill from "../components/Pill.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
+  import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
 
@@ -14,29 +15,33 @@
 </script>
 
 <style>
-  .table-header {
-    @apply table-auto;
-    @apply my-4;
+  a {
+    text-decoration: none;
   }
-  .table-header td {
-    @apply border;
-    @apply p-2;
+  .mzp-u-data-table {
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-lg;
+    td {
+      border: 1px solid $color-light-gray-40;
+      padding: 0.5rem;
+    }
   }
 </style>
 
 {#await appDataPromise then app}
-  <h1>{params.app}</h1>
+  <PageTitle text={params.app} />
+
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}
-  <p class="mt-2">{app.description}</p>
-  <table class="table-header">
+  <p>{app.description}</p>
+  <table class="mzp-u-data-table">
     <tr>
-      <td>Source code Url</td>
+      <td>Source Code</td>
       <td><a href={app.url}>{app.url}</a></td>
     </tr>
     <tr>
-      <td>Application id</td>
+      <td>Application ID</td>
       <td><code>{app.app_id}</code></td>
     </tr>
     <tr>

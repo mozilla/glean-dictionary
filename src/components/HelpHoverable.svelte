@@ -13,8 +13,7 @@
 
 <style>
   .main {
-    @apply inline-block;
-    @apply text-gray-500;
+    display: inline-block;
   }
 </style>
 
