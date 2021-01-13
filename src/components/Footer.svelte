@@ -35,7 +35,7 @@
             href="https://github.com/mozilla/glean-dictionary/tree/{rev}">{rev.substring(0, 10)}</a>
         </p>
         <p class="mzp-c-footer-license">
-          © 2020 Mozilla and other contributors.
+          © 2020 - 2021 Mozilla and other contributors.
         </p>
       </div>
     </nav>

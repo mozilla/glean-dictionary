@@ -5,7 +5,7 @@
   const activeTab = getContext("activeTab");
 </script>
 
-<style lang="scss">
+<style>
   .box {
     padding: 2rem;
     border: 1px solid $color-light-gray-40;

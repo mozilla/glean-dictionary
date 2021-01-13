@@ -7,7 +7,7 @@
   import NotFound from "../components/NotFound.svelte";
   import Pill from "../components/Pill.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
-  import Title from "../components/Title.svelte";
+  import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
 
@@ -29,7 +29,7 @@
 </style>
 
 {#await appDataPromise then app}
-  <Title text={params.app} />
+  <PageTitle text={params.app} />
 
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
@@ -37,7 +37,7 @@
   <p>{app.description}</p>
   <table class="mzp-u-data-table">
     <tr>
-      <td>Source Code URL</td>
+      <td>Source Code</td>
       <td><a href={app.url}>{app.url}</a></td>
     </tr>
     <tr>

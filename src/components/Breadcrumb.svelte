@@ -6,10 +6,11 @@
   ol {
     display: flex;
     li {
-      padding-bottom: $spacing-md;
-      padding-left: $spacing-sm;
       @include text-title-3xs;
       font-weight: bold;
+      padding-bottom: $spacing-md;
+      padding-left: $spacing-sm;
+
       .link-name {
         text-decoration: none;
       }

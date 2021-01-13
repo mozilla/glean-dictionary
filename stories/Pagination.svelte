@@ -65,8 +65,8 @@
       display: flex;
       justify-content: center;
       .page {
-        height: 3rem;
         @include text-body-md;
+        height: 3rem;
         font-weight: bold;
         margin: $spacing-sm;
         cursor: pointer;

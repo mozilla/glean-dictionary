@@ -4,7 +4,7 @@
   import { fetchJSON, getTableData } from "../state/api";
 
   import NotFound from "../components/NotFound.svelte";
-  import Title from "../components/Title.svelte";
+  import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
   export let queryString;
@@ -38,7 +38,7 @@
 </style>
 
 {#await pingDataPromise then data}
-  <Title text={`Table <code>${data.table.name}</code> for ${params.app}`} />
+  <PageTitle text={`Table <code>${data.table.name}</code> for ${params.app}`} />
   <table class="mzp-u-data-table">
     <tr>
       <td>BigQuery Definition</td>

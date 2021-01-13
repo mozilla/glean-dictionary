@@ -1,31 +1,315 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Storyshots Breadcrumb App Details Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="svelte-f5f52z"
+    style=""
+  >
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/"
+      >
+        apps
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        /
+      </span>
+       
+    </li>
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/apps/fenix/"
+      >
+        fenix
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        
+      </span>
+       
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Apps List Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="svelte-f5f52z"
+    style=""
+  >
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/"
+      >
+        apps
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        
+      </span>
+       
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="svelte-f5f52z"
+    style=""
+  >
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/"
+      >
+        apps
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        /
+      </span>
+       
+    </li>
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/apps/fenix/"
+      >
+        fenix
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        /
+      </span>
+       
+    </li>
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/apps/fenix/pings/activation"
+      >
+        activation
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        /
+      </span>
+       
+    </li>
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/apps/fenix/tables/activation/"
+      >
+        activation table
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        
+      </span>
+       
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Metric Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="svelte-f5f52z"
+    style=""
+  >
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/"
+      >
+        apps
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        /
+      </span>
+       
+    </li>
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/apps/fenix/"
+      >
+        fenix
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        /
+      </span>
+       
+    </li>
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/apps/fenix/metrics/about_page.libraries_tapped"
+      >
+        about_page.libraries_tapped
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        
+      </span>
+       
+    </li>
+  </ol>
+</section>
+`;
+
+exports[`Storyshots Breadcrumb Ping Page 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <ol
+    class="svelte-f5f52z"
+    style=""
+  >
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/"
+      >
+        apps
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        /
+      </span>
+       
+    </li>
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/apps/fenix/"
+      >
+        fenix
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        /
+      </span>
+       
+    </li>
+    <li
+      class="svelte-f5f52z"
+    >
+      <a
+        class="link-name svelte-f5f52z"
+        href="/apps/fenix/pings/activation"
+      >
+        activation
+         
+      </a>
+      <span
+        class="svelte-f5f52z"
+      >
+        
+      </span>
+       
+    </li>
+  </ol>
+</section>
+`;
+
 exports[`Storyshots Email Addresses Multiple Emails 1`] = `
 <section
   class="storybook-snapshot-container"
 >
   <span
-    class="svelte-7u2td5"
+    class="svelte-15gk75t"
   >
     <a
+      class="svelte-15gk75t"
       href="mailto:example@example.com"
     >
       example@example.com
     </a>
   </span>
   <span
-    class="svelte-7u2td5"
+    class="svelte-15gk75t"
   >
     <a
+      class="svelte-15gk75t"
       href="mailto:email@email.com"
     >
       email@email.com
     </a>
   </span>
   <span
-    class="svelte-7u2td5"
+    class="svelte-15gk75t"
   >
     <a
+      class="svelte-15gk75t"
       href="mailto:post@pigeon.com"
     >
       post@pigeon.com
@@ -40,14 +324,554 @@ exports[`Storyshots Email Addresses Single Email 1`] = `
   class="storybook-snapshot-container"
 >
   <span
-    class="svelte-7u2td5"
+    class="svelte-15gk75t"
   >
     <a
+      class="svelte-15gk75t"
       href="mailto:glean@mozilla.com"
     >
       glean@mozilla.com
     </a>
   </span>
+  
+</section>
+`;
+
+exports[`Storyshots FilterInput Basic 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="container"
+  >
+    <div
+      class="svelte-y697ub"
+    >
+      <input
+        class="svelte-y697ub"
+        id="filter-input"
+        placeholder="filter terms"
+        type="text"
+      />
+    </div>
+     
+    <ul>
+      <li>
+        foo
+      </li>
+      <li>
+        bar
+      </li>
+      <li>
+        foobar
+      </li>
+      <li>
+        lorem
+      </li>
+      <li>
+        ipsum
+      </li>
+    </ul>
+  </div>
+</section>
+`;
+
+exports[`Storyshots ItemList Default 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="svelte-y697ub"
+  >
+    <input
+      class="svelte-y697ub"
+      id="filter-input"
+      placeholder="filter terms"
+      type="text"
+    />
+  </div>
+   
+  <div
+    class="item-browser svelte-w4aaiz"
+  >
+    <ul
+      class="svelte-w4aaiz"
+    >
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 0"
+        >
+          Test metric 0
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 0
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 1"
+        >
+          Test metric 1
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 1
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 2"
+        >
+          Test metric 2
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 2
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 3"
+        >
+          Test metric 3
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 3
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 4"
+        >
+          Test metric 4
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 4
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 5"
+        >
+          Test metric 5
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 5
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 6"
+        >
+          Test metric 6
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 6
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 7"
+        >
+          Test metric 7
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 7
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 8"
+        >
+          Test metric 8
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 8
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 9"
+        >
+          Test metric 9
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 9
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 10"
+        >
+          Test metric 10
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 10
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 11"
+        >
+          Test metric 11
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 11
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 12"
+        >
+          Test metric 12
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 12
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 13"
+        >
+          Test metric 13
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 13
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 14"
+        >
+          Test metric 14
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 14
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 15"
+        >
+          Test metric 15
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 15
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 16"
+        >
+          Test metric 16
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 16
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 17"
+        >
+          Test metric 17
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 17
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 18"
+        >
+          Test metric 18
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 18
+          
+        </i>
+         
+      </li>
+      <li
+        class="svelte-w4aaiz"
+      >
+        <a
+          class="svelte-w4aaiz"
+          href="/apps/app-name/metrics/Test metric 19"
+        >
+          Test metric 19
+        </a>
+         
+        <i
+          class="svelte-w4aaiz"
+        >
+          This is test metric 19
+          
+        </i>
+         
+      </li>
+    </ul>
+  </div>
+   
+  <div
+    class="pagination-position svelte-bkgwc9"
+  >
+    <p
+      class="svelte-bkgwc9"
+    >
+      Page
+    
+      <code
+        class="svelte-bkgwc9"
+      >
+        1
+      </code>
+      
+    of
+    
+      <code
+        class="svelte-bkgwc9"
+      >
+        2
+      </code>
+      
+    (
+      <code
+        class="svelte-bkgwc9"
+      >
+        1
+      </code>
+      
+    -
+    
+      <code
+        class="svelte-bkgwc9"
+      >
+        20
+      </code>
+      
+    on
+    
+      <code
+        class="svelte-bkgwc9"
+      >
+        21
+      </code>
+      
+    items)
+    </p>
+  </div>
+   
+  <div
+    class="pagination-bar svelte-bkgwc9"
+  >
+    <div
+      class="pagination-button current-page svelte-bkgwc9"
+    >
+      <svg
+        class="feather feather-chevron-left w-6 h-6"
+        fill="none"
+        height="100%"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="100%"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polyline
+          points="15 18 9 12 15 6"
+        />
+      </svg>
+    </div>
+     
+    <div
+      class="pages svelte-bkgwc9"
+    >
+      <div
+        class="page current-page svelte-bkgwc9"
+      >
+        1
+         
+      </div>
+      <div
+        class="page  svelte-bkgwc9"
+      >
+        2
+         
+      </div>
+    </div>
+     
+    <div
+      class="pagination-button  svelte-bkgwc9"
+    >
+      <svg
+        class="feather feather-chevron-right w-6 h-6"
+        fill="none"
+        height="100%"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="100%"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polyline
+          points="9 18 15 12 9 6"
+        />
+      </svg>
+    </div>
+  </div>
+  
   
 </section>
 `;
@@ -68,5 +892,366 @@ exports[`Storyshots Markdown Text 1`] = `
   </a>
   .
   
+</section>
+`;
+
+exports[`Storyshots Pagination Default 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="pagination-position svelte-w3m83n"
+  >
+    <p
+      class="svelte-w3m83n"
+    >
+      Page
+    
+      <code
+        class="svelte-w3m83n"
+      >
+        1
+      </code>
+      
+    of
+    
+      <code
+        class="svelte-w3m83n"
+      >
+        11
+      </code>
+      
+    (
+      <code
+        class="svelte-w3m83n"
+      >
+        1
+      </code>
+      
+    -
+    
+      <code
+        class="svelte-w3m83n"
+      >
+        20
+      </code>
+      
+    on
+    
+      <code
+        class="svelte-w3m83n"
+      >
+        210
+      </code>
+      
+    items)
+    </p>
+  </div>
+   
+  <div
+    class="pagination-bar svelte-w3m83n"
+  >
+    <div
+      class="pagination-button current-page svelte-w3m83n"
+    >
+      <svg
+        class="feather feather-chevron-left w-6 h-6"
+        fill="none"
+        height="100%"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="100%"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polyline
+          points="15 18 9 12 15 6"
+        />
+      </svg>
+    </div>
+     
+    <div
+      class="pages svelte-w3m83n"
+    >
+      <div
+        class="page current-page svelte-w3m83n"
+      >
+        1
+         
+      </div>
+      <div
+        class="page  svelte-w3m83n"
+      >
+        2
+         
+      </div>
+      <div
+        class="page  svelte-w3m83n"
+      >
+        3
+         
+      </div>
+      <div
+        class="page  svelte-w3m83n"
+      >
+        ...
+         
+      </div>
+      <div
+        class="page  svelte-w3m83n"
+      >
+        11
+         
+      </div>
+    </div>
+     
+    <div
+      class="pagination-button  svelte-w3m83n"
+    >
+      <svg
+        class="feather feather-chevron-right w-6 h-6"
+        fill="none"
+        height="100%"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="100%"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polyline
+          points="9 18 15 12 9 6"
+        />
+      </svg>
+    </div>
+  </div>
+  
+</section>
+`;
+
+exports[`Storyshots Pill Deprecated 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="pill svelte-zw85gu"
+    style="background-color: rgb(74, 85, 104);"
+  >
+    Deprecated
+  </div>
+</section>
+`;
+
+exports[`Storyshots Schema Viewer Basic 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="schema-viewer svelte-1m543xb"
+  >
+    <h1
+      class="svelte-cviqid"
+    >
+      Schema
+    </h1>
+     
+    <div
+      class="svelte-y697ub"
+    >
+      <input
+        class="svelte-y697ub"
+        id="filter-input"
+        placeholder="filter terms"
+        type="text"
+      />
+    </div>
+     
+    <div
+      class="schema-browser svelte-1m543xb"
+    >
+      <p
+        class="svelte-1m543xb"
+      >
+        <div
+          class="svelte-19dwd80"
+          style=""
+        >
+          <p
+            class="node svelte-19dwd80"
+          >
+            <span
+              class="parent-node svelte-19dwd80"
+            >
+              
+              
+            </span>
+            <span
+              class="svelte-19dwd80"
+            >
+              additional_properties
+            </span>
+             
+            <p
+              class="node-description svelte-19dwd80"
+            >
+              A JSON string containing any payload properties not present in the schema
+            </p>
+             
+          </p>
+        </div>
+         
+        
+        <div
+          class="svelte-19dwd80"
+          style=""
+        >
+          <p
+            class="node svelte-19dwd80"
+          >
+            <span
+              class="parent-node svelte-19dwd80"
+            >
+              
+              
+            </span>
+            <span
+              class="svelte-19dwd80"
+            >
+              client_info
+            </span>
+             
+             
+          </p>
+        </div>
+         
+        <div
+          class="svelte-19dwd80"
+          style=""
+        >
+          <p
+            class="node svelte-19dwd80"
+          >
+            <span
+              class="parent-node svelte-19dwd80"
+            >
+              client_info
+              .
+            </span>
+            <span
+              class="svelte-19dwd80"
+            >
+              os_version
+            </span>
+             
+            <p
+              class="node-description svelte-19dwd80"
+            >
+              The user-visible version of the operating system (e.g. "1.2.3"). If the version detection fails, this metric gets set to \`Unknown\`.
+            </p>
+             
+          </p>
+        </div>
+         
+        
+        <div
+          class="svelte-19dwd80"
+          style=""
+        >
+          <p
+            class="node svelte-19dwd80"
+          >
+            <span
+              class="parent-node svelte-19dwd80"
+            >
+              client_info
+              .
+            </span>
+            <span
+              class="svelte-19dwd80"
+            >
+              telemetry_sdk_build
+            </span>
+             
+            <p
+              class="node-description svelte-19dwd80"
+            >
+              The version of the Glean SDK
+            </p>
+             
+          </p>
+        </div>
+         
+        
+        
+        
+        <div
+          class="svelte-19dwd80"
+          style=""
+        >
+          <p
+            class="node svelte-19dwd80"
+          >
+            <span
+              class="parent-node svelte-19dwd80"
+            >
+              
+              
+            </span>
+            <span
+              class="svelte-19dwd80"
+            >
+              document_id
+            </span>
+             
+            <p
+              class="node-description svelte-19dwd80"
+            >
+              The document ID specified in the URI when the client sent this message
+            </p>
+             
+          </p>
+        </div>
+         
+        
+      </p>
+    </div>
+  </div>
+</section>
+`;
+
+exports[`Storyshots Tab Basic 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <div
+    class="tabs svelte-1diarvn"
+  />
+   
+  <div
+    class="tab-content svelte-1diarvn"
+  >
+    <div
+      class="title svelte-1cgp1qr active"
+    >
+      A
+    </div>
+    <div
+      class="title svelte-1cgp1qr"
+    >
+      B
+    </div>
+     
+    <div
+      class="box svelte-1lgs0kh"
+    >
+      Content for Tab A
+    </div>
+    
+    
+    
+  </div>
 </section>
 `;

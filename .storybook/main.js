@@ -24,6 +24,11 @@ module.exports = {
           plugins: [autoPrefixer],
         },
       }),
+
+      // turn off warning about unused CSS selectors to
+      // shorten Netlify build time. More context:
+      // https://github.com/mozilla/glean-dictionary/pull/312#issuecomment-759251341
+
       onwarn: (warning, handler) => {
         const { code } = warning;
         if (code === "css-unused-selector") return;

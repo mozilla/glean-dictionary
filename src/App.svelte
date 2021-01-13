@@ -121,9 +121,7 @@
     <div class="mzp-c-navigation-container">
       <div class="mzp-c-navigation-logo-glean">
         <a class="glean-logo" href="/">
-          <img
-            src="/img/logos/glean_logo_bw.png"
-            alt="Glean Dictionary logo" /></a>
+          <img src="/glean_logo.png" alt="Glean Dictionary Logo" /></a>
         <a href="/"><h5>Dictionary</h5></a>
       </div>
     </div>

@@ -5,7 +5,7 @@
   import ItemList from "../components/ItemList.svelte";
   import NotFound from "../components/NotFound.svelte";
   import Markdown from "../components/Markdown.svelte";
-  import Title from "../components/Title.svelte";
+  import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
   const pingDataPromise = getPingData(params.app, params.ping);
@@ -26,7 +26,7 @@
 </style>
 
 {#await pingDataPromise then ping}
-  <Title text={ping.name} />
+  <PageTitle text={ping.name} />
   <table class="mzp-u-data-table">
     <tr>
       <td>Description</td>

@@ -1,8 +1,8 @@
 <style>
   svg {
     display: inline-block;
-    width: $spacing-md;
-    color: $color-dark-gray-50;
+    width: 15px;
+    color: $color-light-gray-50;
   }
 </style>
 

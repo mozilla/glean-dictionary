@@ -58,6 +58,11 @@ module.exports = {
         // https://github.com/sveltejs/eslint-plugin-svelte3/issues/41#issuecomment-572503966
         "no-multiple-empty-lines": ["error", { max: 2, maxBOF: 2, maxEOF: 0 }],
       },
+
+      // Eslint only allows regular CSS inside <style>, so we
+      // use this setting to ignore warnings about SCSS/LESS syntax
+      //
+      // https://github.com/sveltejs/eslint-plugin-svelte3#svelte3ignore-styles
       settings: {
         "svelte3/ignore-styles": () => true,
       },

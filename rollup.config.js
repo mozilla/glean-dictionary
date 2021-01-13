@@ -7,6 +7,7 @@ import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import { spawn, execSync } from "child_process";
 import sveltePreprocess from "svelte-preprocess";
+import copy from "rollup-plugin-copy";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -95,6 +96,18 @@ export default {
     // If we're building for production (npm run build
     // instead of npm run dev), minify
     production && terser(),
+    copy({
+      targets: [
+        {
+          src: "node_modules/@mozilla-protocol/core/protocol/img/logos/mozilla",
+          dest: "public/img/logos",
+        },
+        {
+          src: ["node_modules/@mozilla-protocol/core/protocol/fonts"],
+          dest: "public/",
+        },
+      ],
+    }),
   ],
   watch: {
     clearScreen: false,

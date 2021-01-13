@@ -5,7 +5,7 @@
   import NotFound from "../components/NotFound.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import helpText from "../data/help";
-  import Title from "../components/Title.svelte";
+  import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
   let metricName = params.metric.replaceAll("-", ".");
@@ -66,7 +66,7 @@
 </style>
 
 {#await metricDataPromise then metric}
-  <Title text={metric.name} />
+  <PageTitle text={metric.name} />
   <p>
     <Markdown text={metric.description} />
   </p>

@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import FilterInput from "../components/FilterInput.svelte";
   import Pill from "../components/Pill.svelte";
-  import Title from "../components/Title.svelte";
+  import PageTitle from "../components/PageTitle.svelte";
   import { fetchJSON } from "../state/api";
 
   const URL = "data/apps.json";
@@ -36,7 +36,7 @@
   }
 </style>
 
-<Title text="Applications" />
+<PageTitle text="Applications" />
 
 <div class="deprecation-checkbox">
   <label>

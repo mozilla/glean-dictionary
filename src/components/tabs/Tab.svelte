@@ -11,13 +11,13 @@
 
 <style>
   .title {
+    @include text-title-3xs;
     border-top-width: 0px;
     border-top-left-radius: 0.5rem;
     border-top-right-radius: 0.5rem;
     padding: 1rem;
     background-color: $color-light-gray-10;
     display: inline-block;
-    @include text-title-3xs;
     &.active {
       background-color: $color-light-gray-40;
     }

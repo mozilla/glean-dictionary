@@ -2,7 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import SchemaNode from "./SchemaNode.svelte";
   import FilterInput from "./FilterInput.svelte";
-  import Title from "./Title.svelte";
+  import PageTitle from "./PageTitle.svelte";
 
   export let app;
   export let nodes = [];
@@ -71,7 +71,7 @@
 </style>
 
 <div class="schema-viewer">
-  <Title text={'Schema'} />
+  <PageTitle text={'Schema'} />
 
   <FilterInput onChangeText={filterTextChanged} filterText={searchText} />
   <div class="schema-browser">
