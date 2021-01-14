@@ -12,6 +12,34 @@
 
   const metricDataPromise = getMetricData(params.app, metricName);
 
+  function getGlamUrlTemplate(app) {
+    const map = {
+      fenix: {
+        product: "fenix",
+        app_id: "",
+      },
+      "firefox-android-beta": {
+        product: "fenix",
+        app_id: "beta",
+      },
+      "firefox-android-release": {
+        product: "fenix",
+        app_id: "release",
+      },
+    };
+    if (Object.keys(map).includes(app)) {
+      const p = map[app];
+      return function makeGlamUrl(metric) {
+        return `https://glam.telemetry.mozilla.org/${p.product}/probe/${metric}/explore?app_id=${p.app_id}`;
+      };
+    }
+
+    // The app isn't one GLAM supports so return nothing.
+    return undefined;
+  }
+
+  const glamUrl = getGlamUrlTemplate(params.app);
+
   function getMetricDocumentationURI(type) {
     const sourceDocs = "https://mozilla.github.io/glean/book/user/metrics/";
     const links = {
@@ -213,6 +241,15 @@
         {/each}
       </td>
     </tr>
+    {#if glamUrl && metric.bigquery_names.metric_type !== 'event'}
+      <tr>
+        <td>GLAM</td>
+        <td>
+          <a
+            href={glamUrl(metric.bigquery_names.glam_etl_name)}>{metric.bigquery_names.glam_etl_name}</a>
+        </td>
+      </tr>
+    {/if}
   </table>
 {:catch}
   <NotFound pageName={metricName} itemType="metric" />
