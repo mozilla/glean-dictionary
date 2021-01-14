@@ -40,9 +40,36 @@
   .item-browser {
     max-height: 400px;
     overflow: scroll;
-    margin: $spacing-md auto $spacing-md auto;
     a {
       text-decoration: none;
+    }
+  }
+
+  table {
+    background: $color-light-gray-05;
+    border-collapse: collapse;
+    margin: auto;
+    tr {
+      td {
+        border: 1px dotted $color-light-gray-30;
+      }
+      &:nth-child(odd) td {
+        background: $color-light-gray-10;
+      }
+      &:hover td {
+        background: $color-dark-gray-30;
+        color: $color-light-gray-05;
+        a {
+          font-weight: bold;
+          color: $color-light-gray-05;
+          &:hover {
+            color: $color-blue-40;
+          }
+        }
+      }
+      .description {
+        @include text-body-sm;
+      }
     }
   }
 </style>
@@ -52,16 +79,32 @@
 {:else}
   <FilterInput onChangeText={filterItems} />
   <div class="item-browser">
-    <ul>
-      {#each filteredItems as item}
-        <li>
-          <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
-          <i><Markdown text={item.description} /></i>
-        </li>
-      {:else}
-        <p>Your search didn't match any {itemType}.</p>
-      {/each}
-    </ul>
+    <table class="mzp-u-data-table">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          {#if itemType === 'metrics'}
+            <th scope="col">Type</th>
+          {/if}
+          <th scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each filteredItems as item}
+          <tr>
+            <td class="name">
+              <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
+            </td>
+            {#if itemType === 'metrics'}
+              <td>{item.type}</td>
+            {/if}
+            <td class="description">
+              <Markdown text={item.description} />
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
   </div>
 {/if}
 {#if filteredItems.length}

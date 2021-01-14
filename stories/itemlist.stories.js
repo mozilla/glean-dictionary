@@ -5,6 +5,7 @@ const testData = {
   metrics: [...Array(21).keys()].map((i) => ({
     name: `Test metric ${i}`,
     description: `This is test metric ${i}`,
+    type: `metric_type`,
   })),
 };
 export default {
