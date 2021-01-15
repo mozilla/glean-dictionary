@@ -46,11 +46,14 @@
   }
 
   table {
+    table-layout: fixed;
+    width: 100%;
     background: $color-light-gray-05;
     border-collapse: collapse;
     margin: auto;
     tr {
       td {
+        word-wrap: break-word;
         border: 1px dotted $color-light-gray-30;
       }
       &:nth-child(odd) td {
@@ -60,7 +63,6 @@
         background: $color-dark-gray-30;
         color: $color-light-gray-05;
         a {
-          font-weight: bold;
           color: $color-light-gray-05;
           &:hover {
             color: $color-blue-40;
@@ -80,23 +82,28 @@
   <FilterInput onChangeText={filterItems} />
   <div class="item-browser">
     <table class="mzp-u-data-table">
+      <!-- We have to do inline styling here to override Protocol CSS rules -->
+      <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
+      <col width="35%" />
+      <col width={itemType === 'metrics' ? '25%' : '65%'} />
+      <col width={itemType === 'metrics' ? '40%' : '0'} />
       <thead>
         <tr>
-          <th scope="col">Name</th>
+          <th scope="col" style="text-align: center;">Name</th>
           {#if itemType === 'metrics'}
-            <th scope="col">Type</th>
+            <th scope="col" style="text-align: center;">Type</th>
           {/if}
-          <th scope="col">Description</th>
+          <th scope="col" style="text-align: center;">Description</th>
         </tr>
       </thead>
       <tbody>
         {#each filteredItems as item}
           <tr>
-            <td class="name">
+            <td>
               <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
             </td>
             {#if itemType === 'metrics'}
-              <td>{item.type}</td>
+              <td style="text-align: center;"><code>{item.type}</code></td>
             {/if}
             <td class="description">
               <Markdown text={item.description} />
