@@ -82,6 +82,7 @@ for app in apps:
                 "name": metric.identifier,
                 "description": metric.description,
                 "pings": metric.definition["send_in_pings"],
+                "type": metric.definition["type"],
             }
         )
 
@@ -89,6 +90,7 @@ for app in apps:
             {
                 "name": metric.identifier,
                 "description": metric.description,
+                "type": metric.definition["type"],
             }
         )
 

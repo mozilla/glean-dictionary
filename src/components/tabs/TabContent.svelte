@@ -11,6 +11,7 @@
     border: 1px solid $color-light-gray-40;
     border-bottom-right-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
+    box-shadow: 5px 5px 10px rgba($color-black, 0.1);
   }
 </style>
 

@@ -40,9 +40,44 @@
   .item-browser {
     max-height: 400px;
     overflow: scroll;
-    margin: $spacing-md auto $spacing-md auto;
     a {
       text-decoration: none;
+    }
+  }
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+    background: $color-light-gray-05;
+    border-collapse: collapse;
+    margin: auto;
+
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: $color-light-gray-05;
+    }
+    tr {
+      td {
+        word-wrap: break-word;
+        border: 1px dotted $color-light-gray-30;
+      }
+      &:nth-child(odd) td {
+        background: $color-light-gray-10;
+      }
+      &:hover td {
+        background: $color-dark-gray-30;
+        color: $color-light-gray-05;
+        a {
+          color: $color-light-gray-05;
+          &:hover {
+            color: $color-blue-40;
+          }
+        }
+      }
+      .description {
+        @include text-body-sm;
+      }
     }
   }
 </style>
@@ -52,16 +87,37 @@
 {:else}
   <FilterInput onChangeText={filterItems} />
   <div class="item-browser">
-    <ul>
-      {#each filteredItems as item}
-        <li>
-          <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
-          <i><Markdown text={item.description} /></i>
-        </li>
-      {:else}
-        <p>Your search didn't match any {itemType}.</p>
-      {/each}
-    </ul>
+    <table class="mzp-u-data-table">
+      <!-- We have to do inline styling here to override Protocol CSS rules -->
+      <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
+      <col width="35%" />
+      <col width={itemType === 'metrics' ? '25%' : '65%'} />
+      <col width={itemType === 'metrics' ? '40%' : '0'} />
+      <thead>
+        <tr>
+          <th scope="col" style="text-align: center;">Name</th>
+          {#if itemType === 'metrics'}
+            <th scope="col" style="text-align: center;">Type</th>
+          {/if}
+          <th scope="col" style="text-align: center;">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each filteredItems as item}
+          <tr>
+            <td>
+              <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
+            </td>
+            {#if itemType === 'metrics'}
+              <td style="text-align: center;"><code>{item.type}</code></td>
+            {/if}
+            <td class="description">
+              <Markdown text={item.description} />
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
   </div>
 {/if}
 {#if filteredItems.length}
