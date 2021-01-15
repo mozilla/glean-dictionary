@@ -51,6 +51,12 @@
     background: $color-light-gray-05;
     border-collapse: collapse;
     margin: auto;
+
+    thead {
+      position: sticky;
+      top: 0;
+      background-color: $color-light-gray-05;
+    }
     tr {
       td {
         word-wrap: break-word;
