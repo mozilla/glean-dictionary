@@ -21,7 +21,7 @@
   }
 </style>
 
-<ol style={!links.length ? 'display: none;' : ''}>
+<ol>
   {#each links as link}
     <li>
       <a class="link-name" href={link.url}>{link.name} </a><span
