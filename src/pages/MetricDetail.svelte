@@ -6,11 +6,14 @@
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import helpText from "../data/help";
   import PageTitle from "../components/PageTitle.svelte";
+  import { pageTitle } from "../state/stores";
 
   export let params;
   let metricName = params.metric.replaceAll("-", ".");
 
   const metricDataPromise = getMetricData(params.app, metricName);
+
+  pageTitle.set(`${metricName} | ${params.app} `);
 
   function getGlamUrlTemplate(app) {
     const map = {

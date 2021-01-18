@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { fetchJSON, getTableData } from "../state/api";
+  import { pageTitle } from "../state/stores";
 
   import NotFound from "../components/NotFound.svelte";
   import PageTitle from "../components/PageTitle.svelte";
@@ -21,6 +22,8 @@
   );
 
   const updateURL = () => dispatch("updateURL", queryString);
+
+  pageTitle.set(`${params.table} table | ${params.app}`);
 </script>
 
 <style>

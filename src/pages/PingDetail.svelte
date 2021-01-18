@@ -1,5 +1,6 @@
 <script>
   import { getPingData } from "../state/api";
+  import { pageTitle } from "../state/stores";
 
   import EmailAddresses from "../components/EmailAddresses.svelte";
   import ItemList from "../components/ItemList.svelte";
@@ -9,6 +10,8 @@
 
   export let params;
   const pingDataPromise = getPingData(params.app, params.ping);
+
+  pageTitle.set(`${params.ping} | ${params.app}`);
 </script>
 
 <style>

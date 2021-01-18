@@ -8,10 +8,13 @@
   import Pill from "../components/Pill.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
   import PageTitle from "../components/PageTitle.svelte";
+  import { pageTitle } from "../state/stores";
 
   export let params;
 
   const appDataPromise = getAppData(params.app);
+
+  pageTitle.set(params.app);
 </script>
 
 <style>
