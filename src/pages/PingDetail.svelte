@@ -13,22 +13,15 @@
 </script>
 
 <style>
-  a {
-    text-decoration: none;
-  }
-  .mzp-u-data-table {
-    margin-top: $spacing-md;
-    margin-bottom: $spacing-lg;
-    td {
-      border: 1px solid $color-light-gray-40;
-      padding: 0.5rem;
-    }
-  }
+  @import "../main.scss";
+  @include metadata-table;
 </style>
 
 {#await pingDataPromise then ping}
   <PageTitle text={ping.name} />
-  <table class="mzp-u-data-table">
+  <table>
+    <col />
+    <col />
     <tr>
       <td>Description</td>
       <td>
