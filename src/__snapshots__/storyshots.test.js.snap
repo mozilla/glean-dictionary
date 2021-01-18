@@ -281,6 +281,32 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
 </section>
 `;
 
+exports[`Storyshots Bug Links Bugzilla 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <a
+    href="https://bugzilla.mozilla.org/1234"
+    target="_blank"
+  >
+    bugzil.la/1234
+  </a>
+</section>
+`;
+
+exports[`Storyshots Bug Links Git Hub 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <a
+    href="https://github.com/mozilla-mobile/fenix/issues/1234"
+    target="_blank"
+  >
+    mozilla-mobile/fenix#1234
+  </a>
+</section>
+`;
+
 exports[`Storyshots Email Addresses Multiple Emails 1`] = `
 <section
   class="storybook-snapshot-container"
