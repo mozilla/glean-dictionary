@@ -1,6 +1,7 @@
 <script>
   import { getMetricData } from "../state/api";
   import { getMetricBigQueryURL } from "../state/urls";
+  import BugLink from "../components/BugLink.svelte";
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
@@ -114,13 +115,8 @@
         <HelpHoverable content={helpText.bugs.text} link={helpText.bugs.link} />
       </td>
       <td>
-        {#each metric.bugs as bug}
-          <a
-            href={typeof bug !== 'number' ? bug : `https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}
-            title={bug}
-            target="_blank">
-            {typeof bug !== 'number' ? bug : `https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}
-          </a>
+        {#each metric.bugs as bugRef}
+          <BugLink ref={bugRef} />
         {/each}
       </td>
     </tr>
@@ -201,13 +197,8 @@
     <tr>
       <td>Data Reviews</td>
       <td>
-        {#each metric.data_reviews as rev, i}
-          {#if rev.indexOf('http') > -1}
-            <a href={rev} title={rev} target="_blank"> {i + 1} </a>
-          {:else}
-            <a
-              href="https://bugzilla.mozilla.org/show_bug.cgi?id={rev}">{i + 1}</a>
-          {/if}
+        {#each metric.data_reviews as dataReviewRef}
+          <BugLink ref={dataReviewRef} />
         {/each}
       </td>
     </tr>

@@ -1,6 +1,7 @@
 <script>
   import { getPingData } from "../state/api";
 
+  import BugLink from "../components/BugLink.svelte";
   import EmailAddresses from "../components/EmailAddresses.svelte";
   import ItemList from "../components/ItemList.svelte";
   import NotFound from "../components/NotFound.svelte";
@@ -37,18 +38,17 @@
     <tr>
       <td>Related Bugs</td>
       <td>
-        {#each ping.bugs as bug}
-          {#if typeof bug === 'number'}
-            <a
-              href={`https://bugzilla.mozilla.org/show_bug.cgi?id=${bug}`}>{bug}</a>
-          {:else}<a href={bug}>{bug}</a>{/if}
+        {#each ping.bugs as bugRef}
+          <BugLink ref={bugRef} />
         {/each}
       </td>
     </tr>
     <tr>
       <td>Reviews Data</td>
       <td>
-        {#each ping.data_reviews as review}<a href={review}>{review}</a>{/each}
+        {#each ping.data_reviews as reviewRef}
+          <BugLink ref={reviewRef} />
+        {/each}
       </td>
     </tr>
     <tr>
