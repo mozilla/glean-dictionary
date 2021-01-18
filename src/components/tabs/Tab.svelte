@@ -20,6 +20,8 @@
     display: inline-block;
     &.active {
       background-color: $color-light-gray-40;
+      border: 1px solid $color-light-gray-60;
+      border-bottom-style: none;
     }
     &:not(.active):hover {
       background-color: $color-light-gray-20;

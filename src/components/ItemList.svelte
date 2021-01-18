@@ -66,14 +66,7 @@
         background: $color-light-gray-10;
       }
       &:hover td {
-        background: $color-dark-gray-30;
-        color: $color-light-gray-05;
-        a {
-          color: $color-light-gray-05;
-          &:hover {
-            color: $color-blue-40;
-          }
-        }
+        background: rgba($color-link-hover, 0.1);
       }
       .description {
         @include text-body-sm;
