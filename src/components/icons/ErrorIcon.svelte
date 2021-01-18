@@ -1,0 +1,20 @@
+<svg
+  width="80px"
+  height="50px"
+  viewBox="0 0 24 24"
+  xmlns="http://www.w3.org/2000/svg">
+  <g
+    stroke="none"
+    stroke-width="1"
+    fill="none"
+    fill-rule="evenodd"
+    stroke-linecap="round">
+    <g
+      transform="translate(6.000000, 6.000000)"
+      stroke="#000000"
+      stroke-width="2">
+      <path d="M0,0 L12,12" />
+      <path d="M0,12 L12,0" />
+    </g>
+  </g>
+</svg>

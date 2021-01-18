@@ -20,6 +20,11 @@
 </style>
 
 {#await appDataPromise then app}
+  {#if app.prototype}
+    <AppAlert
+      status="warning"
+      message="This application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings." />
+  {/if}
   <PageTitle text={params.app} />
 
   {#if app.deprecated}
@@ -44,11 +49,6 @@
       </td>
     </tr>
   </table>
-  {#if app.prototype}
-    <AppAlert
-      message="The {params.app} application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
-      bgColor="#808895" />
-  {/if}
 
   <TabGroup active="Metrics">
     <Tab key="Metrics">Metrics</Tab>
