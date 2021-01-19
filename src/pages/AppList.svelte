@@ -4,6 +4,7 @@
   import Pill from "../components/Pill.svelte";
   import PageTitle from "../components/PageTitle.svelte";
   import { fetchJSON } from "../state/api";
+  import { pageTitle } from "../state/stores";
 
   const URL = "data/apps.json";
   let apps;
@@ -19,6 +20,8 @@
     filteredApps = apps.filter((appItem) => appItem.name.includes(filterText));
   }
   let showDeprecated = false;
+
+  pageTitle.set("Glean Dictionary");
 </script>
 
 <style>

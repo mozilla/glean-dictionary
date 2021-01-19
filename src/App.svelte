@@ -12,10 +12,14 @@
   import MetricDetail from "./pages/MetricDetail.svelte";
   import TableDetail from "./pages/TableDetail.svelte";
 
+  import { pageTitle } from "./state/stores";
+
   let component;
   let params = {};
   let links = [];
   let queryString;
+
+  let title;
 
   afterUpdate(() => {
     const { app, ping, metric, table } = params;
@@ -81,6 +85,12 @@
     next();
   });
   page();
+
+  // Set page title
+  // https://stackoverflow.com/a/59028538
+
+  $: title = $pageTitle ? `${$pageTitle}` : "Glean Dictionary";
+  $: document.title = title;
 </script>
 
 <style>
@@ -116,6 +126,9 @@
 
 <GlobalStyles />
 
+<svelte:head>
+  <title>{title}</title>
+</svelte:head>
 <div class="mzp-c-navigation mzp-is-sticky">
   <div class="mzp-c-navigation-l-content">
     <div class="mzp-c-navigation-container">
