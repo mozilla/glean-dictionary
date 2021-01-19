@@ -509,12 +509,11 @@ exports[`Storyshots FilterInput Basic 1`] = `
     class="container"
   >
     <div
-      class="svelte-125aa79"
+      class="svelte-3hp2vc"
     >
       <input
-        class="svelte-125aa79"
+        class="svelte-3hp2vc"
         id="filter-input"
-        style="border-radius: 15px; border: 1px solid #000;"
         type="search"
       />
     </div>
@@ -545,13 +544,12 @@ exports[`Storyshots ItemList Default 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="svelte-125aa79"
+    class="svelte-3hp2vc"
   >
     <input
-      class="svelte-125aa79"
+      class="svelte-3hp2vc"
       id="filter-input"
       placeholder="Search metrics"
-      style="border-radius: 15px; border: 1px solid #000;"
       type="search"
     />
   </div>
@@ -1575,12 +1573,11 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
     </h1>
      
     <div
-      class="svelte-125aa79"
+      class="svelte-3hp2vc"
     >
       <input
-        class="svelte-125aa79"
+        class="svelte-3hp2vc"
         id="filter-input"
-        style="border-radius: 15px; border: 1px solid #000;"
         type="search"
       />
     </div>

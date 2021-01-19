@@ -4,7 +4,7 @@
   export let onChangeText;
   export let filterText = "";
 
-  export let text;
+  export let placeHolder;
 
   const changeText = () => {
     onChangeText(filterText);
@@ -16,17 +16,18 @@
     margin-top: $spacing-xs;
     margin-bottom: $spacing-xs;
   }
-  input {
+  #filter-input {
     width: 100%;
     cursor: pointer;
-    box-shadow: $box-shadow-sm;
+    box-shadow: 3px 3px 6px rgba($color-black, 0.1);
+    border-radius: 15px;
+    border: 1px solid #000;
   }
 </style>
 
 <div>
   <input
-    placeHolder={text}
-    style="border-radius: 15px; border: 1px solid #000;"
+    {placeHolder}
     type="search"
     id="filter-input"
     bind:value={filterText}

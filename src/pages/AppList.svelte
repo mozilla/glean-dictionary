@@ -1,6 +1,5 @@
 <script>
   import { onMount } from "svelte";
-  import { fade } from "svelte/transition";
   import { includes } from "lodash";
 
   import { fetchJSON } from "../state/api";
@@ -92,8 +91,12 @@
 <style>
   .app-filter {
     margin: $spacing-md $spacing-xl;
-    .deprecation-checkbox {
+    #deprecation-checkbox {
+      display: block;
       text-align: right;
+      label {
+        display: inline;
+      }
     }
   }
 
@@ -117,56 +120,74 @@
     width: 30px;
     background-color: inherit;
   }
+  #card {
+    max-width: 230px;
+    #media-block {
+      &:hover {
+        border-radius: 15px;
+      }
+    }
+    #media-wrapper {
+      border-radius: 15px;
+      #logo-img {
+        width: 230px;
+      }
+    }
+  }
+  #card-description {
+    font-size: 14px;
+  }
 </style>
 
-<div transition:fade>
-  {#if apps}
-    <div class="app-filter">
-      <FilterInput text="Search for an application" onChangeText={filterApps} />
-      <span class="deprecation-checkbox">
-        <label>
-          <input type="checkbox" bind:checked={showDeprecated} />
-          Show deprecated applications
-        </label>
-      </span>
-    </div>
+{#if apps}
+  <div class="app-filter">
+    <FilterInput
+      placeHolder="Search for an application"
+      onChangeText={filterApps} />
+    <span id="deprecation-checkbox">
+      <label>
+        <input type="checkbox" bind:checked={showDeprecated} />
+        Show deprecated applications
+      </label>
+    </span>
+  </div>
 
-    <div class="app-list">
-      {#each filteredApps as app}
-        {#if showDeprecated || !app.deprecated}
-          <div
-            class="mzp-c-card mzp-c-card-extra-small has-aspect-3-2"
-            style="max-width: 230px;">
-            <a class="mzp-c-card-block-link" href="/apps/{app.name}">
-              <div class="mzp-c-card-media-wrapper" style="border-radius: 4px;">
+  <div class="app-list">
+    {#each filteredApps as app}
+      {#if showDeprecated || !app.deprecated}
+        <div class="mzp-c-card mzp-c-card-extra-small has-aspect-3-2" id="card">
+          <a
+            class="mzp-c-card-block-link"
+            href="/apps/{app.name}"
+            id="media-block">
+            <div class="mzp-c-card-media-wrapper" id="media-wrapper">
+              <img
+                class="mzp-c-card-imgage"
+                src={getAppLogo(app.name)}
+                alt="${app.name} Logo"
+                id="logo-img" />
+              {#if isPlatform(app.description)}
+                <div class="corner-flag" />
                 <img
-                  class="mzp-c-card-imgage"
-                  src={getAppLogo(app.name)}
-                  alt="${app.name} Logo"
-                  style="width: 230px;" />
-                {#if isPlatform(app.description)}
-                  <div class="corner-flag" />
-                  <img
-                    class="platform-logo"
-                    src={getPlatformLogo(app.description)}
-                    alt="Platform Logo" />
-                {/if}
-              </div>
-              <div class="mzp-c-card-content">
-                <h2 class="mzp-c-card-title">{app.name}</h2>
-                {#if app.deprecated}
-                  <Pill message="Deprecated" bgColor="#4a5568" />
-                {/if}
-                <p class="mzp-c-card-meta" style="font-size: 14px;">
-                  {app.description}
-                </p>
-              </div>
-            </a>
-          </div>
-        {/if}
-      {:else}
-        <p>Your search didn't match any application.</p>
-      {/each}
-    </div>
-  {/if}
-</div>
+                  class="platform-logo"
+                  src={getPlatformLogo(app.description)}
+                  alt="Platform Logo" />
+              {/if}
+            </div>
+            <div class="mzp-c-card-content">
+              <h2 class="mzp-c-card-title">{app.name}</h2>
+              {#if app.deprecated}
+                <Pill message="Deprecated" bgColor="#4a5568" />
+              {/if}
+              <p class="mzp-c-card-meta" id="card-description">
+                {app.description}
+              </p>
+            </div>
+          </a>
+        </div>
+      {/if}
+    {:else}
+      <p>Your search didn't match any application.</p>
+    {/each}
+  </div>
+{/if}

@@ -78,7 +78,7 @@
 {#if !items.length}
   <p>Currently, there are no {itemType} available for {items.name}</p>
 {:else}
-  <FilterInput onChangeText={filterItems} text="Search {itemType}" />
+  <FilterInput onChangeText={filterItems} placeHolder="Search {itemType}" />
   <div class="item-browser">
     <table class="mzp-u-data-table">
       <!-- We have to do inline styling here to override Protocol CSS rules -->
