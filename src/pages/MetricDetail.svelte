@@ -107,7 +107,7 @@
     <col />
     <tr>
       <td>
-        Relevant Bugs
+        Bugs
         <HelpHoverable content={helpText.bugs.text} link={helpText.bugs.link} />
       </td>
       <td>
@@ -120,8 +120,8 @@
       <td>
         Send In Pings
         <HelpHoverable
-          content={helpText.send_in_pings.text}
-          link={helpText.send_in_pings.link} />
+          content={helpText.sendInPings.text}
+          link={helpText.sendInPings.link} />
       </td>
       <td>
         {#each metric.send_in_pings as name}
@@ -132,11 +132,7 @@
     {#if metric.lifetime}
       <tr>
         <td>
-          <a
-            href="https://mozilla.github.io/glean/book/user/adding-new-metrics.html?highlight=lifetime#when-should-glean-automatically-clear-the-measurement"
-            target="_blank">
-            Lifetime
-          </a>
+          Lifetime
           <HelpHoverable
             content={helpText.lifetime.text}
             link={helpText.lifetime.link} />
