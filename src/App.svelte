@@ -94,6 +94,14 @@
 </script>
 
 <style>
+  html,
+  body {
+    /* keep the  below value the same as footer height 
+       to prevent footer from jumping around */
+    /* stackoverflow.com/questions/21206058/place-footer-at-bottom-only-if-page-is-short/21207313#21207313 */
+    padding-bottom: 350px;
+  }
+
   .mzp-c-navigation {
     background: $color-black;
     padding-top: $spacing-md;

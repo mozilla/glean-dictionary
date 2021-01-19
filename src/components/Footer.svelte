@@ -2,6 +2,15 @@
   const rev = "__VERSION__";
 </script>
 
+<style>
+  footer {
+    /* these values need to be equal to body.padding-bottom 
+      in App.svelte to prevent footer from jumping around */
+    height: 350px;
+    margin-top: 350px;
+  }
+</style>
+
 <footer class="mzp-c-footer">
   <div class="mzp-l-content">
     <nav class="mzp-c-footer-secondary">
