@@ -18,7 +18,6 @@
   }
   #filter-input {
     width: 100%;
-    cursor: pointer;
     box-shadow: 3px 3px 6px rgba($color-black, 0.1);
     border-radius: 15px;
     border: 1px solid #000;
