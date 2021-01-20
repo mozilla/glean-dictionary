@@ -95,8 +95,9 @@
 
 <style>
   .mzp-c-navigation {
-    background-color: black;
+    background: $color-black;
     padding-top: $spacing-md;
+
     .mzp-c-navigation-logo-glean {
       width: 100%;
       display: flex;
@@ -117,10 +118,7 @@
   }
 
   .c-sub-navigation {
-    background: #f9f9fa;
-    box-shadow: inset 0 10px 2px -10px rgba(29, 17, 51, 0.04),
-      inset 0 10px 4px -10px rgba(9, 32, 77, 0.12),
-      inset 0 10px 3px -10px rgba(29, 17, 51, 0.12);
+    background: $color-light-gray-10;
   }
 </style>
 
@@ -141,14 +139,15 @@
   </div>
 </div>
 
-<nav class="mzp-c-navigation c-sub-navigation">
-  <div class="mzp-c-navigation-l-content">
-    <div class="mzp-c-navigation-container">
-      <Breadcrumb {links} />
+{#if links.length}
+  <nav class="mzp-c-navigation c-sub-navigation">
+    <div class="mzp-c-navigation-l-content">
+      <div class="mzp-c-navigation-container">
+        <Breadcrumb {links} />
+      </div>
     </div>
-  </div>
-</nav>
-
+  </nav>
+{/if}
 <main>
   <div class="mzp-l-content">
     <article class="mzp-c-article">

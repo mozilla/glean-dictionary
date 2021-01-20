@@ -149,7 +149,6 @@ exports[`Storyshots Breadcrumb App Details Page 1`] = `
 >
   <ol
     class="svelte-f5f52z"
-    style=""
   >
     <li
       class="svelte-f5f52z"
@@ -195,7 +194,6 @@ exports[`Storyshots Breadcrumb Apps List Page 1`] = `
 >
   <ol
     class="svelte-f5f52z"
-    style=""
   >
     <li
       class="svelte-f5f52z"
@@ -224,7 +222,6 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
 >
   <ol
     class="svelte-f5f52z"
-    style=""
   >
     <li
       class="svelte-f5f52z"
@@ -304,7 +301,6 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
 >
   <ol
     class="svelte-f5f52z"
-    style=""
   >
     <li
       class="svelte-f5f52z"
@@ -367,7 +363,6 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
 >
   <ol
     class="svelte-f5f52z"
-    style=""
   >
     <li
       class="svelte-f5f52z"
@@ -516,13 +511,12 @@ exports[`Storyshots FilterInput Basic 1`] = `
     class="container"
   >
     <div
-      class="svelte-y697ub"
+      class="svelte-1jezjd2"
     >
       <input
-        class="svelte-y697ub"
+        class="svelte-1jezjd2"
         id="filter-input"
-        placeholder="filter terms"
-        type="text"
+        type="search"
       />
     </div>
      
@@ -552,13 +546,13 @@ exports[`Storyshots ItemList Default 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="svelte-y697ub"
+    class="svelte-1jezjd2"
   >
     <input
-      class="svelte-y697ub"
+      class="svelte-1jezjd2"
       id="filter-input"
-      placeholder="filter terms"
-      type="text"
+      placeholder="Search metrics"
+      type="search"
     />
   </div>
    
@@ -1581,13 +1575,12 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
     </h1>
      
     <div
-      class="svelte-y697ub"
+      class="svelte-1jezjd2"
     >
       <input
-        class="svelte-y697ub"
+        class="svelte-1jezjd2"
         id="filter-input"
-        placeholder="filter terms"
-        type="text"
+        type="search"
       />
     </div>
      

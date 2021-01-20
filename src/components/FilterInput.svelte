@@ -4,6 +4,8 @@
   export let onChangeText;
   export let filterText = "";
 
+  export let placeHolder;
+
   const changeText = () => {
     onChangeText(filterText);
   };
@@ -14,16 +16,19 @@
     margin-top: $spacing-xs;
     margin-bottom: $spacing-xs;
   }
-  input {
+  #filter-input {
     width: 100%;
+    box-shadow: 3px 3px 6px rgba($color-black, 0.1);
+    border-radius: 15px;
+    border: 1px solid #000;
   }
 </style>
 
 <div>
   <input
-    type="text"
+    {placeHolder}
+    type="search"
     id="filter-input"
     bind:value={filterText}
-    on:input={throttle(changeText, 200)}
-    placeholder="filter terms" />
+    on:input={throttle(changeText, 200)} />
 </div>
