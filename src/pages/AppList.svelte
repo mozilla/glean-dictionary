@@ -7,6 +7,8 @@
   import FilterInput from "../components/FilterInput.svelte";
   import Pill from "../components/Pill.svelte";
 
+  import { pageTitle } from "../state/stores";
+
   const URL = "data/apps.json";
 
   let apps;
@@ -86,6 +88,8 @@
     }
     return undefined;
   }
+
+  pageTitle.set("Glean Dictionary");
 </script>
 
 <style>

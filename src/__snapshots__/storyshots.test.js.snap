@@ -424,6 +424,7 @@ exports[`Storyshots Bug Links Bugzilla 1`] = `
   class="storybook-snapshot-container"
 >
   <a
+    class="svelte-12eprqo"
     href="https://bugzilla.mozilla.org/1234"
     target="_blank"
   >
@@ -437,6 +438,7 @@ exports[`Storyshots Bug Links Git Hub 1`] = `
   class="storybook-snapshot-container"
 >
   <a
+    class="svelte-12eprqo"
     href="https://github.com/mozilla-mobile/fenix/issues/1234"
     target="_blank"
   >
@@ -509,10 +511,10 @@ exports[`Storyshots FilterInput Basic 1`] = `
     class="container"
   >
     <div
-      class="svelte-3hp2vc"
+      class="svelte-1jezjd2"
     >
       <input
-        class="svelte-3hp2vc"
+        class="svelte-1jezjd2"
         id="filter-input"
         type="search"
       />
@@ -544,10 +546,10 @@ exports[`Storyshots ItemList Default 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="svelte-3hp2vc"
+    class="svelte-1jezjd2"
   >
     <input
-      class="svelte-3hp2vc"
+      class="svelte-1jezjd2"
       id="filter-input"
       placeholder="Search metrics"
       type="search"
@@ -1573,10 +1575,10 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
     </h1>
      
     <div
-      class="svelte-3hp2vc"
+      class="svelte-1jezjd2"
     >
       <input
-        class="svelte-3hp2vc"
+        class="svelte-1jezjd2"
         id="filter-input"
         type="search"
       />
