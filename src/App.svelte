@@ -94,12 +94,11 @@
 </script>
 
 <style>
-  html,
-  body {
-    /* keep the  below value the same as footer height 
-       to prevent footer from jumping around */
-    /* stackoverflow.com/questions/21206058/place-footer-at-bottom-only-if-page-is-short/21207313#21207313 */
-    padding-bottom: 350px;
+  .app {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
   }
 
   .mzp-c-navigation {
@@ -135,37 +134,42 @@
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
-<div class="mzp-c-navigation mzp-is-sticky">
-  <div class="mzp-c-navigation-l-content">
-    <div class="mzp-c-navigation-container">
-      <div class="mzp-c-navigation-logo-glean">
-        <a class="glean-logo" href="/">
-          <img src="/glean_logo.png" alt="Glean Dictionary Logo" /></a>
-        <a href="/"><h5>Dictionary</h5></a>
+
+<div class="app">
+  <header>
+    <div class="mzp-c-navigation mzp-is-sticky">
+      <div class="mzp-c-navigation-l-content">
+        <div class="mzp-c-navigation-container">
+          <div class="mzp-c-navigation-logo-glean">
+            <a class="glean-logo" href="/">
+              <img src="/glean_logo.png" alt="Glean Dictionary Logo" /></a>
+            <a href="/"><h5>Dictionary</h5></a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+
+    {#if links.length}
+      <nav class="mzp-c-navigation c-sub-navigation">
+        <div class="mzp-c-navigation-l-content">
+          <div class="mzp-c-navigation-container">
+            <Breadcrumb {links} />
+          </div>
+        </div>
+      </nav>
+    {/if}
+  </header>
+  <main>
+    <div class="mzp-l-content">
+      <article class="mzp-c-article">
+        <svelte:component
+          this={component}
+          bind:params
+          bind:queryString
+          on:updateURL={updateURL} />
+      </article>
+    </div>
+  </main>
+
+  <Footer />
 </div>
-
-{#if links.length}
-  <nav class="mzp-c-navigation c-sub-navigation">
-    <div class="mzp-c-navigation-l-content">
-      <div class="mzp-c-navigation-container">
-        <Breadcrumb {links} />
-      </div>
-    </div>
-  </nav>
-{/if}
-<main>
-  <div class="mzp-l-content">
-    <article class="mzp-c-article">
-      <svelte:component
-        this={component}
-        bind:params
-        bind:queryString
-        on:updateURL={updateURL} />
-    </article>
-  </div>
-</main>
-
-<Footer />
