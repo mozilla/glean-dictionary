@@ -103,8 +103,9 @@ for app in apps:
         metric_type = metric.definition["type"]
         metric_name_snakecase = stringcase.snakecase(metric.identifier)
         metric_table_name = (
-            f"client_info.{metric_name_snakecase}" if
-            metric.is_client_info else f"metrics.{metric_type}.{metric_name_snakecase}"
+            f"client_info.{metric_name_snakecase}"
+            if metric.is_client_info
+            else f"metrics.{metric_type}.{metric_name_snakecase}"
         )
         bigquery_names = dict(
             stable_ping_table_names=stable_ping_table_names,
