@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@2.0.1
   python: circleci/python@0.2.1
+  gcs: t3n/gcs@0.1.3
 jobs:
   build-and-test:
     executor:
@@ -14,6 +15,12 @@ jobs:
       - run: npm run build
       - run: npm run build-storybook
       - run: npm test
+      - run: mkdir /tmp/workspace
+      - run: cp -r public /tmp/workspace
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - public/*
   python-build-and-test:
     executor: python/default
     steps:
@@ -22,8 +29,38 @@ jobs:
       - run:
           name: Run lint
           command: make lint
+      - run: scripts/build-glean-metadata.py
+      - run: mkdir /tmp/workspace-data
+      - run: cp -r public/data/* /tmp/workspace-data
+      - persist_to_workspace:
+          root: /tmp/workspace-data
+          paths:
+            - ./*
+  upload:
+    # this job uploads the built artifacts to the GCS bucket
+    # used to serve https://dictionary.protosaur.dev/
+    docker:
+      - image: google/cloud-sdk
+    working_directory: /tmp
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - attach_workspace:
+          at: /tmp/workspace-data
+      - run: cp -r /tmp/workspace-data/* /tmp/workspace/public/data
+      - gcs/gcs-rsync:
+          bucket: glean-dictionary-dev
+          source: /tmp/workspace/public
+          options: -r -d
 workflows:
   build-and-test:
     jobs:
       - build-and-test
       - python-build-and-test
+      - upload:
+          requires:
+            - build-and-test
+            - python-build-and-test
+          filters:
+            branches:
+              only: main
