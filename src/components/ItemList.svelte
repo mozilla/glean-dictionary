@@ -9,6 +9,8 @@
   import FilterInput from "./FilterInput.svelte";
   import Markdown from "./Markdown.svelte";
 
+  import { isExpired } from "../utils";
+
   let DEFAULT_ITEMS_PER_PAGE = 20;
 
   export let appName;
@@ -18,14 +20,21 @@
   export let totalItems;
   export let paginatedItems;
 
+  let nonExpiredItems = items.filter((item) => !isExpired(item.expires));
+  let shownItems = nonExpiredItems;
+
+  let showExpired = false;
+  let filterTerm = "";
+
   let currentPage = writable(1);
   setContext("currentPage", currentPage);
 
-  totalItems = items.length;
-  paginatedItems = chunk([...items], DEFAULT_ITEMS_PER_PAGE);
+  totalItems = shownItems.length;
+  paginatedItems = chunk([...shownItems], DEFAULT_ITEMS_PER_PAGE);
 
   function filterItems(filterText) {
-    filteredItems = items.filter((item) => item.name.includes(filterText));
+    filterTerm = filterText;
+    filteredItems = shownItems.filter((item) => item.name.includes(filterText));
     if (filteredItems.length > 0) {
       currentPage.set(1);
       paginatedItems = chunk([...filteredItems], DEFAULT_ITEMS_PER_PAGE);
@@ -33,7 +42,19 @@
     }
   }
 
-  $: filteredItems = paginatedItems[$currentPage - 1];
+  function handleExpiredItems(checked) {
+    if (checked) {
+      shownItems = items;
+      filterItems(filterTerm);
+    } else {
+      shownItems = nonExpiredItems;
+      filterItems(filterTerm);
+    }
+  }
+
+  $: {
+    filteredItems = paginatedItems[$currentPage - 1];
+  }
 </script>
 
 <style>
@@ -73,11 +94,29 @@
       }
     }
   }
+  .expire-checkbox {
+    display: block;
+    text-align: right;
+    label {
+      display: inline;
+    }
+  }
 </style>
 
 {#if !items.length}
   <p>Currently, there are no {itemType} available for {items.name}</p>
 {:else}
+  {#if itemType === 'metrics'}
+    <span class="expire-checkbox">
+      <label>
+        <input
+          type="checkbox"
+          bind:checked={showExpired}
+          on:click={handleExpiredItems(!showExpired)} />
+        Show expired metrics
+      </label>
+    </span>
+  {/if}
   <FilterInput onChangeText={filterItems} placeHolder="Search {itemType}" />
   <div class="item-browser">
     <table class="mzp-u-data-table">
@@ -97,17 +136,21 @@
       </thead>
       <tbody>
         {#each filteredItems as item}
-          <tr>
-            <td>
-              <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
-            </td>
-            {#if itemType === 'metrics'}
-              <td style="text-align: center;"><code>{item.type}</code></td>
-            {/if}
-            <td class="description">
-              <Markdown text={item.description} />
-            </td>
-          </tr>
+          {#if showExpired || !isExpired(item.expires)}
+            <tr>
+              <td>
+                <a
+                  href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
+                {#if isExpired(item.expires)}<i>(expired)</i>{/if}
+              </td>
+              {#if itemType === 'metrics'}
+                <td style="text-align: center;"><code>{item.type}</code></td>
+              {/if}
+              <td class="description">
+                <Markdown text={item.description} />
+              </td>
+            </tr>
+          {/if}
         {/each}
       </tbody>
     </table>
