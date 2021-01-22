@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
   import { includes } from "lodash";
 
   import { fetchJSON } from "../state/api";
@@ -156,7 +157,7 @@
     </span>
   </div>
 
-  <div class="app-list">
+  <div class="app-list" transition:fade>
     {#each filteredApps as app}
       {#if showDeprecated || !app.deprecated}
         <div class="mzp-c-card mzp-c-card-extra-small has-aspect-3-2" id="card">
