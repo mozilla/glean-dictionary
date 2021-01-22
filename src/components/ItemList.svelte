@@ -8,53 +8,48 @@
   import Pagination from "./Pagination.svelte";
   import FilterInput from "./FilterInput.svelte";
   import Markdown from "./Markdown.svelte";
+  import Pill from "./Pill.svelte";
 
-  import { isExpired } from "../utils";
+  import { isExpired } from "../state/metrics";
 
   let DEFAULT_ITEMS_PER_PAGE = 20;
 
   export let appName;
   export let items;
   export let itemType;
-  export let filteredItems;
-  export let totalItems;
-  export let paginatedItems;
 
-  let nonExpiredItems = items.filter((item) => !isExpired(item.expires));
-  let shownItems = nonExpiredItems;
+  export let filterText = "";
 
   let showExpired = false;
-  let filterTerm = "";
+  let filteredItems = items.filter((item) => !isExpired(item.expires));
+  let pagedItems;
 
   let currentPage = writable(1);
   setContext("currentPage", currentPage);
 
-  totalItems = shownItems.length;
-  paginatedItems = chunk([...shownItems], DEFAULT_ITEMS_PER_PAGE);
+  const goToPage = (page) => {
+    pagedItems =
+      filteredItems.length > 0
+        ? chunk([...filteredItems], DEFAULT_ITEMS_PER_PAGE)[page - 1]
+        : [];
+  };
 
-  function filterItems(filterText) {
-    filterTerm = filterText;
+  const handleFilter = () => {
+    const shownItems = showExpired
+      ? items
+      : items.filter((item) => !isExpired(item.expires));
     filteredItems = shownItems.filter((item) => item.name.includes(filterText));
-    if (filteredItems.length > 0) {
-      currentPage.set(1);
-      paginatedItems = chunk([...filteredItems], DEFAULT_ITEMS_PER_PAGE);
-      totalItems = filteredItems.length;
-    }
-  }
+    // show the first page of result
+    currentPage.set(1);
+    // if currentPage is already 1, we need to manually call goToPage() to get the first page
+    goToPage(1);
+  };
 
-  function handleExpiredItems(checked) {
-    if (checked) {
-      shownItems = items;
-      filterItems(filterTerm);
-    } else {
-      shownItems = nonExpiredItems;
-      filterItems(filterTerm);
-    }
-  }
+  $: goToPage($currentPage);
 
-  $: {
-    filteredItems = paginatedItems[$currentPage - 1];
-  }
+  // re-filter items when showExpired changes
+  // note on the comma syntax: https://stackoverflow.com/a/56987526
+  $: showExpired, handleFilter(); // eslint-disable-line
 </script>
 
 <style>
@@ -109,15 +104,15 @@
   {#if itemType === 'metrics'}
     <span class="expire-checkbox">
       <label>
-        <input
-          type="checkbox"
-          bind:checked={showExpired}
-          on:click={handleExpiredItems(!showExpired)} />
+        <input type="checkbox" bind:checked={showExpired} />
         Show expired metrics
       </label>
     </span>
   {/if}
-  <FilterInput onChangeText={filterItems} placeHolder="Search {itemType}" />
+  <FilterInput
+    onChangeText={handleFilter}
+    bind:filterText
+    placeHolder="Search {itemType}" />
   <div class="item-browser">
     <table class="mzp-u-data-table">
       <!-- We have to do inline styling here to override Protocol CSS rules -->
@@ -135,27 +130,28 @@
         </tr>
       </thead>
       <tbody>
-        {#each filteredItems as item}
-          {#if showExpired || !isExpired(item.expires)}
-            <tr>
-              <td>
-                <a
-                  href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
-                {#if isExpired(item.expires)}<i>(expired)</i>{/if}
-              </td>
-              {#if itemType === 'metrics'}
-                <td style="text-align: center;"><code>{item.type}</code></td>
+        {#each pagedItems as item}
+          <tr>
+            <td>
+              <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
+              {#if isExpired(item.expires)}
+                <Pill message="Expired" bgColor="#4a5568" />
               {/if}
-              <td class="description">
-                <Markdown text={item.description} />
-              </td>
-            </tr>
-          {/if}
+            </td>
+            {#if itemType === 'metrics'}
+              <td style="text-align: center;"><code>{item.type}</code></td>
+            {/if}
+            <td class="description">
+              <Markdown text={item.description} />
+            </td>
+          </tr>
         {/each}
       </tbody>
     </table>
   </div>
 {/if}
 {#if filteredItems.length}
-  <Pagination {totalItems} itemsPerPage={DEFAULT_ITEMS_PER_PAGE} />
+  <Pagination
+    totalItems={filteredItems.length}
+    itemsPerPage={DEFAULT_ITEMS_PER_PAGE} />
 {/if}

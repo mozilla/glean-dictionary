@@ -13,7 +13,7 @@
 
   import { pageTitle } from "../state/stores";
 
-  import { isExpired } from "../utils";
+  import { isExpired } from "../state/metrics";
 
   export let params;
 
