@@ -51,7 +51,7 @@ jobs:
       - gcs/gcs-rsync:
           bucket: glean-dictionary-dev
           source: /tmp/workspace/public
-          options: -r
+          options: -r -d
 workflows:
   build-and-test:
     jobs:
