@@ -7,6 +7,8 @@
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import helpText from "../data/help";
   import PageTitle from "../components/PageTitle.svelte";
+
+  import { getSearchfoxLink } from "../formatters/searchfox";
   import { pageTitle } from "../state/stores";
 
   export let params;
@@ -204,6 +206,14 @@
       <td>Version</td>
       <td>{metric.version || 0}</td>
     </tr>
+    {#if getSearchfoxLink(params.app, metric.name)}
+      <tr>
+        <td>Searchfox</td>
+        <td>
+          <a href={getSearchfoxLink(params.app, metric.name)}>{metric.name}</a>
+        </td>
+      </tr>
+    {/if}
     <tr>
       <td>BigQuery</td>
       <td>
