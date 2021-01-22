@@ -125,7 +125,7 @@
       </td>
       <td>
         {#each metric.send_in_pings as name}
-          <a href={`/apps/${params.app}/pings/${name}`}> {name} </a>&nbsp;
+          <a href={`/apps/${params.app}/pings/${name}`}> {name} </a>
         {/each}
       </td>
     </tr>
