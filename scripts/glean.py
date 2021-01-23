@@ -41,7 +41,7 @@ class GleanMetric(GleanObject):
     Represents an individual Glean metric, as defined by probe scraper
     """
 
-    ALL_PINGS_KEYWORDS = ("all-pings", "all_pings")
+    ALL_PINGS_KEYWORDS = ("all-pings", "all_pings", "glean_client_info")
 
     def __init__(self, identifier: str, definition: dict, *, ping_names: List[str] = None):
         self.identifier = identifier
@@ -53,7 +53,7 @@ class GleanMetric(GleanObject):
             [p for d in definition[self.HISTORY_KEY] for p in d.get("send_in_pings", ["metrics"])]
         )
         self.definition["send_in_pings"] = defn_pings
-
+        self.is_client_info = "glean_client_info" in defn_pings
         if ping_names is not None:
             self._update_all_pings(ping_names)
 
