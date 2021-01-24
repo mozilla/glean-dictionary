@@ -10,7 +10,7 @@
   import { pageTitle } from "../state/stores";
 
   export let params;
-  let metricName = params.metric.replaceAll("-", ".");
+  let metricName = params.metric;
 
   const metricDataPromise = getMetricData(params.app, metricName);
 

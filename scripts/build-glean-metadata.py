@@ -109,7 +109,9 @@ for app in apps:
             glam_etl_name=etl_snake_case(metric.identifier),
         )
 
-        open(os.path.join(app_metrics_dir, f"{metric.identifier}.json"), "w").write(
+        open(
+            os.path.join(app_metrics_dir, f"{metric.identifier.replace('.', '_')}.json"), "w"
+        ).write(
             json.dumps(
                 dict(
                     metric.definition,
