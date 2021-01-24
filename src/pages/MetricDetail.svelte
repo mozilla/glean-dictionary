@@ -10,11 +10,10 @@
   import { pageTitle } from "../state/stores";
 
   export let params;
-  let metricName = params.metric;
 
-  const metricDataPromise = getMetricData(params.app, metricName);
+  const metricDataPromise = getMetricData(params.app, params.metric);
 
-  pageTitle.set(`${metricName} | ${params.app} `);
+  pageTitle.set(`${params.metric} | ${params.app} `);
 
   function getGlamUrlTemplate(app) {
     const map = {
@@ -235,5 +234,5 @@
     {/if}
   </table>
 {:catch}
-  <NotFound pageName={metricName} itemType="metric" />
+  <NotFound pageName={params.metric} itemType="metric" />
 {/await}
