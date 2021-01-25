@@ -18,4 +18,9 @@ export default {
     text: "Defines which pings the metric is sent in.",
     link: OPTIONAL_METRIC_PARAMS_DOCS,
   },
+  searchFox: {
+    text:
+      "Finds uses of this metric using simple matching. Metrics used dynamically may not appear in the results, only metrics defined in the application will be found.",
+    link: "https://searchfox.org/",
+  },
 };

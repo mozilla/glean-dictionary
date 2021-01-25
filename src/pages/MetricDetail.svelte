@@ -208,9 +208,15 @@
     </tr>
     {#if getSearchfoxLink(params.app, metric.name)}
       <tr>
-        <td>Searchfox</td>
         <td>
-          <a href={getSearchfoxLink(params.app, metric.name)}>{metric.name}</a>
+          Searchfox
+          <HelpHoverable
+            content={helpText.searchFox.text}
+            link={helpText.searchFox.link} />
+        </td>
+        <td>
+          <a href={getSearchfoxLink(params.app, metric.name)}>
+            <code>{metric.name}</code></a>
         </td>
       </tr>
     {/if}
