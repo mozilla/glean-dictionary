@@ -35,10 +35,9 @@
             href="https://github.com/mozilla/glean-dictionary/tree/{rev}">{rev.substring(0, 10)}</a>
         </p>
         <p>
-          The Glean Dictionary is built by Mozilla Data, a small group of people
-          trying to build a sustainable, global and independent Mozilla that
-          ethically leverages data for the common good. For more information,
-          see the
+          The Glean Dictionary is built by Mozilla Data. Our vision is to build a
+          sustainable, global and independent Mozilla that ethically leverages data 
+          for the common good. For more information, see the
           <a href="https://telemetry.mozilla.org">Telemetry Portal</a>
           or
           <a href="https://blog.mozilla.org/data/">read our blog</a>.
