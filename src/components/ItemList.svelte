@@ -41,7 +41,7 @@
     filteredItems = shownItems.filter((item) => item.name.includes(filterText));
     // show the first page of result
     currentPage.set(1);
-    // if currentPage is already 1, we need to manually call goToPage() to get the first page
+    // even if currentPage is already 1, we need to manually call goToPage() to get the first page
     goToPage(1);
   };
 
