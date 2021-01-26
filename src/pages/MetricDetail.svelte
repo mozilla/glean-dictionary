@@ -9,7 +9,11 @@
   import PageTitle from "../components/PageTitle.svelte";
 
   import { getSearchfoxLink } from "../formatters/searchfox";
+  import Pill from "../components/Pill.svelte";
+
   import { pageTitle } from "../state/stores";
+
+  import { isExpired } from "../state/metrics";
 
   export let params;
 
@@ -91,6 +95,9 @@
 
 {#await metricDataPromise then metric}
   <PageTitle text={metric.name} />
+  {#if isExpired(metric.expires)}
+    <Pill message="Expired" bgColor="#4a5568" />
+  {/if}
   <p>
     <Markdown text={metric.description} />
   </p>

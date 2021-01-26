@@ -83,6 +83,7 @@ for app in apps:
                 "description": metric.description,
                 "pings": metric.definition["send_in_pings"],
                 "type": metric.definition["type"],
+                "expires": metric.definition["expires"],
             }
         )
 
@@ -91,6 +92,7 @@ for app in apps:
                 "name": metric.identifier,
                 "description": metric.description,
                 "type": metric.definition["type"],
+                "expires": metric.definition["expires"],
             }
         )
 

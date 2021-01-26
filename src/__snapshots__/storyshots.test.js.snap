@@ -545,6 +545,21 @@ exports[`Storyshots ItemList Default 1`] = `
 <section
   class="storybook-snapshot-container"
 >
+  <span
+    class="expire-checkbox svelte-1wy46sp"
+  >
+    <label
+      class="svelte-1wy46sp"
+    >
+      <input
+        class="svelte-1wy46sp"
+        type="checkbox"
+      />
+      
+        Show expired metrics
+    </label>
+  </span>
+   
   <div
     class="svelte-1jezjd2"
   >
@@ -557,34 +572,34 @@ exports[`Storyshots ItemList Default 1`] = `
   </div>
    
   <div
-    class="item-browser svelte-1jyksu7"
+    class="item-browser svelte-1wy46sp"
   >
     <table
-      class="mzp-u-data-table svelte-1jyksu7"
+      class="mzp-u-data-table svelte-1wy46sp"
     >
       <col
-        class="svelte-1jyksu7"
+        class="svelte-1wy46sp"
         width="35%"
       />
        
       <col
-        class="svelte-1jyksu7"
+        class="svelte-1wy46sp"
         width="25%"
       />
        
       <col
-        class="svelte-1jyksu7"
+        class="svelte-1wy46sp"
         width="40%"
       />
        
       <thead
-        class="svelte-1jyksu7"
+        class="svelte-1wy46sp"
       >
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <th
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             scope="col"
             style="text-align: center;"
           >
@@ -592,7 +607,7 @@ exports[`Storyshots ItemList Default 1`] = `
           </th>
            
           <th
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             scope="col"
             style="text-align: center;"
           >
@@ -600,7 +615,7 @@ exports[`Storyshots ItemList Default 1`] = `
           </th>
            
           <th
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             scope="col"
             style="text-align: center;"
           >
@@ -610,35 +625,36 @@ exports[`Storyshots ItemList Default 1`] = `
       </thead>
        
       <tbody
-        class="svelte-1jyksu7"
+        class="svelte-1wy46sp"
       >
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 0"
             >
               Test metric 0
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 0
             
@@ -646,32 +662,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 1"
             >
               Test metric 1
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 1
             
@@ -679,32 +696,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 2"
             >
               Test metric 2
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 2
             
@@ -712,32 +730,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 3"
             >
               Test metric 3
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 3
             
@@ -745,32 +764,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 4"
             >
               Test metric 4
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 4
             
@@ -778,32 +798,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 5"
             >
               Test metric 5
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 5
             
@@ -811,32 +832,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 6"
             >
               Test metric 6
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 6
             
@@ -844,32 +866,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 7"
             >
               Test metric 7
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 7
             
@@ -877,32 +900,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 8"
             >
               Test metric 8
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 8
             
@@ -910,32 +934,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 9"
             >
               Test metric 9
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 9
             
@@ -943,32 +968,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 10"
             >
               Test metric 10
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 10
             
@@ -976,32 +1002,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 11"
             >
               Test metric 11
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 11
             
@@ -1009,32 +1036,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 12"
             >
               Test metric 12
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 12
             
@@ -1042,32 +1070,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 13"
             >
               Test metric 13
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 13
             
@@ -1075,32 +1104,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 14"
             >
               Test metric 14
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 14
             
@@ -1108,32 +1138,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 15"
             >
               Test metric 15
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 15
             
@@ -1141,32 +1172,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 16"
             >
               Test metric 16
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 16
             
@@ -1174,32 +1206,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 17"
             >
               Test metric 17
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 17
             
@@ -1207,32 +1240,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 18"
             >
               Test metric 18
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 18
             
@@ -1240,32 +1274,33 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
-          class="svelte-1jyksu7"
+          class="svelte-1wy46sp"
         >
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
           >
             <a
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
               href="/apps/app-name/metrics/Test metric 19"
             >
               Test metric 19
             </a>
+             
           </td>
            
           <td
-            class="svelte-1jyksu7"
+            class="svelte-1wy46sp"
             style="text-align: center;"
           >
             <code
-              class="svelte-1jyksu7"
+              class="svelte-1wy46sp"
             >
               metric_type
             </code>
           </td>
            
           <td
-            class="description svelte-1jyksu7"
+            class="description svelte-1wy46sp"
           >
             This is test metric 19
             

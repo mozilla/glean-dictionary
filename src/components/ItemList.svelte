@@ -8,32 +8,48 @@
   import Pagination from "./Pagination.svelte";
   import FilterInput from "./FilterInput.svelte";
   import Markdown from "./Markdown.svelte";
+  import Pill from "./Pill.svelte";
+
+  import { isExpired } from "../state/metrics";
 
   let DEFAULT_ITEMS_PER_PAGE = 20;
 
   export let appName;
   export let items;
   export let itemType;
-  export let filteredItems;
-  export let totalItems;
-  export let paginatedItems;
+
+  export let filterText = "";
+
+  let showExpired = false;
+  let filteredItems = items.filter((item) => !isExpired(item.expires));
+  let pagedItems;
 
   let currentPage = writable(1);
   setContext("currentPage", currentPage);
 
-  totalItems = items.length;
-  paginatedItems = chunk([...items], DEFAULT_ITEMS_PER_PAGE);
+  const goToPage = (page) => {
+    pagedItems =
+      filteredItems.length > 0
+        ? chunk([...filteredItems], DEFAULT_ITEMS_PER_PAGE)[page - 1]
+        : [];
+  };
 
-  function filterItems(filterText) {
-    filteredItems = items.filter((item) => item.name.includes(filterText));
-    if (filteredItems.length > 0) {
-      currentPage.set(1);
-      paginatedItems = chunk([...filteredItems], DEFAULT_ITEMS_PER_PAGE);
-      totalItems = filteredItems.length;
-    }
-  }
+  const handleFilter = () => {
+    const shownItems = showExpired
+      ? items
+      : items.filter((item) => !isExpired(item.expires));
+    filteredItems = shownItems.filter((item) => item.name.includes(filterText));
+    // show the first page of result
+    currentPage.set(1);
+    // even if currentPage is already 1, we need to manually call goToPage() to get the first page
+    goToPage(1);
+  };
 
-  $: filteredItems = paginatedItems[$currentPage - 1];
+  $: goToPage($currentPage);
+
+  // re-filter items when showExpired changes
+  // note on the comma syntax: https://stackoverflow.com/a/56987526
+  $: showExpired, handleFilter(); // eslint-disable-line
 </script>
 
 <style>
@@ -73,12 +89,30 @@
       }
     }
   }
+  .expire-checkbox {
+    display: block;
+    text-align: right;
+    label {
+      display: inline;
+    }
+  }
 </style>
 
 {#if !items.length}
   <p>Currently, there are no {itemType} available for {items.name}</p>
 {:else}
-  <FilterInput onChangeText={filterItems} placeHolder="Search {itemType}" />
+  {#if itemType === 'metrics'}
+    <span class="expire-checkbox">
+      <label>
+        <input type="checkbox" bind:checked={showExpired} />
+        Show expired metrics
+      </label>
+    </span>
+  {/if}
+  <FilterInput
+    onChangeText={handleFilter}
+    bind:filterText
+    placeHolder="Search {itemType}" />
   <div class="item-browser">
     <table class="mzp-u-data-table">
       <!-- We have to do inline styling here to override Protocol CSS rules -->
@@ -96,10 +130,13 @@
         </tr>
       </thead>
       <tbody>
-        {#each filteredItems as item}
+        {#each pagedItems as item}
           <tr>
             <td>
               <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
+              {#if isExpired(item.expires)}
+                <Pill message="Expired" bgColor="#4a5568" />
+              {/if}
             </td>
             {#if itemType === 'metrics'}
               <td style="text-align: center;"><code>{item.type}</code></td>
@@ -114,5 +151,7 @@
   </div>
 {/if}
 {#if filteredItems.length}
-  <Pagination {totalItems} itemsPerPage={DEFAULT_ITEMS_PER_PAGE} />
+  <Pagination
+    totalItems={filteredItems.length}
+    itemsPerPage={DEFAULT_ITEMS_PER_PAGE} />
 {/if}
