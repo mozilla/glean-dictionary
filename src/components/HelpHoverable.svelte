@@ -19,6 +19,8 @@
 
 <div class="main">
   <a href={link} use:tippy={props}>
-    <InfoIcon />
+    <slot>
+      <InfoIcon />
+    </slot>
   </a>
 </div>

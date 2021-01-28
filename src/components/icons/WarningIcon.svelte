@@ -1,8 +1,9 @@
-<svg
-  width="80px"
-  height="50px"
-  viewBox="0 0 24 24"
-  xmlns="http://www.w3.org/2000/svg">
+<script>
+  export let width = "80px";
+  export let height = "50px";
+</script>
+
+<svg {width} {height} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
     <g transform="translate(1.000000, 2.000000)">
       <path
