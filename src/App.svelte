@@ -120,6 +120,7 @@
         color: #e0e3e0;
         line-height: 0.7;
         padding-left: $spacing-xs;
+        font-size: 38px;
       }
     }
   }
