@@ -7,6 +7,7 @@
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import helpText from "../data/help";
   import PageTitle from "../components/PageTitle.svelte";
+  import WarningIcon from "../components/icons/WarningIcon.svelte";
 
   import { getSearchfoxLink } from "../formatters/searchfox";
   import Pill from "../components/Pill.svelte";
@@ -219,6 +220,12 @@
           <HelpHoverable
             content={helpText.searchFox.text}
             link={helpText.searchFox.link} />
+          {#if isExpired(metric.expires)}
+            <HelpHoverable
+              content={'This metric has expired and will likely not appear in Searchfox.'}>
+              <WarningIcon width={'15px'} height={'15px'} />
+            </HelpHoverable>
+          {/if}
         </td>
         <td>
           <a href={getSearchfoxLink(params.app, metric.name)}>
