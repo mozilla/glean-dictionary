@@ -125,6 +125,7 @@ for app in apps:
                     name=metric.identifier,
                     history=metric.definition_history,
                     bigquery_names=bigquery_names,
+                    repo_url=app.repo["url"],
                 ),
                 default=_serialize_sets,
             )

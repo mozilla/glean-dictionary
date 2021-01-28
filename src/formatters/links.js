@@ -1,4 +1,13 @@
-export function getBugLinkTitle(url) {
+export function getBugURL(ref) {
+  // handle old-style Glean bug references (FIXME: do this in etl instead)
+  return ref.toString().startsWith("http")
+    ? ref
+    : `https://bugzilla.mozilla.org/show_bug.cgi?id=${ref}`;
+}
+
+export function getBugLinkTitle(ref) {
+  const url = getBugURL(ref);
+
   // bugzilla bugs
   if (url.includes("bugzilla.mozilla.org") || url.includes("bugzil.la")) {
     return url.replace(/([^\d]+)/, "bugzil.la/");

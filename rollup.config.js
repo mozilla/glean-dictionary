@@ -69,7 +69,7 @@ export default {
       __VERSION__: execSync("git rev-list HEAD --max-count=1")
         .toString()
         .trim(),
-      // workaround the way sveltejs-tippy imports tippy: https://github.com/mdauner/sveltejs-tippy/issues/117
+      // https://atomiks.github.io/tippyjs/v5/faq/#rollup
       "process.env.NODE_ENV": JSON.stringify(
         production ? "production" : "development"
       ),

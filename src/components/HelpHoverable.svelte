@@ -1,10 +1,11 @@
 <script>
-  import tippy from "sveltejs-tippy";
+  import tippy from "./tippy";
   import InfoIcon from "./icons/InfoIcon.svelte";
 
-  export let content;
-  export let link;
-  let props = {
+  export let content = "";
+  export let link = "";
+
+  const props = {
     content,
     allowHTML: true,
     placement: "top",
@@ -18,9 +19,13 @@
 </style>
 
 <div class="main">
-  <a href={link} use:tippy={props}>
-    <slot>
+  {#if link.length}
+    <a href={link} use:tippy={props}>
       <InfoIcon />
-    </slot>
-  </a>
+    </a>
+  {:else}
+    <span use:tippy={props}>
+      <InfoIcon />
+    </span>
+  {/if}
 </div>

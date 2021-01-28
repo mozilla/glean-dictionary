@@ -1,18 +1,17 @@
 <script>
-  import { getMetricData } from "../state/api";
-  import { getMetricBigQueryURL } from "../state/urls";
-  import BugLink from "../components/BugLink.svelte";
   import AppAlert from "../components/AppAlert.svelte";
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
-  import helpText from "../data/help";
   import PageTitle from "../components/PageTitle.svelte";
-  import WarningIcon from "../components/icons/WarningIcon.svelte";
-
-  import { getSearchfoxLink } from "../formatters/searchfox";
-
+  import MetadataTable from "../components/MetadataTable.svelte";
+  import {
+    METRIC_DEFINITION_SCHEMA,
+    METRIC_METADATA_SCHEMA,
+  } from "../data/schemas";
+  import { getMetricData } from "../state/api";
   import { pageTitle } from "../state/stores";
+  import { getMetricBigQueryURL } from "../state/urls";
 
   import { isExpired } from "../state/metrics";
 
@@ -92,6 +91,9 @@
 <style>
   @import "../main.scss";
   @include metadata-table;
+  h2 {
+    font-size: 24px;
+  }
 </style>
 
 {#await metricDataPromise then metric}
@@ -113,132 +115,41 @@
     in
     <a href={`/apps/${params.app}`}>{params.app}</a>
     that
-    {getExpiryInfo(metric.expires)}
+    {getExpiryInfo(metric.expires)}.
   </p>
+
+  <p>
+    Sent in the
+    {#each metric.send_in_pings as pingId, i}
+      <a
+        href={`/apps/${params.app}/pings/${pingId}`}>{pingId}</a>{metric.send_in_pings.length > 1 && i < metric.send_in_pings.length - 1 ? ', ' : ''}
+    {/each}
+    ping{metric.send_in_pings.length > 1 ? 's' : ''}.
+  </p>
+  <h2>Definition</h2>
+
+  <MetadataTable
+    appName={params.app}
+    item={metric}
+    schema={METRIC_DEFINITION_SCHEMA} />
+
+  <h2>Metadata</h2>
+
+  <MetadataTable
+    appName={params.app}
+    item={metric}
+    schema={METRIC_METADATA_SCHEMA} />
+
+  <h2>Access</h2>
+
   <table>
     <col />
     <col />
     <tr>
       <td>
-        Bugs
-        <HelpHoverable content={helpText.bugs.text} link={helpText.bugs.link} />
+        BigQuery
+        <HelpHoverable content={'The BigQuery repesentation of this metric.'} />
       </td>
-      <td>
-        {#each metric.bugs as bugRef}
-          <BugLink ref={bugRef} />
-        {/each}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        Send In Pings
-        <HelpHoverable
-          content={helpText.sendInPings.text}
-          link={helpText.sendInPings.link} />
-      </td>
-      <td>
-        {#each metric.send_in_pings as name}
-          <a href={`/apps/${params.app}/pings/${name}`}> {name} </a>&nbsp;
-        {/each}
-      </td>
-    </tr>
-    {#if metric.lifetime}
-      <tr>
-        <td>
-          Lifetime
-          <HelpHoverable
-            content={helpText.lifetime.text}
-            link={helpText.lifetime.link} />
-        </td>
-        <td>{metric.lifetime}</td>
-      </tr>
-    {/if}
-    {#if metric.time_unit}
-      <tr>
-        <td>
-          <a
-            href="https://mozilla.github.io/glean/book/user/metrics/timing_distribution.html"
-            target="_blank">
-            Time unit
-          </a>
-        </td>
-        <td>{metric.time_unit}</td>
-      </tr>
-    {/if}
-    {#if metric.bucket_count}
-      <tr>
-        <td>Bucket count</td>
-        <td>{metric.bucket_count}</td>
-      </tr>
-    {/if}
-    {#if metric.histogram_type}
-      <tr>
-        <td>Histogram type</td>
-        <td>{metric.histogram_type}</td>
-      </tr>
-    {/if}
-    {#if metric.unit}
-      <tr>
-        <td>Unit</td>
-        <td>{metric.unit}</td>
-      </tr>
-    {/if}
-    {#if metric.range_min !== undefined}
-      <tr>
-        <td>Range Minimum</td>
-        <td>{metric.range_min}</td>
-      </tr>
-    {/if}
-    {#if metric.range_max !== undefined}
-      <tr>
-        <td>Range Maximum</td>
-        <td>{metric.range_max}</td>
-      </tr>
-    {/if}
-    <tr>
-      <td>Disabled</td>
-      <td>{metric.disabled}</td>
-    </tr>
-    <tr>
-      <td>Data Reviews</td>
-      <td>
-        {#each metric.data_reviews as dataReviewRef}
-          <BugLink ref={dataReviewRef} />
-        {/each}
-      </td>
-    </tr>
-    {#if metric.labels && metric.labels.length}
-      <tr>
-        <td>Labels</td>
-        <td>{metric.labels.join(', ')}</td>
-      </tr>
-    {/if}
-    <tr>
-      <td>Version</td>
-      <td>{metric.version || 0}</td>
-    </tr>
-    {#if getSearchfoxLink(params.app, metric.name)}
-      <tr>
-        <td>
-          Searchfox
-          <HelpHoverable
-            content={helpText.searchFox.text}
-            link={helpText.searchFox.link} />
-          {#if isExpired(metric.expires)}
-            <HelpHoverable
-              content={'This metric has expired and will likely not appear in Searchfox.'}>
-              <WarningIcon width={'15px'} height={'15px'} />
-            </HelpHoverable>
-          {/if}
-        </td>
-        <td>
-          <a href={getSearchfoxLink(params.app, metric.name)}>
-            <code>{metric.name}</code></a>
-        </td>
-      </tr>
-    {/if}
-    <tr>
-      <td>BigQuery</td>
       <td>
         {#each metric.bigquery_names.stable_ping_table_names as [sendInPing, tableName]}
           <div>
@@ -259,7 +170,11 @@
     </tr>
     {#if glamUrl && metric.bigquery_names.metric_type !== 'event'}
       <tr>
-        <td>GLAM</td>
+        <td>
+          GLAM
+          <HelpHoverable
+            content={'View this metric in Glean Aggregated Metrics'} />
+        </td>
         <td>
           <a
             href={glamUrl(metric.bigquery_names.glam_etl_name)}>{metric.bigquery_names.glam_etl_name}</a>

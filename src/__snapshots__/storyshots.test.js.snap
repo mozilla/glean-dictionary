@@ -419,90 +419,6 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
 </section>
 `;
 
-exports[`Storyshots Bug Links Bugzilla 1`] = `
-<section
-  class="storybook-snapshot-container"
->
-  <a
-    class="svelte-12eprqo"
-    href="https://bugzilla.mozilla.org/1234"
-    target="_blank"
-  >
-    bugzil.la/1234
-  </a>
-</section>
-`;
-
-exports[`Storyshots Bug Links Git Hub 1`] = `
-<section
-  class="storybook-snapshot-container"
->
-  <a
-    class="svelte-12eprqo"
-    href="https://github.com/mozilla-mobile/fenix/issues/1234"
-    target="_blank"
-  >
-    mozilla-mobile/fenix#1234
-  </a>
-</section>
-`;
-
-exports[`Storyshots Email Addresses Multiple Emails 1`] = `
-<section
-  class="storybook-snapshot-container"
->
-  <span
-    class="svelte-15gk75t"
-  >
-    <a
-      class="svelte-15gk75t"
-      href="mailto:example@example.com"
-    >
-      example@example.com
-    </a>
-  </span>
-  <span
-    class="svelte-15gk75t"
-  >
-    <a
-      class="svelte-15gk75t"
-      href="mailto:email@email.com"
-    >
-      email@email.com
-    </a>
-  </span>
-  <span
-    class="svelte-15gk75t"
-  >
-    <a
-      class="svelte-15gk75t"
-      href="mailto:post@pigeon.com"
-    >
-      post@pigeon.com
-    </a>
-  </span>
-  
-</section>
-`;
-
-exports[`Storyshots Email Addresses Single Email 1`] = `
-<section
-  class="storybook-snapshot-container"
->
-  <span
-    class="svelte-15gk75t"
-  >
-    <a
-      class="svelte-15gk75t"
-      href="mailto:glean@mozilla.com"
-    >
-      glean@mozilla.com
-    </a>
-  </span>
-  
-</section>
-`;
-
 exports[`Storyshots FilterInput Basic 1`] = `
 <section
   class="storybook-snapshot-container"
@@ -1443,6 +1359,152 @@ exports[`Storyshots Markdown Text 1`] = `
   </a>
   .
   
+</section>
+`;
+
+exports[`Storyshots Metadata Table Default 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <table
+    class="svelte-op7dfq"
+  >
+    <col
+      class="svelte-op7dfq"
+    />
+     
+    <col
+      class="svelte-op7dfq"
+    />
+     
+    <tr
+      class="svelte-op7dfq"
+    >
+      <td
+        class="svelte-op7dfq"
+      >
+        Source
+         
+        <div
+          class="main svelte-11pfwu8"
+        >
+          <span
+            class="svelte-11pfwu8"
+          >
+            <svg
+              class="w-5 inline-block svelte-p1n39r"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="svelte-p1n39r"
+                clip-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </div>
+      </td>
+       
+      <td
+        class="svelte-op7dfq"
+      >
+        <a
+          class="svelte-op7dfq"
+          href="https://github.com/mozilla/testapp"
+        >
+          https://github.com/mozilla/testapp
+        </a>
+      </td>
+    </tr>
+    
+    <tr
+      class="svelte-op7dfq"
+    >
+      <td
+        class="svelte-op7dfq"
+      >
+        Application ID
+         
+        <div
+          class="main svelte-11pfwu8"
+        >
+          <span
+            class="svelte-11pfwu8"
+          >
+            <svg
+              class="w-5 inline-block svelte-p1n39r"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="svelte-p1n39r"
+                clip-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </div>
+      </td>
+       
+      <td
+        class="svelte-op7dfq"
+      >
+        org.mozilla.testapp
+      </td>
+    </tr>
+    
+    <tr
+      class="svelte-op7dfq"
+    >
+      <td
+        class="svelte-op7dfq"
+      >
+        Notification Emails
+         
+        <div
+          class="main svelte-11pfwu8"
+        >
+          <span
+            class="svelte-11pfwu8"
+          >
+            <svg
+              class="w-5 inline-block svelte-p1n39r"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                class="svelte-p1n39r"
+                clip-rule="evenodd"
+                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </span>
+        </div>
+      </td>
+       
+      <td
+        class="svelte-op7dfq"
+      >
+        <a
+          class="svelte-op7dfq"
+          href="mailto:test@mozilla.com"
+        >
+          test@mozilla.com
+        </a>
+         
+        
+      </td>
+    </tr>
+    
+     
+  </table>
 </section>
 `;
 

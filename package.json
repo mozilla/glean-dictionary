@@ -52,7 +52,8 @@
     "sass-loader": "^10.1.1",
     "svelte": "3.29.0",
     "svelte-jester": "^1.3.0",
-    "svelte-loader": "2.13.6"
+    "svelte-loader": "2.13.6",
+    "tippy.js": "^6.2.7"
   },
   "dependencies": {
     "autoprefixer": "^9.8.6",
@@ -64,7 +65,6 @@
     "postcss-import": "^12.0.1",
     "postcss-load-config": "^3.0.0",
     "sirv-cli": "1.0.11",
-    "svelte-preprocess": "^4.6.5",
-    "sveltejs-tippy": "^3.0.0"
+    "svelte-preprocess": "^4.6.5"
   }
 }

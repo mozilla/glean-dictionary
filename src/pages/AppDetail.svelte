@@ -1,9 +1,10 @@
 <script>
   import { getAppData } from "../state/api";
 
+  import { APPLICATION_DEFINITION_SCHEMA } from "../data/schemas";
   import AppAlert from "../components/AppAlert.svelte";
   import ItemList from "../components/ItemList.svelte";
-  import EmailAddresses from "../components/EmailAddresses.svelte";
+  import MetadataTable from "../components/MetadataTable.svelte";
   import NotFound from "../components/NotFound.svelte";
   import Pill from "../components/Pill.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
@@ -19,7 +20,6 @@
 
 <style>
   @import "../main.scss";
-  @include metadata-table;
 </style>
 
 {#await appDataPromise then app}
@@ -34,24 +34,11 @@
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}
   <p>{app.description}</p>
-  <table>
-    <col />
-    <col />
-    <tr>
-      <td>Source Code</td>
-      <td><a href={app.url}>{app.url}</a></td>
-    </tr>
-    <tr>
-      <td>Application ID</td>
-      <td><code>{app.app_id}</code></td>
-    </tr>
-    <tr>
-      <td>Notification Email{app.notification_emails.length > 1 ? 's' : ''}</td>
-      <td>
-        <EmailAddresses emails={app.notification_emails} />
-      </td>
-    </tr>
-  </table>
+
+  <MetadataTable
+    appName={params.app}
+    item={app}
+    schema={APPLICATION_DEFINITION_SCHEMA} />
 
   <TabGroup active="Metrics">
     <Tab key="Metrics">Metrics</Tab>
