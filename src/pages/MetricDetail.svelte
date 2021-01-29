@@ -2,6 +2,7 @@
   import { getMetricData } from "../state/api";
   import { getMetricBigQueryURL } from "../state/urls";
   import BugLink from "../components/BugLink.svelte";
+  import AppAlert from "../components/AppAlert.svelte";
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
@@ -10,7 +11,6 @@
   import WarningIcon from "../components/icons/WarningIcon.svelte";
 
   import { getSearchfoxLink } from "../formatters/searchfox";
-  import Pill from "../components/Pill.svelte";
 
   import { pageTitle } from "../state/stores";
 
@@ -95,10 +95,14 @@
 </style>
 
 {#await metricDataPromise then metric}
-  <PageTitle text={metric.name} />
   {#if isExpired(metric.expires)}
-    <Pill message="Expired" bgColor="#4a5568" />
+    <AppAlert
+      status="warning"
+      message="This metric has expired: it may not be present in the source code, new data will not be ingested into BigQuery, and it will not appear in dashboards." />
   {/if}
+
+  <PageTitle text={metric.name} />
+
   <p>
     <Markdown text={metric.description} />
   </p>
