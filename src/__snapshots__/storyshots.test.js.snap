@@ -1367,21 +1367,21 @@ exports[`Storyshots Metadata Table Default 1`] = `
   class="storybook-snapshot-container"
 >
   <table
-    class="svelte-op7dfq"
+    class="svelte-4qcl19"
   >
     <col
-      class="svelte-op7dfq"
+      class="svelte-4qcl19"
     />
      
     <col
-      class="svelte-op7dfq"
+      class="svelte-4qcl19"
     />
      
     <tr
-      class="svelte-op7dfq"
+      class="svelte-4qcl19"
     >
       <td
-        class="svelte-op7dfq"
+        class="svelte-4qcl19"
       >
         Source
          
@@ -1409,10 +1409,10 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-op7dfq"
+        class="svelte-4qcl19"
       >
         <a
-          class="svelte-op7dfq"
+          class="svelte-4qcl19"
           href="https://github.com/mozilla/testapp"
         >
           https://github.com/mozilla/testapp
@@ -1421,10 +1421,10 @@ exports[`Storyshots Metadata Table Default 1`] = `
     </tr>
     
     <tr
-      class="svelte-op7dfq"
+      class="svelte-4qcl19"
     >
       <td
-        class="svelte-op7dfq"
+        class="svelte-4qcl19"
       >
         Application ID
          
@@ -1452,17 +1452,17 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-op7dfq"
+        class="svelte-4qcl19"
       >
         org.mozilla.testapp
       </td>
     </tr>
     
     <tr
-      class="svelte-op7dfq"
+      class="svelte-4qcl19"
     >
       <td
-        class="svelte-op7dfq"
+        class="svelte-4qcl19"
       >
         Notification Emails
          
@@ -1490,15 +1490,18 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-op7dfq"
+        class="svelte-4qcl19"
       >
-        <a
-          class="svelte-op7dfq"
-          href="mailto:test@mozilla.com"
+        <div
+          class="svelte-4qcl19"
         >
-          test@mozilla.com
-        </a>
-         
+          <a
+            class="svelte-4qcl19"
+            href="mailto:test@mozilla.com"
+          >
+            test@mozilla.com
+          </a>
+        </div>
         
       </td>
     </tr>
@@ -1666,7 +1669,7 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
     class="schema-viewer svelte-1m543xb"
   >
     <h1
-      class="svelte-cviqid"
+      class="svelte-1wa7dex"
     >
       Schema
     </h1>
