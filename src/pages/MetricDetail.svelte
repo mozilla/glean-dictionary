@@ -94,8 +94,9 @@
     <Markdown text={metric.description} />
   </p>
 
-    <p>
-    Metric of type <a
+  <p>
+    Metric of type
+    <a
       href={getMetricDocumentationURI(metric.type)}
       target="_blank">{metric.type}</a>. Sent in the
     {#each metric.send_in_pings as pingId, i}
