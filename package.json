@@ -58,7 +58,7 @@
     "autoprefixer": "^9.8.6",
     "lodash": "^4.17.20",
     "lunr": "^2.3.9",
-    "marked": "^1.2.7",
+    "marked": "^1.2.8",
     "node-fetch": "^2.6.1",
     "postcss": "^7.0.35",
     "postcss-import": "^12.0.1",
