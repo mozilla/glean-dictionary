@@ -18,7 +18,7 @@
 <style>
   @import "../main.scss";
   h2 {
-    font-size: 24px;
+    @include text-title-xs;
   }
 </style>
 

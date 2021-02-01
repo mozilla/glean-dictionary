@@ -1,4 +1,5 @@
 import { getEmailLink } from "../formatters/emails";
+import { getExpiryInfo } from "../formatters/expiry";
 import { getBugURL, getBugLinkTitle } from "../formatters/links";
 import { getSearchfoxLink } from "../formatters/searchfox";
 
@@ -146,6 +147,12 @@ export const METRIC_METADATA_SCHEMA = [
       "A list of email addresses to notify for important events with the metric or when people with context or ownership for the metric need to be contacted.",
     helpLink: REQUIRED_METRIC_PARAMS_DOCS,
     linkFormatter: getEmailLink,
+  },
+  {
+    title: "Expires",
+    id: "expires",
+    type: "value",
+    valueFormatter: getExpiryInfo,
   },
 ];
 

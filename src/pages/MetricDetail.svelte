@@ -71,28 +71,13 @@
 
     return `${sourceDocs}${links[type]}` || sourceDocs;
   }
-
-  function getExpiryInfo(expiry) {
-    if (Date.now() > new Date(expiry)) {
-      return `expired on ${expiry}`;
-    }
-
-    switch (expiry) {
-      case "never":
-        return "never expires";
-      case "expired":
-        return "has already manually expired";
-      default:
-        return `expires on ${expiry}`;
-    }
-  }
 </script>
 
 <style>
   @import "../main.scss";
   @include metadata-table;
   h2 {
-    font-size: 24px;
+    @include text-title-xs;
   }
 </style>
 
@@ -108,18 +93,11 @@
   <p>
     <Markdown text={metric.description} />
   </p>
-  <p>
-    <a
-      href={getMetricDocumentationURI(metric.type)}
-      target="_blank">{metric.type}</a>
-    in
-    <a href={`/apps/${params.app}`}>{params.app}</a>
-    that
-    {getExpiryInfo(metric.expires)}.
-  </p>
 
-  <p>
-    Sent in the
+    <p>
+    Metric of type <a
+      href={getMetricDocumentationURI(metric.type)}
+      target="_blank">{metric.type}</a>. Sent in the
     {#each metric.send_in_pings as pingId, i}
       <a
         href={`/apps/${params.app}/pings/${pingId}`}>{pingId}</a>{metric.send_in_pings.length > 1 && i < metric.send_in_pings.length - 1 ? ', ' : ''}

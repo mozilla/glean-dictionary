@@ -4,7 +4,7 @@
 
 <style>
   h1 {
-    font-size: 32px;
+    @include text-title-sm;
   }
 </style>
 
