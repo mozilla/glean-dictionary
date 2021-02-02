@@ -5,6 +5,7 @@
 
   import { getItemURL } from "../state/urls";
 
+  import tippy from "./tippy";
   import Pagination from "./Pagination.svelte";
   import FilterInput from "./FilterInput.svelte";
   import Markdown from "./Markdown.svelte";
@@ -54,11 +55,16 @@
 
 <style>
   .item-browser {
-    max-height: 400px;
-    overflow: scroll;
     a {
       text-decoration: none;
     }
+  }
+
+  .item-property {
+    height: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   table {
@@ -133,16 +139,23 @@
         {#each pagedItems as item}
           <tr>
             <td>
-              <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
-              {#if isExpired(item.expires)}
-                <Pill message="Expired" bgColor="#4a5568" />
-              {/if}
+              <div class="item-property">
+                <a
+                  href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
+                {#if isExpired(item.expires)}
+                  <Pill message="Expired" bgColor="#4a5568" />
+                {/if}
+              </div>
             </td>
             {#if itemType === 'metrics'}
-              <td style="text-align: center;"><code>{item.type}</code></td>
+              <td style="text-align: center;">
+                <div class="item-property"><code>{item.type}</code></div>
+              </td>
             {/if}
             <td class="description">
-              <Markdown text={item.description} />
+              <div class="item-property" title={item.description}>
+                <Markdown text={item.description} />
+              </div>
             </td>
           </tr>
         {/each}
