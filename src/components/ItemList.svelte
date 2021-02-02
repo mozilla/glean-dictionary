@@ -5,7 +5,6 @@
 
   import { getItemURL } from "../state/urls";
 
-  import tippy from "./tippy";
   import Pagination from "./Pagination.svelte";
   import FilterInput from "./FilterInput.svelte";
   import Markdown from "./Markdown.svelte";
@@ -61,10 +60,8 @@
   }
 
   .item-property {
-    height: 24px;
+    height: 36px;
     overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
 
   table {
@@ -91,7 +88,7 @@
         background: rgba($color-link-hover, 0.1);
       }
       .description {
-        @include text-body-sm;
+        @include text-body-xs;
       }
     }
   }
