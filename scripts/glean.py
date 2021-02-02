@@ -49,11 +49,7 @@ class GleanMetric(GleanObject):
         self._set_definition(definition)
         self._set_description(self.definition)
 
-        defn_pings = set(
-            [p for d in definition[self.HISTORY_KEY] for p in d.get("send_in_pings", ["metrics"])]
-        )
-        self.definition["send_in_pings"] = defn_pings
-        self.is_client_info = "glean_client_info" in defn_pings
+        self.is_client_info = "glean_client_info" in self.definition["send_in_pings"]
         if ping_names is not None:
             self._update_all_pings(ping_names)
 
