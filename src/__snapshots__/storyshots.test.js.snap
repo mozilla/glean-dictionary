@@ -1367,21 +1367,21 @@ exports[`Storyshots Metadata Table Default 1`] = `
   class="storybook-snapshot-container"
 >
   <table
-    class="svelte-4qcl19"
+    class="svelte-op7dfq"
   >
     <col
-      class="svelte-4qcl19"
+      class="svelte-op7dfq"
     />
      
     <col
-      class="svelte-4qcl19"
+      class="svelte-op7dfq"
     />
      
     <tr
-      class="svelte-4qcl19"
+      class="svelte-op7dfq"
     >
       <td
-        class="svelte-4qcl19"
+        class="svelte-op7dfq"
       >
         Source
          
@@ -1409,10 +1409,10 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-4qcl19"
+        class="svelte-op7dfq"
       >
         <a
-          class="svelte-4qcl19"
+          class="svelte-op7dfq"
           href="https://github.com/mozilla/testapp"
         >
           https://github.com/mozilla/testapp
@@ -1421,10 +1421,10 @@ exports[`Storyshots Metadata Table Default 1`] = `
     </tr>
     
     <tr
-      class="svelte-4qcl19"
+      class="svelte-op7dfq"
     >
       <td
-        class="svelte-4qcl19"
+        class="svelte-op7dfq"
       >
         Application ID
          
@@ -1452,17 +1452,17 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-4qcl19"
+        class="svelte-op7dfq"
       >
         org.mozilla.testapp
       </td>
     </tr>
     
     <tr
-      class="svelte-4qcl19"
+      class="svelte-op7dfq"
     >
       <td
-        class="svelte-4qcl19"
+        class="svelte-op7dfq"
       >
         Notification Emails
          
@@ -1490,13 +1490,13 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-4qcl19"
+        class="svelte-op7dfq"
       >
         <div
-          class="svelte-4qcl19"
+          class="svelte-op7dfq"
         >
           <a
-            class="svelte-4qcl19"
+            class="svelte-op7dfq"
             href="mailto:test@mozilla.com"
           >
             test@mozilla.com
