@@ -20,7 +20,7 @@ export const APPLICATION_DEFINITION_SCHEMA = [
     id: "app_id",
     type: "value",
     helpText:
-      "The app's identifier exactly as it appears in the relevant app store listing (for relevant platforms) or in the app's Glean initialization call (for other platforms). In the case of the Google Play store, it may contain both dots and dashes. For applicable platforms, you should be able to construct an app store URL from this value.",
+      "The app's identifier exactly as it appears in the relevant app store listing (for relevant platforms) or in the app's Glean initialization call (for other platforms). For applicable platforms, you should be able to construct an app store URL from this value.",
   },
   {
     title: "Notification Emails",
@@ -109,7 +109,7 @@ export const METRIC_METADATA_SCHEMA = [
     id: "labels",
     type: "list",
     helpText:
-      "Different label names for this metric. FIXME: better explain this.",
+      "Only used for labeled metrics. If provided, the labels are enforced at runtime, and recording to an unknown label is recorded to the special label `__other__`.",
   },
   {
     title: "Version",
