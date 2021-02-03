@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import SchemaViewer from "../components/SchemaViewer.svelte";
-  import { fetchJSON, getTableData } from "../state/api";
+  import { getTableData } from "../state/api";
   import { pageTitle } from "../state/stores";
 
   import NotFound from "../components/NotFound.svelte";
@@ -12,14 +12,7 @@
 
   const dispatch = createEventDispatcher();
 
-  const pingDataPromise = getTableData(params.app, params.table).then(
-    async (table) => {
-      return {
-        table,
-        schema: await fetchJSON(table.bq_definition_raw_json),
-      };
-    }
-  );
+  const pingDataPromise = getTableData(params.app, params.table);
 
   const updateURL = () => dispatch("updateURL", queryString);
 
@@ -31,31 +24,31 @@
   @include metadata-table;
 </style>
 
-{#await pingDataPromise then data}
-  <PageTitle text={`Table <code>${data.table.name}</code> for ${params.app}`} />
+{#await pingDataPromise then table}
+  <PageTitle text={`Table <code>${table.name}</code> for ${params.app}`} />
   <table>
     <col />
     <col />
     <tr>
       <td>BigQuery Definition</td>
       <td>
-        <a href={data.table.bq_definition}>
-          {data.table.bq_definition.split('/').slice(-1)}
+        <a href={table.bq_definition}>
+          {table.bq_definition.split('/').slice(-1)}
         </a>
       </td>
     </tr>
     <tr>
       <td>Live Data</td>
-      <td><code>{data.table.live_table}</code></td>
+      <td><code>{table.live_table}</code></td>
     </tr>
     <tr>
       <td>Stable View</td>
-      <td><code>{data.table.stable_table}</code></td>
+      <td><code>{table.stable_table}</code></td>
     </tr>
   </table>
   <SchemaViewer
     app={params.app}
-    nodes={data.schema}
+    nodes={table.bq_schema}
     bind:searchText={queryString}
     on:updateURL={updateURL} />
 {:catch}
