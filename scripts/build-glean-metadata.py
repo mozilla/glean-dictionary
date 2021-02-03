@@ -5,6 +5,7 @@ import os
 import re
 
 import glean
+import requests
 import stringcase
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
@@ -145,15 +146,15 @@ for app in apps:
             "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"  # noqa
             + bq_path
         )
-        bq_definition_raw_json = (
+        bq_schema = requests.get(
             "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"  # noqa
             + bq_path
-        )
+        ).json()
         open(os.path.join(app_table_dir, f"{ping.identifier}.json"), "w").write(
             json.dumps(
                 dict(
                     bq_definition=bq_definition,
-                    bq_definition_raw_json=bq_definition_raw_json,
+                    bq_schema=bq_schema,
                     live_table=live_ping_table_name,
                     name=ping.identifier,
                     stable_table=stable_ping_table_name,
