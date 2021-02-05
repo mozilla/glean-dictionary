@@ -462,6 +462,7 @@ exports[`Storyshots ItemList Default 1`] = `
   class="storybook-snapshot-container"
 >
   <span
+<<<<<<< HEAD
     class="expire-checkbox svelte-1s1bzuy"
   >
     <label
@@ -469,6 +470,30 @@ exports[`Storyshots ItemList Default 1`] = `
     >
       <input
         class="svelte-1s1bzuy"
+=======
+    class="output-control svelte-o23uf0"
+  >
+    <label
+      class="svelte-o23uf0"
+    >
+      Show
+        
+      <input
+        class="svelte-o23uf0"
+        min="0"
+        size="4"
+        type="number"
+      />
+      
+        items per page
+    </label>
+     
+    <label
+      class="svelte-o23uf0"
+    >
+      <input
+        class="svelte-o23uf0"
+>>>>>>> Add items per page input
         type="checkbox"
       />
       
@@ -488,6 +513,7 @@ exports[`Storyshots ItemList Default 1`] = `
   </div>
    
   <div
+<<<<<<< HEAD
     class="item-browser svelte-1s1bzuy"
   >
     <table
@@ -495,10 +521,21 @@ exports[`Storyshots ItemList Default 1`] = `
     >
       <col
         class="svelte-1s1bzuy"
+=======
+    class="item-browser svelte-o23uf0"
+    style="max-height: 1200px;"
+  >
+    <table
+      class="mzp-u-data-table svelte-o23uf0"
+    >
+      <col
+        class="svelte-o23uf0"
+>>>>>>> Add items per page input
         width="35%"
       />
        
       <col
+<<<<<<< HEAD
         class="svelte-1s1bzuy"
         width="20%"
       />
@@ -516,6 +553,25 @@ exports[`Storyshots ItemList Default 1`] = `
         >
           <th
             class="svelte-1s1bzuy"
+=======
+        class="svelte-o23uf0"
+        width="25%"
+      />
+       
+      <col
+        class="svelte-o23uf0"
+        width="40%"
+      />
+       
+      <thead
+        class="svelte-o23uf0"
+      >
+        <tr
+          class="svelte-o23uf0"
+        >
+          <th
+            class="svelte-o23uf0"
+>>>>>>> Add items per page input
             scope="col"
             style="text-align: center;"
           >
@@ -523,7 +579,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </th>
            
           <th
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+>>>>>>> Add items per page input
             scope="col"
             style="text-align: center;"
           >
@@ -531,7 +591,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </th>
            
           <th
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+>>>>>>> Add items per page input
             scope="col"
             style="text-align: center;"
           >
@@ -541,6 +605,7 @@ exports[`Storyshots ItemList Default 1`] = `
       </thead>
        
       <tbody
+<<<<<<< HEAD
         class="svelte-1s1bzuy"
       >
         <tr
@@ -551,6 +616,19 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+        class="svelte-o23uf0"
+      >
+        <tr
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 0"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -563,11 +641,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -578,7 +664,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -591,6 +681,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -598,6 +689,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 1"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -610,11 +711,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -625,7 +734,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -638,6 +751,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -645,6 +759,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 2"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -657,11 +781,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -672,7 +804,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -685,6 +821,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -692,6 +829,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 3"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -704,11 +851,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -719,7 +874,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -732,6 +891,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -739,6 +899,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 4"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -751,11 +921,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -766,7 +944,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -779,6 +961,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -786,6 +969,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 5"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -798,11 +991,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -813,7 +1014,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -826,6 +1031,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -833,6 +1039,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 6"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -845,11 +1061,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -860,7 +1084,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -873,6 +1101,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -880,6 +1109,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 7"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -892,11 +1131,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -907,7 +1154,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -920,6 +1171,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -927,6 +1179,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 8"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -939,11 +1201,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -954,7 +1224,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -967,6 +1241,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -974,6 +1249,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 9"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -986,11 +1271,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1001,7 +1294,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -1014,6 +1311,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -1021,6 +1319,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 10"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -1033,11 +1341,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1048,7 +1364,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -1061,6 +1381,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -1068,6 +1389,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 11"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -1080,11 +1411,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1095,7 +1434,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -1108,6 +1451,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -1115,6 +1459,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 12"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -1127,11 +1481,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1142,7 +1504,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -1155,6 +1521,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -1162,6 +1529,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 13"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -1174,11 +1551,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1189,7 +1574,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -1202,6 +1591,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -1209,6 +1599,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 14"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -1221,11 +1621,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1236,7 +1644,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -1249,6 +1661,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -1256,6 +1669,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 15"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -1268,11 +1691,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1283,7 +1714,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -1296,6 +1731,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -1303,6 +1739,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 16"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -1315,11 +1761,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1330,7 +1784,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -1343,6 +1801,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -1350,6 +1809,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 17"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -1362,11 +1831,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1377,7 +1854,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -1390,6 +1871,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -1397,6 +1879,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 18"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -1409,11 +1901,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1424,7 +1924,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"
@@ -1437,6 +1941,7 @@ exports[`Storyshots ItemList Default 1`] = `
            
         </tr>
         <tr
+<<<<<<< HEAD
           class="svelte-1s1bzuy"
         >
           <td
@@ -1444,6 +1949,16 @@ exports[`Storyshots ItemList Default 1`] = `
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+          class="svelte-o23uf0"
+        >
+          <td
+            class="svelte-o23uf0"
+          >
+            <a
+              class="svelte-o23uf0"
+              href="/apps/app-name/metrics/Test metric 19"
+>>>>>>> Add items per page input
             >
               <a
                 class="svelte-1s1bzuy"
@@ -1456,11 +1971,19 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="svelte-1s1bzuy"
             style="text-align: center;"
           >
             <div
               class="item-property svelte-1s1bzuy"
+=======
+            class="svelte-o23uf0"
+            style="text-align: center;"
+          >
+            <code
+              class="svelte-o23uf0"
+>>>>>>> Add items per page input
             >
               <code
                 class="svelte-1s1bzuy"
@@ -1471,7 +1994,11 @@ exports[`Storyshots ItemList Default 1`] = `
           </td>
            
           <td
+<<<<<<< HEAD
             class="description svelte-1s1bzuy"
+=======
+            class="description svelte-o23uf0"
+>>>>>>> Add items per page input
           >
             <div
               class="item-property svelte-1s1bzuy"

@@ -12,7 +12,7 @@
 
   import { isExpired } from "../state/metrics";
 
-  let DEFAULT_ITEMS_PER_PAGE = 20;
+  let itemsPerPage = 20;
 
   export let appName;
   export let items;
@@ -27,10 +27,10 @@
   let currentPage = writable(1);
   setContext("currentPage", currentPage);
 
-  const goToPage = (page) => {
+  const goToPage = (page, perPage = itemsPerPage) => {
     pagedItems =
       filteredItems.length > 0
-        ? chunk([...filteredItems], DEFAULT_ITEMS_PER_PAGE)[page - 1]
+        ? chunk([...filteredItems], perPage)[page - 1]
         : [];
   };
 
@@ -45,7 +45,9 @@
     goToPage(1);
   };
 
-  $: goToPage($currentPage);
+  $: itemsPerPage // eslint-disable-line
+    ? goToPage($currentPage, itemsPerPage)
+    : goToPage($currentPage, 1);
 
   // re-filter items when showExpired changes
   // note on the comma syntax: https://stackoverflow.com/a/56987526
@@ -54,6 +56,7 @@
 
 <style>
   .item-browser {
+    overflow: scroll;
     a {
       text-decoration: none;
     }
@@ -93,7 +96,7 @@
       }
     }
   }
-  .expire-checkbox {
+  .output-control {
     display: block;
     text-align: right;
     label {
@@ -106,7 +109,12 @@
   <p>Currently, there are no {itemType} available for {items.name}</p>
 {:else}
   {#if itemType === 'metrics'}
-    <span class="expire-checkbox">
+    <span class="output-control">
+      <label>
+        Show
+        <input type="number" bind:value={itemsPerPage} min="0" size="4" />
+        items per page
+      </label>
       <label>
         <input type="checkbox" bind:checked={showExpired} />
         Show expired metrics
@@ -117,7 +125,7 @@
     onChangeText={handleFilter}
     bind:filterText
     placeHolder="Search {itemType}" />
-  <div class="item-browser">
+  <div class="item-browser" style="max-height: {itemsPerPage * 60}px">
     <table class="mzp-u-data-table">
       <!-- We have to do inline styling here to override Protocol CSS rules -->
       <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
@@ -162,7 +170,5 @@
   </div>
 {/if}
 {#if filteredItems.length}
-  <Pagination
-    totalItems={filteredItems.length}
-    itemsPerPage={DEFAULT_ITEMS_PER_PAGE} />
+  <Pagination totalItems={filteredItems.length} {itemsPerPage} />
 {/if}
