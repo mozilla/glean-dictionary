@@ -65,6 +65,6 @@
     "postcss-import": "^12.0.1",
     "postcss-load-config": "^3.0.0",
     "sirv-cli": "1.0.11",
-    "svelte-preprocess": "^4.6.5"
+    "svelte-preprocess": "^4.6.6"
   }
 }
