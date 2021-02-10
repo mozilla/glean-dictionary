@@ -54,11 +54,15 @@
 
 <style>
   .item-browser {
-    max-height: 400px;
-    overflow: scroll;
     a {
       text-decoration: none;
     }
+  }
+
+  .item-property {
+    height: 40px;
+    overflow-y: auto;
+    margin: -0.25rem;
   }
 
   table {
@@ -118,8 +122,8 @@
       <!-- We have to do inline styling here to override Protocol CSS rules -->
       <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
       <col width="35%" />
-      <col width={itemType === 'metrics' ? '25%' : '65%'} />
-      <col width={itemType === 'metrics' ? '40%' : '0'} />
+      <col width={itemType === 'metrics' ? '20%' : '65%'} />
+      <col width={itemType === 'metrics' ? '45%' : '0'} />
       <thead>
         <tr>
           <th scope="col" style="text-align: center;">Name</th>
@@ -133,16 +137,23 @@
         {#each pagedItems as item}
           <tr>
             <td>
-              <a href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
-              {#if isExpired(item.expires)}
-                <Pill message="Expired" bgColor="#4a5568" />
-              {/if}
+              <div class="item-property">
+                <a
+                  href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
+                {#if isExpired(item.expires)}
+                  <Pill message="Expired" bgColor="#4a5568" />
+                {/if}
+              </div>
             </td>
             {#if itemType === 'metrics'}
-              <td style="text-align: center;"><code>{item.type}</code></td>
+              <td style="text-align: center;">
+                <div class="item-property"><code>{item.type}</code></div>
+              </td>
             {/if}
             <td class="description">
-              <Markdown text={item.description} />
+              <div class="item-property" title={item.description}>
+                <Markdown text={item.description} />
+              </div>
             </td>
           </tr>
         {/each}
