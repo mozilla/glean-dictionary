@@ -60,8 +60,8 @@
   }
 
   .item-property {
-    height: 36px;
-    overflow: hidden;
+    height: 40px;
+    overflow-y: auto;
   }
 
   table {
