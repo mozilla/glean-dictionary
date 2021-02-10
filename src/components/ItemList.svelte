@@ -121,8 +121,8 @@
       <!-- We have to do inline styling here to override Protocol CSS rules -->
       <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
       <col width="35%" />
-      <col width={itemType === 'metrics' ? '25%' : '65%'} />
-      <col width={itemType === 'metrics' ? '40%' : '0'} />
+      <col width={itemType === 'metrics' ? '20%' : '65%'} />
+      <col width={itemType === 'metrics' ? '45%' : '0'} />
       <thead>
         <tr>
           <th scope="col" style="text-align: center;">Name</th>
