@@ -88,7 +88,7 @@
         background: rgba($color-link-hover, 0.1);
       }
       .description {
-        @include text-body-xs;
+        @include text-body-sm;
       }
     }
   }
