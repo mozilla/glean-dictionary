@@ -62,6 +62,7 @@
   .item-property {
     height: 40px;
     overflow-y: auto;
+    margin: -0.25rem;
   }
 
   table {
