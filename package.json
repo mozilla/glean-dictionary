@@ -17,7 +17,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@babel/plugin-transform-runtime": "7.12.15",
-    "@babel/preset-env": "^7.12.13",
+    "@babel/preset-env": "^7.12.16",
     "@mozilla-protocol/core": "^13.0.1",
     "@rollup/plugin-commonjs": "17.1.0",
     "@rollup/plugin-node-resolve": "11.1.1",
