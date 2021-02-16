@@ -474,6 +474,17 @@ exports[`Storyshots ItemList Default 1`] = `
       
         Show expired metrics
     </label>
+     
+    <label
+      class="svelte-1s1bzuy"
+    >
+      <input
+        class="svelte-1s1bzuy"
+        type="checkbox"
+      />
+      
+        Paginate
+    </label>
   </span>
    
   <div

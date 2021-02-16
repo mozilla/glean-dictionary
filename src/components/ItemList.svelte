@@ -23,14 +23,15 @@
   let showExpired = false;
   let filteredItems = items.filter((item) => !isExpired(item.expires));
   let pagedItems;
+  let paginated = true;
 
   let currentPage = writable(1);
   setContext("currentPage", currentPage);
 
-  const goToPage = (page) => {
+  const goToPage = (page, perPage = DEFAULT_ITEMS_PER_PAGE) => {
     pagedItems =
       filteredItems.length > 0
-        ? chunk([...filteredItems], DEFAULT_ITEMS_PER_PAGE)[page - 1]
+        ? chunk([...filteredItems], perPage)[page - 1]
         : [];
   };
 
@@ -45,7 +46,7 @@
     goToPage(1);
   };
 
-  $: goToPage($currentPage);
+  $: paginated ? goToPage($currentPage) : goToPage(1, filteredItems.length); // eslint-disable-line
 
   // re-filter items when showExpired changes
   // note on the comma syntax: https://stackoverflow.com/a/56987526
@@ -111,6 +112,10 @@
         <input type="checkbox" bind:checked={showExpired} />
         Show expired metrics
       </label>
+      <label>
+        <input type="checkbox" bind:checked={paginated} />
+        Paginate
+      </label>
     </span>
   {/if}
   <FilterInput
@@ -161,7 +166,8 @@
     </table>
   </div>
 {/if}
-{#if filteredItems.length}
+
+{#if filteredItems.length && paginated}
   <Pagination
     totalItems={filteredItems.length}
     itemsPerPage={DEFAULT_ITEMS_PER_PAGE} />
