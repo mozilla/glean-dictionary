@@ -96,7 +96,7 @@
       }
     }
   }
-  .output-control {
+  .expire-checkbox {
     display: block;
     text-align: right;
     label {
@@ -109,12 +109,7 @@
   <p>Currently, there are no {itemType} available for {items.name}</p>
 {:else}
   {#if itemType === 'metrics'}
-    <span class="output-control">
-      <label>
-        Show
-        <input type="number" bind:value={itemsPerPage} min="0" size="4" />
-        items per page
-      </label>
+    <span class="expire-checkbox">
       <label>
         <input type="checkbox" bind:checked={showExpired} />
         Show expired metrics
@@ -125,7 +120,7 @@
     onChangeText={handleFilter}
     bind:filterText
     placeHolder="Search {itemType}" />
-  <div class="item-browser" style="max-height: {itemsPerPage * 60}px">
+  <div class="item-browser">
     <table class="mzp-u-data-table">
       <!-- We have to do inline styling here to override Protocol CSS rules -->
       <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
