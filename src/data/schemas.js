@@ -11,19 +11,13 @@ const REQUIRED_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#required-metric-parameters";
 const OPTIONAL_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#optional-metric-parameters";
+
 export const APPLICATION_DEFINITION_SCHEMA = [
   {
     title: "Source",
     id: "url",
     type: "link",
     helpText: "Where the source code for this application lives.",
-  },
-  {
-    title: "Application ID",
-    id: "app_id",
-    type: "value",
-    helpText:
-      "The app's identifier exactly as it appears in the relevant app store listing (for relevant platforms) or in the app's Glean initialization call (for other platforms). For applicable platforms, you should be able to construct an app store URL from this value.",
   },
   {
     title: "Notification Emails",
@@ -34,6 +28,26 @@ export const APPLICATION_DEFINITION_SCHEMA = [
     linkFormatter: getEmailLink,
   },
 ];
+
+export const APPLICATION_ID_DEFINITION_SCHEMA = [
+  {
+    title: "Channel",
+    id: "app_channel",
+    type: "value",
+    helpText:
+      "Release channel that this application id corresponds to (release, beta, nightly, or esr).",
+    valueFormatter: (item) => item.channel || "release",
+  },
+  {
+    title: "Dependencies",
+    id: "dependencies",
+    type: "list",
+    helpText:
+      "List of library dependencies that this application id depends on.",
+    valueFormatter: (item) => item.join(", "),
+  },
+];
+
 export const METRIC_DEFINITION_SCHEMA = [
   {
     title: "Source",

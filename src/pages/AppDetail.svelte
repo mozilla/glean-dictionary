@@ -43,6 +43,7 @@
   <TabGroup active="Metrics">
     <Tab key="Metrics">Metrics</Tab>
     <Tab key="Pings">Pings</Tab>
+    <Tab key="Application IDs">Application IDs</Tab>
 
     <TabContent key="Pings">
       <ItemList itemType="pings" items={app.pings} appName={app.name} />
@@ -50,6 +51,14 @@
 
     <TabContent key="Metrics">
       <ItemList itemType="metrics" items={app.metrics} appName={app.name} />
+    </TabContent>
+
+    <TabContent key="Application IDs">
+      <ItemList
+        itemType="app_ids"
+        items={app.app_ids}
+        appName={app.name}
+        showFilter={false} />
     </TabContent>
   </TabGroup>
 {:catch}

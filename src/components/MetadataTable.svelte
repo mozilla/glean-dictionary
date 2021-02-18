@@ -41,6 +41,12 @@
                   href={format(ref, schemaEntry.linkFormatter)}>{format(ref, schemaEntry.valueFormatter)}</a>
               </div>
             {/each}
+          {:else if schemaEntry.type === 'list'}
+            <ul>
+              {#each item[schemaEntry.id] as ref}
+                <li>{ref}</li>
+              {/each}
+            </ul>
           {:else}{format(item[schemaEntry.id], schemaEntry.valueFormatter)}{/if}
         </td>
       </tr>

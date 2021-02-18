@@ -18,6 +18,7 @@
   export let items;
   export let itemType;
 
+  export let showFilter = true;
   export let filterText = "";
 
   let showExpired = false;
@@ -118,10 +119,12 @@
       </label>
     </span>
   {/if}
-  <FilterInput
-    onChangeText={handleFilter}
-    bind:filterText
-    placeHolder="Search {itemType}" />
+  {#if showFilter}
+    <FilterInput
+      onChangeText={handleFilter}
+      bind:filterText
+      placeHolder="Search {itemType}" />
+  {/if}
   <div class="item-browser">
     <table class="mzp-u-data-table">
       <!-- We have to do inline styling here to override Protocol CSS rules -->
@@ -147,6 +150,9 @@
                   href={getItemURL(appName, itemType, item.name)}>{item.name}</a>
                 {#if isExpired(item.expires)}
                   <Pill message="Expired" bgColor="#4a5568" />
+                {/if}
+                {#if item.deprecated}
+                  <Pill message="Deprecated" bgColor="#4a5568" />
                 {/if}
               </div>
             </td>

@@ -17,7 +17,20 @@
 
   export let params;
 
-  const metricDataPromise = getMetricData(params.app, params.metric);
+  let appVariants;
+  let selectedAppId;
+  let selectedAppVariant;
+  const metricDataPromise = getMetricData(params.app, params.metric).then(
+    (metricData) => {
+      appVariants = metricData.variants;
+      [ selectedAppVariant ] = metricData.variants;
+      return metricData;
+    }
+  );
+
+  function selectAppId() {
+    selectedAppVariant = appVariants.find((v) => v.app_id === selectedAppId);
+  }
 
   pageTitle.set(`${params.metric} | ${params.app} `);
 
@@ -121,46 +134,61 @@
 
   <h2>Access</h2>
 
-  <table>
-    <col />
-    <col />
-    <tr>
-      <td>
-        BigQuery
-        <HelpHoverable content={'The BigQuery repesentation of this metric.'} />
-      </td>
-      <td>
-        {#each metric.bigquery_names.stable_ping_table_names as [sendInPing, tableName]}
-          <div>
-            In
-            <a
-              href={getMetricBigQueryURL(params.app, sendInPing)}>{tableName}</a>
-            <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
-            {#if metric.bigquery_names.metric_type !== 'event'}
-              as
-              <a
-                href={getMetricBigQueryURL(params.app, sendInPing, metric.bigquery_names.metric_table_name)}>
-                {metric.bigquery_names.metric_table_name}
-              </a>
-            {/if}
-          </div>
-        {/each}
-      </td>
-    </tr>
-    {#if glamUrl && metric.bigquery_names.metric_type !== 'event'}
+  {#if metric.variants.length > 1}
+    <!-- svelte-ignore a11y-no-onchange -->
+    <select bind:value={selectedAppId} on:change={selectAppId}>
+      {#each metric.variants as variant}
+        <option value={variant.app_id}>
+          {variant.app_channel}
+          ({variant.app_id})
+        </option>
+      {/each}
+    </select>
+  {/if}
+
+  {#if selectedAppVariant}
+    <table>
+      <col />
+      <col />
       <tr>
         <td>
-          GLAM
+          BigQuery
           <HelpHoverable
-            content={'View this metric in Glean Aggregated Metrics'} />
+            content={'The BigQuery repesentation of this metric.'} />
         </td>
         <td>
-          <a
-            href={glamUrl(metric.bigquery_names.glam_etl_name)}>{metric.bigquery_names.glam_etl_name}</a>
+          {#each selectedAppVariant.bigquery_names.stable_ping_table_names as [sendInPing, tableName]}
+            <div>
+              In
+              <a
+                href={getMetricBigQueryURL(params.app, selectedAppVariant.app_id, sendInPing)}>{tableName}</a>
+              <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
+              {#if selectedAppVariant.bigquery_names.metric_type !== 'event'}
+                as
+                <a
+                  href={getMetricBigQueryURL(params.app, selectedAppVariant.app_id, sendInPing, selectedAppVariant.bigquery_names.metric_table_name)}>
+                  {selectedAppVariant.bigquery_names.metric_table_name}
+                </a>
+              {/if}
+            </div>
+          {/each}
         </td>
       </tr>
-    {/if}
-  </table>
+      {#if glamUrl && selectedAppVariant.bigquery_names.metric_type !== 'event'}
+        <tr>
+          <td>
+            GLAM
+            <HelpHoverable
+              content={'View this metric in Glean Aggregated Metrics'} />
+          </td>
+          <td>
+            <a
+              href={glamUrl(selectedAppVariant.bigquery_names.glam_etl_name)}>{selectedAppVariant.bigquery_names.glam_etl_name}</a>
+          </td>
+        </tr>
+      {/if}
+    </table>
+  {/if}
 {:catch}
   <NotFound pageName={params.metric} itemType="metric" />
 {/await}

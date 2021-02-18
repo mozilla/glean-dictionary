@@ -1,12 +1,16 @@
-export function getItemURL(appName, itemType, itemName) {
+function getResourceName(name) {
   // workaround servers that incorrectly interpret url resources with a "." in
-  // them as having an extension (this is common for metrics) -- the glean
+  // them as having an extension (this is common for metrics and application ids) -- the glean
   // schema doesn't allow `-`'s in metrics, so this should be ok
-  return `/apps/${appName}/${itemType}/${itemName.replace(/\./g, "_")}`;
+  return name.replace(/\./g, "_");
 }
 
-export function getMetricBigQueryURL(appName, pingName, metricName) {
+export function getItemURL(appName, itemType, itemName) {
+  return `/apps/${appName}/${itemType}/${getResourceName(itemName)}`;
+}
+
+export function getMetricBigQueryURL(appName, appId, pingName, metricName) {
   return metricName
-    ? `/apps/${appName}/tables/${pingName}?search=${metricName}`
-    : `/apps/${appName}/tables/${pingName}`;
+    ? `/apps/${appName}/app_ids/${appId}/tables/${pingName}?search=${metricName}`
+    : `/apps/${appName}/app_ids/${getResourceName(appId)}/tables/${pingName}`;
 }
