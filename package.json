@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.2.4",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "lunr": "^2.3.9",
     "marked": "^2.0.0",
     "node-fetch": "^2.6.1",
