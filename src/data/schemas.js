@@ -35,7 +35,7 @@ export const APPLICATION_DEFINITION_SCHEMA = [
 export const METRIC_DEFINITION_SCHEMA = [
   {
     title: "Source",
-    id: "repo_url",
+    id: "source_url",
     type: "link",
     helpText: "Where the source definition of the metric may be found.",
   },
@@ -160,6 +160,12 @@ export const METRIC_METADATA_SCHEMA = [
 ];
 
 export const PING_SCHEMA = [
+  {
+    title: "Source",
+    id: "source_url",
+    type: "link",
+    helpText: "Where the source definition of the ping may be found.",
+  },
   {
     title: "Includes Client Identifier",
     id: "include_client_id",
