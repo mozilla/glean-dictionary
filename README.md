@@ -13,7 +13,7 @@ for more details on the Glean Dictionary's ambitions and goals.
 
 You can play with an early version of the Glean Dictionary at:
 
-https://glean-dictionary-dev.netlify.app
+https://dictionary.protosaur.dev
 
 ## Getting Started
 
