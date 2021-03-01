@@ -41,7 +41,7 @@ export const METRIC_DEFINITION_SCHEMA = [
     title: "Source",
     id: "source_url",
     type: "link",
-    helpText: "Where the source definition of the metric may be found.",
+    helpText: "Where the source definition of the metric may be found (referencing the first commit in which it was introduced).",
     valueFormatter: getSourceUrlTitle,
   },
   {
