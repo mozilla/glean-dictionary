@@ -88,6 +88,7 @@ for (app_name, app_group) in app_groups.items():
     app_data = dict(app_group, pings=[], metrics=[])
 
     app_metrics = {}
+    metric_pings = dict(data=[])
     # keep track of which metric and ping identifiers we have seen so far
     metric_identifiers_seen = set()
     ping_identifiers_seen = set()
@@ -101,7 +102,6 @@ for (app_name, app_group) in app_groups.items():
 
         # metrics data
         metrics = app.get_metrics()
-        metric_pings = dict(data=[])
         for metric in metrics:
             if metric.identifier not in metric_identifiers_seen:
                 metric_identifiers_seen.add(metric.identifier)
@@ -162,13 +162,7 @@ for (app_name, app_group) in app_groups.items():
             if ping.identifier not in ping_identifiers_seen:
                 ping_identifiers_seen.add(ping.identifier)
 
-                app_data["pings"].append(
-                    {
-                        "name": ping.identifier,
-                        "description": ping.definition["description"],
-                        "variants": [],
-                    }
-                )
+                app_data["pings"].append(dict(ping.definition, variants=[]))
 
             ping_data = next(pd for pd in app_data["pings"] if pd["name"] == ping.identifier)
 
@@ -187,7 +181,13 @@ for (app_name, app_group) in app_groups.items():
             ).json()
 
             app_variant_table_dir = os.path.join(app_table_dir, app_id_snakecase)
-            ping_data["variants"].append(app_id_snakecase)
+            ping_data["variants"].append(
+                {
+                    "app_id": app.app_id,
+                    "app_channel": app.app.get("app_channel", "release"),
+                    "table": stable_ping_table_name,
+                }
+            )
             os.makedirs(app_variant_table_dir, exist_ok=True)
             open(os.path.join(app_variant_table_dir, f"{ping.identifier}.json"), "w").write(
                 json.dumps(

@@ -1,5 +1,6 @@
 <script>
   import AppAlert from "../components/AppAlert.svelte";
+  import AppVariantSelector from "../components/AppVariantSelector.svelte";
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
@@ -17,50 +18,43 @@
 
   export let params;
 
-  let appVariants;
-  let selectedAppId;
   let selectedAppVariant;
   const metricDataPromise = getMetricData(params.app, params.metric).then(
     (metricData) => {
-      appVariants = metricData.variants;
-      [ selectedAppVariant ] = metricData.variants;
+      [selectedAppVariant] = metricData.variants;
       return metricData;
     }
   );
 
-  function selectAppId() {
-    selectedAppVariant = appVariants.find((v) => v.app_id === selectedAppId);
-  }
-
   pageTitle.set(`${params.metric} | ${params.app} `);
 
-  function getGlamUrlTemplate(app) {
+  function getGlamUrl(appVariant) {
+    if (selectedAppVariant.bigquery_names.metric_type === "event") {
+      // events are not supported by GLAM presently
+      return undefined;
+    }
     const map = {
-      fenix: {
+      "org.mozilla.fenix": {
         product: "fenix",
-        app_id: "",
+        glam_id: "",
       },
-      "firefox-android-beta": {
+      "org.mozilla.firefox_beta": {
         product: "fenix",
-        app_id: "beta",
+        glam_id: "beta",
       },
-      "firefox-android-release": {
+      "org.mozilla.firefox": {
         product: "fenix",
-        app_id: "release",
+        glam_id: "release",
       },
     };
-    if (Object.keys(map).includes(app)) {
-      const p = map[app];
-      return function makeGlamUrl(metric) {
-        return `https://glam.telemetry.mozilla.org/${p.product}/probe/${metric}/explore?app_id=${p.app_id}`;
-      };
+    if (Object.keys(map).includes(appVariant.app_id)) {
+      const p = map[appVariant.app_id];
+      return `https://glam.telemetry.mozilla.org/${p.product}/probe/${appVariant.bigquery_names.glam_etl_name}/explore?app_id=${p.glam_id}`;
     }
 
     // The app isn't one GLAM supports so return nothing.
     return undefined;
   }
-
-  const glamUrl = getGlamUrlTemplate(params.app);
 
   function getMetricDocumentationURI(type) {
     const sourceDocs = "https://mozilla.github.io/glean/book/user/metrics/";
@@ -135,15 +129,7 @@
   <h2>Access</h2>
 
   {#if metric.variants.length > 1}
-    <!-- svelte-ignore a11y-no-onchange -->
-    <select bind:value={selectedAppId} on:change={selectAppId}>
-      {#each metric.variants as variant}
-        <option value={variant.app_id}>
-          {variant.app_channel}
-          ({variant.app_id})
-        </option>
-      {/each}
-    </select>
+    <AppVariantSelector bind:selectedAppVariant variants={metric.variants} />
   {/if}
 
   {#if selectedAppVariant}
@@ -154,7 +140,7 @@
         <td>
           BigQuery
           <HelpHoverable
-            content={'The BigQuery repesentation of this metric.'} />
+            content={'The BigQuery representation of this metric.'} />
         </td>
         <td>
           {#each selectedAppVariant.bigquery_names.stable_ping_table_names as [sendInPing, tableName]}
@@ -174,7 +160,7 @@
           {/each}
         </td>
       </tr>
-      {#if glamUrl && selectedAppVariant.bigquery_names.metric_type !== 'event'}
+      {#if getGlamUrl(selectedAppVariant)}
         <tr>
           <td>
             GLAM
@@ -183,7 +169,7 @@
           </td>
           <td>
             <a
-              href={glamUrl(selectedAppVariant.bigquery_names.glam_etl_name)}>{selectedAppVariant.bigquery_names.glam_etl_name}</a>
+              href={getGlamUrl(selectedAppVariant)}>{selectedAppVariant.bigquery_names.glam_etl_name}</a>
           </td>
         </tr>
       {/if}

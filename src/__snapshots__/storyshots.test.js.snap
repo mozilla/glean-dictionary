@@ -143,6 +143,35 @@ exports[`Storyshots App Alert Text 1`] = `
 </section>
 `;
 
+exports[`Storyshots App Variant Selector Text 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <select>
+    <option
+      value="org.mozilla.fenix"
+    >
+      nightly
+      
+      (
+      org.mozilla.fenix
+      )
+    
+    </option>
+    <option
+      value="org.mozilla.fenix_release"
+    >
+      release
+      
+      (
+      org.mozilla.fenix_release
+      )
+    
+    </option>
+  </select>
+</section>
+`;
+
 exports[`Storyshots Breadcrumb App Details Page 1`] = `
 <section
   class="storybook-snapshot-container"
@@ -570,6 +599,7 @@ exports[`Storyshots ItemList Default 1`] = `
                 Test metric 0
               </a>
                
+               
             </div>
           </td>
            
@@ -616,6 +646,7 @@ exports[`Storyshots ItemList Default 1`] = `
               >
                 Test metric 1
               </a>
+               
                
             </div>
           </td>
@@ -664,6 +695,7 @@ exports[`Storyshots ItemList Default 1`] = `
                 Test metric 2
               </a>
                
+               
             </div>
           </td>
            
@@ -710,6 +742,7 @@ exports[`Storyshots ItemList Default 1`] = `
               >
                 Test metric 3
               </a>
+               
                
             </div>
           </td>
@@ -758,6 +791,7 @@ exports[`Storyshots ItemList Default 1`] = `
                 Test metric 4
               </a>
                
+               
             </div>
           </td>
            
@@ -804,6 +838,7 @@ exports[`Storyshots ItemList Default 1`] = `
               >
                 Test metric 5
               </a>
+               
                
             </div>
           </td>
@@ -852,6 +887,7 @@ exports[`Storyshots ItemList Default 1`] = `
                 Test metric 6
               </a>
                
+               
             </div>
           </td>
            
@@ -898,6 +934,7 @@ exports[`Storyshots ItemList Default 1`] = `
               >
                 Test metric 7
               </a>
+               
                
             </div>
           </td>
@@ -946,6 +983,7 @@ exports[`Storyshots ItemList Default 1`] = `
                 Test metric 8
               </a>
                
+               
             </div>
           </td>
            
@@ -992,6 +1030,7 @@ exports[`Storyshots ItemList Default 1`] = `
               >
                 Test metric 9
               </a>
+               
                
             </div>
           </td>
@@ -1040,6 +1079,7 @@ exports[`Storyshots ItemList Default 1`] = `
                 Test metric 10
               </a>
                
+               
             </div>
           </td>
            
@@ -1086,6 +1126,7 @@ exports[`Storyshots ItemList Default 1`] = `
               >
                 Test metric 11
               </a>
+               
                
             </div>
           </td>
@@ -1134,6 +1175,7 @@ exports[`Storyshots ItemList Default 1`] = `
                 Test metric 12
               </a>
                
+               
             </div>
           </td>
            
@@ -1180,6 +1222,7 @@ exports[`Storyshots ItemList Default 1`] = `
               >
                 Test metric 13
               </a>
+               
                
             </div>
           </td>
@@ -1228,6 +1271,7 @@ exports[`Storyshots ItemList Default 1`] = `
                 Test metric 14
               </a>
                
+               
             </div>
           </td>
            
@@ -1274,6 +1318,7 @@ exports[`Storyshots ItemList Default 1`] = `
               >
                 Test metric 15
               </a>
+               
                
             </div>
           </td>
@@ -1322,6 +1367,7 @@ exports[`Storyshots ItemList Default 1`] = `
                 Test metric 16
               </a>
                
+               
             </div>
           </td>
            
@@ -1368,6 +1414,7 @@ exports[`Storyshots ItemList Default 1`] = `
               >
                 Test metric 17
               </a>
+               
                
             </div>
           </td>
@@ -1416,6 +1463,7 @@ exports[`Storyshots ItemList Default 1`] = `
                 Test metric 18
               </a>
                
+               
             </div>
           </td>
            
@@ -1462,6 +1510,7 @@ exports[`Storyshots ItemList Default 1`] = `
               >
                 Test metric 19
               </a>
+               
                
             </div>
           </td>
@@ -1638,21 +1687,21 @@ exports[`Storyshots Metadata Table Default 1`] = `
   class="storybook-snapshot-container"
 >
   <table
-    class="svelte-op7dfq"
+    class="svelte-e1apn8"
   >
     <col
-      class="svelte-op7dfq"
+      class="svelte-e1apn8"
     />
      
     <col
-      class="svelte-op7dfq"
+      class="svelte-e1apn8"
     />
      
     <tr
-      class="svelte-op7dfq"
+      class="svelte-e1apn8"
     >
       <td
-        class="svelte-op7dfq"
+        class="svelte-e1apn8"
       >
         Source
          
@@ -1680,10 +1729,10 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-op7dfq"
+        class="svelte-e1apn8"
       >
         <a
-          class="svelte-op7dfq"
+          class="svelte-e1apn8"
           href="https://github.com/mozilla/testapp"
         >
           https://github.com/mozilla/testapp
@@ -1692,48 +1741,10 @@ exports[`Storyshots Metadata Table Default 1`] = `
     </tr>
     
     <tr
-      class="svelte-op7dfq"
+      class="svelte-e1apn8"
     >
       <td
-        class="svelte-op7dfq"
-      >
-        Application ID
-         
-        <div
-          class="main svelte-11pfwu8"
-        >
-          <span
-            class="svelte-11pfwu8"
-          >
-            <svg
-              class="w-5 inline-block svelte-p1n39r"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                class="svelte-p1n39r"
-                clip-rule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                fill-rule="evenodd"
-              />
-            </svg>
-          </span>
-        </div>
-      </td>
-       
-      <td
-        class="svelte-op7dfq"
-      >
-        org.mozilla.testapp
-      </td>
-    </tr>
-    
-    <tr
-      class="svelte-op7dfq"
-    >
-      <td
-        class="svelte-op7dfq"
+        class="svelte-e1apn8"
       >
         Notification Emails
          
@@ -1761,13 +1772,13 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-op7dfq"
+        class="svelte-e1apn8"
       >
         <div
-          class="svelte-op7dfq"
+          class="svelte-e1apn8"
         >
           <a
-            class="svelte-op7dfq"
+            class="svelte-e1apn8"
             href="mailto:test@mozilla.com"
           >
             test@mozilla.com

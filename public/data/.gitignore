@@ -1,5 +1,6 @@
 apps.json
-index.json
+**/index.json
+**/app_ids/*.json
 **/pings/*.json
-**/tables/*.json
+**/tables/**/*.json
 **/metrics/*.json

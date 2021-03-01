@@ -2,6 +2,8 @@
   import { getPingData } from "../state/api";
   import { pageTitle } from "../state/stores";
 
+  import AppVariantSelector from "../components/AppVariantSelector.svelte";
+  import HelpHoverable from "../components/HelpHoverable.svelte";
   import ItemList from "../components/ItemList.svelte";
   import MetadataTable from "../components/MetadataTable.svelte";
   import NotFound from "../components/NotFound.svelte";
@@ -10,13 +12,21 @@
   import { PING_SCHEMA } from "../data/schemas";
 
   export let params;
-  const pingDataPromise = getPingData(params.app, params.ping);
+  let selectedAppVariant;
+  const pingDataPromise = getPingData(params.app, params.ping).then(
+    (pingData) => {
+      [selectedAppVariant] = pingData.variants;
+      return pingData;
+    }
+  );
 
   pageTitle.set(`${params.ping} | ${params.app}`);
 </script>
 
 <style>
   @import "../main.scss";
+
+  @include metadata-table;
   h2 {
     @include text-title-xs;
   }
@@ -27,13 +37,34 @@
   <p>
     <Markdown text={ping.description} />
   </p>
-  <p>
-    It is represented in BigQuery as
-    <a
-      href={`/apps/${params.app}/tables/${params.ping}`}>{ping.stable_table_name}</a>.
-  </p>
+
   <h2>Metadata</h2>
   <MetadataTable appName={params.app} item={ping} schema={PING_SCHEMA} />
+
+  <h2>Access</h2>
+
+  {#if ping.variants.length > 1}
+    <AppVariantSelector bind:selectedAppVariant variants={ping.variants} />
+  {/if}
+
+  {#if selectedAppVariant}
+    <table>
+      <col />
+      <col />
+      <tr>
+        <td>
+          BigQuery
+          <HelpHoverable
+            content={'The BigQuery representation of this ping.'} />
+        </td>
+        <td>
+          <a
+            href={`/apps/${params.app}/app_ids/${selectedAppVariant.app_id}/tables/${params.ping}`}>{selectedAppVariant.table}</a>
+        </td>
+      </tr>
+    </table>
+  {/if}
+
   <h2>Metrics</h2>
   <ItemList itemType="metrics" items={ping.metrics} appName={params.app} />
 {:catch}
