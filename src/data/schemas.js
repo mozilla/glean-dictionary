@@ -1,13 +1,16 @@
 import { getEmailLink } from "../formatters/emails";
 import { getExpiryInfo } from "../formatters/expiry";
-import { getBugURL, getBugLinkTitle } from "../formatters/links";
+import {
+  getBugURL,
+  getBugLinkTitle,
+  getSourceUrlTitle,
+} from "../formatters/links";
 import { getSearchfoxLink } from "../formatters/searchfox";
 
 const REQUIRED_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#required-metric-parameters";
 const OPTIONAL_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#optional-metric-parameters";
-
 export const APPLICATION_DEFINITION_SCHEMA = [
   {
     title: "Source",
@@ -31,13 +34,14 @@ export const APPLICATION_DEFINITION_SCHEMA = [
     linkFormatter: getEmailLink,
   },
 ];
-
 export const METRIC_DEFINITION_SCHEMA = [
   {
     title: "Source",
-    id: "repo_url",
+    id: "source_url",
     type: "link",
-    helpText: "Where the source definition of the metric may be found.",
+    helpText:
+      "Where the source definition of the metric may be found (referencing the first commit in which it was introduced).",
+    valueFormatter: getSourceUrlTitle,
   },
   {
     title: "Searchfox",
@@ -50,7 +54,6 @@ export const METRIC_DEFINITION_SCHEMA = [
     },
   },
 ];
-
 export const METRIC_METADATA_SCHEMA = [
   {
     title: "Lifetime",
@@ -158,8 +161,14 @@ export const METRIC_METADATA_SCHEMA = [
     valueFormatter: getExpiryInfo,
   },
 ];
-
 export const PING_SCHEMA = [
+  {
+    title: "Source",
+    id: "source_url",
+    type: "link",
+    helpText: "Where the source definition of the ping may be found.",
+    valueFormatter: getSourceUrlTitle,
+  },
   {
     title: "Includes Client Identifier",
     id: "include_client_id",
