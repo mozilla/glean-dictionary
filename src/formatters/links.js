@@ -27,3 +27,15 @@ export function getBugLinkTitle(ref) {
   // it verbatim, just remove the http/https part
   return url.replace(/^http(s?):\/\//, "");
 }
+
+export function getSourceUrlTitle(url) {
+  if (url.includes("github.com")) {
+    return url.replace(
+      /[^\d]+\/([^\d]+)\/([^\d]+)\/([^\d]+)\/([^/]+)\/(.*)/,
+      (_, orgName, repoName, _blob, _hash, path) => {
+        return `${orgName}/${repoName}/${path}`;
+      }
+    );
+  }
+  return url;
+}

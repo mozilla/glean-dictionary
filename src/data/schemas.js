@@ -1,6 +1,10 @@
 import { getEmailLink } from "../formatters/emails";
 import { getExpiryInfo } from "../formatters/expiry";
-import { getBugURL, getBugLinkTitle } from "../formatters/links";
+import {
+  getBugURL,
+  getBugLinkTitle,
+  getSourceUrlTitle,
+} from "../formatters/links";
 import { getSearchfoxLink } from "../formatters/searchfox";
 
 const REQUIRED_METRIC_PARAMS_DOCS =
@@ -38,6 +42,7 @@ export const METRIC_DEFINITION_SCHEMA = [
     id: "source_url",
     type: "link",
     helpText: "Where the source definition of the metric may be found.",
+    valueFormatter: getSourceUrlTitle,
   },
   {
     title: "Searchfox",
@@ -165,6 +170,7 @@ export const PING_SCHEMA = [
     id: "source_url",
     type: "link",
     helpText: "Where the source definition of the ping may be found.",
+    valueFormatter: getSourceUrlTitle,
   },
   {
     title: "Includes Client Identifier",
