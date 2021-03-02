@@ -12,7 +12,7 @@
   } from "../data/schemas";
   import { getMetricData } from "../state/api";
   import { pageTitle } from "../state/stores";
-  import { getMetricBigQueryURL } from "../state/urls";
+  import { getBigQueryURL } from "../state/urls";
 
   import { isExpired } from "../state/metrics";
 
@@ -147,12 +147,12 @@
             <div>
               In
               <a
-                href={getMetricBigQueryURL(params.app, selectedAppVariant.app_id, sendInPing)}>{tableName}</a>
+                href={getBigQueryURL(params.app, selectedAppVariant.app_id, sendInPing)}>{tableName}</a>
               <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
               {#if selectedAppVariant.bigquery_names.metric_type !== 'event'}
                 as
                 <a
-                  href={getMetricBigQueryURL(params.app, selectedAppVariant.app_id, sendInPing, selectedAppVariant.bigquery_names.metric_table_name)}>
+                  href={getBigQueryURL(params.app, selectedAppVariant.app_id, sendInPing, selectedAppVariant.bigquery_names.metric_table_name)}>
                   {selectedAppVariant.bigquery_names.metric_table_name}
                 </a>
               {/if}

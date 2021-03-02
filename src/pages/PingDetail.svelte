@@ -1,6 +1,7 @@
 <script>
   import { getPingData } from "../state/api";
   import { pageTitle } from "../state/stores";
+  import { getBigQueryURL } from "../state/urls";
 
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
@@ -59,7 +60,9 @@
         </td>
         <td>
           <a
-            href={`/apps/${params.app}/app_ids/${selectedAppVariant.app_id}/tables/${params.ping}`}>{selectedAppVariant.table}</a>
+            href={getBigQueryURL(params.app, selectedAppVariant.app_id, params.ping)}>
+            {selectedAppVariant.table}
+          </a>
         </td>
       </tr>
     </table>

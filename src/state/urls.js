@@ -9,8 +9,10 @@ export function getItemURL(appName, itemType, itemName) {
   return `/apps/${appName}/${itemType}/${getResourceName(itemName)}`;
 }
 
-export function getMetricBigQueryURL(appName, appId, pingName, metricName) {
+export function getBigQueryURL(appName, appId, pingName, metricName) {
   return metricName
-    ? `/apps/${appName}/app_ids/${appId}/tables/${pingName}?search=${metricName}`
+    ? `/apps/${appName}/app_ids/${getResourceName(
+        appId
+      )}/tables/${pingName}?search=${metricName}`
     : `/apps/${appName}/app_ids/${getResourceName(appId)}/tables/${pingName}`;
 }
