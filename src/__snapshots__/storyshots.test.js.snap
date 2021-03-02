@@ -143,7 +143,7 @@ exports[`Storyshots App Alert Text 1`] = `
 </section>
 `;
 
-exports[`Storyshots App Variant Selector Text 1`] = `
+exports[`Storyshots App Variant Selector Default 1`] = `
 <section
   class="storybook-snapshot-container"
 >

@@ -4,6 +4,6 @@ export default {
   title: "App Variant Selector",
 };
 
-export const Text = () => ({
+export const Default = () => ({
   Component: AppVariantSelector,
 });
