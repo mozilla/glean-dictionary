@@ -47,7 +47,7 @@
     </tr>
   </table>
   <SchemaViewer
-    app={params.appId}
+    app={params.app}
     nodes={table.bq_schema}
     bind:searchText={queryString}
     on:updateURL={updateURL} />
