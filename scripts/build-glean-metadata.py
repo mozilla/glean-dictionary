@@ -133,7 +133,7 @@ for (app_name, app_group) in app_groups.items():
             stable_ping_table_names = []
             for ping in metric.definition["send_in_pings"]:
                 stable_ping_table_names.append(
-                    [ping, f"{app_id_snakecase}.{stringcase.snakecase(ping)}"]
+                    [ping, f"{app.app['bq_dataset_family']}.{stringcase.snakecase(ping)}"]
                 )
 
             metric_type = metric.definition["type"]
