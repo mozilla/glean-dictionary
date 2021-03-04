@@ -28,8 +28,25 @@
 
   pageTitle.set(`${params.metric} | ${params.app} `);
 
+  function getLookerUrl(appVariant) {
+    console.log([
+      appVariant.bigquery_names.metric_type,
+      params.app,
+      appVariant,
+    ]);
+    if (
+      params.app != "firefox_ios" &&
+      appVariant.bigquery_names.metric_type !== "labeled_counter"
+    ) {
+      // only supporting labeled counters on Firefox iOS for this prototype
+      return undefined;
+    }
+
+    return `https://mozilla.cloud.looker.com/explore/firefox_ios/counters?fields=counters.total_count,counters.submission_date,counters.label&pivots=counters.label&fill_fields=counters.submission_date&f[counters.submission_date]=28+days+ago+for+28+days&f[counters.metric]=%22labeled_counter.${params.metric}%22&sorts=counters.submission_date+desc,counters.label&limit=500&vis=%7B%22x_axis_gridlines%22%3Afalse%2C%22y_axis_gridlines%22%3Atrue%2C%22show_view_names%22%3Afalse%2C%22show_y_axis_labels%22%3Atrue%2C%22show_y_axis_ticks%22%3Atrue%2C%22y_axis_tick_density%22%3A%22default%22%2C%22y_axis_tick_density_custom%22%3A5%2C%22show_x_axis_label%22%3Atrue%2C%22show_x_axis_ticks%22%3Atrue%2C%22y_axis_scale_mode%22%3A%22linear%22%2C%22x_axis_reversed%22%3Afalse%2C%22y_axis_reversed%22%3Afalse%2C%22plot_size_by_field%22%3Afalse%2C%22trellis%22%3A%22%22%2C%22stacking%22%3A%22%22%2C%22limit_displayed_rows%22%3Afalse%2C%22legend_position%22%3A%22center%22%2C%22point_style%22%3A%22none%22%2C%22show_value_labels%22%3Afalse%2C%22label_density%22%3A25%2C%22x_axis_scale%22%3A%22auto%22%2C%22y_axis_combined%22%3Atrue%2C%22show_null_points%22%3Atrue%2C%22interpolation%22%3A%22linear%22%2C%22type%22%3A%22looker_line%22%2C%22defaults_version%22%3A1%7D&filter_config=%7B%22counters.submission_date%22%3A%5B%7B%22type%22%3A%22past%22%2C%22values%22%3A%5B%7B%22constant%22%3A%2228%22%2C%22unit%22%3A%22c_day%22%7D%2C%7B%7D%5D%2C%22id%22%3A0%2C%22error%22%3Afalse%7D%5D%2C%22counters.metric%22%3A%5B%7B%22type%22%3A%22%3D%22%2C%22values%22%3A%5B%7B%22constant%22%3A%22labeled_counter.${params.metric}%22%7D%2C%7B%7D%5D%2C%22id%22%3A1%2C%22error%22%3Afalse%7D%5D%7D&origin=share-expanded&toggle=vis`;
+  }
+
   function getGlamUrl(appVariant) {
-    if (selectedAppVariant.bigquery_names.metric_type === "event") {
+    if (appVariant.bigquery_names.metric_type === "event") {
       // events are not supported by GLAM presently
       return undefined;
     }
@@ -170,6 +187,17 @@
           <td>
             <a
               href={getGlamUrl(selectedAppVariant)}>{selectedAppVariant.bigquery_names.glam_etl_name}</a>
+          </td>
+        </tr>
+      {/if}
+      {#if getLookerUrl(selectedAppVariant)}
+        <tr>
+          <td>
+            Looker
+            <HelpHoverable content={'View this metric in Looker'} />
+          </td>
+          <td>
+            <a href={getLookerUrl(selectedAppVariant)}>{params.metric}</a>
           </td>
         </tr>
       {/if}
