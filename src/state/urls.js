@@ -10,9 +10,9 @@ export function getItemURL(appName, itemType, itemName) {
 }
 
 export function getBigQueryURL(appName, appId, pingName, metricName) {
-  return metricName
-    ? `/apps/${appName}/app_ids/${getResourceName(
-        appId
-      )}/tables/${pingName}?search=${metricName}`
-    : `/apps/${appName}/app_ids/${getResourceName(appId)}/tables/${pingName}`;
+  const base = `/apps/${getResourceName(appName)}/app_ids/${getResourceName(
+    appId
+  )}/tables/${pingName}`;
+
+  return base + (metricName ? `?search=${metricName}` : "");
 }

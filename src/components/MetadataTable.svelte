@@ -1,5 +1,5 @@
 <script>
-  import { isUndefined } from "lodash";
+  import { isNull, isUndefined } from "lodash";
   import HelpHoverable from "./HelpHoverable.svelte";
 
   export let appName = "";
@@ -20,7 +20,7 @@
   <col />
   <col />
   {#each schema as schemaEntry}
-    {#if !isUndefined(item[schemaEntry.id])}
+    {#if !isUndefined(item[schemaEntry.id]) && !isNull(item[schemaEntry.id])}
       <tr>
         <td>
           {schemaEntry.title}

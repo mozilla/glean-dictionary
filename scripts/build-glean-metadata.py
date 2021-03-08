@@ -58,7 +58,7 @@ for app in apps:
         [
             {
                 "name": app.app_id,
-                "description": app.app["description"],
+                "description": app.app["app_description"],
                 "channel": app.app.get("app_channel", "release"),
                 "deprecated": app.app.get("deprecated", False),
             }
@@ -95,10 +95,9 @@ for (app_name, app_group) in app_groups.items():
 
     for app_id in [app["name"] for app in app_group["app_ids"]]:
         app = next(app for app in apps if app.app_id == app_id)
-        app_id_snakecase = stringcase.snakecase(app.app_id)
 
         # information about this app_id
-        open(os.path.join(app_id_dir, f"{app_id_snakecase}.json"), "w").write(json.dumps(app.app))
+        open(os.path.join(app_id_dir, f"{app_id}.json"), "w").write(json.dumps(app.app))
 
         # metrics data
         metrics = app.get_metrics()
@@ -153,7 +152,7 @@ for (app_name, app_group) in app_groups.items():
                 dict(
                     app_id=app.app_id,
                     app_channel=app.app.get("app_channel", "release"),
-                    app_description=app.app["description"],
+                    app_description=app.app["app_description"],
                     bigquery_names=bigquery_names,
                 )
             )
@@ -168,8 +167,8 @@ for (app_name, app_group) in app_groups.items():
 
             # write table description (app variant specific)
             ping_name_snakecase = stringcase.snakecase(ping.identifier)
-            stable_ping_table_name = f"{app_id_snakecase}.{ping_name_snakecase}"
-            live_ping_table_name = f"{app_id_snakecase}_live_v1.{ping_name_snakecase}"
+            stable_ping_table_name = f"{app.app['bq_dataset_family']}.{ping_name_snakecase}"
+            live_ping_table_name = f"{app.app['bq_dataset_family']}_live_v1.{ping_name_snakecase}"
             bq_path = f"{app.app['document_namespace']}/{ping.identifier}/{ping.identifier}.1.bq"
             bq_definition = (
                 "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"  # noqa
@@ -180,7 +179,7 @@ for (app_name, app_group) in app_groups.items():
                 + bq_path
             ).json()
 
-            app_variant_table_dir = os.path.join(app_table_dir, app_id_snakecase)
+            app_variant_table_dir = os.path.join(app_table_dir, app_id)
             ping_data["variants"].append(
                 {
                     "app_id": app.app_id,
