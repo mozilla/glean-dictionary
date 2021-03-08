@@ -594,9 +594,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 0"
+                href="/apps/app-name/metrics/test metric 0"
               >
-                Test metric 0
+                test metric 0
               </a>
                
                
@@ -642,9 +642,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 1"
+                href="/apps/app-name/metrics/test metric 1"
               >
-                Test metric 1
+                test metric 1
               </a>
                
                
@@ -690,9 +690,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 2"
+                href="/apps/app-name/metrics/test metric 2"
               >
-                Test metric 2
+                test metric 2
               </a>
                
                
@@ -738,9 +738,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 3"
+                href="/apps/app-name/metrics/test metric 3"
               >
-                Test metric 3
+                test metric 3
               </a>
                
                
@@ -786,9 +786,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 4"
+                href="/apps/app-name/metrics/test metric 4"
               >
-                Test metric 4
+                test metric 4
               </a>
                
                
@@ -834,9 +834,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 5"
+                href="/apps/app-name/metrics/test metric 5"
               >
-                Test metric 5
+                test metric 5
               </a>
                
                
@@ -882,9 +882,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 6"
+                href="/apps/app-name/metrics/test metric 6"
               >
-                Test metric 6
+                test metric 6
               </a>
                
                
@@ -930,9 +930,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 7"
+                href="/apps/app-name/metrics/test metric 7"
               >
-                Test metric 7
+                test metric 7
               </a>
                
                
@@ -978,9 +978,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 8"
+                href="/apps/app-name/metrics/test metric 8"
               >
-                Test metric 8
+                test metric 8
               </a>
                
                
@@ -1026,9 +1026,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 9"
+                href="/apps/app-name/metrics/test metric 9"
               >
-                Test metric 9
+                test metric 9
               </a>
                
                
@@ -1074,9 +1074,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 10"
+                href="/apps/app-name/metrics/test metric 10"
               >
-                Test metric 10
+                test metric 10
               </a>
                
                
@@ -1122,9 +1122,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 11"
+                href="/apps/app-name/metrics/test metric 11"
               >
-                Test metric 11
+                test metric 11
               </a>
                
                
@@ -1170,9 +1170,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 12"
+                href="/apps/app-name/metrics/test metric 12"
               >
-                Test metric 12
+                test metric 12
               </a>
                
                
@@ -1218,9 +1218,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 13"
+                href="/apps/app-name/metrics/test metric 13"
               >
-                Test metric 13
+                test metric 13
               </a>
                
                
@@ -1266,9 +1266,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 14"
+                href="/apps/app-name/metrics/test metric 14"
               >
-                Test metric 14
+                test metric 14
               </a>
                
                
@@ -1314,9 +1314,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 15"
+                href="/apps/app-name/metrics/test metric 15"
               >
-                Test metric 15
+                test metric 15
               </a>
                
                
@@ -1362,9 +1362,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 16"
+                href="/apps/app-name/metrics/test metric 16"
               >
-                Test metric 16
+                test metric 16
               </a>
                
                
@@ -1410,9 +1410,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 17"
+                href="/apps/app-name/metrics/test metric 17"
               >
-                Test metric 17
+                test metric 17
               </a>
                
                
@@ -1458,9 +1458,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 18"
+                href="/apps/app-name/metrics/test metric 18"
               >
-                Test metric 18
+                test metric 18
               </a>
                
                
@@ -1506,9 +1506,9 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               <a
                 class="svelte-1s1bzuy"
-                href="/apps/app-name/metrics/Test metric 19"
+                href="/apps/app-name/metrics/test metric 19"
               >
-                Test metric 19
+                test metric 19
               </a>
                
                
