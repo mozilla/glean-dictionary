@@ -32,6 +32,10 @@ REV_WORD_BOUND_PAT = re.compile(
 )
 
 
+def get_resource_path(line: str) -> str:
+    return line.replace(".", "_")
+
+
 def etl_snake_case(line: str) -> str:
     """Convert a string into a snake_cased string."""
     # replace non-alphanumeric characters with spaces in the reversed line
@@ -97,7 +101,9 @@ for (app_name, app_group) in app_groups.items():
         app = next(app for app in apps if app.app_id == app_id)
 
         # information about this app_id
-        open(os.path.join(app_id_dir, f"{app_id}.json"), "w").write(json.dumps(app.app))
+        open(os.path.join(app_id_dir, f"{get_resource_path(app_id)}.json"), "w").write(
+            json.dumps(app.app)
+        )
 
         # metrics data
         metrics = app.get_metrics()
@@ -179,7 +185,7 @@ for (app_name, app_group) in app_groups.items():
                 + bq_path
             ).json()
 
-            app_variant_table_dir = os.path.join(app_table_dir, app.app["bq_dataset_family"])
+            app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
             ping_data["variants"].append(
                 {
                     "app_id": app_id,

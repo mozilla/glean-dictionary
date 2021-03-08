@@ -32,7 +32,9 @@
 
 {#await appIdDataPromise then appId}
   <PageTitle text={appId.app_id} />
-  <p>{appId.description}</p>
+  {#if appId.description}
+    <p>{appId.description}</p>
+  {/if}
   {#if appId.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}
