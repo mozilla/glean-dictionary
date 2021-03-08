@@ -28,12 +28,12 @@
       status="warning"
       message="This application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings." />
   {/if}
-  <PageTitle text={params.app} />
+  <PageTitle text={app.canonical_app_name} />
 
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}
-  <p>{app.description}</p>
+  <p>{app.app_description}</p>
 
   <MetadataTable
     appName={params.app}
@@ -46,18 +46,18 @@
     <Tab key="Application IDs">Application IDs</Tab>
 
     <TabContent key="Pings">
-      <ItemList itemType="pings" items={app.pings} appName={app.name} />
+      <ItemList itemType="pings" items={app.pings} appName={app.app_name} />
     </TabContent>
 
     <TabContent key="Metrics">
-      <ItemList itemType="metrics" items={app.metrics} appName={app.name} />
+      <ItemList itemType="metrics" items={app.metrics} appName={app.app_name} />
     </TabContent>
 
     <TabContent key="Application IDs">
       <ItemList
         itemType="app_ids"
         items={app.app_ids}
-        appName={app.name}
+        appName={app.app_name}
         showFilter={false} />
     </TabContent>
   </TabGroup>

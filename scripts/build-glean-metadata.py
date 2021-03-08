@@ -52,8 +52,9 @@ app_groups = {}
 for app in apps:
     if not app_groups.get(app.app_name):
         app_groups[app.app_name] = {
-            "name": app.app_name,
-            "description": app.app["canonical_app_name"],
+            "app_name": app.app_name,
+            "app_description": app.app["app_description"],
+            "canonical_app_name": app.app["canonical_app_name"],
             "url": app.app["url"],
             "notification_emails": app.app["notification_emails"],
             "app_ids": [],
@@ -62,7 +63,7 @@ for app in apps:
         [
             {
                 "name": app.app_id,
-                "description": app.app["app_description"],
+                "description": app.app.get("description", app.app["app_description"]),
                 "channel": app.app.get("app_channel", "release"),
                 "deprecated": app.app.get("deprecated", False),
             }

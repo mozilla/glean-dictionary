@@ -16,12 +16,20 @@
 
   onMount(async () => {
     apps = await fetchJSON(URL);
-    apps.sort((a, b) => (a.name > b.name ? 1 : -1));
+    apps.sort((a, b) =>
+      a.canonical_app_name.toLowerCase() > b.canonical_app_name.toLowerCase()
+        ? 1
+        : -1
+    );
     filteredApps = apps;
   });
 
   function filterApps(filterText) {
-    filteredApps = apps.filter((appItem) => appItem.name.includes(filterText));
+    filteredApps = apps.filter((appItem) =>
+      appItem.canonical_app_name
+        .toLowerCase()
+        .includes(filterText.toLowerCase())
+    );
   }
   let showDeprecated = false;
 
@@ -162,29 +170,29 @@
         <div class="mzp-c-card mzp-c-card-extra-small has-aspect-3-2" id="card">
           <a
             class="mzp-c-card-block-link"
-            href="/apps/{app.name}"
+            href="/apps/{app.app_name}"
             id="media-block">
             <div class="mzp-c-card-media-wrapper" id="media-wrapper">
               <img
                 class="mzp-c-card-imgage"
-                src={getAppLogo(app.name)}
-                alt="${app.name} Logo"
+                src={getAppLogo(app.app_name)}
+                alt="${app.canonical_app_name} Logo"
                 id="logo-img" />
-              {#if isPlatform(app.description)}
+              {#if isPlatform(app.app_description)}
                 <div class="corner-flag" />
                 <img
                   class="platform-logo"
-                  src={getPlatformLogo(app.description)}
+                  src={getPlatformLogo(app.app_description)}
                   alt="Platform Logo" />
               {/if}
             </div>
             <div class="mzp-c-card-content">
-              <h2 class="mzp-c-card-title">{app.name}</h2>
+              <h2 class="mzp-c-card-title">{app.canonical_app_name}</h2>
               {#if app.deprecated}
                 <Pill message="Deprecated" bgColor="#4a5568" />
               {/if}
               <p class="mzp-c-card-meta" id="card-description">
-                {app.description}
+                {app.app_description}
               </p>
             </div>
           </a>
