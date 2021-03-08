@@ -90,9 +90,7 @@
 
   <PageTitle text={metric.name} />
 
-  <p>
-    <Markdown text={metric.description} />
-  </p>
+  <Markdown text={metric.description} inline={false} />
 
   <p>
     Metric of type

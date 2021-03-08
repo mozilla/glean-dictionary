@@ -597,6 +597,7 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               This is test metric 0
               
+              
             </div>
           </td>
            
@@ -643,6 +644,7 @@ exports[`Storyshots ItemList Default 1`] = `
               title="This is test metric 1"
             >
               This is test metric 1
+              
               
             </div>
           </td>
@@ -691,6 +693,7 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               This is test metric 2
               
+              
             </div>
           </td>
            
@@ -737,6 +740,7 @@ exports[`Storyshots ItemList Default 1`] = `
               title="This is test metric 3"
             >
               This is test metric 3
+              
               
             </div>
           </td>
@@ -785,6 +789,7 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               This is test metric 4
               
+              
             </div>
           </td>
            
@@ -831,6 +836,7 @@ exports[`Storyshots ItemList Default 1`] = `
               title="This is test metric 5"
             >
               This is test metric 5
+              
               
             </div>
           </td>
@@ -879,6 +885,7 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               This is test metric 6
               
+              
             </div>
           </td>
            
@@ -925,6 +932,7 @@ exports[`Storyshots ItemList Default 1`] = `
               title="This is test metric 7"
             >
               This is test metric 7
+              
               
             </div>
           </td>
@@ -973,6 +981,7 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               This is test metric 8
               
+              
             </div>
           </td>
            
@@ -1019,6 +1028,7 @@ exports[`Storyshots ItemList Default 1`] = `
               title="This is test metric 9"
             >
               This is test metric 9
+              
               
             </div>
           </td>
@@ -1067,6 +1077,7 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               This is test metric 10
               
+              
             </div>
           </td>
            
@@ -1113,6 +1124,7 @@ exports[`Storyshots ItemList Default 1`] = `
               title="This is test metric 11"
             >
               This is test metric 11
+              
               
             </div>
           </td>
@@ -1161,6 +1173,7 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               This is test metric 12
               
+              
             </div>
           </td>
            
@@ -1207,6 +1220,7 @@ exports[`Storyshots ItemList Default 1`] = `
               title="This is test metric 13"
             >
               This is test metric 13
+              
               
             </div>
           </td>
@@ -1255,6 +1269,7 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               This is test metric 14
               
+              
             </div>
           </td>
            
@@ -1301,6 +1316,7 @@ exports[`Storyshots ItemList Default 1`] = `
               title="This is test metric 15"
             >
               This is test metric 15
+              
               
             </div>
           </td>
@@ -1349,6 +1365,7 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               This is test metric 16
               
+              
             </div>
           </td>
            
@@ -1395,6 +1412,7 @@ exports[`Storyshots ItemList Default 1`] = `
               title="This is test metric 17"
             >
               This is test metric 17
+              
               
             </div>
           </td>
@@ -1443,6 +1461,7 @@ exports[`Storyshots ItemList Default 1`] = `
             >
               This is test metric 18
               
+              
             </div>
           </td>
            
@@ -1489,6 +1508,7 @@ exports[`Storyshots ItemList Default 1`] = `
               title="This is test metric 19"
             >
               This is test metric 19
+              
               
             </div>
           </td>
@@ -1618,17 +1638,61 @@ exports[`Storyshots Markdown Text 1`] = `
 <section
   class="storybook-snapshot-container"
 >
-  A 
-  <em>
-    text
-  </em>
-   in markdown 
-  <a
-    href="https://mozilla.org"
+  <p>
+    A 
+    <em>
+      text
+    </em>
+     in markdown 
+    <a
+      href="https://mozilla.org"
+    >
+      moz
+    </a>
+    .
+  </p>
+  
+
+  <p>
+    A list:
+  </p>
+  
+
+  <ul
+    class="mzp-u-list-styled"
   >
-    moz
-  </a>
-  .
+    <li>
+      Lorem
+    </li>
+    
+
+    <li>
+      Ipsum
+    </li>
+    
+
+  </ul>
+  <p>
+    This is an ordered list starting from 2:
+  </p>
+  
+
+  <ol
+    class="mzp-u-list-styled"
+    start="2"
+  >
+    <li>
+      Foo
+    </li>
+    
+
+    <li>
+      Bar
+    </li>
+    
+
+  </ol>
+  
   
 </section>
 `;
