@@ -179,10 +179,10 @@ for (app_name, app_group) in app_groups.items():
                 + bq_path
             ).json()
 
-            app_variant_table_dir = os.path.join(app_table_dir, app_id)
+            app_variant_table_dir = os.path.join(app_table_dir, app.app["bq_dataset_family"])
             ping_data["variants"].append(
                 {
-                    "app_id": app.app_id,
+                    "app_id": app_id,
                     "app_channel": app.app.get("app_channel", "release"),
                     "table": stable_ping_table_name,
                 }
