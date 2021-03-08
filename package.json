@@ -63,6 +63,7 @@
     "postcss": "^8.2.7",
     "postcss-import": "^14.0.0",
     "postcss-load-config": "^3.0.1",
+    "rollup-plugin-string": "^3.0.0",
     "sirv-cli": "1.0.11",
     "svelte-preprocess": "^4.6.9"
   }

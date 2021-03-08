@@ -216,3 +216,18 @@ export const PING_SCHEMA = [
     linkFormatter: getEmailLink,
   },
 ];
+
+export const METRIC_ANNOTATION_SCHEMA = [
+  {
+    title: "Component",
+    id: "component",
+    type: "value",
+    helpText: "The product component that this metric is associated with.",
+  },
+  {
+    title: "Features",
+    id: "features",
+    type: "list",
+    helpText: "A set of product features that this metric is associated with.",
+  },
+];

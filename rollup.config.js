@@ -4,6 +4,7 @@ import postcss from "rollup-plugin-postcss";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
+import { string } from "rollup-plugin-string";
 import { terser } from "rollup-plugin-terser";
 import { spawn, execSync } from "child_process";
 import sveltePreprocess from "svelte-preprocess";
@@ -41,6 +42,9 @@ export default {
     file: "public/build/bundle.js",
   },
   plugins: [
+    string({
+      include: ["./src/data/defaultMetricAnnotation.md"],
+    }),
     postcss({
       plugins: [],
     }),

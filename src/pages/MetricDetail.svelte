@@ -1,4 +1,5 @@
 <script>
+  import defaultMetricAnnotation from "../data/defaultMetricAnnotation.md";
   import AppAlert from "../components/AppAlert.svelte";
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
   import Markdown from "../components/Markdown.svelte";
@@ -7,6 +8,7 @@
   import PageTitle from "../components/PageTitle.svelte";
   import MetadataTable from "../components/MetadataTable.svelte";
   import {
+    METRIC_ANNOTATION_SCHEMA,
     METRIC_DEFINITION_SCHEMA,
     METRIC_METADATA_SCHEMA,
   } from "../data/schemas";
@@ -123,6 +125,27 @@
     appName={params.app}
     item={metric}
     schema={METRIC_METADATA_SCHEMA} />
+
+  <h2>Commentary</h2>
+  {#if metric.annotation}
+    <MetadataTable
+      appName={params.app}
+      item={metric.annotation}
+      schema={METRIC_ANNOTATION_SCHEMA} />
+
+    <Markdown text={metric.annotation.content} inline={false} />
+    <p>
+      <a
+        href={`https://github.com/mozilla/glean-annotations/edit/main/annotations/${params.app}/${metric.name}/README.md`}>Edit</a>
+    </p>
+  {:else}
+    <p>
+      No commentary for this metric,
+      <a
+        href={`https://github.com/mozilla/glean-annotations/new/main?filename=annotations/${params.app}/${metric.name}/README.md&value=${encodeURIComponent(defaultMetricAnnotation)}`}>add
+        some</a>?
+    </p>
+  {/if}
 
   <h2>Access</h2>
 
