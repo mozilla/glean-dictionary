@@ -17,6 +17,8 @@
   use({ renderer });
 
   export let text;
+
+  // if inline is set, do not wrap the markdown in a paragraph -- useful for short snippits
   export let inline = true;
 </script>
 
