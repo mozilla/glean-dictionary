@@ -1,5 +1,5 @@
 <script>
-  import { isUndefined } from "lodash";
+  import { isNull, isUndefined } from "lodash";
   import HelpHoverable from "./HelpHoverable.svelte";
 
   export let appName = "";
@@ -20,7 +20,7 @@
   <col />
   <col />
   {#each schema as schemaEntry}
-    {#if !isUndefined(item[schemaEntry.id])}
+    {#if !isUndefined(item[schemaEntry.id]) && !isNull(item[schemaEntry.id])}
       <tr>
         <td>
           {schemaEntry.title}
@@ -41,6 +41,12 @@
                   href={format(ref, schemaEntry.linkFormatter)}>{format(ref, schemaEntry.valueFormatter)}</a>
               </div>
             {/each}
+          {:else if schemaEntry.type === 'list'}
+            <ul>
+              {#each item[schemaEntry.id] as ref}
+                <li>{ref}</li>
+              {/each}
+            </ul>
           {:else}{format(item[schemaEntry.id], schemaEntry.valueFormatter)}{/if}
         </td>
       </tr>

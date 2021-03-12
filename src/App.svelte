@@ -8,6 +8,7 @@
   // Pages
   import AppList from "./pages/AppList.svelte";
   import AppDetail from "./pages/AppDetail.svelte";
+  import AppIdDetail from "./pages/AppIdDetail.svelte";
   import PingDetail from "./pages/PingDetail.svelte";
   import MetricDetail from "./pages/MetricDetail.svelte";
   import TableDetail from "./pages/TableDetail.svelte";
@@ -22,7 +23,7 @@
   let title;
 
   afterUpdate(() => {
-    const { app, ping, metric, table } = params;
+    const { app, appId, ping, metric, table } = params;
 
     links = [
       ...(app
@@ -30,6 +31,9 @@
             { url: "/", name: "apps" },
             { url: `/apps/${app}/`, name: app },
           ]
+        : []),
+      ...(appId
+        ? [{ url: `/apps/${app}/app_ids/${appId}/`, name: appId }]
         : []),
       ...(ping ? [{ url: `/apps/${app}/pings/${ping}/`, name: ping }] : []),
       ...(metric
@@ -43,12 +47,8 @@
       ...(table
         ? [
             {
-              url: `/apps/${app}/pings/${table}/`,
+              url: `/apps/${app}/app_ids/${appId}/tables/${table}/`,
               name: table,
-            },
-            {
-              url: `/apps/${app}/tables/${table}/`,
-              name: `${table} table`,
             },
           ]
         : []),
@@ -75,7 +75,8 @@
 
   page("*", parseQuery);
   page("/", setComponent(AppList));
-  page("/apps/:app/tables/:table", setComponent(TableDetail));
+  page("/apps/:app/app_ids/:appId/tables/:table", setComponent(TableDetail));
+  page("/apps/:app/app_ids/:appId", setComponent(AppIdDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
   page("/apps/:app", setComponent(AppDetail));

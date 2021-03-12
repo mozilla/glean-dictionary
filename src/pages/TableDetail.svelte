@@ -12,11 +12,11 @@
 
   const dispatch = createEventDispatcher();
 
-  const pingDataPromise = getTableData(params.app, params.table);
+  const pingDataPromise = getTableData(params.app, params.appId, params.table);
 
   const updateURL = () => dispatch("updateURL", queryString);
 
-  pageTitle.set(`${params.table} table | ${params.app}`);
+  pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>
 
 <style>
@@ -25,7 +25,7 @@
 </style>
 
 {#await pingDataPromise then table}
-  <PageTitle text={`Table <code>${table.name}</code> for ${params.app}`} />
+  <PageTitle text={`Table <code>${table.name}</code> for ${table.app_id}`} />
   <table>
     <col />
     <col />
@@ -52,5 +52,5 @@
     bind:searchText={queryString}
     on:updateURL={updateURL} />
 {:catch}
-  <NotFound pageName={params.app} itemType="table" />
+  <NotFound pageName={params.appId} itemType="table" />
 {/await}

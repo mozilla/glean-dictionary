@@ -3,7 +3,7 @@ import ItemList from "../src/components/ItemList.svelte";
 const testData = {
   name: "Test data",
   metrics: [...Array(21).keys()].map((i) => ({
-    name: `Test metric ${i}`,
+    name: `test metric ${i}`,
     description: `This is test metric ${i}`,
     type: `metric_type`,
   })),
