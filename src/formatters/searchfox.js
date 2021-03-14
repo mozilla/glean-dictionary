@@ -3,29 +3,31 @@ import { camelCase, upperFirst, snakeCase } from "lodash";
 const searchfoxMap = {
   fenix: "fenix",
 
-  "firefox-android-beta": "fenix",
+  firefox_android_beta: "fenix",
 
-  "firefox-android-release": "fenix",
+  firefox_android_release: "fenix",
 
-  "firefox-desktop": "https://searchfox.org/mozilla-central/source/",
+  firefox_desktop: "https://searchfox.org/mozilla-central/source/",
 
-  "firefox-focus-ios": "focus-ios",
+  focus_ios: "focus-ios",
 
-  "firefox-for-echo-show": "firefox-echo-show",
+  firefox_echo_show: "firefox-echo-show",
 
-  "firefox-for-fire-tv": "firefox-tv",
+  firefox_fire_tv: "firefox-tv",
 
-  "firefox-ios-beta": "firefox-ios",
+  firefox_ios: "firefox-ios",
 
-  "firefox-ios-dev": "firefox-ios",
+  firefox_ios_beta: "firefox-ios",
 
-  "firefox-ios-release": "firefox-ios",
+  firefox_ios_dev: "firefox-ios",
 
-  "firefox-reality": "FirefoxReality",
+  firefox_ios_release: "firefox-ios",
 
-  "lockwise-android": "lockbox-android",
+  firefox_reality: "FirefoxReality",
 
-  "reference-browser": "reference-browser",
+  lockwise_android: "lockbox-android",
+
+  reference_browser: "reference-browser",
 };
 
 export const getSearchfoxLink = (app, metric) => {
@@ -57,7 +59,7 @@ export const getSearchfoxLink = (app, metric) => {
   const allLanguagePatterns = `${camelCased}|${capitalizedCamelCased}|${snakedCased}|${dblColonSnakeCased}`;
 
   if (searchfoxMap[app]) {
-    return app === "firefox-desktop"
+    return app === "firefox_desktop"
       ? `https://searchfox.org/mozilla-central/search?q=${allLanguagePatterns}&regexp=true`
       : `https://searchfox.org/mozilla-mobile/search?q=${allLanguagePatterns}&path=${searchfoxMap[app]}&regexp=true`;
   }
