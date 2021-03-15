@@ -42,7 +42,7 @@
     "page": "1.11.6",
     "prettier": "^2.2.1",
     "prettier-plugin-svelte": "^1.4.2",
-    "rollup": "2.40.0",
+    "rollup": "2.41.2",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-livereload": "2.0.0",
     "rollup-plugin-postcss": "4.0.0",
