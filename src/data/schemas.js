@@ -5,7 +5,7 @@ import {
   getBugLinkTitle,
   getSourceUrlTitle,
 } from "../formatters/links";
-import { getSearchfoxLink } from "../formatters/searchfox";
+import { getMetricLink } from "../formatters/searchfox";
 
 const REQUIRED_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#required-metric-parameters";
@@ -64,7 +64,7 @@ export const METRIC_DEFINITION_SCHEMA = [
     helpText:
       "Finds uses of this metric using simple matching. Metrics used dynamically may not appear in the results, only metrics defined in the application will be found.",
     linkFormatter: (metricId, appName) => {
-      return getSearchfoxLink(appName, metricId);
+      return getMetricLink(appName, metricId);
     },
   },
 ];
