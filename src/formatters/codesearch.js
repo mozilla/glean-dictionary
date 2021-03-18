@@ -30,10 +30,24 @@ const searchfoxMap = {
   reference_browser: "reference-browser",
 };
 
-export const getSearchfoxLink = (app, metric) => {
+const sourcegraphMap = {
+  klar_ios: "focus-ios",
+
+  firefox_reality_pc: "FirefoxRealityPc",
+
+  lockwise_ios: "lockwise-ios",
+
+  mach: "mach",
+
+  mozphab: "mozphab",
+
+  mozregression: "mozregression",
+};
+
+export const getCodeSearchLink = (app, metric) => {
   const [category, name] = metric.split(/\.(?=[^.]+$)/);
 
-  // Generate all possible casings for a Searchfox query:
+  // Generate all possible casings for a search query:
   // https://github.com/mozilla/glean-dictionary/pull/339#issuecomment-766904256
 
   // Javascript: camelCase.camelCase
@@ -58,10 +72,18 @@ export const getSearchfoxLink = (app, metric) => {
 
   const allLanguagePatterns = `${camelCased}|${capitalizedCamelCased}|${snakedCased}|${dblColonSnakeCased}`;
 
+  /* eslint no-else-return: "error" */
+
   if (searchfoxMap[app]) {
     return app === "firefox_desktop"
       ? `https://searchfox.org/mozilla-central/search?q=${allLanguagePatterns}&regexp=true`
       : `https://searchfox.org/mozilla-mobile/search?q=${allLanguagePatterns}&path=${searchfoxMap[app]}&regexp=true`;
+  } else if (sourcegraphMap[app]) {
+    return (
+      `https://sourcegraph.com/search?q=repo:%5Egithub%5C.com%5C/%5BMm%5Dozilla%28.*%29%5C/` +
+      `${sourcegraphMap[app]}%24+${allLanguagePatterns}&patternType=regexp`
+    );
   }
+
   return undefined;
 };
