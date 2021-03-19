@@ -32,8 +32,13 @@
         </td>
         <td>
           {#if schemaEntry.type === 'link'}
-            <a
-              href={format(item[schemaEntry.id], schemaEntry.linkFormatter)}>{format(item[schemaEntry.id], schemaEntry.valueFormatter)}</a>
+            <a href={format(item[schemaEntry.id], schemaEntry.linkFormatter)}>
+              {#if isUndefined(format(item[schemaEntry.id], schemaEntry.linkFormatter))}
+                <em>Unavailable: no search index specified for this application.</em>
+              {:else}
+                {format(item[schemaEntry.id], schemaEntry.valueFormatter)}
+              {/if}
+            </a>
           {:else if schemaEntry.type === 'links'}
             {#each item[schemaEntry.id] as ref}
               <div>
