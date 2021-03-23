@@ -129,7 +129,6 @@ class GleanApp(object):
     PROBE_INFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org"
     APPS_URL = PROBE_INFO_BASE_URL + "/v2/glean/app-listings"
     LIBRARIES_URL = PROBE_INFO_BASE_URL + "/v2/glean/library-variants"
-    REPOS_URL = PROBE_INFO_BASE_URL + "/glean/repositories"
     PINGS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/pings"
 
     METRICS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/metrics"
