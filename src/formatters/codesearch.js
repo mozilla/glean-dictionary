@@ -37,9 +37,10 @@ const sourcegraphMap = {
 
   lockwise_ios: "lockwise-ios",
 
-  mach: "mach",
+  mach: "gecko-dev",
 
-  mozphab: "mozphab",
+  // https://github.com/mozilla-conduit/review
+  mozphab: "review",
 
   mozregression: "mozregression",
 };
