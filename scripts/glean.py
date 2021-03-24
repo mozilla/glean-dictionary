@@ -189,7 +189,7 @@ class GleanApp(object):
 
     def get_metrics(self) -> List[GleanMetric]:
         data = _cache.get_json(GleanApp.METRICS_URL_TEMPLATE.format(self.app["v1_name"]))
-        metrics = [(m[0], {**m[1], "namespace": self.app["app_name"]}) for m in data.items()]
+        metrics = [(key, {**metricdict, "namespace": self.app["app_name"]}) for key, metricdict in data.items()]
         for dependency in self.get_dependencies():
             dependency_metrics = _cache.get_json(
                 GleanApp.METRICS_URL_TEMPLATE.format(dependency["v1_name"])
