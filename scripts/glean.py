@@ -33,7 +33,7 @@ _cache = _Cache()
 
 class GleanObject(object):
     NAME_KEY = "name"
-    NAMESPACE_KEY = "namespace"
+    ORIGIN_KEY = "origin"
     HISTORY_KEY = "history"
 
 
@@ -70,7 +70,7 @@ class GleanMetric(GleanObject):
         # The canonical definition for up-to-date schemas
         self.definition = self.definition_history[0]
         self.definition["name"] = full_defn[self.NAME_KEY]
-        self.definition["namespace"] = full_defn[self.NAMESPACE_KEY]
+        self.definition["origin"] = full_defn[self.ORIGIN_KEY]
 
     def _set_dates(self, definition: dict):
         vals = [datetime.fromisoformat(d["dates"]["first"]) for d in definition[self.HISTORY_KEY]]
@@ -189,14 +189,17 @@ class GleanApp(object):
 
     def get_metrics(self) -> List[GleanMetric]:
         data = _cache.get_json(GleanApp.METRICS_URL_TEMPLATE.format(self.app["v1_name"]))
-        metrics = [(key, {**metricdict, "namespace": self.app["app_name"]}) for key, metricdict in data.items()]
+        metrics = [
+            (key, {**metricdict, "origin": self.app["app_name"]})
+            for key, metricdict in data.items()
+        ]
         for dependency in self.get_dependencies():
             dependency_metrics = _cache.get_json(
                 GleanApp.METRICS_URL_TEMPLATE.format(dependency["v1_name"])
             )
             # augment these dependency names with the library_name where they came from
             metrics += [
-                (d[0], {**d[1], "namespace": dependency["library_name"]})
+                (d[0], {**d[1], "origin": dependency["library_name"]})
                 for d in dependency_metrics.items()
             ]
 

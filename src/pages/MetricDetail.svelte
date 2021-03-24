@@ -130,13 +130,13 @@
     <Markdown text={metric.annotation.content} inline={false} />
     <p>
       <a
-        href={`https://github.com/mozilla/glean-annotations/edit/main/annotations/${metric.namespace}/${metric.name}/README.md`}>Edit</a>
+        href={`https://github.com/mozilla/glean-annotations/edit/main/annotations/${metric.origin}/${metric.name}/README.md`}>Edit</a>
     </p>
   {:else}
     <p>
       No commentary for this metric,
       <a
-        href={`https://github.com/mozilla/glean-annotations/new/main?filename=annotations/${metric.namespace}/${metric.name}/README.md&value=${encodeURIComponent(defaultMetricAnnotation)}`}>add
+        href={`https://github.com/mozilla/glean-annotations/new/main?filename=annotations/${metric.origin}/${metric.name}/README.md&value=${encodeURIComponent(defaultMetricAnnotation)}`}>add
         some</a>?
     </p>
   {/if}
