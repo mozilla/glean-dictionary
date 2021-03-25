@@ -39,6 +39,8 @@ const sourcegraphMap = {
 
   mach: "gecko-dev",
 
+  mozphab: "review",
+
   mozregression: "mozregression",
 };
 
