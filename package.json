@@ -42,7 +42,7 @@
     "page": "1.11.6",
     "prettier": "^2.2.1",
     "prettier-plugin-svelte": "^1.4.2",
-    "rollup": "2.42.3",
+    "rollup": "2.42.4",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-livereload": "2.0.0",
     "rollup-plugin-postcss": "4.0.0",
@@ -63,6 +63,7 @@
     "postcss": "^8.2.8",
     "postcss-import": "^14.0.0",
     "postcss-load-config": "^3.0.1",
+    "rollup-plugin-string": "^3.0.0",
     "sirv-cli": "1.0.11",
     "svelte-preprocess": "^4.6.9"
   }
