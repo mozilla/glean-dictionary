@@ -9,6 +9,7 @@ import requests
 import stringcase
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
+ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
 
 
 def _serialize_sets(obj):
@@ -46,7 +47,10 @@ def etl_snake_case(line: str) -> str:
     return "_".join([w.lower() for w in words if w.strip()])[::-1]
 
 
-# First, get the apps we're using
+# Pull down the annotations
+annotations_index = requests.get(ANNOTATIONS_URL).json()
+
+# Then, get the apps we're using
 apps = [app for app in glean.GleanApp.get_apps()]
 app_groups = {}
 for app in apps:
@@ -133,7 +137,11 @@ for (app_name, app_group) in app_groups.items():
                 )
 
                 app_metrics[metric.identifier] = dict(
-                    metric.definition, name=metric.identifier, repo_url=app.app["url"], variants=[]
+                    metric.definition,
+                    name=metric.identifier,
+                    annotation=annotations_index.get(app_name, {}).get(metric.identifier),
+                    repo_url=app.app["url"],
+                    variants=[],
                 )
 
             stable_ping_table_names = []

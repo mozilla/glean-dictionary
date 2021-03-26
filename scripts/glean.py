@@ -33,6 +33,7 @@ _cache = _Cache()
 
 class GleanObject(object):
     NAME_KEY = "name"
+    ORIGIN_KEY = "origin"
     HISTORY_KEY = "history"
 
 
@@ -69,6 +70,7 @@ class GleanMetric(GleanObject):
         # The canonical definition for up-to-date schemas
         self.definition = self.definition_history[0]
         self.definition["name"] = full_defn[self.NAME_KEY]
+        self.definition["origin"] = full_defn[self.ORIGIN_KEY]
 
     def _set_dates(self, definition: dict):
         vals = [datetime.fromisoformat(d["dates"]["first"]) for d in definition[self.HISTORY_KEY]]
@@ -126,7 +128,7 @@ class GleanApp(object):
 
     PROBE_INFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org"
     APPS_URL = PROBE_INFO_BASE_URL + "/v2/glean/app-listings"
-    REPOS_URL = PROBE_INFO_BASE_URL + "/glean/repositories"
+    LIBRARIES_URL = PROBE_INFO_BASE_URL + "/v2/glean/library-variants"
     PINGS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/pings"
 
     METRICS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/metrics"
@@ -141,10 +143,6 @@ class GleanApp(object):
         self.app_id = app["app_id"]
 
     @staticmethod
-    def get_repos() -> List[dict]:
-        return _cache.get_json(GleanApp.REPOS_URL)
-
-    @staticmethod
     def get_apps() -> List[GleanApp]:
         """
         Get all non-library Glean repositories
@@ -153,11 +151,15 @@ class GleanApp(object):
 
         return [GleanApp(app) for app in apps]
 
+    @staticmethod
+    def get_libraries() -> List[dict]:
+        return _cache.get_json(GleanApp.LIBRARIES_URL)
+
     def get_dependencies(self):
         # Get all of the library dependencies for the application that
         # are also known about in the repositories file.
 
-        # The dependencies are specified using library names, but we need to
+        # The dependencies are specified using dependency names, but we need to
         # map those back to the name of the repository in the repository file.
         try:
             dependencies = _cache.get_json(
@@ -169,15 +171,14 @@ class GleanApp(object):
 
         dependency_library_names = list(dependencies.keys())
 
-        repos_by_dependency_name = {}
-        for repo in self.get_repos():
-            for library_name in repo.get("library_names", []):
-                repos_by_dependency_name[library_name] = repo["name"]
+        libraries_by_dependency_name = {}
+        for library in self.get_libraries():
+            libraries_by_dependency_name[library["dependency_name"]] = library
 
         dependencies = []
         for name in dependency_library_names:
-            if name in repos_by_dependency_name:
-                dependencies.append(repos_by_dependency_name[name])
+            if name in libraries_by_dependency_name:
+                dependencies.append(libraries_by_dependency_name[name])
 
         if len(dependencies) == 0:
             logging.info(f"For {self.app_id}, using default Glean dependencies")
@@ -188,11 +189,19 @@ class GleanApp(object):
 
     def get_metrics(self) -> List[GleanMetric]:
         data = _cache.get_json(GleanApp.METRICS_URL_TEMPLATE.format(self.app["v1_name"]))
-        metrics = list(data.items())
-
+        metrics = [
+            (key, {**metricdict, "origin": self.app["app_name"]})
+            for key, metricdict in data.items()
+        ]
         for dependency in self.get_dependencies():
-            dependency_metrics = _cache.get_json(GleanApp.METRICS_URL_TEMPLATE.format(dependency))
-            metrics += list(dependency_metrics.items())
+            dependency_metrics = _cache.get_json(
+                GleanApp.METRICS_URL_TEMPLATE.format(dependency["v1_name"])
+            )
+            # augment these dependency names with the library_name where they came from
+            metrics += [
+                (d[0], {**d[1], "origin": dependency["library_name"]})
+                for d in dependency_metrics.items()
+            ]
 
         ping_names = set(self._get_ping_data().keys())
 
@@ -206,7 +215,9 @@ class GleanApp(object):
     def _get_ping_data(self) -> dict:
         ping_data = _cache.get_json(GleanApp.PING_URL_TEMPLATE.format(self.app["v1_name"]))
         for dependency in self.get_dependencies():
-            dependency_pings = _cache.get_json(GleanApp.PING_URL_TEMPLATE.format(dependency))
+            dependency_pings = _cache.get_json(
+                GleanApp.PING_URL_TEMPLATE.format(dependency["v1_name"])
+            )
             ping_data.update(dependency_pings)
         return ping_data
 
