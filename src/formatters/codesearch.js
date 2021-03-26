@@ -70,7 +70,7 @@ export const getCodeSearchLink = (app, metric) => {
     ? `${snakeCase(category)}::${snakeCase(name)}`
     : snakeCase(category);
 
-  const allLanguagePatterns = `${camelCased}|${capitalizedCamelCased}|${snakedCased}|${dblColonSnakeCased}`;
+  const allLanguagePatterns = `${metric}|${camelCased}|${capitalizedCamelCased}|${snakedCased}|${dblColonSnakeCased}`;
 
   /* eslint no-else-return: "error" */
 
