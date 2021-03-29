@@ -43,7 +43,7 @@ export default {
   },
   plugins: [
     string({
-      include: ["./src/data/defaultMetricAnnotation.md"],
+      include: ["./src/data/defaultAnnotation.md"],
     }),
     postcss({
       plugins: [],

@@ -113,6 +113,7 @@ class GleanPing(GleanObject):
         # The canonical definition for up-to-date schemas
         self.definition = self.definition_history[0]
         self.definition["name"] = full_defn[self.NAME_KEY]
+        self.definition["origin"] = full_defn[self.ORIGIN_KEY]
 
     def _set_description(self, definition: dict):
         if "description" in definition:
@@ -213,12 +214,26 @@ class GleanApp(object):
         return processed
 
     def _get_ping_data(self) -> dict:
-        ping_data = _cache.get_json(GleanApp.PING_URL_TEMPLATE.format(self.app["v1_name"]))
+        ping_data = dict(
+            [
+                (p[0], {**p[1], "origin": self.app["app_name"]})
+                for p in _cache.get_json(
+                    GleanApp.PING_URL_TEMPLATE.format(self.app["v1_name"])
+                ).items()
+            ]
+        )
+
         for dependency in self.get_dependencies():
-            dependency_pings = _cache.get_json(
-                GleanApp.PING_URL_TEMPLATE.format(dependency["v1_name"])
+            dependency_pings = dict(
+                [
+                    (p[0], {**p[1], "origin": dependency["library_name"]})
+                    for p in _cache.get_json(
+                        GleanApp.PING_URL_TEMPLATE.format(dependency["v1_name"])
+                    ).items()
+                ]
             )
             ping_data.update(dependency_pings)
+
         return ping_data
 
     def get_pings(self) -> List[GleanPing]:

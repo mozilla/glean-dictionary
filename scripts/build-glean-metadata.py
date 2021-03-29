@@ -9,7 +9,7 @@ import requests
 import stringcase
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
-ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
+ANNOTATIONS_URL = "https://deploy-preview-8--blissful-roentgen-ca62bb.netlify.app/api.json"
 
 
 def _serialize_sets(obj):
@@ -139,7 +139,9 @@ for (app_name, app_group) in app_groups.items():
                 app_metrics[metric.identifier] = dict(
                     metric.definition,
                     name=metric.identifier,
-                    annotation=annotations_index.get(app_name, {}).get(metric.identifier),
+                    annotation=annotations_index.get(app_name, {})
+                    .get("metrics", {})
+                    .get(metric.identifier),
                     repo_url=app.app["url"],
                     variants=[],
                 )
@@ -176,7 +178,15 @@ for (app_name, app_group) in app_groups.items():
             if ping.identifier not in ping_identifiers_seen:
                 ping_identifiers_seen.add(ping.identifier)
 
-                app_data["pings"].append(dict(ping.definition, variants=[]))
+                app_data["pings"].append(
+                    dict(
+                        ping.definition,
+                        variants=[],
+                        annotation=annotations_index.get(app_name, {})
+                        .get("pings", {})
+                        .get(ping.identifier),
+                    )
+                )
 
             ping_data = next(pd for pd in app_data["pings"] if pd["name"] == ping.identifier)
 
