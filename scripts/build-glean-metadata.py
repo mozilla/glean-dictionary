@@ -139,9 +139,11 @@ for (app_name, app_group) in app_groups.items():
                 app_metrics[metric.identifier] = dict(
                     metric.definition,
                     name=metric.identifier,
-                    annotation=annotations_index.get(app_name, {})
-                    .get("metrics", {})
-                    .get(metric.identifier),
+                    annotation=(
+                        annotations_index.get(app_name, {})
+                        .get("metrics", {})
+                        .get(metric.identifier)
+                    ),
                     repo_url=app.app["url"],
                     variants=[],
                 )
@@ -182,9 +184,11 @@ for (app_name, app_group) in app_groups.items():
                     dict(
                         ping.definition,
                         variants=[],
-                        annotation=annotations_index.get(app_name, {})
-                        .get("pings", {})
-                        .get(ping.identifier),
+                        annotation=(
+                            annotations_index.get(app_name, {})
+                            .get("pings", {})
+                            .get(ping.identifier)
+                        ),
                     )
                 )
 
