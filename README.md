@@ -3,9 +3,11 @@
 [![CircleCI](https://circleci.com/gh/mozilla/glean-dictionary.svg?style=svg)](https://circleci.com/gh/mozilla/glean-dictionary)
 
 The Glean dictionary aims to provide a comprehensive index of datasets generated
-inside Mozilla for applications built using the [Glean SDK](https://mozilla.github.io/glean/book/index.html).
+inside Mozilla for applications built using the
+[Glean SDK](https://mozilla.github.io/glean/book/index.html).
 
-This project is under active development. For up to date information on project structure and governance, see:
+This project is under active development. For up to date information on project
+structure and governance, see:
 
 https://wiki.mozilla.org/Data/WorkingGroups/GleanDictionary
 
