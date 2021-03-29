@@ -4,6 +4,7 @@
   import { getBigQueryURL } from "../state/urls";
 
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
+  import Commentary from "../components/Commentary.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import ItemList from "../components/ItemList.svelte";
   import MetadataTable from "../components/MetadataTable.svelte";
@@ -41,6 +42,9 @@
 
   <h2>Metadata</h2>
   <MetadataTable appName={params.app} item={ping} schema={PING_SCHEMA} />
+
+  <h2>Commentary</h2>
+  <Commentary item={ping} itemType={'ping'} />
 
   <h2>Access</h2>
 
