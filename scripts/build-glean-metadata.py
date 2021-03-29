@@ -9,7 +9,7 @@ import requests
 import stringcase
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
-ANNOTATIONS_URL = "https://deploy-preview-8--blissful-roentgen-ca62bb.netlify.app/api.json"
+ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
 
 
 def _serialize_sets(obj):
