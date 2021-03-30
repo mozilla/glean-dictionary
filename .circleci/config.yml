@@ -64,3 +64,20 @@ workflows:
           filters:
             branches:
               only: main
+  nightly-deploy:
+    # to ensure we're displaying fresh data, do a deploy every day at 4am UTC
+    # (should be just after probe-scraper + MPS generation)
+    triggers:
+      - schedule:
+          cron: "0 4 * * *"
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - build-and-test
+      - python-build-and-test
+      - upload:
+          requires:
+            - build-and-test
+            - python-build-and-test
