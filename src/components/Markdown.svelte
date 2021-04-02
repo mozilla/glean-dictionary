@@ -20,26 +20,11 @@
   // if inline is set, do not wrap the markdown in a paragraph -- useful for short snippets
   export let inline = true;
 
-  // Split using the regex "/\r?\n|\r/" which should be able to
-  // detect most common line ending formats (win / mac / unix).
-  // ex: "This\nis\n\nan example" -> ["This", "is", "", "an example"]
-  let lines = text.split(/\r?\n|\r/);
+  let htmlText = text.replace("<", "&lt;")
 </script>
 
-{#if text.includes('<')}
-  {#if inline}
-    {text}
-  {:else}
-    {#each lines as text}
-      <p style="margin: 0">{text}</p>
-    {/each}
-  {/if}
-  <!-- hack to get consistent margin -->
-  <p />
+{#if inline}
+  {@html parseInline(htmlText)}
 {:else}
-  {#if inline}
-    {@html parseInline(text)}
-  {:else}
-    {@html parse(text)}
-  {/if}
+  {@html parse(htmlText)}
 {/if}
