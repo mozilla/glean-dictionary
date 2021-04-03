@@ -17,13 +17,14 @@
   use({ renderer });
 
   export let text;
-
-  // if inline is set, do not wrap the markdown in a paragraph -- useful for short snippits
+  // if inline is set, do not wrap the markdown in a paragraph -- useful for short snippets
   export let inline = true;
+
+  let htmlText = text.replace("<", "&lt;");
 </script>
 
 {#if inline}
-  {@html parseInline(text)}
+  {@html parseInline(htmlText)}
 {:else}
-  {@html parse(text)}
+  {@html parse(htmlText)}
 {/if}

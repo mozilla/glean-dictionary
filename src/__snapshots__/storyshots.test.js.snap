@@ -1746,6 +1746,25 @@ exports[`Storyshots Markdown Text 1`] = `
 </section>
 `;
 
+exports[`Storyshots Markdown Text With Angle Brackets 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <p>
+    A &lt;text&gt; in
+  </p>
+  
+
+  <p>
+    markdown &lt;&gt; with angle &lt;brackets&gt;
+  </p>
+  
+
+  
+  
+</section>
+`;
+
 exports[`Storyshots Metadata Table Default 1`] = `
 <section
   class="storybook-snapshot-container"
