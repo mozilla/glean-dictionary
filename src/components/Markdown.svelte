@@ -20,7 +20,9 @@
   // if inline is set, do not wrap the markdown in a paragraph -- useful for short snippets
   export let inline = true;
 
-  let htmlText = text.replace("<", "&lt;");
+  // escape `<` so it doesn't get confused as an HTML tag, see:
+  // https://github.com/mozilla/glean-dictionary/pull/497
+  $: htmlText = text.replace("<", "&lt;");
 </script>
 
 {#if inline}
