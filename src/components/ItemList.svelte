@@ -45,8 +45,9 @@
     // show the first page of result
     currentPage.set(1);
     // even if currentPage is already 1, we need to manually call goToPage() to get the first page
-    dispatch("filterTextChanged", { filterText });
     goToPage(1);
+    // let our parent know that the filter text changed, in case we want to update the URL or something
+    dispatch("filterTextChanged", { filterText });
   };
 
   $: paginated ? goToPage($currentPage) : goToPage(1, filteredItems.length); // eslint-disable-line

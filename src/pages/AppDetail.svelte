@@ -21,10 +21,10 @@
   $: itemType = params.itemType ? params.itemType : "metrics";
   const dispatch = createEventDispatcher();
 
-  function updateURL() {
+  function updateURL(search) {
     dispatch("updateURL", {
       url: `/apps/${params.app}/${itemType}`,
-      queryString,
+      search,
     });
   }
 
@@ -57,7 +57,6 @@
     active={itemType}
     on:tabChanged={({ detail }) => {
       itemType = detail.active;
-      queryString = '';
       updateURL();
     }}>
     <Tab key="metrics">Metrics</Tab>
@@ -71,8 +70,7 @@
         appName={app.app_name}
         filterText={queryString}
         on:filterTextChanged={({ detail }) => {
-          queryString = detail.filterText;
-          updateURL();
+          updateURL(detail.filterText);
         }} />
     </TabContent>
 
@@ -83,8 +81,7 @@
         appName={app.app_name}
         filterText={queryString}
         on:filterTextChanged={({ detail }) => {
-          queryString = detail.filterText;
-          updateURL();
+          updateURL(detail.filterText);
         }} />
     </TabContent>
 
