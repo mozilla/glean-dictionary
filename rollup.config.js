@@ -1,6 +1,5 @@
 import replace from "@rollup/plugin-replace";
 import svelte from "rollup-plugin-svelte";
-import postcss from "rollup-plugin-postcss";
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import livereload from "rollup-plugin-livereload";
@@ -9,6 +8,7 @@ import { terser } from "rollup-plugin-terser";
 import { spawn, execSync } from "child_process";
 import sveltePreprocess from "svelte-preprocess";
 import copy from "rollup-plugin-copy";
+import css from "rollup-plugin-css-only";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -34,6 +34,10 @@ function serve() {
 }
 
 export default {
+  onwarn: (warning, handler) => {
+    if (warning.message.indexOf("Unused CSS selector") !== -1) return;
+    handler(warning);
+  },
   input: "src/main.js",
   output: {
     sourcemap: true,
@@ -45,16 +49,14 @@ export default {
     string({
       include: ["./src/data/defaultAnnotation.md"],
     }),
-    postcss({
-      plugins: [],
-    }),
     svelte({
       // enable run-time checks when not in production
-      dev: !production,
+      compilerOptions: {
+        dev: !production,
+      },
       // we'll extract any component CSS out into
       // a separate file - better for performance
       preprocess: sveltePreprocess({
-        postcss: true,
         defaults: {
           style: "scss",
         },
@@ -62,10 +64,10 @@ export default {
           prependData: `@import 'node_modules/@mozilla-protocol/core/protocol/css/protocol.scss';`,
         },
       }),
-      css: (css) => {
-        css.write("bundle.css");
-      },
     }),
+    // we'll extract any component CSS out into
+    // a separate file - better for performance
+    css({ output: "bundle.css" }),
     // only use google analytics on production builds
     replace({
       __GOOGLE_ANALYTICS_ID__:
