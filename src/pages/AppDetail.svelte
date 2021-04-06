@@ -1,4 +1,6 @@
 <script>
+  import { createEventDispatcher } from "svelte";
+
   import { getAppData } from "../state/api";
 
   import { APPLICATION_DEFINITION_SCHEMA } from "../data/schemas";
@@ -12,8 +14,19 @@
   import { pageTitle } from "../state/stores";
 
   export let params;
+  export let queryString;
 
   const appDataPromise = getAppData(params.app);
+
+  $: itemType = params.itemType ? params.itemType : "metrics";
+  const dispatch = createEventDispatcher();
+
+  function updateURL() {
+    dispatch("updateURL", {
+      url: `/apps/${params.app}/${itemType}`,
+      queryString,
+    });
+  }
 
   pageTitle.set(params.app);
 </script>
@@ -40,20 +53,42 @@
     item={app}
     schema={APPLICATION_DEFINITION_SCHEMA} />
 
-  <TabGroup active="Metrics">
-    <Tab key="Metrics">Metrics</Tab>
-    <Tab key="Pings">Pings</Tab>
-    <Tab key="Application IDs">Application IDs</Tab>
+  <TabGroup
+    active={itemType}
+    on:tabChanged={({ detail }) => {
+      itemType = detail.active;
+      queryString = '';
+      updateURL();
+    }}>
+    <Tab key="metrics">Metrics</Tab>
+    <Tab key="pings">Pings</Tab>
+    <Tab key="app_ids">Application IDs</Tab>
 
-    <TabContent key="Pings">
-      <ItemList itemType="pings" items={app.pings} appName={app.app_name} />
+    <TabContent key="pings">
+      <ItemList
+        itemType="pings"
+        items={app.pings}
+        appName={app.app_name}
+        filterText={queryString}
+        on:filterTextChanged={({ detail }) => {
+          queryString = detail.filterText;
+          updateURL();
+        }} />
     </TabContent>
 
-    <TabContent key="Metrics">
-      <ItemList itemType="metrics" items={app.metrics} appName={app.app_name} />
+    <TabContent key="metrics">
+      <ItemList
+        itemType="metrics"
+        items={app.metrics}
+        appName={app.app_name}
+        filterText={queryString}
+        on:filterTextChanged={({ detail }) => {
+          queryString = detail.filterText;
+          updateURL();
+        }} />
     </TabContent>
 
-    <TabContent key="Application IDs">
+    <TabContent key="app_ids">
       <ItemList
         itemType="app_ids"
         items={app.app_ids}

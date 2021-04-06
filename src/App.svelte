@@ -68,9 +68,12 @@
     next();
   }
 
-  function updateURL({ detail: searchQuery }) {
-    const urlParams = searchQuery.length ? `?search=${searchQuery}` : "";
-    page(`${window.location.pathname}${urlParams}`);
+  function updateURL({ detail }) {
+    page(
+      `${detail.url}${
+        detail.queryString ? `?search=${detail.queryString}` : ""
+      }`
+    );
   }
 
   page("*", parseQuery);
@@ -79,6 +82,7 @@
   page("/apps/:app/app_ids/:appId", setComponent(AppIdDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
+  page("/apps/:app/:itemType", setComponent(AppDetail));
   page("/apps/:app", setComponent(AppDetail));
   page.exit("*", (ctx, next) => {
     ga("set", "page", ctx.page.current);

@@ -3,6 +3,7 @@
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { getTableData } from "../state/api";
   import { pageTitle } from "../state/stores";
+  import { getBigQueryURL } from "../state/urls";
 
   import NotFound from "../components/NotFound.svelte";
   import PageTitle from "../components/PageTitle.svelte";
@@ -14,8 +15,12 @@
 
   const pingDataPromise = getTableData(params.app, params.appId, params.table);
 
-  const updateURL = () => dispatch("updateURL", queryString);
-
+  const updateURL = () => {
+    dispatch("updateURL", {
+      url: getBigQueryURL(params.app, params.appId, params.table),
+      queryString,
+    });
+  };
   pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>
 

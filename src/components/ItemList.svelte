@@ -1,5 +1,5 @@
 <script>
-  import { setContext } from "svelte";
+  import { createEventDispatcher, setContext } from "svelte";
   import { writable } from "svelte/store";
   import { chunk } from "lodash";
 
@@ -36,6 +36,7 @@
         : [];
   };
 
+  const dispatch = createEventDispatcher();
   const handleFilter = () => {
     const shownItems = showExpired
       ? items
@@ -44,6 +45,7 @@
     // show the first page of result
     currentPage.set(1);
     // even if currentPage is already 1, we need to manually call goToPage() to get the first page
+    dispatch("filterTextChanged", { filterText });
     goToPage(1);
   };
 
