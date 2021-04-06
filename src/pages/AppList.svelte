@@ -1,7 +1,6 @@
 <script>
   import { includes } from "lodash";
-  import { onMount, setContext } from "svelte";
-  import { writable } from "svelte/store";
+  import { onMount } from "svelte";
 
   import { fetchJSON } from "../state/api";
 
@@ -11,6 +10,11 @@
   import { pageState, pageTitle } from "../state/stores";
 
   const URL = "data/apps.json";
+
+  $pageState = {
+    search: "",
+    ...$pageState,
+  };
 
   let apps;
   let filteredApps;
@@ -25,22 +29,13 @@
     filteredApps = apps;
   });
 
-  const searchText = writable($pageState.search || "");
-  setContext("searchText", searchText);
-  $: {
-    // update the search text if the store changes on us
-    // (e.g. the user clicks on "glean dictionary" when
-    // they have a filter set, resetting the filter)
-    searchText.set($pageState.search || "");
-  }
   $: {
     // update page state when user filters something
-    pageState.set({ search: $searchText });
     if (apps) {
       filteredApps = apps.filter((appItem) =>
         appItem.canonical_app_name
           .toLowerCase()
-          .includes($searchText.toLowerCase())
+          .includes($pageState.search.toLowerCase())
       );
     }
   }
@@ -167,7 +162,9 @@
 
 {#if apps}
   <div class="app-filter">
-    <FilterInput placeHolder="Search for an application" />
+    <FilterInput
+      placeHolder="Search for an application"
+      bind:value={$pageState.search} />
     <span id="deprecation-checkbox">
       <label>
         <input type="checkbox" bind:checked={showDeprecated} />

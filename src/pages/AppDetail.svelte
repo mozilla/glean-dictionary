@@ -1,7 +1,4 @@
 <script>
-  import { setContext } from "svelte";
-  import { writable } from "svelte/store";
-
   import { getAppData } from "../state/api";
 
   import { APPLICATION_DEFINITION_SCHEMA } from "../data/schemas";
@@ -19,14 +16,12 @@
 
   const appDataPromise = getAppData(params.app);
 
-  let itemType = $pageState.itemType || "metrics";
-  const searchText = writable($pageState.search || "");
-  setContext("searchText", searchText);
-  const showExpired = writable($pageState.showExpired || true);
-  setContext("showExpired", showExpired);
-  $: {
-    pageState.set({ itemType, search: $searchText, showExpired: $showExpired });
-  }
+  $pageState = {
+    itemType: "metrics",
+    search: "",
+    showExpired: false,
+    ...$pageState,
+  };
 
   pageTitle.set(params.app);
 </script>
@@ -64,10 +59,9 @@
   <Commentary item={app} itemType={'application'} />
 
   <TabGroup
-    active={itemType}
+    active={$pageState.itemType}
     on:tabChanged={({ detail }) => {
-      itemType = detail.active;
-      searchText.set('');
+      pageState.set({ ...$pageState, itemType: detail.active, search: '' });
     }}>
     <Tab key="metrics">Metrics</Tab>
     <Tab key="pings">Pings</Tab>

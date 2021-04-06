@@ -1,7 +1,4 @@
 <script>
-  import { setContext } from "svelte";
-  import { writable } from "svelte/store";
-
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { getTableData } from "../state/api";
   import { pageState, pageTitle } from "../state/stores";
@@ -13,12 +10,10 @@
 
   const pingDataPromise = getTableData(params.app, params.appId, params.table);
 
-  const searchText = writable($pageState.search || "");
-  setContext("searchText", searchText);
-  $: {
-    pageState.set({ search: $searchText });
-  }
-
+  $pageState = {
+    search: "",
+    ...$pageState,
+  };
   pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>
 

@@ -1,7 +1,6 @@
 <script>
-  import { mapValues, pickBy } from "lodash";
   import page from "page";
-  import { stringify, parse as queryStringParse } from "query-string";
+  import { parse as queryStringParse } from "query-string";
   import { afterUpdate } from "svelte";
 
   // Pages
@@ -18,7 +17,7 @@
   import GlobalStyles from "./GlobalStyles.svelte";
 
   // Stores
-  import { pageState, pageTitle } from "./state/stores";
+  import { pageState, pageTitle, updateURLState } from "./state/stores";
 
   let component;
   let params = {};
@@ -90,17 +89,7 @@
   // instead of the store because we want to wait until we've initialized any
   // initial state before doing this)
   $: {
-    // create a simplified copy of the state so that our URLs can be shorter:
-    // don't incorporate falsely values and convert booleans to integers
-    const simplifiedState = mapValues(
-      pickBy($pageState, (v) => (typeof v !== "string" && v) || v.length > 0),
-      (v) => (typeof v === "boolean" ? +v : v)
-    );
-    // convert the state into a query string like "a=b&c=d" and attach it
-    // to the URL
-    const query = stringify(simplifiedState);
-    const path = `${window.location.pathname}${query ? `?${query}` : ""}`;
-    window.history.replaceState(null, undefined, path);
+    $pageState, updateURLState(false); // eslint-disable-line
   }
 
   // Set page title

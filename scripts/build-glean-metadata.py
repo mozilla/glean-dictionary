@@ -133,26 +133,24 @@ for (app_name, app_group) in app_groups.items():
             if metric.identifier not in metric_identifiers_seen:
                 metric_identifiers_seen.add(metric.identifier)
 
+                base_definition = {
+                    "name": metric.identifier,
+                    "description": metric.description,
+                    "type": metric.definition["type"],
+                    "expires": metric.definition["expires"],
+                }
+                if metric.definition["origin"] != app_name:
+                    base_definition.update({"origin": metric.definition["origin"]})
+
                 # metrics with associated pings
                 metric_pings["data"].append(
-                    {
-                        "name": metric.identifier,
-                        "description": metric.description,
-                        "pings": metric.definition["send_in_pings"],
-                        "type": metric.definition["type"],
-                        "expires": metric.definition["expires"],
-                    }
+                    dict(base_definition, pings=metric.definition["send_in_pings"])
                 )
 
-                app_data["metrics"].append(
-                    {
-                        "name": metric.identifier,
-                        "description": metric.description,
-                        "type": metric.definition["type"],
-                        "expires": metric.definition["expires"],
-                    }
-                )
+                # the summary of metrics
+                app_data["metrics"].append(base_definition)
 
+                # the full definition
                 app_metrics[metric.identifier] = dict(
                     metric.definition,
                     name=metric.identifier,

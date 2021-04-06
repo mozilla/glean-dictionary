@@ -1,9 +1,6 @@
 <script>
-  import { getContext } from "svelte";
-
+  export let value = "";
   export let placeHolder;
-
-  const searchText = getContext("searchText");
 </script>
 
 <style>
@@ -19,10 +16,4 @@
   }
 </style>
 
-<div>
-  <input
-    {placeHolder}
-    type="search"
-    id="filter-input"
-    bind:value={$searchText} />
-</div>
+<div><input {placeHolder} type="search" id="filter-input" bind:value /></div>

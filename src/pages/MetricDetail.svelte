@@ -96,6 +96,12 @@
       message="This metric has expired: it may not be present in the source code, new data will not be ingested into BigQuery, and it will not appear in dashboards." />
   {/if}
 
+  {#if metric.origin !== params.app}
+    <AppAlert
+      status="warning"
+      message={`This metric is defined by a library used by the application (__${metric.origin}__), rather than the application itself. For more details, see the definition.`} />
+  {/if}
+
   <PageTitle text={metric.name} />
 
   <Markdown text={metric.description} inline={false} />

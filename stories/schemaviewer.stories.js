@@ -47,7 +47,6 @@ export const Basic = () => {
     props: {
       app: "fenix",
       nodes,
-      searchText: "",
     },
   };
 };
