@@ -57,6 +57,7 @@ export default {
       // we'll extract any component CSS out into
       // a separate file - better for performance
       preprocess: sveltePreprocess({
+        postcss: true,
         defaults: {
           style: "scss",
         },
