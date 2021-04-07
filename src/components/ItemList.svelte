@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, setContext } from "svelte";
+  import { getContext, setContext } from "svelte";
   import { writable } from "svelte/store";
   import { chunk } from "lodash";
 
@@ -19,7 +19,6 @@
   export let itemType;
 
   export let showFilter = true;
-  export let filterText = "";
 
   let showExpired = false;
   let filteredItems = items.filter((item) => !isExpired(item.expires));
@@ -29,6 +28,7 @@
   let currentPage = writable(1);
   setContext("currentPage", currentPage);
 
+  const searchText = getContext("searchText");
   const goToPage = (page, perPage = DEFAULT_ITEMS_PER_PAGE) => {
     pagedItems =
       filteredItems.length > 0
@@ -36,25 +36,24 @@
         : [];
   };
 
-  const dispatch = createEventDispatcher();
-  const handleFilter = () => {
+  searchText.subscribe(() => {
     const shownItems = showExpired
       ? items
       : items.filter((item) => !isExpired(item.expires));
-    filteredItems = shownItems.filter((item) => item.name.includes(filterText));
+    filteredItems = shownItems.filter((item) =>
+      item.name.includes($searchText)
+    );
     // show the first page of result
     currentPage.set(1);
     // even if currentPage is already 1, we need to manually call goToPage() to get the first page
     goToPage(1);
-    // let our parent know that the filter text changed, in case we want to update the URL or something
-    dispatch("filterTextChanged", { filterText });
-  };
+  });
 
   $: paginated ? goToPage($currentPage) : goToPage(1, filteredItems.length); // eslint-disable-line
 
   // re-filter items when showExpired changes
   // note on the comma syntax: https://stackoverflow.com/a/56987526
-  $: showExpired, handleFilter(); // eslint-disable-line
+  $: showExpired; // eslint-disable-line
 </script>
 
 <style>
@@ -123,10 +122,7 @@
     </span>
   {/if}
   {#if showFilter}
-    <FilterInput
-      onChangeText={handleFilter}
-      bind:filterText
-      placeHolder="Search {itemType}" />
+    <FilterInput placeHolder="Search {itemType}" />
   {/if}
   <div class="item-browser">
     <table class="mzp-u-data-table">

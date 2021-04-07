@@ -1,5 +1,6 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, setContext } from "svelte";
+  import { writable } from "svelte/store";
 
   import { getAppData } from "../state/api";
 
@@ -21,12 +22,13 @@
   $: itemType = params.itemType ? params.itemType : "metrics";
   const dispatch = createEventDispatcher();
 
-  function updateURL() {
-    dispatch("updateURL", {
-      url: `/apps/${params.app}/${itemType}`,
-      search,
-    });
-  }
+  const searchText = writable(search);
+  setContext("searchText", searchText);
+
+  $: dispatch("updateURL", {
+    url: `/apps/${params.app}/${itemType}`,
+    search: $searchText,
+  });
 
   pageTitle.set(params.app);
 </script>
@@ -57,29 +59,18 @@
     active={itemType}
     on:tabChanged={({ detail }) => {
       itemType = detail.active;
-      search = '';
-      updateURL();
+      searchText.set('');
     }}>
     <Tab key="metrics">Metrics</Tab>
     <Tab key="pings">Pings</Tab>
     <Tab key="app_ids">Application IDs</Tab>
 
     <TabContent key="pings">
-      <ItemList
-        itemType="pings"
-        items={app.pings}
-        appName={app.app_name}
-        bind:filterText={search}
-        on:filterTextChanged={updateURL} />
+      <ItemList itemType="pings" items={app.pings} appName={app.app_name} />
     </TabContent>
 
     <TabContent key="metrics">
-      <ItemList
-        itemType="metrics"
-        items={app.metrics}
-        appName={app.app_name}
-        bind:filterText={search}
-        on:filterTextChanged={updateURL} />
+      <ItemList itemType="metrics" items={app.metrics} appName={app.app_name} />
     </TabContent>
 
     <TabContent key="app_ids">

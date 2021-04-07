@@ -1,24 +1,17 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { getContext } from "svelte";
   import SchemaNode from "./SchemaNode.svelte";
   import FilterInput from "./FilterInput.svelte";
   import PageTitle from "./PageTitle.svelte";
 
   export let app;
   export let nodes = [];
-  export let searchText;
-  let nodesWithVisibility;
 
-  const dispatch = createEventDispatcher();
+  let nodesWithVisibility = [];
 
-  function updateSearchText(filterText) {
-    searchText = filterText;
-    dispatch("updateURL");
-  }
-
-  const filterTextChanged = (filterText = searchText || "") => {
-    updateSearchText(filterText);
-    const filterTerms = filterText
+  const searchText = getContext("searchText");
+  searchText.subscribe(() => {
+    const filterTerms = $searchText
       .trim()
       .split(" ")
       .filter((t) => t.length > 0);
@@ -51,9 +44,7 @@
     };
 
     nodesWithVisibility = nodes.map((node) => addVisibility(node), filterTerms);
-  };
-
-  filterTextChanged();
+  });
 </script>
 
 <style>
@@ -73,7 +64,7 @@
 <div class="schema-viewer">
   <PageTitle text={'Schema'} />
 
-  <FilterInput onChangeText={filterTextChanged} filterText={searchText} />
+  <FilterInput />
   <div class="schema-browser">
     <p>
       {#each nodesWithVisibility as node}

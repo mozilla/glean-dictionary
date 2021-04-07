@@ -1,5 +1,7 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, setContext } from "svelte";
+  import { writable } from "svelte/store";
+
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { getTableData } from "../state/api";
   import { pageTitle } from "../state/stores";
@@ -9,18 +11,20 @@
   import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
-  export let search;
-
-  const dispatch = createEventDispatcher();
 
   const pingDataPromise = getTableData(params.app, params.appId, params.table);
 
-  const updateURL = () => {
+  const searchText = writable("");
+  setContext("searchText", searchText);
+
+  const dispatch = createEventDispatcher();
+  searchText.subscribe(() => {
     dispatch("updateURL", {
       url: getBigQueryURL(params.app, params.appId, params.table),
-      search,
+      search: $searchText,
     });
-  };
+  });
+
   pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>
 
@@ -51,11 +55,7 @@
       <td><code>{table.stable_table}</code></td>
     </tr>
   </table>
-  <SchemaViewer
-    app={params.app}
-    nodes={table.bq_schema}
-    bind:searchText={search}
-    on:updateURL={updateURL} />
+  <SchemaViewer app={params.app} nodes={table.bq_schema} />
 {:catch}
   <NotFound pageName={params.appId} itemType="table" />
 {/await}
