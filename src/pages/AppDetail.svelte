@@ -14,14 +14,14 @@
   import { pageTitle } from "../state/stores";
 
   export let params;
-  export let queryString;
+  export let search;
 
   const appDataPromise = getAppData(params.app);
 
   $: itemType = params.itemType ? params.itemType : "metrics";
   const dispatch = createEventDispatcher();
 
-  function updateURL(search) {
+  function updateURL() {
     dispatch("updateURL", {
       url: `/apps/${params.app}/${itemType}`,
       search,
@@ -57,6 +57,7 @@
     active={itemType}
     on:tabChanged={({ detail }) => {
       itemType = detail.active;
+      search = '';
       updateURL();
     }}>
     <Tab key="metrics">Metrics</Tab>
@@ -68,10 +69,8 @@
         itemType="pings"
         items={app.pings}
         appName={app.app_name}
-        filterText={queryString}
-        on:filterTextChanged={({ detail }) => {
-          updateURL(detail.filterText);
-        }} />
+        bind:filterText={search}
+        on:filterTextChanged={updateURL} />
     </TabContent>
 
     <TabContent key="metrics">
@@ -79,10 +78,8 @@
         itemType="metrics"
         items={app.metrics}
         appName={app.app_name}
-        filterText={queryString}
-        on:filterTextChanged={({ detail }) => {
-          updateURL(detail.filterText);
-        }} />
+        bind:filterText={search}
+        on:filterTextChanged={updateURL} />
     </TabContent>
 
     <TabContent key="app_ids">

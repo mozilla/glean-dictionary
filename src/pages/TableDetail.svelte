@@ -9,7 +9,7 @@
   import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
-  export let queryString;
+  export let search;
 
   const dispatch = createEventDispatcher();
 
@@ -18,7 +18,7 @@
   const updateURL = () => {
     dispatch("updateURL", {
       url: getBigQueryURL(params.app, params.appId, params.table),
-      queryString,
+      search,
     });
   };
   pageTitle.set(`${params.table} table | ${params.appId}`);
@@ -54,7 +54,7 @@
   <SchemaViewer
     app={params.app}
     nodes={table.bq_schema}
-    bind:searchText={queryString}
+    bind:searchText={search}
     on:updateURL={updateURL} />
 {:catch}
   <NotFound pageName={params.appId} itemType="table" />

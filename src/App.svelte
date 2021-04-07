@@ -18,7 +18,7 @@
   let component;
   let params = {};
   let links = [];
-  let queryString;
+  let search;
 
   let title;
 
@@ -63,17 +63,13 @@
   }
 
   function parseQuery(ctx, next) {
-    queryString = ctx.querystring;
-    queryString = queryString !== "" ? queryString.split("=")[1] : "";
+    search = ctx.querystring;
+    search = search !== "" ? search.split("=")[1] : "";
     next();
   }
 
   function updateURL({ detail }) {
-    page(
-      `${detail.url}${
-        detail.queryString ? `?search=${detail.queryString}` : ""
-      }`
-    );
+    page(`${detail.url}${detail.search ? `?search=${detail.search}` : ""}`);
   }
 
   page("*", parseQuery);
@@ -171,7 +167,7 @@
         <svelte:component
           this={component}
           bind:params
-          bind:queryString
+          bind:search
           on:updateURL={updateURL} />
       </article>
     </div>
