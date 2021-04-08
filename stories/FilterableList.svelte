@@ -1,16 +1,22 @@
 <script>
+  import { setContext } from "svelte";
+  import { writable } from "svelte/store";
+
   import FilterInput from "../src/components/FilterInput.svelte";
 
   export let listItems;
   let filteredItems = listItems;
 
-  function filterList(filterText = "") {
-    filteredItems = listItems.filter((item) => item.includes(filterText));
+  let searchText = writable("");
+  setContext("searchText", searchText);
+
+  $: {
+    filteredItems = listItems.filter((item) => item.includes($searchText));
   }
 </script>
 
 <div class="container">
-  <FilterInput onChangeText={filterList} />
+  <FilterInput />
   <ul>
     {#each filteredItems as item}
       <li>{item}</li>
