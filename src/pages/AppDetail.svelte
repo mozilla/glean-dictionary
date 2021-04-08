@@ -1,5 +1,5 @@
 <script>
-  import { createEventDispatcher, setContext } from "svelte";
+  import { setContext } from "svelte";
   import { writable } from "svelte/store";
 
   import { getAppData } from "../state/api";
@@ -12,23 +12,20 @@
   import Pill from "../components/Pill.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
   import PageTitle from "../components/PageTitle.svelte";
-  import { pageTitle } from "../state/stores";
+  import { pageState, pageTitle } from "../state/stores";
 
   export let params;
-  export let search;
 
   const appDataPromise = getAppData(params.app);
 
-  $: itemType = params.itemType ? params.itemType : "metrics";
-  const dispatch = createEventDispatcher();
-
-  const searchText = writable(search);
+  let itemType = $pageState.itemType || "metrics";
+  const searchText = writable($pageState.search || "");
   setContext("searchText", searchText);
-
-  $: dispatch("updateURL", {
-    url: `/apps/${params.app}/${itemType}`,
-    search: $searchText,
-  });
+  const showExpired = writable($pageState.showExpired || false);
+  setContext("showExpired", showExpired);
+  $: {
+    pageState.set({ itemType, search: $searchText, showExpired: $showExpired });
+  }
 
   pageTitle.set(params.app);
 </script>

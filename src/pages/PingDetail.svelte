@@ -3,7 +3,7 @@
   import { writable } from "svelte/store";
 
   import { getPingData } from "../state/api";
-  import { pageTitle } from "../state/stores";
+  import { pageState, pageTitle } from "../state/stores";
   import { getBigQueryURL } from "../state/urls";
 
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
@@ -17,7 +17,6 @@
   import { PING_SCHEMA } from "../data/schemas";
 
   export let params;
-  export let search = "";
 
   let selectedAppVariant;
   const pingDataPromise = getPingData(params.app, params.ping).then(
@@ -27,8 +26,11 @@
     }
   );
 
-  const searchText = writable(search);
+  const searchText = writable($pageState.search || "");
   setContext("searchText", searchText);
+  $: {
+    pageState.set({ search: $searchText });
+  }
 
   pageTitle.set(`${params.ping} | ${params.app}`);
 </script>

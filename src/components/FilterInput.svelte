@@ -4,9 +4,6 @@
   export let placeHolder;
 
   const searchText = getContext("searchText");
-  const changeText = (ev) => {
-    searchText.set(ev.target.value);
-  };
 </script>
 
 <style>

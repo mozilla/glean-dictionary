@@ -1,9 +1,8 @@
 <script>
-  import { afterUpdate } from "svelte";
+  import { mapValues, pickBy } from "lodash";
   import page from "page";
-  import Breadcrumb from "./components/Breadcrumb.svelte";
-  import Footer from "./components/Footer.svelte";
-  import GlobalStyles from "./GlobalStyles.svelte";
+  import { stringify, parse as queryStringParse } from "query-string";
+  import { afterUpdate } from "svelte";
 
   // Pages
   import AppList from "./pages/AppList.svelte";
@@ -13,12 +12,17 @@
   import MetricDetail from "./pages/MetricDetail.svelte";
   import TableDetail from "./pages/TableDetail.svelte";
 
-  import { pageTitle } from "./state/stores";
+  // Components
+  import Breadcrumb from "./components/Breadcrumb.svelte";
+  import Footer from "./components/Footer.svelte";
+  import GlobalStyles from "./GlobalStyles.svelte";
+
+  // Stores
+  import { pageState, pageTitle } from "./state/stores";
 
   let component;
   let params = {};
   let links = [];
-  let search;
 
   let title;
 
@@ -63,17 +67,9 @@
   }
 
   function parseQuery(ctx, next) {
-    search = ctx.querystring;
-    search = search !== "" ? search.split("=")[1] : "";
+    const query = queryStringParse(ctx.querystring);
+    pageState.set(query);
     next();
-  }
-
-  function updateURL({ detail }) {
-    history.replaceState(
-      null,
-      undefined,
-      `${detail.url}${detail.search ? `?search=${detail.search}` : ""}`
-    );
   }
 
   page("*", parseQuery);
@@ -82,7 +78,6 @@
   page("/apps/:app/app_ids/:appId", setComponent(AppIdDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
-  page("/apps/:app/:itemType", setComponent(AppDetail));
   page("/apps/:app", setComponent(AppDetail));
   page.exit("*", (ctx, next) => {
     ga("set", "page", ctx.page.current);
@@ -90,6 +85,22 @@
     next();
   });
   page();
+
+  // set up a handler to update our URL when page state changes (we do this here,
+  // instead of the store because we want to wait until we've initialized any
+  // initial state before doing this)
+  $: {
+    // create nice, short urls that don't incorporate falsely values
+    // and convert booleans to integers
+    const query = stringify(
+      mapValues(
+        pickBy($pageState, (v) => (typeof v !== "string" && v) || v.length > 0),
+        (v) => (typeof v === "boolean" ? +v : v)
+      )
+    );
+    const path = `${window.location.pathname}${query ? `?${query}` : ""}`;
+    window.history.replaceState(null, undefined, path);
+  }
 
   // Set page title
   // https://stackoverflow.com/a/59028538
@@ -168,11 +179,7 @@
   <main>
     <div class="mzp-l-content">
       <article class="mzp-c-article">
-        <svelte:component
-          this={component}
-          bind:params
-          bind:search
-          on:updateURL={updateURL} />
+        <svelte:component this={component} bind:params />
       </article>
     </div>
   </main>

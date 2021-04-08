@@ -20,7 +20,6 @@
 
   export let showFilter = true;
 
-  let showExpired = false;
   let filteredItems = items.filter((item) => !isExpired(item.expires));
   let pagedItems;
   let paginated = true;
@@ -36,8 +35,19 @@
         : [];
   };
 
-  const filterItems = () => {
-    const shownItems = showExpired
+  const showExpired = getContext("showExpired");
+
+  $: {
+    if (paginated) {
+      goToPage($currentPage);
+    } else {
+      goToPage(1, filteredItems.length);
+    }
+  }
+
+  // re-filter items when showExpired or $searchText changes
+  $: {
+    const shownItems = $showExpired
       ? items
       : items.filter((item) => !isExpired(item.expires));
     filteredItems = shownItems.filter((item) =>
@@ -47,13 +57,7 @@
     currentPage.set(1);
     // even if currentPage is already 1, we need to manually call goToPage() to get the first page
     goToPage(1);
-  };
-
-  $: paginated ? goToPage($currentPage) : goToPage(1, filteredItems.length); // eslint-disable-line
-
-  // re-filter items when showExpired or $searchText changes
-  // note on the comma syntax: https://stackoverflow.com/a/56987526
-  $: showExpired, $searchText, filterItems();
+  }
 </script>
 
 <style>
@@ -112,7 +116,7 @@
   {#if itemType === 'metrics'}
     <span class="expire-checkbox">
       <label>
-        <input type="checkbox" bind:checked={showExpired} />
+        <input type="checkbox" bind:checked={$showExpired} />
         Show expired metrics
       </label>
       <label>

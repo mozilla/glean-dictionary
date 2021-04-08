@@ -1,29 +1,23 @@
 <script>
-  import { createEventDispatcher, setContext } from "svelte";
+  import { setContext } from "svelte";
   import { writable } from "svelte/store";
 
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { getTableData } from "../state/api";
-  import { pageTitle } from "../state/stores";
-  import { getBigQueryURL } from "../state/urls";
+  import { pageState, pageTitle } from "../state/stores";
 
   import NotFound from "../components/NotFound.svelte";
   import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
-  export let search;
 
   const pingDataPromise = getTableData(params.app, params.appId, params.table);
 
-  const searchText = writable(search);
+  const searchText = writable($pageState.search || "");
   setContext("searchText", searchText);
-
-  const dispatch = createEventDispatcher();
-  $: $searchText,
-    dispatch("updateURL", {
-      url: getBigQueryURL(params.app, params.appId, params.table),
-      search: $searchText,
-    });
+  $: {
+    pageState.set({ search: $searchText });
+  }
 
   pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>
