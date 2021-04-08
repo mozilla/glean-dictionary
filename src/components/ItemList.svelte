@@ -48,13 +48,12 @@
     // even if currentPage is already 1, we need to manually call goToPage() to get the first page
     goToPage(1);
   };
-  searchText.subscribe(filterItems);
 
   $: paginated ? goToPage($currentPage) : goToPage(1, filteredItems.length); // eslint-disable-line
 
-  // re-filter items when showExpired changes
+  // re-filter items when showExpired or $searchText changes
   // note on the comma syntax: https://stackoverflow.com/a/56987526
-  $: showExpired, filterItems; // eslint-disable-line
+  $: showExpired, $searchText, filterItems();
 </script>
 
 <style>

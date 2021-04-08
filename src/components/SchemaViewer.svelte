@@ -10,7 +10,7 @@
   let nodesWithVisibility = [];
 
   const searchText = getContext("searchText");
-  searchText.subscribe(() => {
+  $: {
     const filterTerms = $searchText
       .trim()
       .split(" ")
@@ -44,7 +44,7 @@
     };
 
     nodesWithVisibility = nodes.map((node) => addVisibility(node), filterTerms);
-  });
+  }
 </script>
 
 <style>

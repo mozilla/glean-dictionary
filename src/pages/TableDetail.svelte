@@ -11,19 +11,19 @@
   import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
+  export let search;
 
   const pingDataPromise = getTableData(params.app, params.appId, params.table);
 
-  const searchText = writable("");
+  const searchText = writable(search);
   setContext("searchText", searchText);
 
   const dispatch = createEventDispatcher();
-  searchText.subscribe(() => {
+  $: $searchText,
     dispatch("updateURL", {
       url: getBigQueryURL(params.app, params.appId, params.table),
       search: $searchText,
     });
-  });
 
   pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>

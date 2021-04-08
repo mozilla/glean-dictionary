@@ -3,11 +3,11 @@
   import { writable } from "svelte/store";
   import { createEventDispatcher, setContext } from "svelte";
 
-  const store = writable(active);
-  setContext("activeTab", store);
+  const activeTab = writable(active);
+  setContext("activeTab", activeTab);
 
   const dispatch = createEventDispatcher();
-  store.subscribe((value) => dispatch("tabChanged", { active: value }));
+  $: dispatch("tabChanged", { active: $activeTab });
 </script>
 
 <style>
