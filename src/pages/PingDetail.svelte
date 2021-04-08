@@ -28,8 +28,10 @@
 
   const searchText = writable($pageState.search || "");
   setContext("searchText", searchText);
+  const showExpired = writable($pageState.showExpired || false);
+  setContext("showExpired", showExpired);
   $: {
-    pageState.set({ search: $searchText });
+    pageState.set({ search: $searchText, showExpired: $showExpired });
   }
 
   pageTitle.set(`${params.ping} | ${params.app}`);
