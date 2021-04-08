@@ -582,10 +582,1103 @@ exports[`Storyshots ItemList Default 1`] = `
        
       <tbody
         class="svelte-1s1bzuy"
-      />
+      >
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 0"
+              >
+                test metric 0
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 0"
+            >
+              This is test metric 0
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 1"
+              >
+                test metric 1
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 1"
+            >
+              This is test metric 1
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 2"
+              >
+                test metric 2
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 2"
+            >
+              This is test metric 2
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 3"
+              >
+                test metric 3
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 3"
+            >
+              This is test metric 3
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 4"
+              >
+                test metric 4
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 4"
+            >
+              This is test metric 4
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 5"
+              >
+                test metric 5
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 5"
+            >
+              This is test metric 5
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 6"
+              >
+                test metric 6
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 6"
+            >
+              This is test metric 6
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 7"
+              >
+                test metric 7
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 7"
+            >
+              This is test metric 7
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 8"
+              >
+                test metric 8
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 8"
+            >
+              This is test metric 8
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 9"
+              >
+                test metric 9
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 9"
+            >
+              This is test metric 9
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 10"
+              >
+                test metric 10
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 10"
+            >
+              This is test metric 10
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 11"
+              >
+                test metric 11
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 11"
+            >
+              This is test metric 11
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 12"
+              >
+                test metric 12
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 12"
+            >
+              This is test metric 12
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 13"
+              >
+                test metric 13
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 13"
+            >
+              This is test metric 13
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 14"
+              >
+                test metric 14
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 14"
+            >
+              This is test metric 14
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 15"
+              >
+                test metric 15
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 15"
+            >
+              This is test metric 15
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 16"
+              >
+                test metric 16
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 16"
+            >
+              This is test metric 16
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 17"
+              >
+                test metric 17
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 17"
+            >
+              This is test metric 17
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 18"
+              >
+                test metric 18
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 18"
+            >
+              This is test metric 18
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+        <tr
+          class="svelte-1s1bzuy"
+        >
+          <td
+            class="svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <a
+                class="svelte-1s1bzuy"
+                href="/apps/app-name/metrics/test metric 19"
+              >
+                test metric 19
+              </a>
+               
+               
+            </div>
+          </td>
+           
+          <td
+            class="svelte-1s1bzuy"
+            style="text-align: center;"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+            >
+              <code
+                class="svelte-1s1bzuy"
+              >
+                metric_type
+              </code>
+            </div>
+          </td>
+           
+          <td
+            class="description svelte-1s1bzuy"
+          >
+            <div
+              class="item-property svelte-1s1bzuy"
+              title="This is test metric 19"
+            >
+              This is test metric 19
+              
+              
+            </div>
+          </td>
+           
+        </tr>
+      </tbody>
     </table>
   </div>
    
+  <div
+    class="pagination-position svelte-bkgwc9"
+  >
+    <p
+      class="svelte-bkgwc9"
+    >
+      Page
+    
+      <code
+        class="svelte-bkgwc9"
+      >
+        1
+      </code>
+      
+    of
+    
+      <code
+        class="svelte-bkgwc9"
+      >
+        2
+      </code>
+      
+    (
+      <code
+        class="svelte-bkgwc9"
+      >
+        1
+      </code>
+      
+    -
+    
+      <code
+        class="svelte-bkgwc9"
+      >
+        20
+      </code>
+      
+    on
+    
+      <code
+        class="svelte-bkgwc9"
+      >
+        21
+      </code>
+      
+    items)
+    </p>
+  </div>
+   
+  <div
+    class="pagination-bar svelte-bkgwc9"
+  >
+    <div
+      class="pagination-button current-page svelte-bkgwc9"
+    >
+      <svg
+        class="feather feather-chevron-left w-6 h-6"
+        fill="none"
+        height="100%"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="100%"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polyline
+          points="15 18 9 12 15 6"
+        />
+      </svg>
+    </div>
+     
+    <div
+      class="pages svelte-bkgwc9"
+    >
+      <div
+        class="page current-page svelte-bkgwc9"
+      >
+        1
+         
+      </div>
+      <div
+        class="page  svelte-bkgwc9"
+      >
+        2
+         
+      </div>
+    </div>
+     
+    <div
+      class="pagination-button  svelte-bkgwc9"
+    >
+      <svg
+        class="feather feather-chevron-right w-6 h-6"
+        fill="none"
+        height="100%"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        viewBox="0 0 24 24"
+        width="100%"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <polyline
+          points="9 18 15 12 9 6"
+        />
+      </svg>
+    </div>
+  </div>
+  
   
 </section>
 `;
