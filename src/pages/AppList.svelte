@@ -28,6 +28,13 @@
   const searchText = writable($pageState.search || "");
   setContext("searchText", searchText);
   $: {
+    // update the search text if the store changes on us
+    // (e.g. the user clicks on "glean dictionary" when
+    // they have a filter set, resetting the filter)
+    searchText.set($pageState.search || "");
+  }
+  $: {
+    // update page state when user filters something
     pageState.set({ search: $searchText });
     if (apps) {
       filteredApps = apps.filter((appItem) =>
