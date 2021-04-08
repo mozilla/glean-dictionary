@@ -1,13 +1,14 @@
 <script>
-  import { onMount } from "svelte";
   import { includes } from "lodash";
+  import { onMount, setContext } from "svelte";
+  import { writable } from "svelte/store";
 
   import { fetchJSON } from "../state/api";
 
   import FilterInput from "../components/FilterInput.svelte";
   import Pill from "../components/Pill.svelte";
 
-  import { pageTitle } from "../state/stores";
+  import { pageState, pageTitle } from "../state/stores";
 
   const URL = "data/apps.json";
 
@@ -24,13 +25,19 @@
     filteredApps = apps;
   });
 
-  function filterApps(filterText) {
-    filteredApps = apps.filter((appItem) =>
-      appItem.canonical_app_name
-        .toLowerCase()
-        .includes(filterText.toLowerCase())
-    );
+  const searchText = writable($pageState.search || "");
+  setContext("searchText", searchText);
+  $: {
+    pageState.set({ search: $searchText });
+    if (apps) {
+      filteredApps = apps.filter((appItem) =>
+        appItem.canonical_app_name
+          .toLowerCase()
+          .includes($searchText.toLowerCase())
+      );
+    }
   }
+
   let showDeprecated = false;
 
   const appLogos = {
