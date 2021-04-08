@@ -36,7 +36,7 @@
         : [];
   };
 
-  searchText.subscribe(() => {
+  const filterItems = () => {
     const shownItems = showExpired
       ? items
       : items.filter((item) => !isExpired(item.expires));
@@ -47,13 +47,14 @@
     currentPage.set(1);
     // even if currentPage is already 1, we need to manually call goToPage() to get the first page
     goToPage(1);
-  });
+  };
+  searchText.subscribe(filterItems);
 
   $: paginated ? goToPage($currentPage) : goToPage(1, filteredItems.length); // eslint-disable-line
 
   // re-filter items when showExpired changes
   // note on the comma syntax: https://stackoverflow.com/a/56987526
-  $: showExpired; // eslint-disable-line
+  $: showExpired, filterItems; // eslint-disable-line
 </script>
 
 <style>

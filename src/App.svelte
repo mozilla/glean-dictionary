@@ -69,7 +69,11 @@
   }
 
   function updateURL({ detail }) {
-    page(`${detail.url}${detail.search ? `?search=${detail.search}` : ""}`);
+    history.replaceState(
+      null,
+      undefined,
+      `${detail.url}${detail.search ? `?search=${detail.search}` : ""}`
+    );
   }
 
   page("*", parseQuery);
