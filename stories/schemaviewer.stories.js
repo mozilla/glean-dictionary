@@ -1,4 +1,4 @@
-import SchemaViewer from "../src/components/SchemaViewer.svelte";
+import SchemaViewer from "./SchemaViewer.svelte";
 
 const nodes = [
   {
@@ -41,10 +41,13 @@ export default {
   title: "Schema Viewer",
 };
 
-export const Basic = () => ({
-  Component: SchemaViewer,
-  props: {
-    app: "fenix",
-    nodes,
-  },
-});
+export const Basic = () => {
+  return {
+    Component: SchemaViewer,
+    props: {
+      app: "fenix",
+      nodes,
+      searchText: "",
+    },
+  };
+};

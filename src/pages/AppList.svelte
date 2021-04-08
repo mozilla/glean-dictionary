@@ -153,9 +153,7 @@
 
 {#if apps}
   <div class="app-filter">
-    <FilterInput
-      placeHolder="Search for an application"
-      onChangeText={filterApps} />
+    <FilterInput placeHolder="Search for an application" />
     <span id="deprecation-checkbox">
       <label>
         <input type="checkbox" bind:checked={showDeprecated} />
