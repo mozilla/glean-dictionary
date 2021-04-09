@@ -18,17 +18,13 @@
 
   const appDataPromise = getAppData(params.app);
 
-  let itemType = writable($pageState.itemType || "metrics");
+  let itemType = $pageState.itemType || "metrics";
   const searchText = writable($pageState.search || "");
   setContext("searchText", searchText);
   const showExpired = writable($pageState.showExpired || false);
   setContext("showExpired", showExpired);
   $: {
-    pageState.set({
-      itemType: $itemType,
-      search: $searchText,
-      showExpired: $showExpired,
-    });
+    pageState.set({ itemType, search: $searchText, showExpired: $showExpired });
   }
 
   pageTitle.set(params.app);
@@ -57,8 +53,9 @@
     schema={APPLICATION_DEFINITION_SCHEMA} />
 
   <TabGroup
-    bind:activeTab={itemType}
-    on:tabChanged={() => {
+    active={itemType}
+    on:tabChanged={({ detail }) => {
+      itemType = detail.active;
       searchText.set('');
     }}>
     <Tab key="metrics">Metrics</Tab>
