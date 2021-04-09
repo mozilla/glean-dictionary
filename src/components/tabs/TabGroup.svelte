@@ -1,13 +1,11 @@
 <script>
-  export let active = 0;
-  import { writable } from "svelte/store";
+  export let activeTab;
   import { createEventDispatcher, setContext } from "svelte";
 
-  const activeTab = writable(active);
   setContext("activeTab", activeTab);
 
   const dispatch = createEventDispatcher();
-  $: dispatch("tabChanged", { active: $activeTab });
+  $: dispatch("tabChanged", { activeTab: $activeTab });
 </script>
 
 <style>
