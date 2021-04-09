@@ -90,14 +90,15 @@
   // instead of the store because we want to wait until we've initialized any
   // initial state before doing this)
   $: {
-    // create nice, short urls that don't incorporate falsely values
-    // and convert booleans to integers
-    const query = stringify(
-      mapValues(
-        pickBy($pageState, (v) => (typeof v !== "string" && v) || v.length > 0),
-        (v) => (typeof v === "boolean" ? +v : v)
-      )
+    // create a simplified copy of the state so that our URLs can be shorter:
+    // don't incorporate falsely values and convert booleans to integers
+    const simplifiedState = mapValues(
+      pickBy($pageState, (v) => (typeof v !== "string" && v) || v.length > 0),
+      (v) => (typeof v === "boolean" ? +v : v)
     );
+    // convert the state into a query string like "a=b&c=d" and attach it
+    // to the URL
+    const query = stringify(simplifiedState);
     const path = `${window.location.pathname}${query ? `?${query}` : ""}`;
     window.history.replaceState(null, undefined, path);
   }
