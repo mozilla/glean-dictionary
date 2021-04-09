@@ -1,5 +1,5 @@
 <script>
-  import { setContext } from "svelte";
+  import { getContext, setContext } from "svelte";
   import { writable } from "svelte/store";
   import { chunk } from "lodash";
 
@@ -19,9 +19,7 @@
   export let itemType;
 
   export let showFilter = true;
-  export let filterText = "";
 
-  let showExpired = false;
   let filteredItems = items.filter((item) => !isExpired(item.expires));
   let pagedItems;
   let paginated = true;
@@ -29,6 +27,7 @@
   let currentPage = writable(1);
   setContext("currentPage", currentPage);
 
+  const searchText = getContext("searchText");
   const goToPage = (page, perPage = DEFAULT_ITEMS_PER_PAGE) => {
     pagedItems =
       filteredItems.length > 0
@@ -36,22 +35,29 @@
         : [];
   };
 
-  const handleFilter = () => {
-    const shownItems = showExpired
+  const showExpired = getContext("showExpired");
+
+  $: {
+    if (paginated) {
+      goToPage($currentPage);
+    } else {
+      goToPage(1, filteredItems.length);
+    }
+  }
+
+  // re-filter items when showExpired or $searchText changes
+  $: {
+    const shownItems = $showExpired
       ? items
       : items.filter((item) => !isExpired(item.expires));
-    filteredItems = shownItems.filter((item) => item.name.includes(filterText));
+    filteredItems = shownItems.filter((item) =>
+      item.name.includes($searchText)
+    );
     // show the first page of result
     currentPage.set(1);
     // even if currentPage is already 1, we need to manually call goToPage() to get the first page
     goToPage(1);
-  };
-
-  $: paginated ? goToPage($currentPage) : goToPage(1, filteredItems.length); // eslint-disable-line
-
-  // re-filter items when showExpired changes
-  // note on the comma syntax: https://stackoverflow.com/a/56987526
-  $: showExpired, handleFilter(); // eslint-disable-line
+  }
 </script>
 
 <style>
@@ -110,7 +116,7 @@
   {#if itemType === 'metrics'}
     <span class="expire-checkbox">
       <label>
-        <input type="checkbox" bind:checked={showExpired} />
+        <input type="checkbox" bind:checked={$showExpired} />
         Show expired metrics
       </label>
       <label>
@@ -120,10 +126,7 @@
     </span>
   {/if}
   {#if showFilter}
-    <FilterInput
-      onChangeText={handleFilter}
-      bind:filterText
-      placeHolder="Search {itemType}" />
+    <FilterInput placeHolder="Search {itemType}" />
   {/if}
   <div class="item-browser">
     <table class="mzp-u-data-table">

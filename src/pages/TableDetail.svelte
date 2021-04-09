@@ -1,20 +1,23 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { setContext } from "svelte";
+  import { writable } from "svelte/store";
+
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { getTableData } from "../state/api";
-  import { pageTitle } from "../state/stores";
+  import { pageState, pageTitle } from "../state/stores";
 
   import NotFound from "../components/NotFound.svelte";
   import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
-  export let queryString;
-
-  const dispatch = createEventDispatcher();
 
   const pingDataPromise = getTableData(params.app, params.appId, params.table);
 
-  const updateURL = () => dispatch("updateURL", queryString);
+  const searchText = writable($pageState.search || "");
+  setContext("searchText", searchText);
+  $: {
+    pageState.set({ search: $searchText });
+  }
 
   pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>
@@ -46,11 +49,7 @@
       <td><code>{table.stable_table}</code></td>
     </tr>
   </table>
-  <SchemaViewer
-    app={params.app}
-    nodes={table.bq_schema}
-    bind:searchText={queryString}
-    on:updateURL={updateURL} />
+  <SchemaViewer app={params.app} nodes={table.bq_schema} />
 {:catch}
   <NotFound pageName={params.appId} itemType="table" />
 {/await}

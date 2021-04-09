@@ -1,9 +1,8 @@
 <script>
-  import { afterUpdate } from "svelte";
+  import { mapValues, pickBy } from "lodash";
   import page from "page";
-  import Breadcrumb from "./components/Breadcrumb.svelte";
-  import Footer from "./components/Footer.svelte";
-  import GlobalStyles from "./GlobalStyles.svelte";
+  import { stringify, parse as queryStringParse } from "query-string";
+  import { afterUpdate } from "svelte";
 
   // Pages
   import AppList from "./pages/AppList.svelte";
@@ -13,12 +12,17 @@
   import MetricDetail from "./pages/MetricDetail.svelte";
   import TableDetail from "./pages/TableDetail.svelte";
 
-  import { pageTitle } from "./state/stores";
+  // Components
+  import Breadcrumb from "./components/Breadcrumb.svelte";
+  import Footer from "./components/Footer.svelte";
+  import GlobalStyles from "./GlobalStyles.svelte";
+
+  // Stores
+  import { pageState, pageTitle } from "./state/stores";
 
   let component;
   let params = {};
   let links = [];
-  let queryString;
 
   let title;
 
@@ -63,14 +67,9 @@
   }
 
   function parseQuery(ctx, next) {
-    queryString = ctx.querystring;
-    queryString = queryString !== "" ? queryString.split("=")[1] : "";
+    const query = queryStringParse(ctx.querystring);
+    pageState.set(query);
     next();
-  }
-
-  function updateURL({ detail: searchQuery }) {
-    const urlParams = searchQuery.length ? `?search=${searchQuery}` : "";
-    page(`${window.location.pathname}${urlParams}`);
   }
 
   page("*", parseQuery);
@@ -86,6 +85,23 @@
     next();
   });
   page();
+
+  // set up a handler to update our URL when page state changes (we do this here,
+  // instead of the store because we want to wait until we've initialized any
+  // initial state before doing this)
+  $: {
+    // create a simplified copy of the state so that our URLs can be shorter:
+    // don't incorporate falsely values and convert booleans to integers
+    const simplifiedState = mapValues(
+      pickBy($pageState, (v) => (typeof v !== "string" && v) || v.length > 0),
+      (v) => (typeof v === "boolean" ? +v : v)
+    );
+    // convert the state into a query string like "a=b&c=d" and attach it
+    // to the URL
+    const query = stringify(simplifiedState);
+    const path = `${window.location.pathname}${query ? `?${query}` : ""}`;
+    window.history.replaceState(null, undefined, path);
+  }
 
   // Set page title
   // https://stackoverflow.com/a/59028538
@@ -164,11 +180,7 @@
   <main>
     <div class="mzp-l-content">
       <article class="mzp-c-article">
-        <svelte:component
-          this={component}
-          bind:params
-          bind:queryString
-          on:updateURL={updateURL} />
+        <svelte:component this={component} bind:params />
       </article>
     </div>
   </main>

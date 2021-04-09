@@ -1,4 +1,4 @@
-import ItemList from "../src/components/ItemList.svelte";
+import ItemList from "./ItemList.svelte";
 
 const testData = {
   name: "Test data",

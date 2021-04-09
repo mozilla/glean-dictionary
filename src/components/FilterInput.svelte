@@ -1,14 +1,9 @@
 <script>
-  import { throttle } from "lodash";
-
-  export let onChangeText;
-  export let filterText = "";
+  import { getContext } from "svelte";
 
   export let placeHolder;
 
-  const changeText = () => {
-    onChangeText(filterText);
-  };
+  const searchText = getContext("searchText");
 </script>
 
 <style>
@@ -29,6 +24,5 @@
     {placeHolder}
     type="search"
     id="filter-input"
-    bind:value={filterText}
-    on:input={throttle(changeText, 200)} />
+    bind:value={$searchText} />
 </div>

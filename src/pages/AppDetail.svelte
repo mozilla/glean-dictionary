@@ -1,4 +1,7 @@
 <script>
+  import { setContext } from "svelte";
+  import { writable } from "svelte/store";
+
   import { getAppData } from "../state/api";
 
   import { APPLICATION_DEFINITION_SCHEMA } from "../data/schemas";
@@ -9,11 +12,20 @@
   import Pill from "../components/Pill.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
   import PageTitle from "../components/PageTitle.svelte";
-  import { pageTitle } from "../state/stores";
+  import { pageState, pageTitle } from "../state/stores";
 
   export let params;
 
   const appDataPromise = getAppData(params.app);
+
+  let itemType = $pageState.itemType || "metrics";
+  const searchText = writable($pageState.search || "");
+  setContext("searchText", searchText);
+  const showExpired = writable($pageState.showExpired || false);
+  setContext("showExpired", showExpired);
+  $: {
+    pageState.set({ itemType, search: $searchText, showExpired: $showExpired });
+  }
 
   pageTitle.set(params.app);
 </script>
@@ -40,20 +52,25 @@
     item={app}
     schema={APPLICATION_DEFINITION_SCHEMA} />
 
-  <TabGroup active="Metrics">
-    <Tab key="Metrics">Metrics</Tab>
-    <Tab key="Pings">Pings</Tab>
-    <Tab key="Application IDs">Application IDs</Tab>
+  <TabGroup
+    active={itemType}
+    on:tabChanged={({ detail }) => {
+      itemType = detail.active;
+      searchText.set('');
+    }}>
+    <Tab key="metrics">Metrics</Tab>
+    <Tab key="pings">Pings</Tab>
+    <Tab key="app_ids">Application IDs</Tab>
 
-    <TabContent key="Pings">
+    <TabContent key="pings">
       <ItemList itemType="pings" items={app.pings} appName={app.app_name} />
     </TabContent>
 
-    <TabContent key="Metrics">
+    <TabContent key="metrics">
       <ItemList itemType="metrics" items={app.metrics} appName={app.app_name} />
     </TabContent>
 
-    <TabContent key="Application IDs">
+    <TabContent key="app_ids">
       <ItemList
         itemType="app_ids"
         items={app.app_ids}

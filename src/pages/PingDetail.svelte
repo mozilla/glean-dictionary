@@ -1,6 +1,9 @@
 <script>
+  import { setContext } from "svelte";
+  import { writable } from "svelte/store";
+
   import { getPingData } from "../state/api";
-  import { pageTitle } from "../state/stores";
+  import { pageState, pageTitle } from "../state/stores";
   import { getBigQueryURL } from "../state/urls";
 
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
@@ -14,6 +17,7 @@
   import { PING_SCHEMA } from "../data/schemas";
 
   export let params;
+
   let selectedAppVariant;
   const pingDataPromise = getPingData(params.app, params.ping).then(
     (pingData) => {
@@ -21,6 +25,14 @@
       return pingData;
     }
   );
+
+  const searchText = writable($pageState.search || "");
+  setContext("searchText", searchText);
+  const showExpired = writable($pageState.showExpired || false);
+  setContext("showExpired", showExpired);
+  $: {
+    pageState.set({ search: $searchText, showExpired: $showExpired });
+  }
 
   pageTitle.set(`${params.ping} | ${params.app}`);
 </script>
