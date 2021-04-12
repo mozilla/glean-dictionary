@@ -59,7 +59,7 @@
     "autoprefixer": "^10.2.5",
     "lodash": "^4.17.21",
     "lunr": "^2.3.9",
-    "marked": "^2.0.1",
+    "marked": "^2.0.3",
     "node-fetch": "^2.6.1",
     "postcss": "^8.2.9",
     "postcss-import": "^14.0.1",
