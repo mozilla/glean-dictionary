@@ -60,6 +60,7 @@
     }}>
     <Tab key="metrics">Metrics</Tab>
     <Tab key="pings">Pings</Tab>
+    <Tab key="tables">Tables</Tab>
     <Tab key="app_ids">Application IDs</Tab>
 
     <TabContent key="pings">
@@ -68,6 +69,10 @@
 
     <TabContent key="metrics">
       <ItemList itemType="metrics" items={app.metrics} appName={app.app_name} />
+    </TabContent>
+
+    <TabContent key="tables">
+      <ItemList itemType="tables" items={app.tables} appName={app.app_name} />
     </TabContent>
 
     <TabContent key="app_ids">
