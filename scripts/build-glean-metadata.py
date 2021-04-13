@@ -10,6 +10,7 @@ import stringcase
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
+BIGQUERY_ETL_DOCS_URL = "https://deploy-preview-1949--bigquery-etl-dev.netlify.app/mozdata/api.json"
 
 
 def _serialize_sets(obj):
@@ -49,6 +50,9 @@ def etl_snake_case(line: str) -> str:
 
 # Pull down the annotations
 annotations_index = requests.get(ANNOTATIONS_URL).json()
+
+# Dataset docs
+dataset_docs = requests.get(BIGQUERY_ETL_DOCS_URL).json()
 
 # Then, get the apps we're using
 apps = [app for app in glean.GleanApp.get_apps()]
@@ -94,13 +98,14 @@ for (app_name, app_group) in app_groups.items():
     for directory in (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir):
         os.makedirs(directory, exist_ok=True)
 
-    app_data = dict(app_group, pings=[], metrics=[])
+    app_data = dict(app_group, pings=[], metrics=[], tables=[])
 
     app_metrics = {}
     metric_pings = dict(data=[])
-    # keep track of which metric and ping identifiers we have seen so far
+    # keep track of which metric, ping and table identifiers we have seen so far
     metric_identifiers_seen = set()
     ping_identifiers_seen = set()
+    table_identifiers_seen = set()
 
     for app_id in [app["name"] for app in app_group["app_ids"]]:
         app = next(app for app in apps if app.app_id == app_id)
@@ -176,6 +181,7 @@ for (app_name, app_group) in app_groups.items():
                 )
             )
 
+        # ping data
         for ping in app.get_pings():
             if ping.identifier not in ping_identifiers_seen:
                 ping_identifiers_seen.add(ping.identifier)
@@ -208,7 +214,6 @@ for (app_name, app_group) in app_groups.items():
                 + bq_path
             ).json()
 
-            app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
             ping_data["variants"].append(
                 {
                     "app_id": app_id,
@@ -216,6 +221,7 @@ for (app_name, app_group) in app_groups.items():
                     "table": stable_ping_table_name,
                 }
             )
+            app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
             os.makedirs(app_variant_table_dir, exist_ok=True)
             open(os.path.join(app_variant_table_dir, f"{ping.identifier}.json"), "w").write(
                 json.dumps(
@@ -230,30 +236,48 @@ for (app_name, app_group) in app_groups.items():
                 )
             )
 
-        # write ping descriptions
-        for ping_data in app_data["pings"]:
-            open(os.path.join(app_ping_dir, f"{ping_data['name']}.json"), "w").write(
-                json.dumps(
-                    dict(
-                        ping_data,
-                        metrics=[
-                            metric
-                            for metric in metric_pings["data"]
-                            if ping_data["name"] in metric["pings"]
-                        ],
-                    ),
-                    default=_serialize_sets,
+        # generated dataset documentation
+        table_docs = dataset_docs.get(get_resource_path(app.app_id), [])
+        for table_doc in table_docs:
+            table_name = table_doc["table_name"]
+            if table_name not in table_identifiers_seen:
+                table_identifiers_seen.add(table_name)
+                app_data["tables"].append(
+                    {
+                        "name": table_name,
+                        "description": table_doc["metadata"].get(
+                            "friendly_name", "No description available"
+                        ),
+                    }
                 )
-            )
 
-        for metric_data in app_metrics.values():
-            open(
-                os.path.join(app_metrics_dir, f"{metric_data['name'].replace('.', '_')}.json"), "w"
-            ).write(
-                json.dumps(
-                    metric_data,
-                    default=_serialize_sets,
-                )
+    # write ping descriptions
+    for ping_data in app_data["pings"]:
+        open(os.path.join(app_ping_dir, f"{ping_data['name']}.json"), "w").write(
+            json.dumps(
+                dict(
+                    ping_data,
+                    metrics=[
+                        metric
+                        for metric in metric_pings["data"]
+                        if ping_data["name"] in metric["pings"]
+                    ],
+                ),
+                default=_serialize_sets,
             )
+        )
 
-        open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))
+    for metric_data in app_metrics.values():
+        open(
+            os.path.join(app_metrics_dir, f"{metric_data['name'].replace('.', '_')}.json"), "w"
+        ).write(
+            json.dumps(
+                metric_data,
+                default=_serialize_sets,
+            )
+        )
+
+    # sort the metadata, then write it out
+    for key in ["metrics", "pings", "tables"]:
+        app_data[key].sort(key=lambda v: v["name"])
+    open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))
