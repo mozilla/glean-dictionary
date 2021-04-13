@@ -230,30 +230,31 @@ for (app_name, app_group) in app_groups.items():
                 )
             )
 
-        # write ping descriptions
-        for ping_data in app_data["pings"]:
-            open(os.path.join(app_ping_dir, f"{ping_data['name']}.json"), "w").write(
-                json.dumps(
-                    dict(
-                        ping_data,
-                        metrics=[
-                            metric
-                            for metric in metric_pings["data"]
-                            if ping_data["name"] in metric["pings"]
-                        ],
-                    ),
-                    default=_serialize_sets,
-                )
+    # write ping descriptions
+    for ping_data in app_data["pings"]:
+        open(os.path.join(app_ping_dir, f"{ping_data['name']}.json"), "w").write(
+            json.dumps(
+                dict(
+                    ping_data,
+                    metrics=[
+                        metric
+                        for metric in metric_pings["data"]
+                        if ping_data["name"] in metric["pings"]
+                    ],
+                ),
+                default=_serialize_sets,
             )
+        )
 
-        for metric_data in app_metrics.values():
-            open(
-                os.path.join(app_metrics_dir, f"{metric_data['name'].replace('.', '_')}.json"), "w"
-            ).write(
-                json.dumps(
-                    metric_data,
-                    default=_serialize_sets,
-                )
+    # write metrics
+    for metric_data in app_metrics.values():
+        open(
+            os.path.join(app_metrics_dir, f"{metric_data['name'].replace('.', '_')}.json"), "w"
+        ).write(
+            json.dumps(
+                metric_data,
+                default=_serialize_sets,
             )
+        )
 
-        open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))
+    open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))
