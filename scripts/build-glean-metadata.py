@@ -257,4 +257,9 @@ for (app_name, app_group) in app_groups.items():
             )
         )
 
+    # sort the information in the app-level summary, then write it out
+    # (we don't sort application id information, that's already handled
+    # above)
+    for key in ["metrics", "pings"]:
+        app_data[key].sort(key=lambda v: v["name"])
     open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))
