@@ -18,7 +18,10 @@ export async function getPingData(appName, pingName) {
 }
 
 export async function getMetricData(appName, metricName) {
-  return fetchJSON(`/data/${appName}/metrics/${metricName}.json`);
+  // for metric names that start with "metrics", we added "data"
+  // to its JSON file name to avoid being blocked by uBlock origin
+
+  return fetchJSON(`/data/${appName}/metrics/data_${metricName}.json`);
 }
 
 export async function getTableData(appName, appId, pingName) {
