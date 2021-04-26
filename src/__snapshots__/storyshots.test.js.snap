@@ -1756,7 +1756,11 @@ exports[`Storyshots Markdown Text With Angle Brackets 1`] = `
   
 
   <p>
-    markdown &lt;&gt; with angle &lt;brackets&gt;
+    markdown &lt;&gt; with angle &lt;brackets&gt; (unquoted) and more angle 
+    <code>
+      &lt;brackets&gt;
+    </code>
+     (quoted)
   </p>
   
 

@@ -13,20 +13,19 @@
         start ? `start="${start}"` : ""
       } class="mzp-u-list-styled">${body}</${outerEl}>`;
     },
+    html(html) {
+      return `<code>${html.replace("<", "&lt;")}</code>`;
+    },
   };
   use({ renderer });
 
   export let text;
   // if inline is set, do not wrap the markdown in a paragraph -- useful for short snippets
   export let inline = true;
-
-  // escape `<` so it doesn't get confused as an HTML tag, see:
-  // https://github.com/mozilla/glean-dictionary/pull/497
-  $: htmlText = text.replace("<", "&lt;");
 </script>
 
 {#if inline}
-  {@html parseInline(htmlText)}
+  {@html parseInline(text)}
 {:else}
-  {@html parse(htmlText)}
+  {@html parse(text)}
 {/if}
