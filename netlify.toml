@@ -1,0 +1,15 @@
+[build]
+command = """
+    scripts/build-glean-metadata.py
+    npm run build
+    if [ "$STORYBOOK" ]; then
+      npm run build-storybook
+      mv storybook-static public/storybook
+    fi
+"""
+environment = { PYTHON_VERSION = "3.7" }
+publish = "public"
+
+[context.production]
+  [context.production.environment]
+  CONTEXT = "production"
