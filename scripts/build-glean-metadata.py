@@ -18,6 +18,18 @@ def _serialize_sets(obj):
     return obj
 
 
+def _normalize_metrics(name):
+    # replace . with _ so sirv doesn't think that
+    # a metric is a file
+    metric_name = name.replace(".", "_")
+
+    # if a metric name starts with "metrics", uBlock Origin
+    # will block the network call to get the JSON resource
+    # See: https://github.com/mozilla/glean-dictionary/issues/550
+    # To get around this, we add "data" to metric names
+    return f"data_{metric_name}"
+
+
 # ETL specific snakecase taken from:
 # https://github.com/mozilla/bigquery-etl/blob/master/bigquery_etl/util/common.py
 #
@@ -249,7 +261,7 @@ for (app_name, app_group) in app_groups.items():
     # write metrics
     for metric_data in app_metrics.values():
         open(
-            os.path.join(app_metrics_dir, f"{metric_data['name'].replace('.', '_')}.json"), "w"
+            os.path.join(app_metrics_dir, f"{_normalize_metrics(metric_data['name'])}.json"), "w"
         ).write(
             json.dumps(
                 metric_data,
