@@ -140,7 +140,7 @@ for (app_name, app_group) in app_groups.items():
                     metric.definition,
                     name=metric.identifier,
                     annotation=(
-                        annotations_index.get(app_name, {})
+                        annotations_index.get(metric.definition["origin"], {})
                         .get("metrics", {})
                         .get(metric.identifier)
                     ),
@@ -185,7 +185,7 @@ for (app_name, app_group) in app_groups.items():
                         ping.definition,
                         variants=[],
                         annotation=(
-                            annotations_index.get(app_name, {})
+                            annotations_index.get(ping.definition["origin"], {})
                             .get("pings", {})
                             .get(ping.identifier)
                         ),
