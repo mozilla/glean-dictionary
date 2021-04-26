@@ -73,17 +73,17 @@
   }
 
   page("*", parseQuery);
+  page("*", (ctx, next) => {
+    ga("set", "page", ctx.page.current);
+    ga("send", "pageview");
+    next();
+  });
   page("/", setComponent(AppList));
   page("/apps/:app/app_ids/:appId/tables/:table", setComponent(TableDetail));
   page("/apps/:app/app_ids/:appId", setComponent(AppIdDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
   page("/apps/:app", setComponent(AppDetail));
-  page.exit("*", (ctx, next) => {
-    ga("set", "page", ctx.page.current);
-    ga("send", "pageview");
-    next();
-  });
   page();
 
   // set up a handler to update our URL when page state changes (we do this here,
