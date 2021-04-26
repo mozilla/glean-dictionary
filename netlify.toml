@@ -1,0 +1,19 @@
+[build]
+command = """
+    scripts/build-glean-metadata.py
+    npm run build
+    npm run build-storybook
+    mv storybook-static public/storybook
+"""
+environment = { PYTHON_VERSION = "3.7" }
+publish = "public"
+
+[context.production]
+  # We don't build storybook in production
+  [context.production.build]
+  command = """
+  scripts/build-glean-metadata.py
+  npm run build
+  """
+  [context.production.environment]
+  CONTEXT = "production"
