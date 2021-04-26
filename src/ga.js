@@ -5,5 +5,4 @@ export const googleAnalytics = (gaID) => {
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
   ga('create', gaID, 'auto');
-  ga('send', 'pageview');
 };
