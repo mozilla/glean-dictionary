@@ -4,7 +4,6 @@ import logging
 from datetime import datetime
 from typing import List
 
-import cachecontrol
 import requests
 
 logger = logging.getLogger(__name__)
@@ -17,12 +16,17 @@ class _Cache:
     """
 
     def __init__(self):
-        self.sess = requests.Session()
-        self.sess.mount("http://", cachecontrol.CacheControlAdapter())
-        self.sess.mount("https://", cachecontrol.CacheControlAdapter())
+        self.cached_responses = {}
 
     def get(self, url: str):
-        return self.sess.get(url)
+        if self.cached_responses.get(url):
+            return self.cached_responses[url]
+
+        # pass a parameter to bypass any caching, which might give us stale
+        # data (probeinfo.telemetry.mozilla.org is currently using cloudfront)
+        resp = requests.get(url + f"?t={datetime.utcnow().isoformat()}")
+        self.cached_responses[url] = resp
+        return resp
 
     def get_json(self, url: str):
         return self.get(url).json()
