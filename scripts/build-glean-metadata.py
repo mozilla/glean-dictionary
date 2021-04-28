@@ -82,6 +82,7 @@ for app in apps:
                 "description": app.app.get("description", app.app["app_description"]),
                 "channel": app.app.get("app_channel", "release"),
                 "deprecated": app.app.get("deprecated", False),
+                "prototype": app.app.get("prototype", False),
             }
         ]
     )
@@ -107,6 +108,9 @@ for (app_name, app_group) in app_groups.items():
         os.makedirs(directory, exist_ok=True)
 
     app_data = dict(app_group, pings=[], metrics=[])
+    # An application group is considered a prototype only if all its application ids are
+    if all([app_id.get("prototype") for app_id in app_group["app_ids"]]):
+        app_data["prototype"] = True
 
     app_metrics = {}
     metric_pings = dict(data=[])
