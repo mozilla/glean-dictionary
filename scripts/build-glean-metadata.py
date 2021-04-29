@@ -74,6 +74,7 @@ for app in apps:
             "url": app.app["url"],
             "notification_emails": app.app["notification_emails"],
             "app_ids": [],
+            "annotation": (annotations_index.get(app.app_name, {}).get("app")),
         }
     app_groups[app.app_name]["app_ids"].extend(
         [

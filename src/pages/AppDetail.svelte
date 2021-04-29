@@ -6,6 +6,7 @@
 
   import { APPLICATION_DEFINITION_SCHEMA } from "../data/schemas";
   import AppAlert from "../components/AppAlert.svelte";
+  import Commentary from "../components/Commentary.svelte";
   import ItemList from "../components/ItemList.svelte";
   import MetadataTable from "../components/MetadataTable.svelte";
   import NotFound from "../components/NotFound.svelte";
@@ -32,9 +33,16 @@
 
 <style>
   @import "../main.scss";
+  h2 {
+    @include text-title-xs;
+  }
 </style>
 
 {#await appDataPromise then app}
+  {#if app.annotation && app.annotation.warning}
+    <AppAlert status="warning" message={app.annotation.warning} />
+  {/if}
+
   {#if app.prototype}
     <AppAlert
       status="warning"
@@ -51,6 +59,9 @@
     appName={params.app}
     item={app}
     schema={APPLICATION_DEFINITION_SCHEMA} />
+
+  <h2>Commentary</h2>
+  <Commentary item={app} itemType={'application'} />
 
   <TabGroup
     active={itemType}
