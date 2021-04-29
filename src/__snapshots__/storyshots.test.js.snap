@@ -45,6 +45,8 @@ exports[`Storyshots App Alert Text 1`] = `
       class="alert-text svelte-q7l1in"
     >
       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+      
+      
     </div>
   </div>
    
@@ -100,6 +102,8 @@ exports[`Storyshots App Alert Text 1`] = `
       class="alert-text svelte-q7l1in"
     >
       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+      
+      
     </div>
   </div>
    
@@ -138,6 +142,8 @@ exports[`Storyshots App Alert Text 1`] = `
       class="alert-text svelte-q7l1in"
     >
       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+      
+      
     </div>
   </div>
 </section>
