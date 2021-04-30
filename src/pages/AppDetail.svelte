@@ -22,7 +22,7 @@
   let itemType = $pageState.itemType || "metrics";
   const searchText = writable($pageState.search || "");
   setContext("searchText", searchText);
-  const showExpired = writable($pageState.showExpired || false);
+  const showExpired = writable($pageState.showExpired || true);
   setContext("showExpired", showExpired);
   $: {
     pageState.set({ itemType, search: $searchText, showExpired: $showExpired });
