@@ -22,7 +22,7 @@ export function getLookerURL(appName, pingName) {
   // hack (we should ideally be doing this somewhere in our upstream ETL)
 
   if (appName === "fenix" || appName === "burnham") {
-    return `https://mozilladev.cloud.looker.com/explore/${appName}/${pingName.replace(
+    return `https://mozilla.cloud.looker.com/explore/${appName}/${pingName.replace(
       /-/g,
       "_"
     )}`;
