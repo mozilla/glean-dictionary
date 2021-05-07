@@ -4,7 +4,7 @@
 
   import { getPingData } from "../state/api";
   import { pageState, pageTitle } from "../state/stores";
-  import { getBigQueryURL } from "../state/urls";
+  import { getBigQueryURL, getLookerURL } from "../state/urls";
 
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
   import Commentary from "../components/Commentary.svelte";
@@ -81,6 +81,17 @@
           </a>
         </td>
       </tr>
+      {#if getLookerURL(params.app, params.ping)}
+        <tr>
+          <td>
+            Looker
+            <HelpHoverable content={'Explore this ping in Looker.'} />
+          </td>
+          <td>
+            <a href={getLookerURL(params.app, params.ping)}> {params.ping} </a>
+          </td>
+        </tr>
+      {/if}
     </table>
   {/if}
 
