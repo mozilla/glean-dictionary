@@ -167,7 +167,7 @@
     {/if}
   </header>
   <main>
-    <div class="mzp-l-content">
+    <div class="mzp-l-content" style="padding-top: 15px">
       <article class="mzp-c-article">
         <svelte:component this={component} bind:params />
       </article>
