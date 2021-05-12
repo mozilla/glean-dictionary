@@ -11,9 +11,9 @@ structure and governance, see:
 
 https://wiki.mozilla.org/Data/WorkingGroups/GleanDictionary
 
-You can play with an early version of the Glean Dictionary at:
+The production version of the Glean Dictionary is deployed at:
 
-https://dictionary.protosaur.dev
+https://dictionary.telemetry.mozilla.org
 
 ## Getting Started
 
