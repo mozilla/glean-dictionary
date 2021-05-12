@@ -5,8 +5,11 @@
 
   export let listItems;
 
-  let filteredItems = listItems;
+  $pageState = {
+    search: "",
+  };
 
+  let filteredItems = listItems;
   $: {
     filteredItems = listItems.filter((item) =>
       item.includes($pageState.search)
