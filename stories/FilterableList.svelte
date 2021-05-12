@@ -1,20 +1,21 @@
 <script>
-  import { writable } from "svelte/store";
+  import { pageState } from "../src/state/stores";
 
   import FilterInput from "../src/components/FilterInput.svelte";
 
   export let listItems;
+
   let filteredItems = listItems;
 
-  let searchText = writable("");
-
   $: {
-    filteredItems = listItems.filter((item) => item.includes($searchText));
+    filteredItems = listItems.filter((item) =>
+      item.includes($pageState.search)
+    );
   }
 </script>
 
 <div class="container">
-  <FilterInput bind:value={$searchText} />
+  <FilterInput />
   <ul>
     {#each filteredItems as item}
       <li>{item}</li>

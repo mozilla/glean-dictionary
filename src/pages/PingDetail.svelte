@@ -26,7 +26,7 @@
 
   $pageState = {
     search: "",
-    showExpired: false,
+    showExpired: true,
     ...$pageState,
   };
   pageTitle.set(`${params.ping} | ${params.app}`);

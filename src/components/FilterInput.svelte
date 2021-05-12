@@ -1,5 +1,6 @@
 <script>
-  export let value = "";
+  import { pageState } from "../state/stores";
+
   export let placeHolder;
 </script>
 
@@ -16,4 +17,10 @@
   }
 </style>
 
-<div><input {placeHolder} type="search" id="filter-input" bind:value /></div>
+<div>
+  <input
+    {placeHolder}
+    type="search"
+    id="filter-input"
+    bind:value={$pageState.search} />
+</div>

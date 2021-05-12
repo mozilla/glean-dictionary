@@ -65,7 +65,7 @@
 <div class="schema-viewer">
   <PageTitle text={'Schema'} />
 
-  <FilterInput bind:value={$pageState.search} />
+  <FilterInput />
   <div class="schema-browser">
     <p>
       {#each nodesWithVisibility as node}

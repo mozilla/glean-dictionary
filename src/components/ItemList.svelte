@@ -132,9 +132,7 @@
     </span>
   {/if}
   {#if showFilter}
-    <FilterInput
-      placeHolder="Search {itemType}"
-      bind:value={$pageState.search} />
+    <FilterInput placeHolder="Search {itemType}" />
   {/if}
   <div class="item-browser">
     <table class="mzp-u-data-table">

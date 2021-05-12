@@ -19,7 +19,7 @@
   $pageState = {
     itemType: "metrics",
     search: "",
-    showExpired: false,
+    showExpired: true,
     ...$pageState,
   };
 
