@@ -1,17 +1,18 @@
 <script>
-  import { getContext } from "svelte";
   import SchemaNode from "./SchemaNode.svelte";
   import FilterInput from "./FilterInput.svelte";
   import PageTitle from "./PageTitle.svelte";
+
+  import { pageState } from "../state/stores";
 
   export let app;
   export let nodes = [];
 
   let nodesWithVisibility = [];
 
-  const searchText = getContext("searchText");
   $: {
-    const filterTerms = $searchText
+    const { search } = $pageState;
+    const filterTerms = search
       .trim()
       .split(" ")
       .filter((t) => t.length > 0);

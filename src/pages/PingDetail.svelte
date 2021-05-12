@@ -1,11 +1,9 @@
 <script>
-  import { setContext } from "svelte";
-  import { writable } from "svelte/store";
-
   import { getPingData } from "../state/api";
   import { pageState, pageTitle } from "../state/stores";
   import { getBigQueryURL, getLookerURL } from "../state/urls";
 
+  import AppAlert from "../components/AppAlert.svelte";
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
   import Commentary from "../components/Commentary.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
@@ -26,14 +24,11 @@
     }
   );
 
-  const searchText = writable($pageState.search || "");
-  setContext("searchText", searchText);
-  const showExpired = writable($pageState.showExpired || false);
-  setContext("showExpired", showExpired);
-  $: {
-    pageState.set({ search: $searchText, showExpired: $showExpired });
-  }
-
+  $pageState = {
+    search: "",
+    showExpired: true,
+    ...$pageState,
+  };
   pageTitle.set(`${params.ping} | ${params.app}`);
 </script>
 
@@ -47,6 +42,12 @@
 </style>
 
 {#await pingDataPromise then ping}
+  {#if ping.origin && ping.origin !== params.app}
+    <AppAlert
+      status="warning"
+      message={`This ping is defined by a library used by the application (__${ping.origin}__), rather than the application itself. For more details, see the definition.`} />
+  {/if}
+
   <PageTitle text={ping.name} />
   <p>
     <Markdown text={ping.description} />
