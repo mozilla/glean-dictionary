@@ -161,6 +161,18 @@
 </style>
 
 {#if apps}
+  <p>
+    The Glean Dictionary documents the data collected by
+    <a href="https://mozilla.org">Mozilla</a>
+    projects that use
+    <a href="https://mozilla.github.io/glean/">Glean</a>. Click on a project
+    below to browse its data catalog. If you have questions, please ask in the
+    <a
+      href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org">Glean
+      Dictionary channel</a>
+    on Mozilla's instance of Matrix.
+  </p>
+
   <div class="app-filter">
     <FilterInput placeHolder="Search for an application" />
     <span id="deprecation-checkbox">
