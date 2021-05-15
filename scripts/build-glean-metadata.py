@@ -136,6 +136,9 @@ for (app_name, app_group) in app_groups.items():
                 base_definition = {
                     "name": metric.identifier,
                     "description": metric.description,
+                    "extra_keys": metric.definition["extra_keys"]
+                    if "extra_keys" in metric.definition
+                    else None,
                     "type": metric.definition["type"],
                     "expires": metric.definition["expires"],
                 }

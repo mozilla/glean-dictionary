@@ -1,4 +1,6 @@
 <script>
+  import { isEmpty } from "lodash";
+
   import AppAlert from "../components/AppAlert.svelte";
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
   import Commentary from "../components/Commentary.svelte";
@@ -117,6 +119,24 @@
     {/each}
     ping{metric.send_in_pings.length > 1 ? 's' : ''}.
   </p>
+
+  {#if metric.extra_keys && !isEmpty(metric.extra_keys)}
+    <dl class="mzp-u-list-styled">
+      <a
+        href="https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys">Extra
+        key{Object.keys(metric.extra_keys).length > 1 ? 's' : ''}:
+      </a>
+
+      {#each Object.entries(metric.extra_keys) as [keyName, definition]}
+        <dd>
+          <strong>{keyName}</strong>:
+
+          <Markdown text={definition.description} />
+        </dd>
+      {/each}
+    </dl>
+  {/if}
+  <br />
   <h2>Definition</h2>
 
   <MetadataTable
