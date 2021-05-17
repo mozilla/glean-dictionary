@@ -38,9 +38,12 @@
     const originMatch = (item) =>
       item.origin && item.origin.includes(search.toLowerCase());
 
+    const labelMatch = (item) => item.labels && item.labels.includes(search);
+
     // filter on match either on name or on origin
     filteredItems = items.filter(
-      (item) => item.name.includes(search) || originMatch(item)
+      (item) =>
+        item.name.includes(search) || originMatch(item) || labelMatch(item)
     );
 
     // also filter out expired items (if we're not showing expired)
@@ -59,8 +62,8 @@
         : [];
   }
 
-  const originClicked = (origin) => {
-    $pageState = { ...$pageState, search: origin };
+  const updateSearch = (search) => {
+    $pageState = { ...$pageState, search };
     // when the user clicks on an origin (library name), we want to persist a new state
     updateURLState(true);
   };
@@ -89,13 +92,19 @@
       <!-- We have to do inline styling here to override Protocol CSS rules -->
       <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
       <col width="35%" />
-      <col width={itemType === "metrics" ? "20%" : "65%"} />
-      <col width={itemType === "metrics" ? "45%" : "0"} />
+      <col
+        width={itemType === "metrics" || itemType === "labels" ? "20%" : "65%"}
+      />
+      <col
+        width={itemType === "metrics" || itemType === "labels" ? "45%" : "0"}
+      />
       <thead>
         <tr>
           <th scope="col" style="text-align: center;">Name</th>
           {#if itemType === "metrics"}
             <th scope="col" style="text-align: center;">Type</th>
+          {:else if itemType === "labels"}
+            <th scope="col" style="text-align: center;">Metric Count</th>
           {/if}
           <th scope="col" style="text-align: center;">Description</th>
         </tr>
@@ -113,8 +122,18 @@
                     message={item.origin}
                     bgColor="#4a5568"
                     clickable
-                    on:click={originClicked(item.origin)}
+                    on:click={updateSearch(item.origin)}
                   />
+                {/if}
+                {#if item.labels}
+                  {#each item.labels as label}
+                    <Pill
+                      message={label}
+                      bgColor="#4a5568"
+                      clickable
+                      on:click={updateSearch(label)}
+                    />
+                  {/each}
                 {/if}
                 {#if isExpired(item.expires)}
                   <Pill message="Expired" bgColor="#4a5568" />
@@ -127,6 +146,12 @@
             {#if itemType === "metrics"}
               <td style="text-align: center;">
                 <div class="item-property"><code>{item.type}</code></div>
+              </td>
+            {:else if itemType === "labels"}
+              <td style="text-align: center;">
+                <div class="item-property">
+                  {item.metric_count}
+                </div>
               </td>
             {/if}
             <td class="description">

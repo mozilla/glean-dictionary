@@ -13,6 +13,10 @@ export async function getAppIdData(appName, appId) {
   return fetchJSON(`/data/${appName}/app_ids/${appId}.json`);
 }
 
+export async function getLabelData(appName, labelName) {
+  return fetchJSON(`/data/${appName}/labels/${labelName}.json`);
+}
+
 export async function getPingData(appName, pingName) {
   return fetchJSON(`/data/${appName}/pings/${pingName}.json`);
 }

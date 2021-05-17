@@ -9,14 +9,6 @@
   }
 </script>
 
-<div
-  class="title"
-  on:click={() => selectTab(key)}
-  class:active={$activeTab === key}
->
-  <slot />
-</div>
-
 <style>
   .title {
     @include text-title-3xs;
@@ -37,3 +29,10 @@
     }
   }
 </style>
+
+<div
+  class="title"
+  on:click={() => selectTab(key)}
+  class:active={$activeTab === key}>
+  <slot />
+</div>

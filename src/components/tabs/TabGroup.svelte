@@ -3,12 +3,25 @@
   import { writable } from "svelte/store";
   import { createEventDispatcher, setContext } from "svelte";
 
-  const activeTab = writable(active);
+  let activeTab = writable(active);
   setContext("activeTab", activeTab);
 
   const dispatch = createEventDispatcher();
-  $: dispatch("tabChanged", { active: $activeTab });
+  $: {
+    // handles $activeTab changing
+    dispatch("tabChanged", { active: $activeTab });
+  }
+  $: {
+    // handles component binding changing
+    activeTab.set(active);
+  }
 </script>
+
+<style>
+  .tab-content {
+    margin-top: $spacing-lg;
+  }
+</style>
 
 <div class="tabs">
   <slot name="tabs" />
@@ -17,9 +30,3 @@
 <div class="tab-content">
   <slot />
 </div>
-
-<style>
-  .tab-content {
-    margin-top: $spacing-lg;
-  }
-</style>
