@@ -3,6 +3,7 @@
 import json
 import os
 import re
+import sys
 
 import glean
 import requests
@@ -64,6 +65,10 @@ annotations_index = requests.get(ANNOTATIONS_URL).json()
 
 # Then, get the apps we're using
 apps = [app for app in glean.GleanApp.get_apps()]
+
+if len(sys.argv) > 1:
+    apps = [app for app in apps if app.app_name in sys.argv[1:]]
+
 app_groups = {}
 for app in apps:
     if not app_groups.get(app.app_name):

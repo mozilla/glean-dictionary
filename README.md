@@ -39,6 +39,15 @@ npm run dev
 If that worked, you should be able to see a local version of Glean at
 http://localhost:5000
 
+You can speed up the "build data" step by appending the name of a set of
+application(s) you want to build metadata for. This can speed up the process
+considerably. For example, to build a metadata index for Fenix (Firefox for
+Android) only, try:
+
+```bash
+./scripts/build-glean-metadata.py fenix
+```
+
 ## Storybook
 
 We use [Storybook](https://storybook.js.org/) for developing and validating
