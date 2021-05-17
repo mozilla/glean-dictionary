@@ -83,9 +83,9 @@ procedure:
   [this iodide notebook](https://alpha.iodide.io/notebooks/6616/) useful for
   creating a set of notes on what changed).
 - From a local checkout, update the `production` branch to be in sync with the
-  tag you just created, then push to the production branch. After the 
-  integration tests pass, dictionary.telemetry.mozilla.org should be automatically
-  updated to the latest version.
+  tag you just created, then push to the production branch. After the
+  integration tests pass, dictionary.telemetry.mozilla.org should be
+  automatically updated to the latest version.
 
 A version of the Glean Dictionary running the development branch (`main`) is
 accessible at https://glean-dictionary-dev.netlify.app/
