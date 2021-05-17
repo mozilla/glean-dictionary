@@ -172,8 +172,8 @@ for (app_name, app_group) in app_groups.items():
             metric_type = metric.definition["type"]
             metric_name_snakecase = stringcase.snakecase(metric.identifier)
             metric_table_name = (
-                f"client_info.{metric_name_snakecase}"
-                if metric.is_client_info
+                f"{metric.bq_prefix}.{metric_name_snakecase}"
+                if metric.bq_prefix
                 else f"metrics.{metric_type}.{metric_name_snakecase}"
             )
             bigquery_names = dict(
