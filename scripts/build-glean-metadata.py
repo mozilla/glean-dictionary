@@ -12,7 +12,7 @@ import stringcase
 import yaml
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
-ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
+ANNOTATIONS_URL = "https://deploy-preview-12--glean-annotations.netlify.app/api.json"
 NAMESPACES_URL = "https://raw.githubusercontent.com/mozilla/looker-hub/main/namespaces.yaml"
 
 # Priority for getting metric data (use the later definitions of nightly over release)
@@ -172,10 +172,11 @@ open(os.path.join(OUTPUT_DIRECTORY, "apps.json"), "w").write(json.dumps(list(app
 # Write out some metadata for each app group (for the app detail page)
 for (app_name, app_group) in app_groups.items():
     app_dir = os.path.join(OUTPUT_DIRECTORY, app_name)
-    (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir) = (
-        os.path.join(app_dir, subtype) for subtype in ("app_ids", "pings", "tables", "metrics")
+    (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir, app_labels_dir) = (
+        os.path.join(app_dir, subtype)
+        for subtype in ("app_ids", "pings", "tables", "metrics", "labels")
     )
-    for directory in (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir):
+    for directory in (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir, app_labels_dir):
         os.makedirs(directory, exist_ok=True)
 
     app_data = dict(app_group, pings=[], metrics=[])
@@ -204,6 +205,11 @@ for (app_name, app_group) in app_groups.items():
             if metric.identifier not in metric_identifiers_seen:
                 metric_identifiers_seen.add(metric.identifier)
 
+                # read the annotation, if any
+                annotation = (
+                    annotations_index.get(app_name, {}).get("metrics", {}).get(metric.identifier)
+                )
+
                 base_definition = {
                     "name": metric.identifier,
                     "description": metric.description,
@@ -213,6 +219,8 @@ for (app_name, app_group) in app_groups.items():
                     "type": metric.definition["type"],
                     "expires": metric.definition["expires"],
                 }
+                if annotation and annotation.get("labels"):
+                    base_definition.update({"labels": annotation["labels"]})
                 if metric.definition["origin"] != app_name:
                     base_definition.update({"origin": metric.definition["origin"]})
 
@@ -443,9 +451,34 @@ for (app_name, app_group) in app_groups.items():
             )
         )
 
+    # write labels (if any)
+    labels = [
+        {"name": k, "description": v}
+        for (k, v) in annotations_index.get(app.app_name, {}).get("labels", {}).items()
+    ]
+    if labels:
+        app_data["labels"] = labels
+        for label in labels:
+            label_metrics = [
+                metric
+                for metric in app_data["metrics"]
+                if label["name"] in metric.get("labels", [])
+            ]
+            label["metric_count"] = len(label_metrics)
+            open(os.path.join(app_labels_dir, f"{label['name']}.json"), "w").write(
+                json.dumps(
+                    dict(
+                        label,
+                        origin=app.app_name,
+                        metrics=label_metrics,
+                    )
+                )
+            )
+
     # sort the information in the app-level summary, then write it out
     # (we don't sort application id information, that's already handled
     # above)
-    for key in ["metrics", "pings"]:
-        app_data[key].sort(key=lambda v: v["name"])
+    for key in ["labels", "metrics", "pings"]:
+        if app_data.get(key):
+            app_data[key].sort(key=lambda v: v["name"])
     open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))

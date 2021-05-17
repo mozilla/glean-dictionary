@@ -6,6 +6,9 @@ function getResourceName(name) {
 }
 
 export function getItemURL(appName, itemType, itemName) {
+  if (itemType === "labels") {
+    return `/apps/${appName}?itemType=metrics&search=${itemName}`;
+  }
   return `/apps/${appName}/${itemType}/${getResourceName(itemName)}`;
 }
 

@@ -26,7 +26,7 @@
   let title;
 
   afterUpdate(() => {
-    const { app, appId, ping, metric, table } = params;
+    const { app, appId, label, ping, metric, table } = params;
 
     links = [
       ...(app
@@ -38,6 +38,7 @@
       ...(appId
         ? [{ url: `/apps/${app}/app_ids/${appId}/`, name: appId }]
         : []),
+      ...(label ? [{ url: `/apps/${app}/labels/${label}/`, name: label }] : []),
       ...(ping ? [{ url: `/apps/${app}/pings/${ping}/`, name: ping }] : []),
       ...(metric
         ? [

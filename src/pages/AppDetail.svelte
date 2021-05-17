@@ -16,15 +16,16 @@
 
   export let params;
 
-  const appDataPromise = getAppData(params.app);
-
-  $pageState = {
-    itemType: "metrics",
-    page: 1,
-    search: "",
-    showExpired: true,
-    ...$pageState,
-  };
+  const appDataPromise = getAppData(params.app).then((app) => {
+    $pageState = {
+      itemType: "metrics",
+      page: 1,
+      search: "",
+      showExpired: true,
+      ...$pageState,
+    };
+    return app;
+  });
 
   pageTitle.set(params.app);
 </script>
@@ -61,7 +62,7 @@
   <Commentary item={app} itemType={"application"} />
 
   <TabGroup
-    active={$pageState.itemType}
+    bind:active={$pageState.itemType}
     on:tabChanged={({ detail }) => {
       pageState.set({
         ...$pageState,
@@ -73,7 +74,14 @@
   >
     <Tab key="metrics">Metrics</Tab>
     <Tab key="pings">Pings</Tab>
+    {#if app.labels && app.labels.length}
+      <Tab key="labels">Labels</Tab>
+    {/if}
     <Tab key="app_ids">Application IDs</Tab>
+
+    <TabContent key="labels">
+      <ItemList itemType="labels" items={app.labels} appName={app.app_name} />
+    </TabContent>
 
     <TabContent key="pings">
       <ItemList itemType="pings" items={app.pings} appName={app.app_name} />
