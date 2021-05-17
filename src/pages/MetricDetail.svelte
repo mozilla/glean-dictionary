@@ -121,12 +121,13 @@
   </p>
 
   {#if metric.extra_keys && !isEmpty(metric.extra_keys)}
+    <h2>
+      Extra key{Object.keys(metric.extra_keys).length > 1 ? 's' : ''}
+      <HelpHoverable
+        content={'The acceptable keys on the "extra" object sent with events.'}
+        link={'https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys'} />
+    </h2>
     <dl class="mzp-u-list-styled">
-      <a
-        href="https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys">Extra
-        key{Object.keys(metric.extra_keys).length > 1 ? 's' : ''}:
-      </a>
-
       {#each Object.entries(metric.extra_keys) as [keyName, definition]}
         <dd>
           <strong>{keyName}</strong>:
@@ -136,7 +137,7 @@
       {/each}
     </dl>
   {/if}
-  <br />
+
   <h2>Definition</h2>
 
   <MetadataTable
