@@ -69,6 +69,15 @@ following command:
 npm run test:jest -- -u
 ```
 
+## Deployment
+
+The production version of the Glean Dictionary (https://dictionary.telemetry.mozilla.org) is 
+deployed from the `production` branch on this repository, which usually corresponds to the latest 
+GitHub release.
+
+A version of the Glean Dictionary running the development branch (`main`) is accessible at
+https://glean-dictionary-dev.netlify.app/
+
 ## Contributing
 
 For more information on contributing, see [CONTRIBUTING.md](./CONTRIBUTING.md)
