@@ -5,6 +5,7 @@
   import { fetchJSON } from "../state/api";
 
   import FilterInput from "../components/FilterInput.svelte";
+  import Markdown from "../components/Markdown.svelte";
   import Pill from "../components/Pill.svelte";
 
   import { pageState, pageTitle } from "../state/stores";
@@ -211,7 +212,7 @@
                 <Pill message="Deprecated" bgColor="#4a5568" />
               {/if}
               <p class="mzp-c-card-meta" id="card-description">
-                {app.app_description}
+                <Markdown text={app.app_description} />
               </p>
             </div>
           </a>
