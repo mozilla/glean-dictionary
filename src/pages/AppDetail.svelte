@@ -5,6 +5,7 @@
   import AppAlert from "../components/AppAlert.svelte";
   import Commentary from "../components/Commentary.svelte";
   import ItemList from "../components/ItemList.svelte";
+  import Markdown from "../components/Markdown.svelte";
   import MetadataTable from "../components/MetadataTable.svelte";
   import NotFound from "../components/NotFound.svelte";
   import Pill from "../components/Pill.svelte";
@@ -48,7 +49,8 @@
   {#if app.deprecated}
     <Pill message="Deprecated" bgColor="#4a5568" />
   {/if}
-  <p>{app.app_description}</p>
+
+  <Markdown text={app.app_description} inline={false} />
 
   <MetadataTable
     appName={params.app}
