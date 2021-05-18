@@ -8,9 +8,11 @@ import sys
 import glean
 import requests
 import stringcase
+import yaml
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
+NAMESPACES_URL = "https://lookml-generator-dev.netlify.app/namespaces.yaml"
 
 
 def _serialize_sets(obj):
@@ -62,6 +64,7 @@ def etl_snake_case(line: str) -> str:
 
 # Pull down the annotations
 annotations_index = requests.get(ANNOTATIONS_URL).json()
+looker_namespaces = yaml.safe_load(requests.get(NAMESPACES_URL).text)
 
 # Then, get the apps we're using
 apps = [app for app in glean.GleanApp.get_apps()]
@@ -203,18 +206,22 @@ for (app_name, app_group) in app_groups.items():
         for ping in app.get_pings():
             if ping.identifier not in ping_identifiers_seen:
                 ping_identifiers_seen.add(ping.identifier)
-
-                app_data["pings"].append(
-                    dict(
-                        ping.definition,
-                        variants=[],
-                        annotation=(
-                            annotations_index.get(ping.definition["origin"], {})
-                            .get("pings", {})
-                            .get(ping.identifier)
-                        ),
-                    )
+                ping_data = dict(
+                    ping.definition,
+                    variants=[],
+                    annotation=(
+                        annotations_index.get(ping.definition["origin"], {})
+                        .get("pings", {})
+                        .get(ping.identifier)
+                    ),
                 )
+                if (
+                    looker_namespaces.get(app_name)
+                    and looker_namespaces[app_name].get("glean_app")
+                    and looker_namespaces[app_name]["explores"].get(ping.identifier)
+                ):
+                    ping_data.update({"looker_explore": True})
+                app_data["pings"].append(ping_data)
 
             ping_data = next(pd for pd in app_data["pings"] if pd["name"] == ping.identifier)
 
