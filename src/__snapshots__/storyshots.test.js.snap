@@ -193,7 +193,13 @@ exports[`Storyshots Authenticated Link Text 1`] = `
     class="lock-link svelte-1db1y01"
     href="https://docs.telemetry.mozilla.org/concepts/gaining_access.html"
   >
-    🔒
+    <span
+      aria-label="access limited"
+      class="svelte-1db1y01"
+      role="img"
+    >
+      🔒
+    </span>
   </a>
 </section>
 `;
