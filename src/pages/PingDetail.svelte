@@ -1,7 +1,7 @@
 <script>
   import { getPingData } from "../state/api";
   import { pageState, pageTitle } from "../state/stores";
-  import { getBigQueryURL, getLookerURL } from "../state/urls";
+  import { getBigQueryURL, getLookerExploreURL } from "../state/urls";
 
   import AppAlert from "../components/AppAlert.svelte";
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
@@ -82,14 +82,18 @@
           </a>
         </td>
       </tr>
-      {#if getLookerURL(params.app, params.ping)}
+      {#if ping.looker_explore}
         <tr>
           <td>
             Looker
             <HelpHoverable content={'Explore this ping in Looker.'} />
           </td>
           <td>
-            <a href={getLookerURL(params.app, params.ping)}> {params.ping} </a>
+            <a
+              href={getLookerExploreURL(params.app, params.ping.replace(/-/g, '_'))}>
+              {params.ping}
+            </a>
+            (all variants)
           </td>
         </tr>
       {/if}
