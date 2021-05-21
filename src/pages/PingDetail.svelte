@@ -86,7 +86,8 @@
         <tr>
           <td>
             Looker
-            <HelpHoverable content={'Explore this ping in Looker.'} />
+            <HelpHoverable
+              content={"Explore this ping in Mozilla's instance of Looker."} />
           </td>
           <td>
             <a href={getLookerURL(params.app, params.ping)}> {params.ping} </a>
