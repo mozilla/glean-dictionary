@@ -5,6 +5,7 @@
 
   import AppAlert from "../components/AppAlert.svelte";
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
+  import AuthenticatedLink from "../components/AuthenticatedLink.svelte";
   import Commentary from "../components/Commentary.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import ItemList from "../components/ItemList.svelte";
@@ -90,10 +91,10 @@
               content={"Explore this ping in Mozilla's instance of Looker."} />
           </td>
           <td>
-            <a
+            <AuthenticatedLink
               href={getLookerExploreURL(params.app, params.ping.replace(/-/g, '_'))}>
               {params.ping}
-            </a>
+            </AuthenticatedLink>
             (all variants)
           </td>
         </tr>

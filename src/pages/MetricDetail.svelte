@@ -3,6 +3,7 @@
 
   import AppAlert from "../components/AppAlert.svelte";
   import AppVariantSelector from "../components/AppVariantSelector.svelte";
+  import AuthenticatedLink from "../components/AuthenticatedLink.svelte";
   import Commentary from "../components/Commentary.svelte";
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
@@ -199,8 +200,9 @@
               content={'View this metric in Glean Aggregated Metrics'} />
           </td>
           <td>
-            <a
-              href={getGlamUrl(selectedAppVariant)}>{selectedAppVariant.bigquery_names.glam_etl_name}</a>
+            <AuthenticatedLink href={getGlamUrl(selectedAppVariant)}>
+              {selectedAppVariant.bigquery_names.glam_etl_name}
+            </AuthenticatedLink>
           </td>
         </tr>
       {/if}
