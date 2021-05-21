@@ -178,6 +178,26 @@ exports[`Storyshots App Variant Selector Default 1`] = `
 </section>
 `;
 
+exports[`Storyshots Authenticated Link Text 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <a
+    class="svelte-1db1y01"
+    href="https://glam.telemetry.mozilla.org"
+  >
+    GLAM
+  </a>
+   
+  <a
+    class="lock-link svelte-1db1y01"
+    href="https://docs.telemetry.mozilla.org/concepts/gaining_access.html"
+  >
+    🔒
+  </a>
+</section>
+`;
+
 exports[`Storyshots Breadcrumb App Details Page 1`] = `
 <section
   class="storybook-snapshot-container"
