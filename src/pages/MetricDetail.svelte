@@ -196,7 +196,8 @@
           <td>
             GLAM
             <HelpHoverable
-              content={'View this metric in Glean Aggregated Metrics'} />
+              content={'View this metric in Glean Aggregated Metrics'}
+              link={'https://docs.telemetry.mozilla.org/cookbooks/glam.html'} />
           </td>
           <td>
             <a
