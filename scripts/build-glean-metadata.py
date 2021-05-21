@@ -12,7 +12,7 @@ import yaml
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
-NAMESPACES_URL = "https://lookml-generator-dev.netlify.app/namespaces.yaml"
+NAMESPACES_URL = "https://raw.githubusercontent.com/mozilla/looker-hub/main/namespaces.yaml"
 
 
 def _serialize_sets(obj):
