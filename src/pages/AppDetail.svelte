@@ -19,6 +19,7 @@
 
   $pageState = {
     itemType: "metrics",
+    page: 1,
     search: "",
     showExpired: true,
     ...$pageState,
@@ -58,7 +59,12 @@
   <TabGroup
     active={$pageState.itemType}
     on:tabChanged={({ detail }) => {
-      pageState.set({ ...$pageState, itemType: detail.active, search: "" });
+      pageState.set({
+        ...$pageState,
+        itemType: detail.active,
+        search: "",
+        page: "",
+      });
     }}
   >
     <Tab key="metrics">Metrics</Tab>

@@ -1,5 +1,5 @@
 <script>
-  import { getContext } from "svelte";
+  import { pageState } from "../state/stores";
 
   import BackButton from "./icons/BackButton.svelte";
   import ForwardButton from "./icons/ForwardButton.svelte";
@@ -9,7 +9,7 @@
   let from;
   let to;
   let lastPage;
-  let currentPage = getContext("currentPage");
+  let currentPage = 1;
 
   const truncatedPagination = (current, last) => {
     // Source: https://gist.github.com/kottenator/9d936eb3e4e3c3e02598#gistcomment-3413141
@@ -37,25 +37,30 @@
 
   function changePage(page) {
     if (page !== currentPage) {
-      currentPage.set(page);
+      currentPage = page;
+      $pageState.page = page;
     }
   }
 
   $: {
     lastPage = Math.ceil(totalItems / itemsPerPage);
-    from = 1 + itemsPerPage * ($currentPage - 1);
-    if ($currentPage * itemsPerPage > totalItems) {
+    from = 1 + itemsPerPage * (currentPage - 1);
+    if (currentPage * itemsPerPage > totalItems) {
       to = totalItems;
     } else {
-      to = $currentPage * itemsPerPage;
+      to = currentPage * itemsPerPage;
     }
+  }
+
+  $: {
+    currentPage = Number($pageState.page || 1);
   }
 </script>
 
 <div class="pagination-position">
   <p>
     Page
-    <code>{$currentPage}</code>
+    <code>{currentPage}</code>
     of
     <code>{lastPage}</code>
     (<code>{from}</code>
@@ -71,17 +76,17 @@
   <div class="pagination-bar">
     <div
       on:click|preventDefault={() =>
-        changePage($currentPage !== 1 ? $currentPage - 1 : 1)}
-      class="pagination-button {$currentPage === 1 ? 'current-page' : ''}"
+        changePage(currentPage !== 1 ? currentPage - 1 : 1)}
+      class="pagination-button {currentPage === 1 ? 'current-page' : ''}"
     >
       <BackButton />
     </div>
     <div class="pages">
-      {#each truncatedPagination($currentPage, lastPage) as page}
+      {#each truncatedPagination(currentPage, lastPage) as page}
         <div
           on:click|preventDefault={() =>
-            changePage(Number.isInteger(page) ? page : $currentPage)}
-          class="page {page === $currentPage ? 'current-page' : ''}"
+            changePage(Number.isInteger(page) ? page : currentPage)}
+          class="page {page === currentPage ? 'current-page' : ''}"
         >
           {page}
         </div>
@@ -89,10 +94,8 @@
     </div>
     <div
       on:click|preventDefault={() =>
-        changePage($currentPage !== lastPage ? $currentPage + 1 : lastPage)}
-      class="pagination-button {$currentPage === lastPage
-        ? 'current-page'
-        : ''}"
+        changePage(currentPage !== lastPage ? currentPage + 1 : lastPage)}
+      class="pagination-button {currentPage === lastPage ? 'current-page' : ''}"
     >
       <ForwardButton />
     </div>
