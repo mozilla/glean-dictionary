@@ -17,6 +17,26 @@ export function getBigQueryURL(appName, appId, pingName, metricName) {
   return base + (metricName ? `?search=${metricName}` : "");
 }
 
-export function getLookerExploreURL(appName, exploreName) {
-  return `https://mozilla.cloud.looker.com/explore/${appName}/${exploreName}`;
+export function getLookerExploreURL(
+  appName,
+  exploreName,
+  fieldName,
+  tableName,
+  category
+) {
+  const params = [];
+  if (fieldName) {
+    params.push(
+      `fields=${category || exploreName}.${fieldName.replace(/\./g, "__")}`
+    );
+  }
+  if (tableName) {
+    params.push(
+      `f[${exploreName}.channel]=mozdata.${tableName.replace(/_/g, "%5E_")}`
+    );
+  }
+
+  return `https://mozilla.cloud.looker.com/explore/${appName}/${exploreName}${
+    params.length ? `?${params.join("&")}` : ""
+  }`;
 }

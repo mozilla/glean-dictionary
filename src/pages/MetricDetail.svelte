@@ -16,11 +16,23 @@
   } from "../data/schemas";
   import { getMetricData } from "../state/api";
   import { pageTitle } from "../state/stores";
-  import { getBigQueryURL } from "../state/urls";
+  import { getBigQueryURL, getLookerExploreURL } from "../state/urls";
 
   import { isExpired } from "../state/metrics";
 
   export let params;
+
+  const SUPPORTED_LOOKER_METRIC_TYPES = new Set([
+    "boolean",
+    "counter",
+    "datetime",
+    "jwe",
+    "quantity",
+    "string",
+    "rate",
+    "timespan",
+    "uuid",
+  ]);
 
   let selectedAppVariant;
   const metricDataPromise = getMetricData(params.app, params.metric).then(
@@ -167,6 +179,54 @@
     <table>
       <col />
       <col />
+      {#if getGlamUrl(selectedAppVariant)}
+        <tr>
+          <td>
+            GLAM
+            <HelpHoverable
+              content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
+              link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
+            />
+          </td>
+          <td>
+            <AuthenticatedLink href={getGlamUrl(selectedAppVariant)}>
+              {selectedAppVariant.bigquery_names.glam_etl_name}
+            </AuthenticatedLink>
+          </td>
+        </tr>
+      {/if}
+      {#if SUPPORTED_LOOKER_METRIC_TYPES.has(metric.type)}
+        <tr>
+          <td>Looker</td>
+          <td>
+            {#each selectedAppVariant.bigquery_names.stable_ping_table_names as [sendInPing, tableName]}
+              In
+              <AuthenticatedLink
+                href={getLookerExploreURL(
+                  params.app,
+                  sendInPing.replace(/-/g, "_")
+                )}
+              >
+                {sendInPing}
+              </AuthenticatedLink>
+              as
+              <AuthenticatedLink
+                href={getLookerExploreURL(
+                  params.app,
+                  sendInPing.replace(/-/g, "_"),
+                  metric.type === "counter"
+                    ? params.metric
+                    : selectedAppVariant.bigquery_names.metric_table_name,
+                  tableName,
+                  metric.type === "counter" && "metrics"
+                )}
+              >
+                {metric.name}
+              </AuthenticatedLink>
+            {/each}
+          </td>
+        </tr>
+      {/if}
       <tr>
         <td>
           BigQuery
@@ -203,22 +263,6 @@
           {/each}
         </td>
       </tr>
-      {#if getGlamUrl(selectedAppVariant)}
-        <tr>
-          <td>
-            GLAM
-            <HelpHoverable
-              content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
-              link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
-            />
-          </td>
-          <td>
-            <AuthenticatedLink href={getGlamUrl(selectedAppVariant)}>
-              {selectedAppVariant.bigquery_names.glam_etl_name}
-            </AuthenticatedLink>
-          </td>
-        </tr>
-      {/if}
     </table>
   {/if}
 {:catch}
