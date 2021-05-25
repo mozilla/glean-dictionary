@@ -17,11 +17,6 @@
   pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>
 
-<style>
-  @import "../main.scss";
-  @include metadata-table;
-</style>
-
 {#await pingDataPromise then table}
   <PageTitle text={`Table <code>${table.name}</code> for ${table.app_id}`} />
   <table>
@@ -31,7 +26,7 @@
       <td>BigQuery Definition</td>
       <td>
         <a href={table.bq_definition}>
-          {table.bq_definition.split('/').slice(-1)}
+          {table.bq_definition.split("/").slice(-1)}
         </a>
       </td>
     </tr>
@@ -48,3 +43,8 @@
 {:catch}
   <NotFound pageName={params.appId} itemType="table" />
 {/await}
+
+<style>
+  @import "../main.scss";
+  @include metadata-table;
+</style>

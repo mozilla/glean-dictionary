@@ -110,6 +110,72 @@
   pageTitle.set("Glean Dictionary");
 </script>
 
+{#if apps}
+  <p>
+    The Glean Dictionary documents the data collected by
+    <a href="https://mozilla.org">Mozilla</a>
+    projects that use
+    <a href="https://mozilla.github.io/glean/">Glean</a>. Select a project to
+    browse its data catalog. If you have questions, please ask in the
+    <a href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org"
+      >Glean Dictionary channel</a
+    >
+    on Mozilla's instance of Matrix.
+  </p>
+
+  <div class="app-filter">
+    <FilterInput placeHolder="Search for an application" />
+    <span id="deprecation-checkbox">
+      <label>
+        <input type="checkbox" bind:checked={showDeprecated} />
+        Show deprecated applications
+      </label>
+    </span>
+  </div>
+
+  <div class="app-list">
+    {#each filteredApps as app}
+      {#if showDeprecated || !app.deprecated}
+        <div class="mzp-c-card mzp-c-card-extra-small has-aspect-3-2" id="card">
+          <a
+            class="mzp-c-card-block-link"
+            href="/apps/{app.app_name}"
+            id="media-block"
+          >
+            <div class="mzp-c-card-media-wrapper" id="media-wrapper">
+              <img
+                class="mzp-c-card-imgage"
+                src={getAppLogo(app.app_name)}
+                alt="${app.canonical_app_name} Logo"
+                id="logo-img"
+              />
+              {#if isPlatform(app.app_description)}
+                <div class="corner-flag" />
+                <img
+                  class="platform-logo"
+                  src={getPlatformLogo(app.app_description)}
+                  alt="Platform Logo"
+                />
+              {/if}
+            </div>
+            <div class="mzp-c-card-content">
+              <h2 class="mzp-c-card-title">{app.canonical_app_name}</h2>
+              {#if app.deprecated}
+                <Pill message="Deprecated" bgColor="#4a5568" />
+              {/if}
+              <p class="mzp-c-card-meta" id="card-description">
+                <Markdown text={app.app_description} />
+              </p>
+            </div>
+          </a>
+        </div>
+      {/if}
+    {:else}
+      <p>Your search didn't match any application.</p>
+    {/each}
+  </div>
+{/if}
+
 <style>
   .app-filter {
     margin: $spacing-md $spacing-xl;
@@ -160,66 +226,3 @@
     font-size: 14px;
   }
 </style>
-
-{#if apps}
-  <p>
-    The Glean Dictionary documents the data collected by
-    <a href="https://mozilla.org">Mozilla</a>
-    projects that use
-    <a href="https://mozilla.github.io/glean/">Glean</a>. Select a project to
-    browse its data catalog. If you have questions, please ask in the
-    <a
-      href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org">Glean
-      Dictionary channel</a>
-    on Mozilla's instance of Matrix.
-  </p>
-
-  <div class="app-filter">
-    <FilterInput placeHolder="Search for an application" />
-    <span id="deprecation-checkbox">
-      <label>
-        <input type="checkbox" bind:checked={showDeprecated} />
-        Show deprecated applications
-      </label>
-    </span>
-  </div>
-
-  <div class="app-list">
-    {#each filteredApps as app}
-      {#if showDeprecated || !app.deprecated}
-        <div class="mzp-c-card mzp-c-card-extra-small has-aspect-3-2" id="card">
-          <a
-            class="mzp-c-card-block-link"
-            href="/apps/{app.app_name}"
-            id="media-block">
-            <div class="mzp-c-card-media-wrapper" id="media-wrapper">
-              <img
-                class="mzp-c-card-imgage"
-                src={getAppLogo(app.app_name)}
-                alt="${app.canonical_app_name} Logo"
-                id="logo-img" />
-              {#if isPlatform(app.app_description)}
-                <div class="corner-flag" />
-                <img
-                  class="platform-logo"
-                  src={getPlatformLogo(app.app_description)}
-                  alt="Platform Logo" />
-              {/if}
-            </div>
-            <div class="mzp-c-card-content">
-              <h2 class="mzp-c-card-title">{app.canonical_app_name}</h2>
-              {#if app.deprecated}
-                <Pill message="Deprecated" bgColor="#4a5568" />
-              {/if}
-              <p class="mzp-c-card-meta" id="card-description">
-                <Markdown text={app.app_description} />
-              </p>
-            </div>
-          </a>
-        </div>
-      {/if}
-    {:else}
-      <p>Your search didn't match any application.</p>
-    {/each}
-  </div>
-{/if}

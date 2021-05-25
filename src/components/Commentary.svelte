@@ -15,14 +15,18 @@
   <Markdown text={item.annotation.content} inline={false} />
   <p>
     <a
-      href={`https://github.com/mozilla/glean-annotations/edit/main/annotations/${annotationPath}`}>Edit</a>
+      href={`https://github.com/mozilla/glean-annotations/edit/main/annotations/${annotationPath}`}
+      >Edit</a
+    >
   </p>
 {:else}
   <p>
     No commentary for this
     {itemType},
     <a
-      href={`https://github.com/mozilla/glean-annotations/new/main?filename=annotations/${annotationPath}&value=${encodeURIComponent(defaultAnnotation)}`}>add
-      some</a>?
+      href={`https://github.com/mozilla/glean-annotations/new/main?filename=annotations/${annotationPath}&value=${encodeURIComponent(
+        defaultAnnotation
+      )}`}>add some</a
+    >?
   </p>
 {/if}

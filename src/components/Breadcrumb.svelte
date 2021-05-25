@@ -2,6 +2,16 @@
   export let links;
 </script>
 
+<ol>
+  {#each links as link}
+    <li>
+      <a class="link-name" href={link.url}>{link.name} </a><span class
+        >{links.indexOf(link) === links.length - 1 ? "" : "/"}</span
+      >
+    </li>
+  {/each}
+</ol>
+
 <style>
   ol {
     display: flex;
@@ -20,12 +30,3 @@
     }
   }
 </style>
-
-<ol>
-  {#each links as link}
-    <li>
-      <a class="link-name" href={link.url}>{link.name} </a><span
-        class>{links.indexOf(link) === links.length - 1 ? '' : '/'}</span>
-    </li>
-  {/each}
-</ol>

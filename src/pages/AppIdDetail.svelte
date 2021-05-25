@@ -23,13 +23,6 @@
   setTitle(params.appId, params.app);
 </script>
 
-<style>
-  @import "../main.scss";
-  h2 {
-    @include text-title-xs;
-  }
-</style>
-
 {#await appIdDataPromise then appId}
   <PageTitle text={appId.app_id} />
   {#if appId.description}
@@ -44,5 +37,13 @@
   <MetadataTable
     appName={params.app}
     item={appId}
-    schema={APPLICATION_ID_DEFINITION_SCHEMA} />
+    schema={APPLICATION_ID_DEFINITION_SCHEMA}
+  />
 {/await}
+
+<style>
+  @import "../main.scss";
+  h2 {
+    @include text-title-xs;
+  }
+</style>

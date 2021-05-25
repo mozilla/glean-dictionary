@@ -11,11 +11,6 @@
   }
 </script>
 
-<style>
-  @import "../main.scss";
-  @include metadata-table;
-</style>
-
 <table>
   <col />
   <col />
@@ -27,26 +22,30 @@
           {#if schemaEntry.helpText}
             <HelpHoverable
               content={schemaEntry.helpText}
-              link={schemaEntry.helpLink} />
+              link={schemaEntry.helpLink}
+            />
           {/if}
         </td>
         <td>
-          {#if schemaEntry.type === 'link'}
+          {#if schemaEntry.type === "link"}
             <a href={format(item[schemaEntry.id], schemaEntry.linkFormatter)}>
               {#if isUndefined(format(item[schemaEntry.id], schemaEntry.linkFormatter))}
-                <em>Unavailable: no search index specified for this application.</em>
+                <em
+                  >Unavailable: no search index specified for this application.</em
+                >
               {:else}
                 {format(item[schemaEntry.id], schemaEntry.valueFormatter)}
               {/if}
             </a>
-          {:else if schemaEntry.type === 'links'}
+          {:else if schemaEntry.type === "links"}
             {#each item[schemaEntry.id] as ref}
               <div>
-                <a
-                  href={format(ref, schemaEntry.linkFormatter)}>{format(ref, schemaEntry.valueFormatter)}</a>
+                <a href={format(ref, schemaEntry.linkFormatter)}
+                  >{format(ref, schemaEntry.valueFormatter)}</a
+                >
               </div>
             {/each}
-          {:else if schemaEntry.type === 'list'}
+          {:else if schemaEntry.type === "list"}
             <ul>
               {#each item[schemaEntry.id] as ref}
                 <li>{ref}</li>
@@ -59,3 +58,8 @@
   {/each}
   <slot />
 </table>
+
+<style>
+  @import "../main.scss";
+  @include metadata-table;
+</style>

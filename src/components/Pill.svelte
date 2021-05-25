@@ -4,6 +4,14 @@
   export let clickable = false;
 </script>
 
+<div
+  style="background-color: {bgColor}"
+  class="pill {clickable ? 'clickable' : ''}"
+  on:click
+>
+  {message}
+</div>
+
 <style>
   .pill {
     @include text-body-sm;
@@ -20,10 +28,3 @@
     cursor: pointer;
   }
 </style>
-
-<div
-  style="background-color: {bgColor}"
-  class="pill {clickable ? 'clickable' : ''}"
-  on:click>
-  {message}
-</div>
