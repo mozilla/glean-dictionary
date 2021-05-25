@@ -139,42 +139,6 @@
     <table>
       <col />
       <col />
-      <tr>
-        <td>
-          BigQuery
-          <HelpHoverable
-            content={"The BigQuery representation of this metric."}
-          />
-        </td>
-        <td>
-          {#each selectedAppVariant.etl.stable_ping_table_names as [sendInPing, tableName]}
-            <div>
-              In
-              <a
-                href={getBigQueryURL(
-                  params.app,
-                  selectedAppVariant.app_id,
-                  sendInPing
-                )}>{tableName}</a
-              >
-              <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
-              {#if metric.type !== "event"}
-                as
-                <a
-                  href={getBigQueryURL(
-                    params.app,
-                    selectedAppVariant.app_id,
-                    sendInPing,
-                    selectedAppVariant.etl.table_name
-                  )}
-                >
-                  {selectedAppVariant.etl.table_name}
-                </a>
-              {/if}
-            </div>
-          {/each}
-        </td>
-      </tr>
       {#if selectedAppVariant.etl.glam_url}
         <tr>
           <td>
@@ -191,6 +155,63 @@
           </td>
         </tr>
       {/if}
+      {#if selectedAppVariant.etl.looker_explore_links}
+        {#each selectedAppVariant.etl.looker_explore_links as link}
+          <tr>
+            <td
+              >Looker <HelpHoverable
+                content={"Explore this metric in Mozilla's instance of Looker."}
+              />
+            </td>
+            <td>
+              In
+              <AuthenticatedLink href={link.base}>
+                {link.ping}
+              </AuthenticatedLink>
+              as
+              <AuthenticatedLink href={link.metric}>
+                {metric.name}
+              </AuthenticatedLink>
+            </td>
+          </tr>
+        {/each}
+      {/if}
+      <tr>
+        <td>
+          BigQuery
+          <HelpHoverable
+            content={"The BigQuery representation of this metric."}
+          />
+        </td>
+        <td>
+          {#each selectedAppVariant.etl.bigquery_stable_ping_tables as table}
+            <div>
+              In
+              <a
+                href={getBigQueryURL(
+                  params.app,
+                  selectedAppVariant.app_id,
+                  table.ping
+                )}>{table.name}</a
+              >
+              <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
+              {#if metric.type !== "event"}
+                as
+                <a
+                  href={getBigQueryURL(
+                    params.app,
+                    selectedAppVariant.app_id,
+                    table.ping,
+                    selectedAppVariant.etl.bigquery_column_name
+                  )}
+                >
+                  {selectedAppVariant.etl.bigquery_column_name}
+                </a>
+              {/if}
+            </div>
+          {/each}
+        </td>
+      </tr>
     </table>
   {/if}
 {:catch}

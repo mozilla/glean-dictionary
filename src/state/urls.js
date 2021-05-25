@@ -16,7 +16,3 @@ export function getBigQueryURL(appName, appId, pingName, metricName) {
 
   return base + (metricName ? `?search=${metricName}` : "");
 }
-
-export function getLookerExploreURL(appName, exploreName) {
-  return `https://mozilla.cloud.looker.com/explore/${appName}/${exploreName}`;
-}
