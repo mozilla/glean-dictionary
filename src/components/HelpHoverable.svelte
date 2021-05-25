@@ -12,12 +12,6 @@
   };
 </script>
 
-<style>
-  .main {
-    display: inline-block;
-  }
-</style>
-
 <div class="main">
   {#if link.length}
     <a href={link} use:tippy={props}>
@@ -29,3 +23,9 @@
     </span>
   {/if}
 </div>
+
+<style>
+  .main {
+    display: inline-block;
+  }
+</style>

@@ -84,25 +84,19 @@
   }
 </script>
 
-<style>
-  @import "../main.scss";
-  @include metadata-table;
-  h2 {
-    @include text-title-xs;
-  }
-</style>
-
 {#await metricDataPromise then metric}
   {#if isExpired(metric.expires)}
     <AppAlert
       status="warning"
-      message="This metric has expired: it may not be present in the source code, new data will not be ingested into BigQuery, and it will not appear in dashboards." />
+      message="This metric has expired: it may not be present in the source code, new data will not be ingested into BigQuery, and it will not appear in dashboards."
+    />
   {/if}
 
   {#if metric.origin !== params.app}
     <AppAlert
       status="warning"
-      message={`This metric is defined by a library used by the application (__${metric.origin}__), rather than the application itself. For more details, see the definition.`} />
+      message={`This metric is defined by a library used by the application (__${metric.origin}__), rather than the application itself. For more details, see the definition.`}
+    />
   {/if}
 
   <PageTitle text={metric.name} />
@@ -111,14 +105,16 @@
 
   <p>
     Metric of type
-    <a
-      href={getMetricDocumentationURI(metric.type)}
-      target="_blank">{metric.type}</a>. Sent in the
+    <a href={getMetricDocumentationURI(metric.type)} target="_blank"
+      >{metric.type}</a
+    >. Sent in the
     {#each metric.send_in_pings as pingId, i}
-      <a
-        href={`/apps/${params.app}/pings/${pingId}`}>{pingId}</a>{metric.send_in_pings.length > 1 && i < metric.send_in_pings.length - 1 ? ', ' : ''}
+      <a href={`/apps/${params.app}/pings/${pingId}`}>{pingId}</a>{metric
+        .send_in_pings.length > 1 && i < metric.send_in_pings.length - 1
+        ? ", "
+        : ""}
     {/each}
-    ping{metric.send_in_pings.length > 1 ? 's' : ''}.
+    ping{metric.send_in_pings.length > 1 ? "s" : ""}.
   </p>
 
   <h2>Definition</h2>
@@ -126,14 +122,16 @@
   <MetadataTable
     appName={params.app}
     item={metric}
-    schema={METRIC_DEFINITION_SCHEMA} />
+    schema={METRIC_DEFINITION_SCHEMA}
+  />
 
   {#if metric.extra_keys && !isEmpty(metric.extra_keys)}
     <h2>
       Extra keys
       <HelpHoverable
         content={'The acceptable keys on the "extra" object sent with events.'}
-        link={'https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys'} />
+        link={"https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys"}
+      />
     </h2>
     <table>
       <col />
@@ -153,10 +151,11 @@
   <MetadataTable
     appName={params.app}
     item={metric}
-    schema={METRIC_METADATA_SCHEMA} />
+    schema={METRIC_METADATA_SCHEMA}
+  />
 
   <h2>Commentary</h2>
-  <Commentary item={metric} itemType={'metric'} />
+  <Commentary item={metric} itemType={"metric"} />
 
   <h2>Access</h2>
 
@@ -172,19 +171,31 @@
         <td>
           BigQuery
           <HelpHoverable
-            content={'The BigQuery representation of this metric.'} />
+            content={"The BigQuery representation of this metric."}
+          />
         </td>
         <td>
           {#each selectedAppVariant.bigquery_names.stable_ping_table_names as [sendInPing, tableName]}
             <div>
               In
               <a
-                href={getBigQueryURL(params.app, selectedAppVariant.app_id, sendInPing)}>{tableName}</a>
+                href={getBigQueryURL(
+                  params.app,
+                  selectedAppVariant.app_id,
+                  sendInPing
+                )}>{tableName}</a
+              >
               <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
-              {#if selectedAppVariant.bigquery_names.metric_type !== 'event'}
+              {#if selectedAppVariant.bigquery_names.metric_type !== "event"}
                 as
                 <a
-                  href={getBigQueryURL(params.app, selectedAppVariant.app_id, sendInPing, selectedAppVariant.bigquery_names.metric_table_name)}>
+                  href={getBigQueryURL(
+                    params.app,
+                    selectedAppVariant.app_id,
+                    sendInPing,
+                    selectedAppVariant.bigquery_names.metric_table_name
+                  )}
+                >
                   {selectedAppVariant.bigquery_names.metric_table_name}
                 </a>
               {/if}
@@ -197,8 +208,9 @@
           <td>
             GLAM
             <HelpHoverable
-              content={'View this metric in the Glean Aggregated Metrics (GLAM) dashboard'}
-              link={'https://docs.telemetry.mozilla.org/cookbooks/glam.html'} />
+              content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
+              link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
+            />
           </td>
           <td>
             <AuthenticatedLink href={getGlamUrl(selectedAppVariant)}>
@@ -212,3 +224,11 @@
 {:catch}
   <NotFound pageName={params.metric} itemType="metric" />
 {/await}
+
+<style>
+  @import "../main.scss";
+  @include metadata-table;
+  h2 {
+    @include text-title-xs;
+  }
+</style>

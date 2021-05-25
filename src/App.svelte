@@ -99,6 +99,48 @@
   $: document.title = title;
 </script>
 
+<GlobalStyles />
+
+<svelte:head>
+  <title>{title}</title>
+</svelte:head>
+
+<div class="app">
+  <header>
+    <div class="mzp-c-navigation mzp-is-sticky">
+      <div class="mzp-c-navigation-l-content">
+        <div class="mzp-c-navigation-container">
+          <div class="mzp-c-navigation-logo-glean">
+            <a class="glean-logo" href="/">
+              <img src="/glean_logo.png" alt="Glean Dictionary Logo" /></a
+            >
+            <a href="/"><h5>Dictionary</h5></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {#if links.length}
+      <nav class="mzp-c-navigation c-sub-navigation">
+        <div class="mzp-c-navigation-l-content">
+          <div class="mzp-c-navigation-container">
+            <Breadcrumb {links} />
+          </div>
+        </div>
+      </nav>
+    {/if}
+  </header>
+  <main>
+    <div class="mzp-l-content" style="padding-top: 15px">
+      <article class="mzp-c-article">
+        <svelte:component this={component} bind:params />
+      </article>
+    </div>
+  </main>
+
+  <Footer />
+</div>
+
 <style>
   .app {
     min-height: 100vh;
@@ -135,44 +177,3 @@
     background: $color-light-gray-10;
   }
 </style>
-
-<GlobalStyles />
-
-<svelte:head>
-  <title>{title}</title>
-</svelte:head>
-
-<div class="app">
-  <header>
-    <div class="mzp-c-navigation mzp-is-sticky">
-      <div class="mzp-c-navigation-l-content">
-        <div class="mzp-c-navigation-container">
-          <div class="mzp-c-navigation-logo-glean">
-            <a class="glean-logo" href="/">
-              <img src="/glean_logo.png" alt="Glean Dictionary Logo" /></a>
-            <a href="/"><h5>Dictionary</h5></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {#if links.length}
-      <nav class="mzp-c-navigation c-sub-navigation">
-        <div class="mzp-c-navigation-l-content">
-          <div class="mzp-c-navigation-container">
-            <Breadcrumb {links} />
-          </div>
-        </div>
-      </nav>
-    {/if}
-  </header>
-  <main>
-    <div class="mzp-l-content" style="padding-top: 15px">
-      <article class="mzp-c-article">
-        <svelte:component this={component} bind:params />
-      </article>
-    </div>
-  </main>
-
-  <Footer />
-</div>

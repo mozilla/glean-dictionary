@@ -5,6 +5,12 @@
   const activeTab = getContext("activeTab");
 </script>
 
+{#if $activeTab === key}
+  <div class="box">
+    <slot />
+  </div>
+{/if}
+
 <style>
   .box {
     padding: 2rem;
@@ -14,9 +20,3 @@
     box-shadow: 5px 5px 10px rgba($color-black, 0.1);
   }
 </style>
-
-{#if $activeTab === key}
-  <div class="box">
-    <slot />
-  </div>
-{/if}

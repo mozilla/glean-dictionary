@@ -11,13 +11,15 @@
         stroke="#000000"
         stroke-width="2"
         stroke-linecap="round"
-        stroke-linejoin="round" />
+        stroke-linejoin="round"
+      />
       <path
         d="M11,7 L11,11"
         stroke="#000000"
         stroke-width="2"
         stroke-linecap="round"
-        stroke-linejoin="round" />
+        stroke-linejoin="round"
+      />
       <circle fill="#000000" cx="11" cy="15" r="1" />
     </g>
   </g>

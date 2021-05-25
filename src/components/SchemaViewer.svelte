@@ -48,6 +48,19 @@
   }
 </script>
 
+<div class="schema-viewer">
+  <PageTitle text={"Schema"} />
+
+  <FilterInput />
+  <div class="schema-browser">
+    <p>
+      {#each nodesWithVisibility as node}
+        <SchemaNode {app} {node} />
+      {/each}
+    </p>
+  </div>
+</div>
+
 <style>
   .schema-viewer {
     margin-top: 2rem;
@@ -61,16 +74,3 @@
     }
   }
 </style>
-
-<div class="schema-viewer">
-  <PageTitle text={'Schema'} />
-
-  <FilterInput />
-  <div class="schema-browser">
-    <p>
-      {#each nodesWithVisibility as node}
-        <SchemaNode {app} {node} />
-      {/each}
-    </p>
-  </div>
-</div>

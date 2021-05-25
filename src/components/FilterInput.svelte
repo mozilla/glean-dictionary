@@ -4,6 +4,15 @@
   export let placeHolder;
 </script>
 
+<div>
+  <input
+    {placeHolder}
+    type="search"
+    id="filter-input"
+    bind:value={$pageState.search}
+  />
+</div>
+
 <style>
   div {
     margin-top: $spacing-xs;
@@ -16,11 +25,3 @@
     border: 1px solid #000;
   }
 </style>
-
-<div>
-  <input
-    {placeHolder}
-    type="search"
-    id="filter-input"
-    bind:value={$pageState.search} />
-</div>

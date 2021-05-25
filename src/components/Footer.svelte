@@ -9,21 +9,26 @@
         <a
           href="https://www.mozilla.org/"
           data-link-type="footer"
-          data-link-name="Mozilla">Mozilla</a>
+          data-link-name="Mozilla">Mozilla</a
+        >
       </div>
       <div class="mzp-c-footer-legal">
         <ul class="mzp-c-footer-terms">
           <li>
-            <a
-              href="https://www.mozilla.org/privacy/websites/#cookies">Cookies</a>
+            <a href="https://www.mozilla.org/privacy/websites/#cookies"
+              >Cookies</a
+            >
           </li>
           <li>
             <a
-              href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org">Chat</a>
+              href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org"
+              >Chat</a
+            >
           </li>
           <li>
-            <a
-              href="https://github.com/mozilla/glean-dictionary/issues">Issues</a>
+            <a href="https://github.com/mozilla/glean-dictionary/issues"
+              >Issues</a
+            >
           </li>
           <li>
             <a href="https://github.com/mozilla/glean-dictionary">Source</a>
@@ -31,8 +36,9 @@
         </ul>
         <p>
           Alpha Software - revision
-          <a
-            href="https://github.com/mozilla/glean-dictionary/tree/{rev}">{rev.substring(0, 10)}</a>
+          <a href="https://github.com/mozilla/glean-dictionary/tree/{rev}"
+            >{rev.substring(0, 10)}</a
+          >
         </p>
         <p>
           The Glean Dictionary is built by Mozilla Data. Our vision is to build

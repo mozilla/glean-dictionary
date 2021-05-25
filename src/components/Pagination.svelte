@@ -52,6 +52,53 @@
   }
 </script>
 
+<div class="pagination-position">
+  <p>
+    Page
+    <code>{$currentPage}</code>
+    of
+    <code>{lastPage}</code>
+    (<code>{from}</code>
+    -
+    <code>{to}</code>
+    on
+    <code>{totalItems}</code>
+    items)
+  </p>
+</div>
+
+{#if itemsPerPage < totalItems}
+  <div class="pagination-bar">
+    <div
+      on:click|preventDefault={() =>
+        changePage($currentPage !== 1 ? $currentPage - 1 : 1)}
+      class="pagination-button {$currentPage === 1 ? 'current-page' : ''}"
+    >
+      <BackButton />
+    </div>
+    <div class="pages">
+      {#each truncatedPagination($currentPage, lastPage) as page}
+        <div
+          on:click|preventDefault={() =>
+            changePage(Number.isInteger(page) ? page : $currentPage)}
+          class="page {page === $currentPage ? 'current-page' : ''}"
+        >
+          {page}
+        </div>
+      {/each}
+    </div>
+    <div
+      on:click|preventDefault={() =>
+        changePage($currentPage !== lastPage ? $currentPage + 1 : lastPage)}
+      class="pagination-button {$currentPage === lastPage
+        ? 'current-page'
+        : ''}"
+    >
+      <ForwardButton />
+    </div>
+  </div>
+{/if}
+
 <style>
   .pagination-position {
     margin-top: $spacing-md;
@@ -82,42 +129,3 @@
     }
   }
 </style>
-
-<div class="pagination-position">
-  <p>
-    Page
-    <code>{$currentPage}</code>
-    of
-    <code>{lastPage}</code>
-    (<code>{from}</code>
-    -
-    <code>{to}</code>
-    on
-    <code>{totalItems}</code>
-    items)
-  </p>
-</div>
-
-{#if itemsPerPage < totalItems}
-  <div class="pagination-bar">
-    <div
-      on:click|preventDefault={() => changePage($currentPage !== 1 ? $currentPage - 1 : 1)}
-      class="pagination-button {$currentPage === 1 ? 'current-page' : ''}">
-      <BackButton />
-    </div>
-    <div class="pages">
-      {#each truncatedPagination($currentPage, lastPage) as page}
-        <div
-          on:click|preventDefault={() => changePage(Number.isInteger(page) ? page : $currentPage)}
-          class="page {page === $currentPage ? 'current-page' : ''}">
-          {page}
-        </div>
-      {/each}
-    </div>
-    <div
-      on:click|preventDefault={() => changePage($currentPage !== lastPage ? $currentPage + 1 : lastPage)}
-      class="pagination-button {$currentPage === lastPage ? 'current-page' : ''}">
-      <ForwardButton />
-    </div>
-  </div>
-{/if}

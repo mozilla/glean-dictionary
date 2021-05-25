@@ -16,6 +16,13 @@
   };
 </script>
 
+<div class="mzp-c-notification-bar mzp-t-{status} {status}" transition:fade>
+  <svelte:component this={icons[status]} />
+  <div class="alert-text">
+    <Markdown text={message} inline={true} />
+  </div>
+</div>
+
 <style>
   .mzp-c-notification-bar {
     display: flex;
@@ -38,10 +45,3 @@
     background-color: $color-green-20;
   }
 </style>
-
-<div class="mzp-c-notification-bar mzp-t-{status} {status}" transition:fade>
-  <svelte:component this={icons[status]} />
-  <div class="alert-text">
-    <Markdown text={message} inline={true} />
-  </div>
-</div>
