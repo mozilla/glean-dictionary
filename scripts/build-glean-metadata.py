@@ -327,5 +327,6 @@ for (app_name, app_group) in app_groups.items():
     # (we don't sort application id information, that's already handled
     # above)
     for key in ["labels", "metrics", "pings"]:
-        app_data[key].sort(key=lambda v: v["name"])
+        if app_data.get(key):
+            app_data[key].sort(key=lambda v: v["name"])
     open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))
