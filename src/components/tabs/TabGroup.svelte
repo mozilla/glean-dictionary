@@ -17,12 +17,6 @@
   }
 </script>
 
-<style>
-  .tab-content {
-    margin-top: $spacing-lg;
-  }
-</style>
-
 <div class="tabs">
   <slot name="tabs" />
 </div>
@@ -30,3 +24,9 @@
 <div class="tab-content">
   <slot />
 </div>
+
+<style>
+  .tab-content {
+    margin-top: $spacing-lg;
+  }
+</style>
