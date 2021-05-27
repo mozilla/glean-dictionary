@@ -32,34 +32,6 @@
 
   pageTitle.set(`${params.metric} | ${params.app} `);
 
-  function getGlamUrl(appVariant) {
-    if (selectedAppVariant.bigquery_names.metric_type === "event") {
-      // events are not supported by GLAM presently
-      return undefined;
-    }
-    const map = {
-      "org.mozilla.fenix": {
-        product: "fenix",
-        glam_id: "",
-      },
-      "org.mozilla.firefox_beta": {
-        product: "fenix",
-        glam_id: "beta",
-      },
-      "org.mozilla.firefox": {
-        product: "fenix",
-        glam_id: "release",
-      },
-    };
-    if (Object.keys(map).includes(appVariant.app_id)) {
-      const p = map[appVariant.app_id];
-      return `https://glam.telemetry.mozilla.org/${p.product}/probe/${appVariant.bigquery_names.glam_etl_name}/explore?app_id=${p.glam_id}`;
-    }
-
-    // The app isn't one GLAM supports so return nothing.
-    return undefined;
-  }
-
   function getMetricDocumentationURI(type) {
     const sourceDocs = "https://mozilla.github.io/glean/book/user/metrics/";
     const links = {
@@ -175,7 +147,7 @@
           />
         </td>
         <td>
-          {#each selectedAppVariant.bigquery_names.stable_ping_table_names as [sendInPing, tableName]}
+          {#each selectedAppVariant.etl.stable_ping_table_names as [sendInPing, tableName]}
             <div>
               In
               <a
@@ -186,24 +158,24 @@
                 )}>{tableName}</a
               >
               <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
-              {#if selectedAppVariant.bigquery_names.metric_type !== "event"}
+              {#if metric.type !== "event"}
                 as
                 <a
                   href={getBigQueryURL(
                     params.app,
                     selectedAppVariant.app_id,
                     sendInPing,
-                    selectedAppVariant.bigquery_names.metric_table_name
+                    selectedAppVariant.etl.table_name
                   )}
                 >
-                  {selectedAppVariant.bigquery_names.metric_table_name}
+                  {selectedAppVariant.etl.table_name}
                 </a>
               {/if}
             </div>
           {/each}
         </td>
       </tr>
-      {#if getGlamUrl(selectedAppVariant)}
+      {#if selectedAppVariant.etl.glam_url}
         <tr>
           <td>
             GLAM
@@ -213,8 +185,8 @@
             />
           </td>
           <td>
-            <AuthenticatedLink href={getGlamUrl(selectedAppVariant)}>
-              {selectedAppVariant.bigquery_names.glam_etl_name}
+            <AuthenticatedLink href={selectedAppVariant.etl.glam_url}>
+              {params.metric}
             </AuthenticatedLink>
           </td>
         </tr>

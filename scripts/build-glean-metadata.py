@@ -14,6 +14,12 @@ OUTPUT_DIRECTORY = os.path.join("public", "data")
 ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
 NAMESPACES_URL = "https://raw.githubusercontent.com/mozilla/looker-hub/main/namespaces.yaml"
 
+GLAM_PRODUCT_MAPPINGS = {
+    "org.mozilla.fenix": ("fenix", ""),
+    "org.mozilla.firefox_beta": ("fenix", "beta"),
+    "org.mozilla.firefox": ("fenix", "release"),
+}
+
 
 def _serialize_sets(obj):
     if isinstance(obj, set):
@@ -183,23 +189,29 @@ for (app_name, app_group) in app_groups.items():
 
             metric_type = metric.definition["type"]
             metric_name_snakecase = stringcase.snakecase(metric.identifier)
-            metric_table_name = (
-                f"{metric.bq_prefix}.{metric_name_snakecase}"
-                if metric.bq_prefix
-                else f"metrics.{metric_type}.{metric_name_snakecase}"
-            )
-            bigquery_names = dict(
+            etl = dict(
                 stable_ping_table_names=stable_ping_table_names,
-                metric_type=metric_type,
-                metric_table_name=metric_table_name,
-                glam_etl_name=etl_snake_case(metric.identifier),
+                table_name=(
+                    f"{metric.bq_prefix}.{metric_name_snakecase}"
+                    if metric.bq_prefix
+                    else f"metrics.{metric_type}.{metric_name_snakecase}"
+                ),
             )
+            if metric_type != "event" and GLAM_PRODUCT_MAPPINGS.get(app.app_id):
+                (glam_product, glam_app_id) = GLAM_PRODUCT_MAPPINGS[app.app_id]
+                glam_metric_id = etl_snake_case(metric.identifier)
+                etl["glam_url"] = (
+                    "https://glam.telemetry.mozilla.org/"
+                    + f"{glam_product}/probe/{glam_metric_id}/explore"
+                    + f"?app_id={glam_app_id}"
+                )
+
             app_metrics[metric.identifier]["variants"].append(
                 dict(
                     app_id=app.app_id,
                     app_channel=app.app.get("app_channel", "release"),
                     app_description=app.app["app_description"],
-                    bigquery_names=bigquery_names,
+                    etl=etl,
                 )
             )
 
