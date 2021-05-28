@@ -1735,6 +1735,155 @@ exports[`Storyshots ItemList Default 1`] = `
 </section>
 `;
 
+exports[`Storyshots Label Default 1`] = `
+<section
+  class="storybook-snapshot-container"
+>
+  <h4>
+    Color Palette
+  </h4>
+   
+  <p>
+    By default, the label color is generated from the label text, but you can
+  choose a specific color from the below palette by setting 
+    <code>
+      labelNumber
+    </code>
+     variable.
+  </p>
+   
+  <span
+    class="label label-1  svelte-141533s"
+  >
+    label-1
+  </span>
+   
+  <span
+    class="label label-2  svelte-141533s"
+  >
+    label-2
+  </span>
+   
+  <span
+    class="label label-3  svelte-141533s"
+  >
+    label-3
+  </span>
+   
+  <span
+    class="label label-4  svelte-141533s"
+  >
+    label-4
+  </span>
+   
+  <span
+    class="label label-5  svelte-141533s"
+  >
+    label-5
+  </span>
+   
+  <span
+    class="label label-6  svelte-141533s"
+  >
+    label-6
+  </span>
+   
+  <span
+    class="label label-7  svelte-141533s"
+  >
+    label-7
+  </span>
+   
+  <span
+    class="label label-8  svelte-141533s"
+  >
+    label-8
+  </span>
+   
+  <span
+    class="label label-9  svelte-141533s"
+  >
+    label-9
+  </span>
+   
+  <br />
+   
+  <br />
+   
+  <h4>
+    Glean labels
+  </h4>
+   
+  <span
+    class="label label-8  svelte-141533s"
+  >
+    glean-core
+  </span>
+   
+  <span
+    class="label label-5  svelte-141533s"
+  >
+    glean-android
+  </span>
+   
+  <span
+    class="label label-4  svelte-141533s"
+  >
+    sync
+  </span>
+   
+  <span
+    class="label label-3  svelte-141533s"
+  >
+    lib-crash
+  </span>
+   
+  <span
+    class="label label-8  svelte-141533s"
+  >
+    engine-gecko
+  </span>
+   
+  <span
+    class="label label-3  svelte-141533s"
+  >
+    support-migration
+  </span>
+   
+  <span
+    class="label label-6  svelte-141533s"
+  >
+    nimbus
+  </span>
+   
+  <span
+    class="label label-3  svelte-141533s"
+  >
+    logins-store
+  </span>
+   
+  <br />
+   
+  <br />
+   
+  <h4>
+    Deprecated/Expired status
+  </h4>
+   
+  <span
+    class="label label-9  svelte-141533s"
+  >
+    deprecated
+  </span>
+   
+  <span
+    class="label label-9  svelte-141533s"
+  >
+    expired
+  </span>
+</section>
+`;
+
 exports[`Storyshots Markdown Text 1`] = `
 <section
   class="storybook-snapshot-container"
@@ -2066,19 +2215,6 @@ exports[`Storyshots Pagination Default 1`] = `
     </div>
   </div>
   
-</section>
-`;
-
-exports[`Storyshots Pill Deprecated 1`] = `
-<section
-  class="storybook-snapshot-container"
->
-  <div
-    class="pill  svelte-17njsgx"
-    style="background-color: rgb(74, 85, 104);"
-  >
-    Deprecated
-  </div>
 </section>
 `;
 

@@ -3,7 +3,7 @@
 
   import { APPLICATION_ID_DEFINITION_SCHEMA } from "../data/schemas";
   import MetadataTable from "../components/MetadataTable.svelte";
-  import Pill from "../components/Pill.svelte";
+  import Label from "../components/Label.svelte";
   import PageTitle from "../components/PageTitle.svelte";
   import { pageTitle } from "../state/stores";
 
@@ -29,7 +29,7 @@
     <p>{appId.description}</p>
   {/if}
   {#if appId.deprecated}
-    <Pill message="Deprecated" bgColor="#4a5568" />
+    <Label message="Deprecated" />
   {/if}
 
   <h2>Metadata</h2>
