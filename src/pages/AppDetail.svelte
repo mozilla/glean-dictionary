@@ -41,7 +41,7 @@
   <PageTitle text={app.canonical_app_name} />
 
   {#if app.deprecated}
-    <Label message="deprecated" />
+    <Label text="deprecated" />
   {/if}
 
   <Markdown text={app.app_description} inline={false} />

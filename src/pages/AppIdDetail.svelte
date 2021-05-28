@@ -29,7 +29,7 @@
     <p>{appId.description}</p>
   {/if}
   {#if appId.deprecated}
-    <Label message="Deprecated" />
+    <Label text="deprecated" />
   {/if}
 
   <h2>Metadata</h2>

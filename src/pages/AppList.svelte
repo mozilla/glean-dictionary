@@ -161,7 +161,7 @@
             <div class="mzp-c-card-content">
               <h2 class="mzp-c-card-title">{app.canonical_app_name}</h2>
               {#if app.deprecated}
-                <Label message="deprecated" />
+                <Label text="deprecated" />
               {/if}
               <p class="mzp-c-card-meta" id="card-description">
                 <Markdown text={app.app_description} />
