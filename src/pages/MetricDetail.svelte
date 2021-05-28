@@ -156,25 +156,27 @@
         </tr>
       {/if}
       {#if selectedAppVariant.etl.looker_explore_links}
-        {#each selectedAppVariant.etl.looker_explore_links as link}
-          <tr>
-            <td
-              >Looker <HelpHoverable
-                content={"Explore this metric in Mozilla's instance of Looker."}
-              />
-            </td>
-            <td>
-              In
-              <AuthenticatedLink href={link.base}>
-                {link.ping}
-              </AuthenticatedLink>
-              as
-              <AuthenticatedLink href={link.metric}>
-                {metric.name}
-              </AuthenticatedLink>
-            </td>
-          </tr>
-        {/each}
+        <tr>
+          <td
+            >Looker <HelpHoverable
+              content={"Explore this metric in Mozilla's instance of Looker."}
+            />
+          </td>
+          <td>
+            {#each selectedAppVariant.etl.looker_explore_links as link}
+              <div>
+                In
+                <AuthenticatedLink href={link.base}>
+                  {link.ping}
+                </AuthenticatedLink>
+                as
+                <AuthenticatedLink href={link.metric}>
+                  {metric.name}
+                </AuthenticatedLink>
+              </div>
+            {/each}
+          </td>
+        </tr>
       {/if}
       <tr>
         <td>

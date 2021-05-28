@@ -20,6 +20,18 @@ GLAM_PRODUCT_MAPPINGS = {
     "org.mozilla.firefox": ("fenix", "release"),
 }
 
+SUPPORTED_LOOKER_METRIC_TYPES = {
+    "boolean",
+    "counter",
+    "datetime",
+    "jwe",
+    "quantity",
+    "string",
+    "rate",
+    "timespan",
+    "uuid",
+}
+
 
 def _serialize_sets(obj):
     if isinstance(obj, set):
@@ -207,26 +219,55 @@ for (app_name, app_group) in app_groups.items():
                 ping_name_snakecase = stringcase.snakecase(ping)
                 table_name = f"{app.app['bq_dataset_family']}.{ping_name_snakecase}"
                 bigquery_stable_ping_tables.append({"ping": ping, "name": table_name})
-                base_looker_explore_link = get_looker_explore_url(
-                    looker_namespaces, app_name, ping, table_name
-                )
-                if base_looker_explore_link and metric_type == "counter":
-                    metric_identifier = "metrics." + metric_name_snakecase
-                    channel_identifier = "mozdata." + table_name.replace("_", "%5E_")
-                    looker_explore_links.append(
-                        {
-                            "ping": ping,
-                            "base": base_looker_explore_link,
-                            "metric": (base_looker_explore_link + f"&fields={metric_identifier}"),
-                        }
-                    )
-            etl = dict(
-                bigquery_stable_ping_tables=bigquery_stable_ping_tables,
-                bigquery_column_name=(
+                bigquery_column_name = (
                     f"{metric.bq_prefix}.{metric_name_snakecase}"
                     if metric.bq_prefix
                     else f"metrics.{metric_type}.{metric_name_snakecase}"
-                ),
+                )
+                base_looker_explore_link = get_looker_explore_url(
+                    looker_namespaces, app_name, ping, table_name
+                )
+                if base_looker_explore_link:
+                    looker_metric_link = None
+                    if metric_type == "counter":
+                        looker_metric_link = (
+                            base_looker_explore_link
+                            + "&fields="
+                            + ",".join(
+                                [
+                                    f"{ping_name_snakecase}.submission_date",
+                                    f"{ping_name_snakecase}.{metric_name_snakecase}",
+                                ]
+                            )
+                        )
+                    elif metric_type in SUPPORTED_LOOKER_METRIC_TYPES:
+                        looker_dimension_name = "{}.{}".format(
+                            ping_name_snakecase, bigquery_column_name.replace(".", "__")
+                        )
+                        looker_metric_link = (
+                            base_looker_explore_link
+                            + "&fields="
+                            + ",".join(
+                                [
+                                    f"{ping_name_snakecase}.submission_date",
+                                    looker_dimension_name,
+                                    f"{ping_name_snakecase}.clients",
+                                ]
+                            )
+                            + f"&pivots={looker_dimension_name}"
+                        )
+
+                    if looker_metric_link:
+                        looker_explore_links.append(
+                            {
+                                "ping": ping,
+                                "base": base_looker_explore_link,
+                                "metric": looker_metric_link,
+                            }
+                        )
+            etl = dict(
+                bigquery_stable_ping_tables=bigquery_stable_ping_tables,
+                bigquery_column_name=bigquery_column_name,
                 looker_explore_links=looker_explore_links,
             )
 
