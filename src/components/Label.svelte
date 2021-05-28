@@ -55,7 +55,7 @@
 
   @function set-text-color($color) {
     // generate darker text color if background is light
-    @if (lightness($color) > 40) {
+    @if (lightness($color) > 30) {
       @return #000000;
     } @else {
       // and vice versa: if dark background => light text
@@ -75,11 +75,11 @@
     padding: 0;
     display: inline-block;
     line-height: 20px;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
-    border-radius: $spacing-sm;
+    border-radius: 2em;
     background: silver;
-    padding: 0 5px;
+    padding: 0 9px;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12);
   }
 

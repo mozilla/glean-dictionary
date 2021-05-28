@@ -1745,7 +1745,7 @@ exports[`Storyshots Label Default 1`] = `
    
   <p>
     By default, the label color is generated from the label text, but you can
-  choose a specific color from the below palette by setting 
+  choose a specific color from the below palette by setting a 
     <code>
       labelNumber
     </code>
@@ -1753,55 +1753,55 @@ exports[`Storyshots Label Default 1`] = `
   </p>
    
   <span
-    class="label label-1  svelte-141533s"
+    class="label label-1  svelte-b1x4s2"
   >
     label-1
   </span>
    
   <span
-    class="label label-2  svelte-141533s"
+    class="label label-2  svelte-b1x4s2"
   >
     label-2
   </span>
    
   <span
-    class="label label-3  svelte-141533s"
+    class="label label-3  svelte-b1x4s2"
   >
     label-3
   </span>
    
   <span
-    class="label label-4  svelte-141533s"
+    class="label label-4  svelte-b1x4s2"
   >
     label-4
   </span>
    
   <span
-    class="label label-5  svelte-141533s"
+    class="label label-5  svelte-b1x4s2"
   >
     label-5
   </span>
    
   <span
-    class="label label-6  svelte-141533s"
+    class="label label-6  svelte-b1x4s2"
   >
     label-6
   </span>
    
   <span
-    class="label label-7  svelte-141533s"
+    class="label label-7  svelte-b1x4s2"
   >
     label-7
   </span>
    
   <span
-    class="label label-8  svelte-141533s"
+    class="label label-8  svelte-b1x4s2"
   >
     label-8
   </span>
    
   <span
-    class="label label-9  svelte-141533s"
+    class="label label-9  svelte-b1x4s2"
   >
     label-9
   </span>
@@ -1815,49 +1815,49 @@ exports[`Storyshots Label Default 1`] = `
   </h4>
    
   <span
-    class="label label-8  svelte-141533s"
+    class="label label-8  svelte-b1x4s2"
   >
     glean-core
   </span>
    
   <span
-    class="label label-5  svelte-141533s"
+    class="label label-5  svelte-b1x4s2"
   >
     glean-android
   </span>
    
   <span
-    class="label label-4  svelte-141533s"
+    class="label label-4  svelte-b1x4s2"
   >
     sync
   </span>
    
   <span
-    class="label label-3  svelte-141533s"
+    class="label label-3  svelte-b1x4s2"
   >
     lib-crash
   </span>
    
   <span
-    class="label label-8  svelte-141533s"
+    class="label label-8  svelte-b1x4s2"
   >
     engine-gecko
   </span>
    
   <span
-    class="label label-3  svelte-141533s"
+    class="label label-3  svelte-b1x4s2"
   >
     support-migration
   </span>
    
   <span
-    class="label label-6  svelte-141533s"
+    class="label label-6  svelte-b1x4s2"
   >
     nimbus
   </span>
    
   <span
-    class="label label-3  svelte-141533s"
+    class="label label-3  svelte-b1x4s2"
   >
     logins-store
   </span>
@@ -1871,13 +1871,13 @@ exports[`Storyshots Label Default 1`] = `
   </h4>
    
   <span
-    class="label label-9  svelte-141533s"
+    class="label label-9  svelte-b1x4s2"
   >
     deprecated
   </span>
    
   <span
-    class="label label-9  svelte-141533s"
+    class="label label-9  svelte-b1x4s2"
   >
     expired
   </span>

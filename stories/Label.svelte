@@ -5,7 +5,7 @@
 <h4>Color Palette</h4>
 <p>
   By default, the label color is generated from the label text, but you can
-  choose a specific color from the below palette by setting <code
+  choose a specific color from the below palette by setting a <code
     >labelNumber</code
   > variable.
 </p>
