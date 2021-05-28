@@ -6,7 +6,7 @@
 
   import FilterInput from "../components/FilterInput.svelte";
   import Markdown from "../components/Markdown.svelte";
-  import Pill from "../components/Pill.svelte";
+  import Label from "../components/Label.svelte";
 
   import { pageState, pageTitle } from "../state/stores";
 
@@ -161,7 +161,7 @@
             <div class="mzp-c-card-content">
               <h2 class="mzp-c-card-title">{app.canonical_app_name}</h2>
               {#if app.deprecated}
-                <Pill message="Deprecated" bgColor="#4a5568" />
+                <Label text="deprecated" />
               {/if}
               <p class="mzp-c-card-meta" id="card-description">
                 <Markdown text={app.app_description} />

@@ -8,7 +8,7 @@
   import Markdown from "../components/Markdown.svelte";
   import MetadataTable from "../components/MetadataTable.svelte";
   import NotFound from "../components/NotFound.svelte";
-  import Pill from "../components/Pill.svelte";
+  import Label from "../components/Label.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
   import PageTitle from "../components/PageTitle.svelte";
   import { pageState, pageTitle } from "../state/stores";
@@ -41,7 +41,7 @@
   <PageTitle text={app.canonical_app_name} />
 
   {#if app.deprecated}
-    <Pill message="Deprecated" bgColor="#4a5568" />
+    <Label text="deprecated" />
   {/if}
 
   <Markdown text={app.app_description} inline={false} />

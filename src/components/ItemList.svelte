@@ -8,7 +8,7 @@
   import Pagination from "./Pagination.svelte";
   import FilterInput from "./FilterInput.svelte";
   import Markdown from "./Markdown.svelte";
-  import Pill from "./Pill.svelte";
+  import Label from "./Label.svelte";
 
   import { isExpired } from "../state/metrics";
   import { pageState, updateURLState } from "../state/stores";
@@ -109,18 +109,17 @@
                   >{item.name}</a
                 >
                 {#if item.origin && item.origin !== appName}
-                  <Pill
-                    message={item.origin}
-                    bgColor="#4a5568"
-                    clickable
+                  <Label
+                    text={item.origin}
                     on:click={originClicked(item.origin)}
+                    clickable
                   />
                 {/if}
                 {#if isExpired(item.expires)}
-                  <Pill message="Expired" bgColor="#4a5568" />
+                  <Label text="expired" />
                 {/if}
                 {#if item.deprecated}
-                  <Pill message="Deprecated" bgColor="#4a5568" />
+                  <Label text="deprecated" />
                 {/if}
               </div>
             </td>
