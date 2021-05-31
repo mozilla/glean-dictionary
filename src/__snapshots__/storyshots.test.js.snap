@@ -153,26 +153,34 @@ exports[`Storyshots App Variant Selector Default 1`] = `
 <section
   class="storybook-snapshot-container"
 >
-  <select>
+  <label
+    for="app_id"
+  >
+    Application Variant
+  </label>
+   
+  <select
+    name="app_id"
+  >
     <option
       value="org.mozilla.fenix"
     >
       nightly
       
-      (
+        (
       org.mozilla.fenix
       )
-    
+       
     </option>
     <option
       value="org.mozilla.fenix_release"
     >
       release
       
-      (
+        (
       org.mozilla.fenix_release
       )
-    
+       
     </option>
   </select>
 </section>

@@ -2,7 +2,7 @@
   import { isEmpty } from "lodash";
 
   import AppAlert from "../components/AppAlert.svelte";
-  import AppVariantSelector from "../components/AppVariantSelector.svelte";
+  import VariantSelector from "../components/VariantSelector.svelte";
   import AuthenticatedLink from "../components/AuthenticatedLink.svelte";
   import Commentary from "../components/Commentary.svelte";
   import Markdown from "../components/Markdown.svelte";
@@ -23,12 +23,29 @@
   export let params;
 
   let selectedAppVariant;
+  let selectedPingVariant;
+  let pingData;
   const metricDataPromise = getMetricData(params.app, params.metric).then(
     (metricData) => {
       [selectedAppVariant] = metricData.variants;
+      selectedPingVariant = { id: metricData.send_in_pings[0] };
       return metricData;
     }
   );
+
+  $: {
+    pingData =
+      console.log([
+        selectedAppVariant,
+        selectedPingVariant,
+        selectedAppVariant &&
+          selectedPingVariant &&
+          selectedAppVariant.etl.ping_data[selectedPingVariant.id],
+      ]) ||
+      (selectedAppVariant &&
+        selectedPingVariant &&
+        selectedAppVariant.etl.ping_data[selectedPingVariant.id]);
+  }
 
   pageTitle.set(`${params.metric} | ${params.app} `);
 
@@ -131,15 +148,35 @@
 
   <h2>Access</h2>
 
-  {#if metric.variants.length > 1}
-    <AppVariantSelector bind:selectedAppVariant variants={metric.variants} />
-  {/if}
+  <div class="access-selectors">
+    {#if metric.variants.length > 1}
+      <div>
+        <VariantSelector
+          name={"app_id"}
+          label={"Application Variant"}
+          bind:selectedVariant={selectedAppVariant}
+          variants={metric.variants}
+        />
+      </div>
+    {/if}
+
+    {#if metric.send_in_pings.length > 1}
+      <div>
+        <VariantSelector
+          name={"ping_id"}
+          label={"Ping"}
+          bind:selectedVariant={selectedPingVariant}
+          variants={metric.send_in_pings.map((p) => ({ id: p }))}
+        />
+      </div>
+    {/if}
+  </div>
 
   {#if selectedAppVariant}
     <table>
       <col />
       <col />
-      {#if selectedAppVariant.etl.glam_url}
+      {#if selectedAppVariant.etl.glam_url && selectedPingVariant.id === "metrics"}
         <tr>
           <td>
             GLAM
@@ -155,7 +192,7 @@
           </td>
         </tr>
       {/if}
-      {#if selectedAppVariant.etl.looker_explore_links}
+      {#if pingData.looker}
         <tr>
           <td
             >Looker <HelpHoverable
@@ -163,18 +200,16 @@
             />
           </td>
           <td>
-            {#each selectedAppVariant.etl.looker_explore_links as link}
-              <div>
-                In
-                <AuthenticatedLink href={link.base}>
-                  {link.ping}
-                </AuthenticatedLink>
-                as
-                <AuthenticatedLink href={link.metric}>
-                  {metric.name}
-                </AuthenticatedLink>
-              </div>
-            {/each}
+            <div>
+              In
+              <AuthenticatedLink href={pingData.looker.base}>
+                {selectedPingVariant.id}
+              </AuthenticatedLink>
+              as
+              <AuthenticatedLink href={pingData.looker.metric}>
+                {metric.name}
+              </AuthenticatedLink>
+            </div>
           </td>
         </tr>
       {/if}
@@ -186,32 +221,30 @@
           />
         </td>
         <td>
-          {#each selectedAppVariant.etl.bigquery_stable_ping_tables as table}
-            <div>
-              In
+          <div>
+            In
+            <a
+              href={getBigQueryURL(
+                params.app,
+                selectedAppVariant.id,
+                selectedPingVariant.id
+              )}>{pingData.bigquery_table}</a
+            >
+            <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
+            {#if metric.type !== "event"}
+              as
               <a
                 href={getBigQueryURL(
                   params.app,
-                  selectedAppVariant.app_id,
-                  table.ping
-                )}>{table.name}</a
+                  selectedAppVariant.id,
+                  selectedPingVariant.id,
+                  selectedAppVariant.etl.bigquery_column_name
+                )}
               >
-              <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
-              {#if metric.type !== "event"}
-                as
-                <a
-                  href={getBigQueryURL(
-                    params.app,
-                    selectedAppVariant.app_id,
-                    table.ping,
-                    selectedAppVariant.etl.bigquery_column_name
-                  )}
-                >
-                  {selectedAppVariant.etl.bigquery_column_name}
-                </a>
-              {/if}
-            </div>
-          {/each}
+                {selectedAppVariant.etl.bigquery_column_name}
+              </a>
+            {/if}
+          </div>
         </td>
       </tr>
     </table>
@@ -225,5 +258,11 @@
   @include metadata-table;
   h2 {
     @include text-title-xs;
+  }
+
+  .access-selectors {
+    display: grid;
+    grid-template-columns: min-content min-content;
+    grid-gap: $spacing-md;
   }
 </style>

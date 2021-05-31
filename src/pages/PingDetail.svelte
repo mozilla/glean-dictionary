@@ -4,7 +4,7 @@
   import { getBigQueryURL } from "../state/urls";
 
   import AppAlert from "../components/AppAlert.svelte";
-  import AppVariantSelector from "../components/AppVariantSelector.svelte";
+  import VariantSelector from "../components/VariantSelector.svelte";
   import AuthenticatedLink from "../components/AuthenticatedLink.svelte";
   import Commentary from "../components/Commentary.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
@@ -55,7 +55,12 @@
   <h2>Access</h2>
 
   {#if ping.variants.length > 1}
-    <AppVariantSelector bind:selectedAppVariant variants={ping.variants} />
+    <VariantSelector
+      name={"app_id"}
+      label={"Application Variant"}
+      bind:selectedVariant={selectedAppVariant}
+      variants={ping.variants}
+    />
   {/if}
 
   {#if selectedAppVariant}
@@ -73,7 +78,7 @@
           <a
             href={getBigQueryURL(
               params.app,
-              selectedAppVariant.app_id,
+              selectedAppVariant.id,
               params.ping
             )}
           >
