@@ -176,7 +176,7 @@
     <table>
       <col />
       <col />
-      {#if selectedAppVariant.etl.glam_url && selectedPingVariant.id === "metrics"}
+      {#if selectedAppVariant.etl.glam_url}
         <tr>
           <td>
             GLAM
