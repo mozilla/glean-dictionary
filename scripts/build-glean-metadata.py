@@ -20,6 +20,18 @@ GLAM_PRODUCT_MAPPINGS = {
     "org.mozilla.firefox": ("fenix", "release"),
 }
 
+SUPPORTED_LOOKER_METRIC_TYPES = {
+    "boolean",
+    "counter",
+    "datetime",
+    "jwe",
+    "quantity",
+    "string",
+    "rate",
+    "timespan",
+    "uuid",
+}
+
 
 def _serialize_sets(obj):
     if isinstance(obj, set):
@@ -66,6 +78,22 @@ def etl_snake_case(line: str) -> str:
     words = REV_WORD_BOUND_PAT.split(subbed)
     # filter spaces between words and snake_case and reverse again
     return "_".join([w.lower() for w in words if w.strip()])[::-1]
+
+
+def get_looker_explore_url(looker_namespaces, app_name, ping_name, table_name):
+    ping_name_snakecase = stringcase.snakecase(ping_name)
+    if (
+        looker_namespaces.get(app_name)
+        and looker_namespaces[app_name].get("glean_app")
+        and looker_namespaces[app_name]["explores"].get(ping_name_snakecase)
+    ):
+        channel_identifier = "mozdata." + table_name.replace("_", "%5E_")
+
+        return (
+            f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}"
+            + f"?f[{ping_name_snakecase}.channel]={channel_identifier}"
+        )
+    return None
 
 
 # Pull down the annotations
@@ -181,22 +209,69 @@ for (app_name, app_group) in app_groups.items():
                     variants=[],
                 )
 
-            stable_ping_table_names = []
-            for ping in metric.definition["send_in_pings"]:
-                stable_ping_table_names.append(
-                    [ping, f"{app.app['bq_dataset_family']}.{stringcase.snakecase(ping)}"]
-                )
-
             metric_type = metric.definition["type"]
             metric_name_snakecase = stringcase.snakecase(metric.identifier)
-            etl = dict(
-                stable_ping_table_names=stable_ping_table_names,
-                table_name=(
+
+            # BigQuery and Looker metadata is ping based
+            bigquery_stable_ping_tables = []
+            looker_explore_links = []
+            for ping in metric.definition["send_in_pings"]:
+                ping_name_snakecase = stringcase.snakecase(ping)
+                table_name = f"{app.app['bq_dataset_family']}.{ping_name_snakecase}"
+                bigquery_stable_ping_tables.append({"ping": ping, "name": table_name})
+                bigquery_column_name = (
                     f"{metric.bq_prefix}.{metric_name_snakecase}"
                     if metric.bq_prefix
                     else f"metrics.{metric_type}.{metric_name_snakecase}"
-                ),
+                )
+                base_looker_explore_link = get_looker_explore_url(
+                    looker_namespaces, app_name, ping, table_name
+                )
+                if base_looker_explore_link:
+                    looker_metric_link = None
+                    if metric_type == "counter":
+                        looker_metric_link = (
+                            base_looker_explore_link
+                            + "&fields="
+                            + ",".join(
+                                [
+                                    f"{ping_name_snakecase}.submission_date",
+                                    f"{ping_name_snakecase}.{metric_name_snakecase}",
+                                ]
+                            )
+                        )
+                    elif metric_type in SUPPORTED_LOOKER_METRIC_TYPES:
+                        looker_dimension_name = "{}.{}".format(
+                            ping_name_snakecase, bigquery_column_name.replace(".", "__")
+                        )
+                        looker_metric_link = (
+                            base_looker_explore_link
+                            + "&fields="
+                            + ",".join(
+                                [
+                                    f"{ping_name_snakecase}.submission_date",
+                                    looker_dimension_name,
+                                    f"{ping_name_snakecase}.clients",
+                                ]
+                            )
+                            + f"&pivots={looker_dimension_name}"
+                        )
+
+                    if looker_metric_link:
+                        looker_explore_links.append(
+                            {
+                                "ping": ping,
+                                "base": base_looker_explore_link,
+                                "metric": looker_metric_link,
+                            }
+                        )
+            etl = dict(
+                bigquery_stable_ping_tables=bigquery_stable_ping_tables,
+                bigquery_column_name=bigquery_column_name,
+                looker_explore_links=looker_explore_links,
             )
+
+            # GLAM metadata is per app / app-id
             if metric_type != "event" and GLAM_PRODUCT_MAPPINGS.get(app.app_id):
                 (glam_product, glam_app_id) = GLAM_PRODUCT_MAPPINGS[app.app_id]
                 glam_metric_id = etl_snake_case(metric.identifier)
@@ -227,12 +302,6 @@ for (app_name, app_group) in app_groups.items():
                         .get(ping.identifier)
                     ),
                 )
-                if (
-                    looker_namespaces.get(app_name)
-                    and looker_namespaces[app_name].get("glean_app")
-                    and looker_namespaces[app_name]["explores"].get(ping.identifier)
-                ):
-                    ping_data.update({"looker_explore": True})
                 app_data["pings"].append(ping_data)
 
             ping_data = next(pd for pd in app_data["pings"] if pd["name"] == ping.identifier)
@@ -250,15 +319,18 @@ for (app_name, app_group) in app_groups.items():
                 "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"  # noqa
                 + bq_path
             ).json()
-
-            app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
-            ping_data["variants"].append(
-                {
-                    "app_id": app_id,
-                    "app_channel": app.app.get("app_channel", "release"),
-                    "table": stable_ping_table_name,
-                }
+            variant_data = {
+                "app_id": app_id,
+                "app_channel": app.app.get("app_channel", "release"),
+                "table": stable_ping_table_name,
+            }
+            looker_url = get_looker_explore_url(
+                looker_namespaces, app_name, ping.identifier, stable_ping_table_name
             )
+            if looker_url:
+                variant_data.update({"looker_url": looker_url})
+            ping_data["variants"].append(variant_data)
+            app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
             os.makedirs(app_variant_table_dir, exist_ok=True)
             open(os.path.join(app_variant_table_dir, f"{ping.identifier}.json"), "w").write(
                 json.dumps(
