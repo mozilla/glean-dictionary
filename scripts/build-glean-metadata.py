@@ -205,25 +205,35 @@ for (app_name, app_group) in app_groups.items():
                         .get("metrics", {})
                         .get(metric.identifier)
                     ),
+                    # convert send_in_pings to a list so we can sort (see below)
+                    send_in_pings=list(metric.definition["send_in_pings"]),
                     repo_url=app.app["url"],
                     variants=[],
                 )
 
+                # sort "send in pings" alphanumerically, except that `metrics`
+                # should always be first if present
+                ping_priority = {"metrics": 0}
+                app_metrics[metric.identifier]["send_in_pings"].sort()
+                app_metrics[metric.identifier]["send_in_pings"].sort(
+                    key=lambda ping: ping_priority.get(ping, 1)
+                )
+
             metric_type = metric.definition["type"]
             metric_name_snakecase = stringcase.snakecase(metric.identifier)
+            bigquery_column_name = (
+                f"{metric.bq_prefix}.{metric_name_snakecase}"
+                if metric.bq_prefix
+                else f"metrics.{metric_type}.{metric_name_snakecase}"
+            )
 
             # BigQuery and Looker metadata is ping based
+            ping_data = {}
             bigquery_stable_ping_tables = []
-            looker_explore_links = []
             for ping in metric.definition["send_in_pings"]:
                 ping_name_snakecase = stringcase.snakecase(ping)
                 table_name = f"{app.app['bq_dataset_family']}.{ping_name_snakecase}"
-                bigquery_stable_ping_tables.append({"ping": ping, "name": table_name})
-                bigquery_column_name = (
-                    f"{metric.bq_prefix}.{metric_name_snakecase}"
-                    if metric.bq_prefix
-                    else f"metrics.{metric_type}.{metric_name_snakecase}"
-                )
+                ping_data[ping] = {"bigquery_table": table_name}
                 base_looker_explore_link = get_looker_explore_url(
                     looker_namespaces, app_name, ping, table_name
                 )
@@ -258,17 +268,14 @@ for (app_name, app_group) in app_groups.items():
                         )
 
                     if looker_metric_link:
-                        looker_explore_links.append(
-                            {
-                                "ping": ping,
-                                "base": base_looker_explore_link,
-                                "metric": looker_metric_link,
-                            }
-                        )
+                        ping_data[ping]["looker"] = {
+                            "base": base_looker_explore_link,
+                            "metric": looker_metric_link,
+                        }
+
             etl = dict(
-                bigquery_stable_ping_tables=bigquery_stable_ping_tables,
+                ping_data=ping_data,
                 bigquery_column_name=bigquery_column_name,
-                looker_explore_links=looker_explore_links,
             )
 
             # GLAM metadata is per app / app-id
@@ -283,9 +290,8 @@ for (app_name, app_group) in app_groups.items():
 
             app_metrics[metric.identifier]["variants"].append(
                 dict(
-                    app_id=app.app_id,
-                    app_channel=app.app.get("app_channel", "release"),
-                    app_description=app.app["app_description"],
+                    id=app.app_id,
+                    description=app.app.get("app_channel", "release"),
                     etl=etl,
                 )
             )
@@ -320,8 +326,8 @@ for (app_name, app_group) in app_groups.items():
                 + bq_path
             ).json()
             variant_data = {
-                "app_id": app_id,
-                "app_channel": app.app.get("app_channel", "release"),
+                "id": app_id,
+                "description": app.app.get("app_channel", "release"),
                 "table": stable_ping_table_name,
             }
             looker_url = get_looker_explore_url(
