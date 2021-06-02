@@ -1,6 +1,4 @@
 <script>
-  import { setContext } from "svelte";
-  import { writable } from "svelte/store";
   import { chunk } from "lodash";
 
   import { getItemURL } from "../state/urls";
@@ -25,16 +23,20 @@
   let pagedItems;
   let paginated = true;
 
-  let currentPage = writable(1);
-  setContext("currentPage", currentPage);
+  // track change of filter input
+  let { search } = $pageState;
 
   // re-filter items when showExpired or search text changes
   $: {
-    const search = $pageState.search || "";
-    // don't use $currentPage, because we don't want to call this reactively
-    // when paginating
-    currentPage.set(1);
+    if (search !== $pageState.search) {
+      search = $pageState.search || "";
+      $pageState.page = 1;
+    }
+  }
 
+  // update pagedItems when either pagination changes or search text changes
+  // (above)
+  $: {
     const originMatch = (item) =>
       item.origin && item.origin.includes(search.toLowerCase());
 
@@ -47,15 +49,14 @@
     filteredItems = $pageState.showExpired
       ? filteredItems
       : filteredItems.filter((item) => !isExpired(item.expires));
-  }
 
-  // update pagination when either pagination changes or filtered list changes
-  // (above)
-  $: {
+    // update pagination
+    const currentPage = $pageState.page || 1;
     const perPage = paginated ? DEFAULT_ITEMS_PER_PAGE : filteredItems.length;
+    const chunkIndex = paginated ? currentPage - 1 : 0;
     pagedItems =
       filteredItems.length > 0
-        ? chunk([...filteredItems], perPage)[$currentPage - 1]
+        ? chunk([...filteredItems], perPage)[chunkIndex]
         : [];
   }
 
