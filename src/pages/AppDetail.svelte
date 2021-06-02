@@ -63,7 +63,7 @@
         ...$pageState,
         itemType: detail.active,
         search: "",
-        page: "",
+        page: 1,
       });
     }}
   >
