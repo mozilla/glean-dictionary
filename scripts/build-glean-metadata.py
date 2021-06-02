@@ -290,6 +290,11 @@ for (app_name, app_group) in app_groups.items():
                 )
             )
 
+            # deduplicate metrics in variants by their app_id
+            app_metrics[metric.identifier]["variants"] = list(
+                {v["app_id"]: v for v in app_metrics[metric.identifier]["variants"]}.values()
+            )
+
         for ping in app.get_pings():
             if ping.identifier not in ping_identifiers_seen:
                 ping_identifiers_seen.add(ping.identifier)
