@@ -14,7 +14,6 @@
   // Components
   import Breadcrumb from "./components/Breadcrumb.svelte";
   import Footer from "./components/Footer.svelte";
-  import GlobalStyles from "./GlobalStyles.svelte";
 
   // Stores
   import { pageState, pageTitle, updateURLState } from "./state/stores";
@@ -98,8 +97,6 @@
   $: title = $pageTitle ? `${$pageTitle}` : "Glean Dictionary";
   $: document.title = title;
 </script>
-
-<GlobalStyles />
 
 <svelte:head>
   <title>{title}</title>

@@ -1,3 +1,8 @@
+@import "tippy.js/dist/tippy.css";
+
+@import "@mozilla-protocol/core/protocol/css/protocol.scss";
+@import "@mozilla-protocol/core/protocol/css/components/_emphasis-box.scss";
+
 @mixin metadata-table {
   // Styling for metadata tables in
   // App, Metric, Ping, Table detail pages

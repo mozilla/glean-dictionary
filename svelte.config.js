@@ -7,7 +7,7 @@ module.exports = {
       style: "scss",
     },
     scss: {
-      prependData: `@import 'node_modules/@mozilla-protocol/core/protocol/css/protocol.scss';`,
+      prependData: `@import 'src/main.scss';`,
     },
     postcss: {
       plugins: [autoPrefixer],
