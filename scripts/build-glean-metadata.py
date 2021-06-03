@@ -109,7 +109,7 @@ def get_app_variant_description(app):
     description = app.app.get("app_channel", "release")
     # Make it obvious if a variant should no longer be used.
     if app.app.get("deprecated"):
-        description += " - deprecated"
+        description = f"[Deprecated] {description}"
     return description
 
 
