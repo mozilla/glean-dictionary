@@ -371,7 +371,7 @@ for (app_name, app_group) in app_groups.items():
                 )
             )
 
-    # write ping descriptions
+    # write ping descriptions, resorting the app-specific parts in user preference order
     for ping_data in app_data["pings"]:
         ping_data["variants"].sort(key=lambda v: USER_CHANNEL_PRIORITY[v["channel"]])
         open(os.path.join(app_ping_dir, f"{ping_data['name']}.json"), "w").write(
