@@ -14,6 +14,12 @@ OUTPUT_DIRECTORY = os.path.join("public", "data")
 ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
 NAMESPACES_URL = "https://raw.githubusercontent.com/mozilla/looker-hub/main/namespaces.yaml"
 
+# Priority for getting metric data (use the later definitions of nightly over release)
+METRIC_CHANNEL_PRIORITY = {"nightly": 1, "beta": 2, "release": 3, "esr": 4}
+# Priority for sorting app ids in the UI (of anticipated relevance to the suer)
+USER_CHANNEL_PRIORITY = {"release": 1, "beta": 2, "nightly": 3, "esr": 4}
+
+
 GLAM_PRODUCT_MAPPINGS = {
     "org.mozilla.fenix": ("fenix", ""),
     "org.mozilla.firefox_beta": ("fenix", "beta"),
@@ -96,6 +102,17 @@ def get_looker_explore_url(looker_namespaces, app_name, ping_name, table_name):
     return None
 
 
+def get_app_variant_description(app):
+    """
+    Gets a description of app variants (intended for use inside dropdowns)
+    """
+    description = app.app.get("app_channel", "release")
+    # Make it obvious if a variant should no longer be used.
+    if app.app.get("deprecated"):
+        description = f"[Deprecated] {description}"
+    return description
+
+
 # Pull down the annotations
 annotations_index = requests.get(ANNOTATIONS_URL).json()
 looker_namespaces = yaml.safe_load(requests.get(NAMESPACES_URL).text)
@@ -132,11 +149,10 @@ for app in apps:
     )
 
 # sort each set of app ids by the following criteria
-# nightly < beta < release < esr
+# metric channel priority nightly < beta < release < esr
 # non-deprecated < deprecated
-channel_priority = {"nightly": 1, "beta": 2, "release": 3, "esr": 4}
 for app_group in app_groups.values():
-    app_group["app_ids"].sort(key=lambda app_id: channel_priority[app_id["channel"]])
+    app_group["app_ids"].sort(key=lambda app_id: METRIC_CHANNEL_PRIORITY[app_id["channel"]])
     app_group["app_ids"].sort(key=lambda app_id: app_id["deprecated"])
 
 # Write out a list of app groups (for the landing page)
@@ -164,6 +180,7 @@ for (app_name, app_group) in app_groups.items():
 
     for app_id in [app["name"] for app in app_group["app_ids"]]:
         app = next(app for app in apps if app.app_id == app_id)
+        app_is_deprecated = app.app.get("deprecated")
 
         # information about this app_id
         open(os.path.join(app_id_dir, f"{get_resource_path(app_id)}.json"), "w").write(
@@ -237,7 +254,8 @@ for (app_name, app_group) in app_groups.items():
                 base_looker_explore_link = get_looker_explore_url(
                     looker_namespaces, app_name, ping, table_name
                 )
-                if base_looker_explore_link:
+                # we deliberately don't show looker information for deprecated applications
+                if not app_is_deprecated and base_looker_explore_link:
                     looker_metric_link = None
                     if metric_type == "counter":
                         looker_metric_link = (
@@ -291,7 +309,8 @@ for (app_name, app_group) in app_groups.items():
             app_metrics[metric.identifier]["variants"].append(
                 dict(
                     id=app.app_id,
-                    description=app.app.get("app_channel", "release"),
+                    channel=app.app.get("app_channel", "release"),
+                    description=get_app_variant_description(app),
                     etl=etl,
                 )
             )
@@ -325,15 +344,16 @@ for (app_name, app_group) in app_groups.items():
                 "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"  # noqa
                 + bq_path
             ).json()
-            variant_data = {
-                "id": app_id,
-                "description": app.app.get("app_channel", "release"),
-                "table": stable_ping_table_name,
-            }
+            variant_data = dict(
+                id=app_id,
+                description=get_app_variant_description(app),
+                table=stable_ping_table_name,
+                channel=app.app.get("app_channel", "release"),
+            )
             looker_url = get_looker_explore_url(
                 looker_namespaces, app_name, ping.identifier, stable_ping_table_name
             )
-            if looker_url:
+            if not app_is_deprecated and looker_url:
                 variant_data.update({"looker_url": looker_url})
             ping_data["variants"].append(variant_data)
             app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
@@ -351,8 +371,9 @@ for (app_name, app_group) in app_groups.items():
                 )
             )
 
-    # write ping descriptions
+    # write ping descriptions, resorting the app-specific parts in user preference order
     for ping_data in app_data["pings"]:
+        ping_data["variants"].sort(key=lambda v: USER_CHANNEL_PRIORITY[v["channel"]])
         open(os.path.join(app_ping_dir, f"{ping_data['name']}.json"), "w").write(
             json.dumps(
                 dict(
@@ -367,8 +388,9 @@ for (app_name, app_group) in app_groups.items():
             )
         )
 
-    # write metrics
+    # write metrics, resorting the app-specific parts in user preference order
     for metric_data in app_metrics.values():
+        metric_data["variants"].sort(key=lambda v: USER_CHANNEL_PRIORITY[v["channel"]])
         open(
             os.path.join(app_metrics_dir, f"{_normalize_metrics(metric_data['name'])}.json"), "w"
         ).write(
