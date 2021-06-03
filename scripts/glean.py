@@ -196,6 +196,31 @@ class GleanApp(object):
         logging.info(f"For {self.app_id}, found Glean dependencies: {dependencies}")
         return dependencies
 
+    def deduplicate_metrics(self, metrics):
+        metric_names = set()
+        results = []
+
+        def get_index(name, list):
+            for i in range(len(list)):
+                if list[i][0] == name:
+                    return i
+            return None
+
+        def get_last_date(metric):
+            return metric[1]["history"][-1]["dates"]["last"]
+
+        for item in metrics:
+            if item[0] not in metric_names:
+                metric_names.add(item[0])
+                results.append(item)
+            # get the latest version of a metric if there's a duplicate
+            if item[0] in metric_names and get_last_date(item) > get_last_date(
+                results[get_index(item[0], results)]
+            ):
+                del results[get_index(item[0], results)]
+                results.append(item)
+        return results
+
     def get_metrics(self) -> List[GleanMetric]:
         data = _cache.get_json(GleanApp.METRICS_URL_TEMPLATE.format(self.app["v1_name"]))
         metrics = [
@@ -211,6 +236,7 @@ class GleanApp(object):
                 (d[0], {**d[1], "origin": dependency["library_name"]})
                 for d in dependency_metrics.items()
             ]
+            metrics = self.deduplicate_metrics(metrics)
 
         ping_names = set(self._get_ping_data().keys())
 
