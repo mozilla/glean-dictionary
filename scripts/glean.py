@@ -211,20 +211,21 @@ class GleanApp(object):
                 (d[0], {**d[1], "origin": dependency["library_name"]})
                 for d in dependency_metrics.items()
             ]
-            # only get the latest version of metrics
-            deduplicated_metrics = {}
-            for metric in metrics:
-                if (
-                    not deduplicated_metrics.get(metric[0])
-                    or deduplicated_metrics[metric[0]][1]["history"][-1]["dates"]["last"]
-                    < metric[1]["history"][-1]["dates"]["last"]
-                ):
-                    deduplicated_metrics[metric[0]] = metric
 
         ping_names = set(self._get_ping_data().keys())
-
         processed = []
-        for _id, defn in deduplicated_metrics.values():
+
+        # deduplicate metrics
+        metric_map = {}
+        for metric in metrics:
+            if (
+                not metric_map.get(metric[0])
+                or metric_map[metric[0]][1]["history"][-1]["dates"]["last"]
+                < metric[1]["history"][-1]["dates"]["last"]
+            ):
+                metric_map[metric[0]] = metric
+
+        for _id, defn in metric_map.values():
             metric = GleanMetric(_id, defn, ping_names=ping_names)
             processed.append(metric)
 
