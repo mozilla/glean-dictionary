@@ -288,7 +288,7 @@ for (app_name, app_group) in app_groups.items():
                     if looker_metric_link:
                         ping_data[ping]["looker"] = {
                             "base": base_looker_explore_link,
-                            "metric": looker_metric_link,
+                            "metric": f"{looker_metric_link}&toggle=vis",
                         }
 
             etl = dict(
