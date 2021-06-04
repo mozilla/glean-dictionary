@@ -213,9 +213,19 @@ class GleanApp(object):
             ]
 
         ping_names = set(self._get_ping_data().keys())
-
         processed = []
-        for _id, defn in metrics:
+
+        # deduplicate metrics
+        metric_map = {}
+        for metric in metrics:
+            if (
+                not metric_map.get(metric[0])
+                or metric_map[metric[0]][1]["history"][-1]["dates"]["last"]
+                < metric[1]["history"][-1]["dates"]["last"]
+            ):
+                metric_map[metric[0]] = metric
+
+        for _id, defn in metric_map.values():
             metric = GleanMetric(_id, defn, ping_names=ping_names)
             processed.append(metric)
 
