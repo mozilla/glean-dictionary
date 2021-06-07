@@ -13,6 +13,7 @@
   import NotFound from "../components/NotFound.svelte";
   import Markdown from "../components/Markdown.svelte";
   import PageTitle from "../components/PageTitle.svelte";
+  import SubHeading from "../components/SubHeading.svelte";
   import { PING_SCHEMA } from "../data/schemas";
 
   export let params;
@@ -46,13 +47,22 @@
     <Markdown text={ping.description} />
   </p>
 
-  <h2>Metadata</h2>
+  <SubHeading
+    title={"Metadata"}
+    helpText={"Metadata about this ping, as defined by the implementor."}
+  />
   <MetadataTable appName={params.app} item={ping} schema={PING_SCHEMA} />
 
-  <h2>Commentary</h2>
+  <SubHeading
+    title={"Commentary"}
+    helpText={"Reviewed commentary from Mozilla data practitioners on this ping."}
+  />
   <Commentary item={ping} itemType={"ping"} />
 
-  <h2>Access</h2>
+  <SubHeading
+    title={"Access"}
+    helpText={"Ways to access this metric in Mozilla's data warehouse."}
+  />
 
   {#if ping.variants.length > 1}
     <VariantSelector
@@ -104,7 +114,10 @@
     </table>
   {/if}
 
-  <h2>Metrics</h2>
+  <SubHeading
+    title={"Metrics"}
+    helpText={"Metrics that are sent inside this ping."}
+  />
   <ItemList itemType="metrics" items={ping.metrics} appName={params.app} />
 {:catch}
   <NotFound pageName={params.ping} itemType="ping" />
