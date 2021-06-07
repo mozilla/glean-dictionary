@@ -119,17 +119,16 @@
         </div>
       </div>
     </div>
-
-    {#if links.length}
-      <nav class="mzp-c-navigation c-sub-navigation">
-        <div class="mzp-c-navigation-l-content">
-          <div class="mzp-c-navigation-container">
-            <Breadcrumb {links} />
-          </div>
-        </div>
-      </nav>
-    {/if}
   </header>
+  {#if links.length}
+    <nav class="mzp-c-navigation c-sub-navigation">
+      <div class="mzp-c-navigation-l-content">
+        <div class="mzp-c-navigation-container">
+          <Breadcrumb {links} />
+        </div>
+      </div>
+    </nav>
+  {/if}
   <main>
     <div class="mzp-l-content" style="padding-top: 15px">
       <article class="mzp-c-article">
@@ -174,6 +173,10 @@
   }
 
   .c-sub-navigation {
+    top: 0;
+    position: sticky;
     background: $color-light-gray-10;
+    box-shadow: 1px 1px 1px rgba($color-black, 0.1);
+    z-index: 1000;
   }
 </style>
