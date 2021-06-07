@@ -11,6 +11,7 @@
   import Label from "../components/Label.svelte";
   import { TabGroup, Tab, TabContent } from "../components/tabs";
   import PageTitle from "../components/PageTitle.svelte";
+  import SubHeading from "../components/SubHeading.svelte";
   import { pageState, pageTitle } from "../state/stores";
 
   export let params;
@@ -53,7 +54,10 @@
     schema={APPLICATION_DEFINITION_SCHEMA}
   />
 
-  <h2>Commentary</h2>
+  <SubHeading
+    title={"Commentary"}
+    helpText={"Reviewed commentary from Mozilla data practitioners on this application."}
+  />
   <Commentary item={app} itemType={"application"} />
 
   <TabGroup

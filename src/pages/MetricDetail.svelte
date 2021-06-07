@@ -9,6 +9,7 @@
   import NotFound from "../components/NotFound.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import PageTitle from "../components/PageTitle.svelte";
+  import SubHeading from "../components/SubHeading.svelte";
   import MetadataTable from "../components/MetadataTable.svelte";
   import {
     METRIC_DEFINITION_SCHEMA,
@@ -106,8 +107,6 @@
     ping{metric.send_in_pings.length > 1 ? "s" : ""}.
   </p>
 
-  <h2>Definition</h2>
-
   <MetadataTable
     appName={params.app}
     item={metric}
@@ -135,19 +134,27 @@
       {/each}
     </table>
   {/if}
-  <h2>Metadata</h2>
 
+  <SubHeading
+    title={"Metadata"}
+    helpText={"Metadata about this metric, as defined by the implementor."}
+  />
   <MetadataTable
     appName={params.app}
     item={metric}
     schema={METRIC_METADATA_SCHEMA}
   />
 
-  <h2>Commentary</h2>
+  <SubHeading
+    title={"Commentary"}
+    helpText={"Reviewed commentary from Mozilla data practitioners on this metric."}
+  />
   <Commentary item={metric} itemType={"metric"} />
 
-  <h2>Access</h2>
-
+  <SubHeading
+    title={"Access"}
+    helpText={"Ways to access this metric in Mozilla's data warehouse."}
+  />
   <div class="access-selectors">
     {#if metric.variants.length > 1}
       <div>
