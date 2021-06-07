@@ -15,10 +15,10 @@
 <style>
   ol {
     display: flex;
+    margin: 0 0 1em;
     li {
       @include text-title-3xs;
       font-weight: bold;
-      padding-bottom: $spacing-md;
       padding-left: $spacing-sm;
 
       .link-name {
