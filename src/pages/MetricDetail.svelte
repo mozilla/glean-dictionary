@@ -36,16 +36,9 @@
 
   $: {
     pingData =
-      console.log([
-        selectedAppVariant,
-        selectedPingVariant,
-        selectedAppVariant &&
-          selectedPingVariant &&
-          selectedAppVariant.etl.ping_data[selectedPingVariant.id],
-      ]) ||
-      (selectedAppVariant &&
-        selectedPingVariant &&
-        selectedAppVariant.etl.ping_data[selectedPingVariant.id]);
+      selectedAppVariant &&
+      selectedPingVariant &&
+      selectedAppVariant.etl.ping_data[selectedPingVariant.id];
   }
 
   pageTitle.set(`${params.metric} | ${params.app} `);
