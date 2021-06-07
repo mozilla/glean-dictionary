@@ -4,6 +4,7 @@ import json
 import os
 import re
 import sys
+import urllib.parse
 
 import glean
 import requests
@@ -26,7 +27,13 @@ GLAM_PRODUCT_MAPPINGS = {
     "org.mozilla.firefox": ("fenix", "release"),
 }
 
-SUPPORTED_LOOKER_METRIC_TYPES = {
+GLEAN_DISTRIBUTION_TYPES = {
+    "timing_distribution",
+    "memory_distribution",
+    "custom_distribution",
+}
+
+SUPPORTED_LOOKER_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
     "boolean",
     "counter",
     "datetime",
@@ -257,6 +264,7 @@ for (app_name, app_group) in app_groups.items():
                 # we deliberately don't show looker information for deprecated applications
                 if not app_is_deprecated and base_looker_explore_link:
                     looker_metric_link = None
+                    # for counters, we can use measures directly
                     if metric_type == "counter":
                         looker_metric_link = (
                             base_looker_explore_link
@@ -269,21 +277,52 @@ for (app_name, app_group) in app_groups.items():
                             )
                         )
                     elif metric_type in SUPPORTED_LOOKER_METRIC_TYPES:
-                        looker_dimension_name = "{}.{}".format(
+                        base_looker_dimension_name = "{}.{}".format(
                             ping_name_snakecase, bigquery_column_name.replace(".", "__")
                         )
-                        looker_metric_link = (
-                            base_looker_explore_link
-                            + "&fields="
-                            + ",".join(
-                                [
-                                    f"{ping_name_snakecase}.submission_date",
-                                    looker_dimension_name,
-                                    f"{ping_name_snakecase}.clients",
-                                ]
+
+                        # For distribution types, we'll aggregate the sum of all distributions per
+                        # day. In most cases, this isn't super meaningful, but provides a starting
+                        # place for further analysis
+                        if metric_type in GLEAN_DISTRIBUTION_TYPES:
+                            looker_dimension_name = base_looker_dimension_name + "__sum"
+                            custom_field_name = f"sum_of_{metric_name_snakecase}"
+                            dynamic_fields = [
+                                dict(
+                                    measure=custom_field_name,
+                                    label=f"Sum of {metric.identifier}",
+                                    based_on=looker_dimension_name,
+                                    expression="",
+                                    type="sum",
+                                )
+                            ]
+                            looker_metric_link = (
+                                base_looker_explore_link
+                                + "&fields="
+                                + ",".join(
+                                    [
+                                        f"{ping_name_snakecase}.submission_date",
+                                        custom_field_name,
+                                    ]
+                                )
+                                + "&dynamic_fields="
+                                + urllib.parse.quote_plus(json.dumps(dynamic_fields))
                             )
-                            + f"&pivots={looker_dimension_name}"
-                        )
+                        else:
+                            # otherwise pivoting on the dimension is the best we can do (this works
+                            # well for boolean measures)
+                            looker_metric_link = (
+                                base_looker_explore_link
+                                + "&fields="
+                                + ",".join(
+                                    [
+                                        f"{ping_name_snakecase}.submission_date",
+                                        base_looker_dimension_name,
+                                        f"{ping_name_snakecase}.clients",
+                                    ]
+                                )
+                                + f"&pivots={base_looker_dimension_name}"
+                            )
 
                     if looker_metric_link:
                         ping_data[ping]["looker"] = {
