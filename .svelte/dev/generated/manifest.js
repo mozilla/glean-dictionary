@@ -20,6 +20,9 @@ export const routes = [
 	// src/routes/index.svelte
 	[/^\/$/, [c[0], c[2]], [c[1]]],
 
+	// src/routes/apps.scss
+	[/^\/apps\/?$/],
+
 	// src/routes/[app]/index.svelte
 	[/^\/([^/]+?)\/?$/, [c[0], c[3], c[4]], [c[1]], (m) => ({ app: d(m[1])})],
 

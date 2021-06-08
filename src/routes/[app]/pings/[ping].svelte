@@ -11,12 +11,7 @@
 </script>
 
 <script>
-	export let ping;
-	export let app;
-	import { setContext } from 'svelte';
-	import { writable } from 'svelte/store';
-
-	import { pageState } from '$lib/state/stores';
+	export let ping, app;
 	import { getBigQueryURL } from '$lib/state/urls';
 
 	import AppVariantSelector from '$lib/AppVariantSelector.svelte';
@@ -29,13 +24,6 @@
 	import { PING_SCHEMA } from '$lib/data/schemas';
 
 	let selectedAppVariant;
-
-	const searchText = writable($pageState.search || '');
-	setContext('searchText', searchText);
-	const showExpired = writable($pageState.showExpired || false);
-	setContext('showExpired', showExpired);
-	
-	$: pageState.set({... $pageState, search: $searchText, showExpired: $showExpired });
 	
 </script>
 
@@ -54,9 +42,8 @@
 <h2>Commentary</h2>
 <Commentary item={ping} itemType={'ping'} />
 
-<h2>Access</h2>
-
 {#if ping.variants.length > 1}
+	<h2>Access</h2>
 	<AppVariantSelector bind:selectedAppVariant variants={ping.variants} />
 {/if}
 
@@ -82,8 +69,6 @@
 <ItemList itemType="metrics" items={ping.metrics} appName={app} />
 
 <style>
-	@import '../../../main.scss';
-
 	@include metadata-table;
 	h2 {
 		@include text-title-xs;

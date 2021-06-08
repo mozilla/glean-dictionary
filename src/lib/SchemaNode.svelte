@@ -4,7 +4,29 @@
   export let parentFields = [];
 </script>
 
+<<<<<<< HEAD
 <div style={node.visible ? "" : "display: none;"}>
+=======
+<!-- <style>
+  p {
+    margin: 0;
+  }
+  .node {
+    @include text-body-md;
+    .parent-node {
+      color: $color-dark-gray-60;
+    }
+    .node-description,
+    .node-link {
+      @include text-body-sm;
+      color: $color-dark-gray-20;
+      margin-left: $spacing-sm;
+    }
+  }
+</style> -->
+
+<div style={node.visible ? '' : 'display: none;'}>
+>>>>>>> f1d974b (more wip)
   <p class="node">
     <span class="parent-node"
       >{parentFields.join(".")}{parentFields.length ? "." : ""}</span

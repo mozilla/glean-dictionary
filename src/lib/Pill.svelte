@@ -3,7 +3,7 @@
   export let bgColor;
 </script>
 
-<style>
+<!-- <style>
   .pill {
     @include text-body-sm;
     display: inline-block;
@@ -13,6 +13,6 @@
     color: $color-light-gray-05;
     font-weight: bold;
   }
-</style>
+</style> -->
 
 <div style="background-color: {bgColor}" class="pill">{message}</div>

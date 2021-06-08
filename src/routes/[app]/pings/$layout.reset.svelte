@@ -49,9 +49,9 @@
 	
 <Footer/>
 
-<style>
+<!-- <style>
 	main {
 	margin: $spacing-md;
 }
-</style>
+</style> -->
 

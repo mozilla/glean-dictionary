@@ -28,6 +28,9 @@
 	import PageTitle from '$lib/PageTitle.svelte';
 	import { pageState } from '$lib/state/stores';
 
+	// reset pageState
+	pageState.set({...$pageState, itemType: "metrics"})
+	
 	function updatePath(pageState) {
 		const simplifiedState = mapValues(
       		pickBy(pageState, (v) => (typeof v !== "string" && v) || v.length > 0),
@@ -36,11 +39,9 @@
 		const query = stringify(simplifiedState);
     	const path = `${window.location.pathname}${query ? `?${query}` : ""}`;
     	window.history.replaceState(null, undefined, path);
-		console.log("query", query)
 	}
 
 	$: typeof window !== "undefined" && updatePath($pageState);
-	$: console.log($pageState)
 </script>
 
 <svelte:head>

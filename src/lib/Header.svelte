@@ -23,7 +23,7 @@
 	{/if} -->
 </header>
 
-<style lang="scss">
+<!-- <style lang="scss">
 	@import '@mozilla-protocol/core/protocol/css/protocol.scss';
 
 	.mzp-c-navigation {
@@ -50,4 +50,4 @@
 			}
 		}
 	}
-</style>
+</style> -->

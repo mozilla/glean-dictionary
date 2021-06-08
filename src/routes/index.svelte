@@ -1,9 +1,12 @@
 <script context="module">
+	console.log('Starting 1')
 	export async function load({ fetch }) {
+		console.log('starting 2')
 		const res = await fetch('/data/apps.json');
 
 		if (res.ok) {
 			const apps = await res.json();
+			console.log("Starting 3");
 			apps.sort((a, b) =>
 				a.canonical_app_name.toLowerCase() > b.canonical_app_name.toLowerCase() ? 1 : -1
 			);
@@ -13,6 +16,7 @@
 				}
 			};
 		}
+
 		const { message } = await res.json();
 		return { error: new Error(message) };
 	}
@@ -24,6 +28,7 @@
 
 	import FilterInput from '$lib/FilterInput.svelte';
 	import { pageState } from '$lib/state/stores';
+	console.log("next")
 
 	const appLogos = {
 		browser: '/img/app-logos/browser.png',
@@ -133,54 +138,5 @@
 {/if}
 
 <style lang="scss">
-	@import '@mozilla-protocol/core/protocol/css/protocol.scss';
-
-	.app-filter {
-		margin: $spacing-md $spacing-xl;
-		#deprecation-checkbox {
-			display: block;
-			text-align: right;
-			label {
-				display: inline;
-			}
-		}
-	}
-
-	.app-list {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-		grid-gap: $spacing-md;
-	}
-
-	.corner-flag {
-		border-top: 80px solid black;
-		border-right: 80px solid transparent;
-		position: absolute;
-		top: 1px;
-		left: 1px;
-	}
-	.platform-logo {
-		position: absolute;
-		top: 7px;
-		left: 7px;
-		width: 30px;
-		background-color: inherit;
-	}
-	#card {
-		max-width: 230px;
-		#media-block {
-			&:hover {
-				border-radius: 15px;
-			}
-		}
-		#media-wrapper {
-			border-radius: 15px;
-			#logo-img {
-				width: 230px;
-			}
-		}
-	}
-	#card-description {
-		font-size: 14px;
-	}
+@import "./apps.scss"
 </style>

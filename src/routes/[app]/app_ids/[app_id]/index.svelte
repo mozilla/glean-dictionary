@@ -36,8 +36,8 @@
 
 <MetadataTable appName={app} item={appId} schema={APPLICATION_ID_DEFINITION_SCHEMA} />
 
-<style>
+<!-- <style>
 	h2 {
 		@include text-title-xs;
 	}
-</style>
+</style> -->

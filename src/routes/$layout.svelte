@@ -2,7 +2,7 @@
 	import Header from '$lib/Header.svelte';
 	import Footer from '$lib/Footer.svelte';
 	// import BreadCrumb from '$lib/BreadCrumb.svelte';
-	import '../main.scss';
+	// import '../main.scss';
 </script>
 
 <Header />
@@ -18,3 +18,4 @@
 	margin: $spacing-md;
 }
 </style>
+

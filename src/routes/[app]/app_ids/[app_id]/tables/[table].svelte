@@ -55,7 +55,7 @@ export const router = false;
 </table>
 <SchemaViewer {app} nodes={table.bq_schema} />
 
-<style>
+<!-- <style>
 	@import '../../../../../main.scss';
 	@include metadata-table;
-</style>
+</style> -->

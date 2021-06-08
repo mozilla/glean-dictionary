@@ -24,8 +24,6 @@
 	import { METRIC_DEFINITION_SCHEMA, METRIC_METADATA_SCHEMA } from '$lib/data/schemas';
 	import { getBigQueryURL } from '$lib/state/urls';
 	import { isExpired } from '$lib/state/metrics';
-import { pageState } from '$lib/state/stores';
-import BigQueryLink from '$lib/BigQueryLink.svelte';
 
 	let selectedAppVariant;
 	[selectedAppVariant] = metric.variants;
@@ -152,12 +150,6 @@ import BigQueryLink from '$lib/BigQueryLink.svelte';
 							>
 								{selectedAppVariant.bigquery_names.metric_table_name}
 							</a>
-							<!-- <BigQueryLink bigQueryLink={getBigQueryURL(
-								app,
-								selectedAppVariant.app_id,
-								sendInPing,
-								selectedAppVariant.bigquery_names.metric_table_name
-							)} metricName={selectedAppVariant.bigquery_names.metric_table_name}/> -->
 						{/if}
 					</div>
 				{/each}
@@ -180,7 +172,6 @@ import BigQueryLink from '$lib/BigQueryLink.svelte';
 {/if}
 
 <style>
-	@import '../../../main.scss';
 	@include metadata-table;
 	h2 {
 		@include text-title-xs;
