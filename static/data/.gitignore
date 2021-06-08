@@ -1,0 +1,7 @@
+
+apps.json
+**/index.json
+**/app_ids/*.json
+**/pings/*.json
+**/tables/**/*.json
+**/metrics/*.json

@@ -1,8 +1,0 @@
-# Inverse matches (i.e., DO NOT ignore these)
-!.prettierrc.js
-
-public/build/bundle.js
-scripts/build-glean-metadata.js
-src/ga.js
-storybook-static/*
-venv/*

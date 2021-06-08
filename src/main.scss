@@ -1,4 +1,8 @@
-@mixin metadata-table {
+// TODO: import Protocol before rendering  
+  
+  @import "@mozilla-protocol/core/protocol/css/protocol.scss";
+
+  @mixin metadata-table {
   // Styling for metadata tables in
   // App, Metric, Ping, Table detail pages
   table {

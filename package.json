@@ -1,15 +1,13 @@
 {
   "name": "glean-dictionary",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "scripts": {
-    "build": "rollup --config",
-    "build-storybook": "build-storybook --static-dir ./public --config-dir .storybook",
-    "dev": "rollup --config --watch",
-    "format": "prettier --plugin-search-dir=. --write .",
-    "format:check": "prettier --plugin-search-dir=. --check .",
-    "lint": "eslint .",
-    "start": "sirv public",
-    "storybook": "start-storybook --static-dir ./public -p 6006",
+    "dev": "svelte-kit dev",
+    "build": "svelte-kit build",
+    "start": "svelte-kit start",
+    "lint": "prettier --check . && eslint --ignore-path .gitignore .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "test": "npm-run-all format:check lint test:jest",
     "test:jest": "jest tests src --no-cache",
     "build-glean-metadata": "node scripts/build-glean-metadata.js"
