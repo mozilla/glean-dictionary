@@ -1,15 +1,20 @@
 <script context="module">
 	export async function load({ fetch }) {
 		const res = await fetch('/data/apps.json');
-		const apps = await res.json();
 
-		apps.sort((a, b) =>
-			a.canonical_app_name.toLowerCase() > b.canonical_app_name.toLowerCase() ? 1 : -1
-		);
-
-		return {
-			props: { apps }
-		};
+		if (res.ok) {
+			const apps = await res.json();
+			apps.sort((a, b) =>
+				a.canonical_app_name.toLowerCase() > b.canonical_app_name.toLowerCase() ? 1 : -1
+			);
+			return {
+				props: {
+					apps
+				}
+			};
+		}
+		const { message } = await res.json();
+		return { error: new Error(message) };
 	}
 </script>
 

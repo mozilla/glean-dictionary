@@ -1,2 +1,0 @@
-<!-- TODO: breadcrumb -->
-<slot />

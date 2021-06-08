@@ -1,7 +1,5 @@
 /node_modules/
 /static/build/
-/static/img/logos/
-/static/fonts/
 /storybook-static/
 venv
 *.pyc

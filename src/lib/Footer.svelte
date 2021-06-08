@@ -1,5 +1,5 @@
 <script>
-  const rev = "__VERSION__";
+	const rev = '__VERSION__';
 </script>
 
 <footer class="mzp-c-footer">

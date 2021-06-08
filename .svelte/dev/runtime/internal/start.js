@@ -138,25 +138,16 @@ class Router {
 			// Don't handle hash changes
 			if (url.pathname === location.pathname && url.search === location.search) return;
 
-			const info = this.parse(url);
-			if (info) {
-				const noscroll = a.hasAttribute('sveltekit:noscroll');
-				history.pushState({}, '', url.href);
-				this._navigate(info, noscroll ? scroll_state() : null, [], url.hash);
-				event.preventDefault();
-			}
+			const noscroll = a.hasAttribute('sveltekit:noscroll');
+			history.pushState({}, '', url.href);
+			this._navigate(url, noscroll ? scroll_state() : null, [], url.hash);
+			event.preventDefault();
 		});
 
 		addEventListener('popstate', (event) => {
 			if (event.state && this.enabled) {
 				const url = new URL(location.href);
-				const info = this.parse(url);
-				if (info) {
-					this._navigate(info, event.state['sveltekit:scroll'], []);
-				} else {
-					// eslint-disable-next-line
-					location.href = location.href; // nosonar
-				}
+				this._navigate(url, event.state['sveltekit:scroll'], []);
 			}
 		});
 
@@ -175,16 +166,14 @@ class Router {
 		if (url.origin !== location.origin) return null;
 		if (!url.pathname.startsWith(this.base)) return null;
 
-		const path = url.pathname.slice(this.base.length) || '/';
+		const path = decodeURIComponent(url.pathname.slice(this.base.length) || '/');
 
 		const routes = this.routes.filter(([pattern]) => pattern.test(path));
 
-		if (routes.length > 0) {
-			const query = new URLSearchParams(url.search);
-			const id = `${path}?${query}`;
+		const query = new URLSearchParams(url.search);
+		const id = `${path}?${query}`;
 
-			return { id, routes, path, query };
-		}
+		return { id, routes, path, query };
 	}
 
 	/**
@@ -195,13 +184,9 @@ class Router {
 	async goto(href, { noscroll = false, replaceState = false } = {}, chain) {
 		if (this.enabled) {
 			const url = new URL(href, get_base_uri(document));
-			const info = this.parse(url);
 
-			if (info) {
-				// TODO shouldn't need to pass the hash here
-				history[replaceState ? 'replaceState' : 'pushState']({}, '', href);
-				return this._navigate(info, noscroll ? scroll_state() : null, chain, url.hash);
-			}
+			history[replaceState ? 'replaceState' : 'pushState']({}, '', href);
+			return this._navigate(url, noscroll ? scroll_state() : null, chain, url.hash);
 		}
 
 		location.href = href;
@@ -223,22 +208,18 @@ class Router {
 	 * @returns {Promise<import('./types').NavigationResult>}
 	 */
 	async prefetch(url) {
-		const info = this.parse(url);
-
-		if (info) {
-			return this.renderer.load(info);
-		} else {
-			throw new Error(`Could not prefetch ${url.href}`);
-		}
+		return this.renderer.load(this.parse(url));
 	}
 
 	/**
-	 * @param {import('./types').NavigationInfo} info
+	 * @param {URL} url
 	 * @param {{ x: number, y: number }} scroll
 	 * @param {string[]} chain
 	 * @param {string} [hash]
 	 */
-	async _navigate(info, scroll, chain, hash) {
+	async _navigate(url, scroll, chain, hash) {
+		const info = this.parse(url);
+
 		this.renderer.notify({
 			path: info.path,
 			query: info.query
@@ -1001,6 +982,10 @@ class Renderer {
  *   };
  * }} opts */
 async function start({ paths, target, session, host, route, spa, hydrate }) {
+	if (import.meta.env.DEV && !target) {
+		throw new Error('Missing target element. See https://kit.svelte.dev/docs#configuration-target');
+	}
+
 	const router =
 		route &&
 		new Router({

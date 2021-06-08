@@ -1,6 +1,6 @@
 <script context="module">
 	export async function load({ page }) {
-		const { app, metric, appId, ping, table } = page.params;
+		const { app, metric, appId, ping, table } = await page.params;
 
 		const links = [
 			...(app
@@ -35,17 +35,16 @@
 
 <script>
 	export let links;
+	import BreadCrumb from '$lib/BreadCrumb.svelte';
 	import Header from '$lib/Header.svelte';
 	import Footer from '$lib/Footer.svelte';
-	import BreadCrumb from '$lib/BreadCrumb.svelte';
-	import '../main.scss';
 </script>
 
+
 <Header />
+<BreadCrumb {links} />
 
-<main>
-	<BreadCrumb {links} />
-	<slot />
-</main>
+<slot>
+</slot>
 
-<Footer />
+<Footer/>

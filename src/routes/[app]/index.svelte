@@ -1,11 +1,15 @@
 <script context="module">
 	export async function load({ page, fetch }) {
 		const res = await fetch(`/data/${page.params.app}/index.json`);
+		if (res.ok) {
 		const app = await res.json();
+			return {
+				props: { app }
+			};
+		}
 
-		return {
-			props: { app }
-		};
+		const { message } = await res.json();
+		return { error: new Error(message) };
 	}
 </script>
 
