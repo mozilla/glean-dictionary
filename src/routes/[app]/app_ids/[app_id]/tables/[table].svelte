@@ -1,4 +1,7 @@
 <script context="module">
+
+export const router = false;
+
 	export async function load({ page, fetch }) {
 		const tableName = page.params.table.replace(/\./g, '_');
 		const res = await fetch(
@@ -6,33 +9,27 @@
 		);
 		const table = await res.json();
 		const app = page.params.app;
-
+		const search = page.query.get("search")
 		return {
-			props: { table, app }
+			props: { table, app, search }
 		};
 	}
 </script>
 
 <script>
-	export let table, app;
-	import { setContext } from 'svelte';
-	import { writable } from 'svelte/store';
-
+	export let table, app, search;
 	import SchemaViewer from '$lib/SchemaViewer.svelte';
 	import PageTitle from '$lib/PageTitle.svelte';
 
 	import { pageState } from '$lib/state/stores';
-
-	const searchText = writable($pageState.search || '');
-	setContext('searchText', searchText);
-
-	$: {
-		pageState.set({ search: $searchText });
+	
+	if (search) {
+		pageState.set({... $pageState,search: search})
 	}
 </script>
 
 <svelte:head>
-	<title>{table} table | {app.appId}</title>
+	<title>{table.name} table | {table.app_id}</title>
 </svelte:head>
 
 <PageTitle text={`Table <code>${table.name}</code> for ${table.app_id}`} />

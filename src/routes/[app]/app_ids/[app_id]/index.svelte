@@ -37,7 +37,6 @@
 <MetadataTable appName={app} item={appId} schema={APPLICATION_ID_DEFINITION_SCHEMA} />
 
 <style>
-	@import '../../../../main.scss';
 	h2 {
 		@include text-title-xs;
 	}

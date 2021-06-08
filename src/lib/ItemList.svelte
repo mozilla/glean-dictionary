@@ -19,7 +19,7 @@
 
   export let showFilter = true;
 
-  let filteredItems = items.filter((item) => !isExpired(item.expires));
+let filteredItems;
   let pagedItems;
   let paginated = true;
   let topElement;

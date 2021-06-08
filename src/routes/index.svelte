@@ -20,8 +20,10 @@
 
 <script>
 	export let apps;
+	export let shownApps;
 
 	import FilterInput from '$lib/FilterInput.svelte';
+	import { pageState } from '$lib/state/stores';
 
 	const appLogos = {
 		browser: '/img/app-logos/browser.png',
@@ -82,6 +84,11 @@
 		}
 		return undefined;
 	}
+	
+	// reset search
+	pageState.set({... $pageState, search: ""})
+	
+	$: shownApps = apps.filter(a => a.app_name.includes($pageState.search))
 </script>
 
 <svelte:head>
@@ -91,9 +98,9 @@
 <div class="app-filter">
 	<FilterInput placeHolder="Search for an application" />
 </div>
-{#if apps}
+{#if shownApps}
 	<div class="app-list">
-		{#each apps as app}
+		{#each shownApps as app}
 			<div class="mzp-c-card mzp-c-card-extra-small has-aspect-3-2" id="card">
 				<a class="mzp-c-card-block-link" href={app.app_name} id="media-block">
 					<div class="mzp-c-card-media-wrapper" id="media-wrapper">

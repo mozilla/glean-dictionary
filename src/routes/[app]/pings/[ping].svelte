@@ -34,9 +34,9 @@
 	setContext('searchText', searchText);
 	const showExpired = writable($pageState.showExpired || false);
 	setContext('showExpired', showExpired);
-	$: {
-		pageState.set({ search: $searchText, showExpired: $showExpired });
-	}
+	
+	$: pageState.set({... $pageState, search: $searchText, showExpired: $showExpired });
+	
 </script>
 
 <svelte:head>

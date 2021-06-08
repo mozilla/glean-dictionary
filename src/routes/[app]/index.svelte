@@ -16,8 +16,8 @@
 <script>
 	export let app;
 
-	import { setContext } from 'svelte';
-	import { writable } from 'svelte/store';
+	import { mapValues, pickBy } from "lodash";
+  	import { stringify} from "query-string";
 
 	import { APPLICATION_DEFINITION_SCHEMA } from '$lib/data/schemas';
 	import AppAlert from '$lib/AppAlert.svelte';
@@ -28,14 +28,19 @@
 	import PageTitle from '$lib/PageTitle.svelte';
 	import { pageState } from '$lib/state/stores';
 
-	let itemType = $pageState.itemType || 'metrics';
-	const searchText = writable($pageState.search || '');
-	setContext('searchText', searchText);
-	const showExpired = writable($pageState.showExpired || false);
-	setContext('showExpired', showExpired);
-	$: {
-		pageState.set({ itemType, search: $searchText, showExpired: $showExpired });
+	function updatePath(pageState) {
+		const simplifiedState = mapValues(
+      		pickBy(pageState, (v) => (typeof v !== "string" && v) || v.length > 0),
+      		(v) => (typeof v === "boolean" ? +v : v)
+    	);
+		const query = stringify(simplifiedState);
+    	const path = `${window.location.pathname}${query ? `?${query}` : ""}`;
+    	window.history.replaceState(null, undefined, path);
+		console.log("query", query)
 	}
+
+	$: typeof window !== "undefined" && updatePath($pageState);
+	$: console.log($pageState)
 </script>
 
 <svelte:head>
@@ -58,22 +63,21 @@
 <MetadataTable appName={app.app_name} item={app} schema={APPLICATION_DEFINITION_SCHEMA} />
 
 <TabGroup
-	active={itemType}
+	active={$pageState.itemType}
 	on:tabChanged={({ detail }) => {
-		itemType = detail.active;
-		searchText.set('');
+		pageState.set({... $pageState, itemType: detail.active, search: ""});
 	}}
 >
 	<Tab key="metrics">Metrics</Tab>
 	<Tab key="pings">Pings</Tab>
 	<Tab key="app_ids">Application IDs</Tab>
 
-	<TabContent key="pings">
-		<ItemList itemType="pings" items={app.pings} appName={app.app_name} />
-	</TabContent>
-
 	<TabContent key="metrics">
 		<ItemList itemType="metrics" items={app.metrics} appName={app.app_name} />
+	</TabContent>
+
+	<TabContent key="pings">
+		<ItemList itemType="pings" items={app.pings} appName={app.app_name} />
 	</TabContent>
 
 	<TabContent key="app_ids">

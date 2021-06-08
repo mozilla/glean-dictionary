@@ -42,9 +42,16 @@
 
 
 <Header />
+
+<main>
 <BreadCrumb {links} />
-
-<slot>
-</slot>
-
+	<slot /></main>
+	
 <Footer/>
+
+<style>
+	main {
+	margin: $spacing-md;
+}
+</style>
+

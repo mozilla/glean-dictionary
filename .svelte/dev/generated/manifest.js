@@ -2,7 +2,7 @@ const c = [
 	() => import("../../../src/routes/$layout.svelte"),
 	() => import("../components/error.svelte"),
 	() => import("../../../src/routes/index.svelte"),
-	() => import("../../../src/routes/[app]/$layout.reset.svelte"),
+	() => import("../../../src/routes/[app]/$layout.svelte"),
 	() => import("../../../src/routes/[app]/index.svelte"),
 	() => import("../../../src/routes/[app]/app_ids/[app_id]/$layout.reset.svelte"),
 	() => import("../../../src/routes/[app]/app_ids/[app_id]/index.svelte"),
@@ -21,7 +21,7 @@ export const routes = [
 	[/^\/$/, [c[0], c[2]], [c[1]]],
 
 	// src/routes/[app]/index.svelte
-	[/^\/([^/]+?)\/?$/, [c[3], c[4]], [], (m) => ({ app: d(m[1])})],
+	[/^\/([^/]+?)\/?$/, [c[0], c[3], c[4]], [c[1]], (m) => ({ app: d(m[1])})],
 
 	// src/routes/[app]/app_ids/[app_id]/index.svelte
 	[/^\/([^/]+?)\/app_ids\/([^/]+?)\/?$/, [c[5], c[6]], [], (m) => ({ app: d(m[1]), app_id: d(m[2])})],

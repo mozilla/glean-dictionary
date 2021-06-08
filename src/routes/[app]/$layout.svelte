@@ -36,20 +36,16 @@
 <script>
 	export let links;
 	import BreadCrumb from '$lib/BreadCrumb.svelte';
-	import Header from '$lib/Header.svelte';
-	import Footer from '$lib/Footer.svelte';
 </script>
-
-
-<Header />
 
 <BreadCrumb {links} />
 
-<slot />
+<main>
+<slot /></main>
 
-
-<Footer/>
 
 <style>
-
+	main {
+	margin: $spacing-md;
+}
 </style>

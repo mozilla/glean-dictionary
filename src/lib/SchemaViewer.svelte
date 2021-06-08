@@ -45,6 +45,7 @@
     };
 
     nodesWithVisibility = nodes.map((node) => addVisibility(node), filterTerms);
+
   }
 </script>
 

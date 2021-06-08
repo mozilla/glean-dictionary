@@ -15,6 +15,7 @@
 	export let metric, app;
 
 	import AppVariantSelector from '$lib/AppVariantSelector.svelte';
+	import AppAlert from '$lib/AppAlert.svelte'
 	import Commentary from '$lib/Commentary.svelte';
 	import HelpHoverable from '$lib/HelpHoverable.svelte';
 	import PageTitle from '$lib/PageTitle.svelte';
@@ -23,6 +24,8 @@
 	import { METRIC_DEFINITION_SCHEMA, METRIC_METADATA_SCHEMA } from '$lib/data/schemas';
 	import { getBigQueryURL } from '$lib/state/urls';
 	import { isExpired } from '$lib/state/metrics';
+import { pageState } from '$lib/state/stores';
+import BigQueryLink from '$lib/BigQueryLink.svelte';
 
 	let selectedAppVariant;
 	[selectedAppVariant] = metric.variants;
@@ -149,6 +152,12 @@
 							>
 								{selectedAppVariant.bigquery_names.metric_table_name}
 							</a>
+							<!-- <BigQueryLink bigQueryLink={getBigQueryURL(
+								app,
+								selectedAppVariant.app_id,
+								sendInPing,
+								selectedAppVariant.bigquery_names.metric_table_name
+							)} metricName={selectedAppVariant.bigquery_names.metric_table_name}/> -->
 						{/if}
 					</div>
 				{/each}
