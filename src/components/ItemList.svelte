@@ -23,20 +23,11 @@
   let pagedItems;
   let paginated = true;
 
-  // track change of filter input
-  let { search } = $pageState;
-
-  // re-filter items when showExpired or search text changes
-  $: {
-    if (search !== $pageState.search) {
-      search = $pageState.search || "";
-      $pageState.page = 1;
-    }
-  }
-
   // update pagedItems when either pagination changes or search text changes
   // (above)
   $: {
+    const search = $pageState.search || "";
+
     const originMatch = (item) =>
       item.origin && item.origin.includes(search.toLowerCase());
 
@@ -61,7 +52,7 @@
   }
 
   const originClicked = (origin) => {
-    $pageState = { ...$pageState, search: origin };
+    $pageState = { ...$pageState, search: origin, page: 1 };
     // when the user clicks on an origin (library name), we want to persist a new state
     updateURLState(true);
   };
