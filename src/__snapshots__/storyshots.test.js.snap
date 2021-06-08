@@ -216,44 +216,54 @@ exports[`Storyshots Breadcrumb App Details Page 1`] = `
 <section
   class="storybook-snapshot-container"
 >
-  <ol
-    class="svelte-1j9buj7"
+  <div
+    class="breadcrumb svelte-rpk294"
   >
-    <li
-      class="svelte-1j9buj7"
+    <ol
+      class="svelte-rpk294"
     >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/"
+      <li
+        class="svelte-rpk294"
       >
-        apps
+        <a
+          class="link-name svelte-rpk294"
+          href="/"
+        >
+          apps
+        </a>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
-      >
-        /
-      </span>
-       
-    </li>
-    <li
-      class="svelte-1j9buj7"
-    >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/apps/fenix/"
-      >
-        fenix
+        <span
+          class="svelte-rpk294"
+        >
+          -&gt;
+        </span>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
+      </li>
+      <li
+        class="svelte-rpk294"
       >
-        
-      </span>
-       
-    </li>
-  </ol>
+        <a
+          class="link-name svelte-rpk294"
+          href="/apps/fenix/"
+        >
+          fenix
+        </a>
+         
+        <span
+          class="svelte-rpk294"
+        >
+          
+        </span>
+         
+      </li>
+    </ol>
+     
+    <img
+      alt="Platform Logo"
+      class="svelte-rpk294"
+      src="/img/app-logos/android-breadcrumb.png"
+    />
+  </div>
 </section>
 `;
 
@@ -261,27 +271,32 @@ exports[`Storyshots Breadcrumb Apps List Page 1`] = `
 <section
   class="storybook-snapshot-container"
 >
-  <ol
-    class="svelte-1j9buj7"
+  <div
+    class="breadcrumb svelte-rpk294"
   >
-    <li
-      class="svelte-1j9buj7"
+    <ol
+      class="svelte-rpk294"
     >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/"
+      <li
+        class="svelte-rpk294"
       >
-        apps
+        <a
+          class="link-name svelte-rpk294"
+          href="/"
+        >
+          apps
+        </a>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
-      >
-        
-      </span>
-       
-    </li>
-  </ol>
+        <span
+          class="svelte-rpk294"
+        >
+          
+        </span>
+         
+      </li>
+    </ol>
+     
+  </div>
 </section>
 `;
 
@@ -289,78 +304,88 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
 <section
   class="storybook-snapshot-container"
 >
-  <ol
-    class="svelte-1j9buj7"
+  <div
+    class="breadcrumb svelte-rpk294"
   >
-    <li
-      class="svelte-1j9buj7"
+    <ol
+      class="svelte-rpk294"
     >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/"
+      <li
+        class="svelte-rpk294"
       >
-        apps
+        <a
+          class="link-name svelte-rpk294"
+          href="/"
+        >
+          apps
+        </a>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
-      >
-        /
-      </span>
-       
-    </li>
-    <li
-      class="svelte-1j9buj7"
-    >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/apps/fenix/"
-      >
-        fenix
+        <span
+          class="svelte-rpk294"
+        >
+          -&gt;
+        </span>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
+      </li>
+      <li
+        class="svelte-rpk294"
       >
-        /
-      </span>
-       
-    </li>
-    <li
-      class="svelte-1j9buj7"
-    >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/apps/fenix/pings/activation"
-      >
-        activation
+        <a
+          class="link-name svelte-rpk294"
+          href="/apps/fenix/"
+        >
+          fenix
+        </a>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
-      >
-        /
-      </span>
-       
-    </li>
-    <li
-      class="svelte-1j9buj7"
-    >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/apps/fenix/tables/activation/"
-      >
-        activation table
+        <span
+          class="svelte-rpk294"
+        >
+          -&gt;
+        </span>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
+      </li>
+      <li
+        class="svelte-rpk294"
       >
-        
-      </span>
-       
-    </li>
-  </ol>
+        <a
+          class="link-name svelte-rpk294"
+          href="/apps/fenix/pings/activation"
+        >
+          activation
+        </a>
+         
+        <span
+          class="svelte-rpk294"
+        >
+          -&gt;
+        </span>
+         
+      </li>
+      <li
+        class="svelte-rpk294"
+      >
+        <a
+          class="link-name svelte-rpk294"
+          href="/apps/fenix/tables/activation/"
+        >
+          activation table
+        </a>
+         
+        <span
+          class="svelte-rpk294"
+        >
+          
+        </span>
+         
+      </li>
+    </ol>
+     
+    <img
+      alt="Platform Logo"
+      class="svelte-rpk294"
+      src="/img/app-logos/android-breadcrumb.png"
+    />
+  </div>
 </section>
 `;
 
@@ -368,61 +393,71 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
 <section
   class="storybook-snapshot-container"
 >
-  <ol
-    class="svelte-1j9buj7"
+  <div
+    class="breadcrumb svelte-rpk294"
   >
-    <li
-      class="svelte-1j9buj7"
+    <ol
+      class="svelte-rpk294"
     >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/"
+      <li
+        class="svelte-rpk294"
       >
-        apps
+        <a
+          class="link-name svelte-rpk294"
+          href="/"
+        >
+          apps
+        </a>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
-      >
-        /
-      </span>
-       
-    </li>
-    <li
-      class="svelte-1j9buj7"
-    >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/apps/fenix/"
-      >
-        fenix
+        <span
+          class="svelte-rpk294"
+        >
+          -&gt;
+        </span>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
+      </li>
+      <li
+        class="svelte-rpk294"
       >
-        /
-      </span>
-       
-    </li>
-    <li
-      class="svelte-1j9buj7"
-    >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/apps/fenix/metrics/about_page.libraries_tapped"
-      >
-        about_page.libraries_tapped
+        <a
+          class="link-name svelte-rpk294"
+          href="/apps/fenix/"
+        >
+          fenix
+        </a>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
+        <span
+          class="svelte-rpk294"
+        >
+          -&gt;
+        </span>
+         
+      </li>
+      <li
+        class="svelte-rpk294"
       >
-        
-      </span>
-       
-    </li>
-  </ol>
+        <a
+          class="link-name svelte-rpk294"
+          href="/apps/fenix/metrics/about_page.libraries_tapped"
+        >
+          about_page.libraries_tapped
+        </a>
+         
+        <span
+          class="svelte-rpk294"
+        >
+          
+        </span>
+         
+      </li>
+    </ol>
+     
+    <img
+      alt="Platform Logo"
+      class="svelte-rpk294"
+      src="/img/app-logos/android-breadcrumb.png"
+    />
+  </div>
 </section>
 `;
 
@@ -430,61 +465,71 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
 <section
   class="storybook-snapshot-container"
 >
-  <ol
-    class="svelte-1j9buj7"
+  <div
+    class="breadcrumb svelte-rpk294"
   >
-    <li
-      class="svelte-1j9buj7"
+    <ol
+      class="svelte-rpk294"
     >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/"
+      <li
+        class="svelte-rpk294"
       >
-        apps
+        <a
+          class="link-name svelte-rpk294"
+          href="/"
+        >
+          apps
+        </a>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
-      >
-        /
-      </span>
-       
-    </li>
-    <li
-      class="svelte-1j9buj7"
-    >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/apps/fenix/"
-      >
-        fenix
+        <span
+          class="svelte-rpk294"
+        >
+          -&gt;
+        </span>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
+      </li>
+      <li
+        class="svelte-rpk294"
       >
-        /
-      </span>
-       
-    </li>
-    <li
-      class="svelte-1j9buj7"
-    >
-      <a
-        class="link-name svelte-1j9buj7"
-        href="/apps/fenix/pings/activation"
-      >
-        activation
+        <a
+          class="link-name svelte-rpk294"
+          href="/apps/fenix/"
+        >
+          fenix
+        </a>
          
-      </a>
-      <span
-        class="svelte-1j9buj7"
+        <span
+          class="svelte-rpk294"
+        >
+          -&gt;
+        </span>
+         
+      </li>
+      <li
+        class="svelte-rpk294"
       >
-        
-      </span>
-       
-    </li>
-  </ol>
+        <a
+          class="link-name svelte-rpk294"
+          href="/apps/fenix/pings/activation"
+        >
+          activation
+        </a>
+         
+        <span
+          class="svelte-rpk294"
+        >
+          
+        </span>
+         
+      </li>
+    </ol>
+     
+    <img
+      alt="Platform Logo"
+      class="svelte-rpk294"
+      src="/img/app-logos/android-breadcrumb.png"
+    />
+  </div>
 </section>
 `;
 

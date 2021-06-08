@@ -107,26 +107,18 @@
 
 <div class="app">
   <header>
-    <div class="mzp-c-navigation mzp-is-sticky">
-      <div class="mzp-c-navigation-l-content">
-        <div class="mzp-c-navigation-container">
-          <div class="mzp-c-navigation-logo-glean">
-            <a class="glean-logo" href="/">
-              <img src="/glean_logo.png" alt="Glean Dictionary Logo" /></a
-            >
-            <a href="/"><h5>Dictionary</h5></a>
-          </div>
-        </div>
+    <div class="mzp-c-navigation">
+      <div class="mzp-c-navigation-logo-glean">
+        <a class="glean-logo" href="/">
+          <img src="/glean_logo.png" alt="Glean Dictionary Logo" /></a
+        >
+        <a href="/"><h5>Dictionary</h5></a>
       </div>
     </div>
   </header>
   {#if links.length}
-    <nav class="mzp-c-navigation c-sub-navigation">
-      <div class="mzp-c-navigation-l-content">
-        <div class="mzp-c-navigation-container">
-          <Breadcrumb {links} />
-        </div>
-      </div>
+    <nav class="mzp-c-navigation breadcrumb">
+      <Breadcrumb {links} />
     </nav>
   {/if}
   <main>
@@ -151,8 +143,9 @@
   .mzp-c-navigation {
     background: $color-black;
     padding-top: $spacing-md;
-
+    overflow-x: hidden;
     .mzp-c-navigation-logo-glean {
+      margin-left: $spacing-xl;
       width: 100%;
       display: flex;
       padding-top: $spacing-xs;
@@ -172,7 +165,7 @@
     }
   }
 
-  .c-sub-navigation {
+  .breadcrumb {
     top: 0;
     position: sticky;
     background: $color-light-gray-10;
