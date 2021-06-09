@@ -132,6 +132,10 @@ if len(sys.argv) > 1:
 
 app_groups = {}
 for app in apps:
+    if app.app.get("skip_documentation"):
+        # respect apps that don't want to appear in the glean dictionary
+        continue
+
     if not app_groups.get(app.app_name):
         app_groups[app.app_name] = {
             "app_name": app.app_name,
