@@ -18,6 +18,7 @@
 </script>
 
 {#await pingDataPromise then table}
+<div class="mzp-c-emphasis-box">
   <PageTitle text={`Table <code>${table.name}</code> for ${table.app_id}`} />
   <table>
     <col />
@@ -40,6 +41,7 @@
     </tr>
   </table>
   <SchemaViewer app={params.app} nodes={table.bq_schema} />
+  </div>
 {:catch}
   <NotFound pageName={params.appId} itemType="table" />
 {/await}

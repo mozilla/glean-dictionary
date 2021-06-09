@@ -30,7 +30,8 @@
 </script>
 
 {#await appDataPromise then app}
-  {#if app.annotation && app.annotation.warning}
+  <div class="mzp-c-emphasis-box">
+    {#if app.annotation && app.annotation.warning}
     <AppAlert status="warning" message={app.annotation.warning} />
   {/if}
 
@@ -40,7 +41,6 @@
       message="This application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
     />
   {/if}
-  <div class="mzp-c-emphasis-box">
   <PageTitle text={app.canonical_app_name} />
 
   {#if app.deprecated}
@@ -100,7 +100,7 @@
 
 <style>
   @import "../main.scss";
-  @import "@mozilla-protocol/core/protocol/css/components/_emphasis-box.scss";
+
   h2 {
     @include text-title-xs;
   }

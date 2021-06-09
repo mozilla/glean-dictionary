@@ -68,7 +68,8 @@
 </script>
 
 {#await metricDataPromise then metric}
-  {#if isExpired(metric.expires)}
+  <div class="mzp-c-emphasis-box">
+    {#if isExpired(metric.expires)}
     <AppAlert
       status="warning"
       message="This metric has expired: it may not be present in the source code, new data will not be ingested into BigQuery, and it will not appear in dashboards."
@@ -249,6 +250,7 @@
       </tr>
     </table>
   {/if}
+  </div>
 {:catch}
   <NotFound pageName={params.metric} itemType="metric" />
 {/await}

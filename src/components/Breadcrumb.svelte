@@ -1,4 +1,7 @@
 <script>
+import { log } from "console";
+
+
   export let links;
 
   const isPlatform = (app) => {
@@ -56,9 +59,6 @@
 
         .link-name {
           text-decoration: none;
-        }
-        span {
-          /* color: $color-dark-gray-10; */
         }
       }
     }

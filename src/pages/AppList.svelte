@@ -183,7 +183,7 @@
 {/if}
 
 <style>
-  @import "@mozilla-protocol/core/protocol/css/components/_emphasis-box.scss";
+  @import "../main.scss";
   .app-filter {
     margin: $spacing-md $spacing-xl;
     #deprecation-checkbox {

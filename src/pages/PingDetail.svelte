@@ -35,7 +35,8 @@
 </script>
 
 {#await pingDataPromise then ping}
-  {#if ping.origin && ping.origin !== params.app}
+  <div class="mzp-c-emphasis-box">
+    {#if ping.origin && ping.origin !== params.app}
     <AppAlert
       status="warning"
       message={`This ping is defined by a library used by the application (__${ping.origin}__), rather than the application itself. For more details, see the definition.`}
@@ -119,6 +120,7 @@
     helpText={"Metrics that are sent inside this ping."}
   />
   <ItemList itemType="metrics" items={ping.metrics} appName={params.app} />
+  </div>
 {:catch}
   <NotFound pageName={params.ping} itemType="ping" />
 {/await}

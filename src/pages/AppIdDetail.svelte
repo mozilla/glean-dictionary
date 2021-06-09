@@ -24,6 +24,7 @@
 </script>
 
 {#await appIdDataPromise then appId}
+<div class="mzp-c-emphasis-box">
   <PageTitle text={appId.app_id} />
   {#if appId.description}
     <p>{appId.description}</p>
@@ -39,6 +40,7 @@
     item={appId}
     schema={APPLICATION_ID_DEFINITION_SCHEMA}
   />
+  </div>
 {/await}
 
 <style>
