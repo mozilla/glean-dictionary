@@ -32,68 +32,72 @@
 {#await appDataPromise then app}
   <div class="mzp-c-emphasis-box">
     {#if app.annotation && app.annotation.warning}
-    <AppAlert status="warning" message={app.annotation.warning} />
-  {/if}
+      <AppAlert status="warning" message={app.annotation.warning} />
+    {/if}
 
-  {#if app.prototype}
-    <AppAlert
-      status="warning"
-      message="This application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
-    />
-  {/if}
-  <PageTitle text={app.canonical_app_name} />
-
-  {#if app.deprecated}
-    <Label text="deprecated" />
-  {/if}
-
-  <Markdown text={app.app_description} inline={false} />
-
-  <MetadataTable
-    appName={params.app}
-    item={app}
-    schema={APPLICATION_DEFINITION_SCHEMA}
-  />
-
-  <SubHeading
-    title={"Commentary"}
-    helpText={"Reviewed commentary from Mozilla data practitioners on this application."}
-  />
-  <Commentary item={app} itemType={"application"} />
-
-  <TabGroup
-    active={$pageState.itemType}
-    on:tabChanged={({ detail }) => {
-      pageState.set({
-        ...$pageState,
-        itemType: detail.active,
-        search: "",
-        page: 1,
-      });
-    }}
-  >
-    <Tab key="metrics">Metrics</Tab>
-    <Tab key="pings">Pings</Tab>
-    <Tab key="app_ids">Application IDs</Tab>
-
-    <TabContent key="pings">
-      <ItemList itemType="pings" items={app.pings} appName={app.app_name} />
-    </TabContent>
-
-    <TabContent key="metrics">
-      <ItemList itemType="metrics" items={app.metrics} appName={app.app_name} />
-    </TabContent>
-
-    <TabContent key="app_ids">
-      <ItemList
-        itemType="app_ids"
-        items={app.app_ids}
-        appName={app.app_name}
-        showFilter={false}
+    {#if app.prototype}
+      <AppAlert
+        status="warning"
+        message="This application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
       />
-    </TabContent>
-  </TabGroup>
-</div>
+    {/if}
+    <PageTitle text={app.canonical_app_name} />
+
+    {#if app.deprecated}
+      <Label text="deprecated" />
+    {/if}
+
+    <Markdown text={app.app_description} inline={false} />
+
+    <MetadataTable
+      appName={params.app}
+      item={app}
+      schema={APPLICATION_DEFINITION_SCHEMA}
+    />
+
+    <SubHeading
+      title={"Commentary"}
+      helpText={"Reviewed commentary from Mozilla data practitioners on this application."}
+    />
+    <Commentary item={app} itemType={"application"} />
+
+    <TabGroup
+      active={$pageState.itemType}
+      on:tabChanged={({ detail }) => {
+        pageState.set({
+          ...$pageState,
+          itemType: detail.active,
+          search: "",
+          page: 1,
+        });
+      }}
+    >
+      <Tab key="metrics">Metrics</Tab>
+      <Tab key="pings">Pings</Tab>
+      <Tab key="app_ids">Application IDs</Tab>
+
+      <TabContent key="pings">
+        <ItemList itemType="pings" items={app.pings} appName={app.app_name} />
+      </TabContent>
+
+      <TabContent key="metrics">
+        <ItemList
+          itemType="metrics"
+          items={app.metrics}
+          appName={app.app_name}
+        />
+      </TabContent>
+
+      <TabContent key="app_ids">
+        <ItemList
+          itemType="app_ids"
+          items={app.app_ids}
+          appName={app.app_name}
+          showFilter={false}
+        />
+      </TabContent>
+    </TabGroup>
+  </div>
 {:catch}
   <NotFound pageName={params.app} itemType="application" />
 {/await}

@@ -37,89 +37,89 @@
 {#await pingDataPromise then ping}
   <div class="mzp-c-emphasis-box">
     {#if ping.origin && ping.origin !== params.app}
-    <AppAlert
-      status="warning"
-      message={`This ping is defined by a library used by the application (__${ping.origin}__), rather than the application itself. For more details, see the definition.`}
+      <AppAlert
+        status="warning"
+        message={`This ping is defined by a library used by the application (__${ping.origin}__), rather than the application itself. For more details, see the definition.`}
+      />
+    {/if}
+
+    <PageTitle text={ping.name} />
+    <p>
+      <Markdown text={ping.description} />
+    </p>
+
+    <SubHeading
+      title={"Metadata"}
+      helpText={"Metadata about this ping, as defined by the implementor."}
     />
-  {/if}
+    <MetadataTable appName={params.app} item={ping} schema={PING_SCHEMA} />
 
-  <PageTitle text={ping.name} />
-  <p>
-    <Markdown text={ping.description} />
-  </p>
-
-  <SubHeading
-    title={"Metadata"}
-    helpText={"Metadata about this ping, as defined by the implementor."}
-  />
-  <MetadataTable appName={params.app} item={ping} schema={PING_SCHEMA} />
-
-  <SubHeading
-    title={"Commentary"}
-    helpText={"Reviewed commentary from Mozilla data practitioners on this ping."}
-  />
-  <Commentary item={ping} itemType={"ping"} />
-
-  <SubHeading
-    title={"Access"}
-    helpText={"Ways to access this metric in Mozilla's data warehouse."}
-  />
-
-  {#if ping.variants.length > 1}
-    <VariantSelector
-      name={"app_id"}
-      label={"Application Variant"}
-      bind:selectedVariant={selectedAppVariant}
-      variants={ping.variants}
+    <SubHeading
+      title={"Commentary"}
+      helpText={"Reviewed commentary from Mozilla data practitioners on this ping."}
     />
-  {/if}
+    <Commentary item={ping} itemType={"ping"} />
 
-  {#if selectedAppVariant}
-    <table>
-      <col />
-      <col />
-      <tr>
-        <td>
-          BigQuery
-          <HelpHoverable
-            content={"The BigQuery representation of this ping."}
-          />
-        </td>
-        <td>
-          <a
-            href={getBigQueryURL(
-              params.app,
-              selectedAppVariant.id,
-              params.ping
-            )}
-          >
-            {selectedAppVariant.table}
-          </a>
-        </td>
-      </tr>
-      {#if selectedAppVariant.looker_url}
+    <SubHeading
+      title={"Access"}
+      helpText={"Ways to access this metric in Mozilla's data warehouse."}
+    />
+
+    {#if ping.variants.length > 1}
+      <VariantSelector
+        name={"app_id"}
+        label={"Application Variant"}
+        bind:selectedVariant={selectedAppVariant}
+        variants={ping.variants}
+      />
+    {/if}
+
+    {#if selectedAppVariant}
+      <table>
+        <col />
+        <col />
         <tr>
           <td>
-            Looker
+            BigQuery
             <HelpHoverable
-              content={"Explore this ping in Mozilla's instance of Looker."}
+              content={"The BigQuery representation of this ping."}
             />
           </td>
           <td>
-            <AuthenticatedLink href={selectedAppVariant.looker_url}>
-              {params.ping}
-            </AuthenticatedLink>
+            <a
+              href={getBigQueryURL(
+                params.app,
+                selectedAppVariant.id,
+                params.ping
+              )}
+            >
+              {selectedAppVariant.table}
+            </a>
           </td>
         </tr>
-      {/if}
-    </table>
-  {/if}
+        {#if selectedAppVariant.looker_url}
+          <tr>
+            <td>
+              Looker
+              <HelpHoverable
+                content={"Explore this ping in Mozilla's instance of Looker."}
+              />
+            </td>
+            <td>
+              <AuthenticatedLink href={selectedAppVariant.looker_url}>
+                {params.ping}
+              </AuthenticatedLink>
+            </td>
+          </tr>
+        {/if}
+      </table>
+    {/if}
 
-  <SubHeading
-    title={"Metrics"}
-    helpText={"Metrics that are sent inside this ping."}
-  />
-  <ItemList itemType="metrics" items={ping.metrics} appName={params.app} />
+    <SubHeading
+      title={"Metrics"}
+      helpText={"Metrics that are sent inside this ping."}
+    />
+    <ItemList itemType="metrics" items={ping.metrics} appName={params.app} />
   </div>
 {:catch}
   <NotFound pageName={params.ping} itemType="ping" />

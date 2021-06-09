@@ -70,186 +70,186 @@
 {#await metricDataPromise then metric}
   <div class="mzp-c-emphasis-box">
     {#if isExpired(metric.expires)}
-    <AppAlert
-      status="warning"
-      message="This metric has expired: it may not be present in the source code, new data will not be ingested into BigQuery, and it will not appear in dashboards."
-    />
-  {/if}
-
-  {#if metric.origin !== params.app}
-    <AppAlert
-      status="warning"
-      message={`This metric is defined by a library used by the application (__${metric.origin}__), rather than the application itself. For more details, see the definition.`}
-    />
-  {/if}
-
-  <PageTitle text={metric.name} />
-
-  <Markdown text={metric.description} inline={false} />
-
-  <p>
-    Metric of type
-    <a href={getMetricDocumentationURI(metric.type)} target="_blank"
-      >{metric.type}</a
-    >. Sent in the
-    {#each metric.send_in_pings as pingId, i}
-      <a href={`/apps/${params.app}/pings/${pingId}`}>{pingId}</a>{metric
-        .send_in_pings.length > 1 && i < metric.send_in_pings.length - 1
-        ? ", "
-        : ""}
-    {/each}
-    ping{metric.send_in_pings.length > 1 ? "s" : ""}.
-  </p>
-
-  <MetadataTable
-    appName={params.app}
-    item={metric}
-    schema={METRIC_DEFINITION_SCHEMA}
-  />
-
-  {#if metric.extra_keys && !isEmpty(metric.extra_keys)}
-    <h2>
-      Extra keys
-      <HelpHoverable
-        content={'The acceptable keys on the "extra" object sent with events.'}
-        link={"https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys"}
+      <AppAlert
+        status="warning"
+        message="This metric has expired: it may not be present in the source code, new data will not be ingested into BigQuery, and it will not appear in dashboards."
       />
-    </h2>
-    <table>
-      <col />
-      <col />
-      {#each Object.entries(metric.extra_keys) as [keyName, definition]}
-        <tr>
-          <td><code>{keyName}</code></td>
-          <td>
-            <Markdown text={definition.description} />
-          </td>
-        </tr>
+    {/if}
+
+    {#if metric.origin !== params.app}
+      <AppAlert
+        status="warning"
+        message={`This metric is defined by a library used by the application (__${metric.origin}__), rather than the application itself. For more details, see the definition.`}
+      />
+    {/if}
+
+    <PageTitle text={metric.name} />
+
+    <Markdown text={metric.description} inline={false} />
+
+    <p>
+      Metric of type
+      <a href={getMetricDocumentationURI(metric.type)} target="_blank"
+        >{metric.type}</a
+      >. Sent in the
+      {#each metric.send_in_pings as pingId, i}
+        <a href={`/apps/${params.app}/pings/${pingId}`}>{pingId}</a>{metric
+          .send_in_pings.length > 1 && i < metric.send_in_pings.length - 1
+          ? ", "
+          : ""}
       {/each}
-    </table>
-  {/if}
+      ping{metric.send_in_pings.length > 1 ? "s" : ""}.
+    </p>
 
-  <SubHeading
-    title={"Metadata"}
-    helpText={"Metadata about this metric, as defined by the implementor."}
-  />
-  <MetadataTable
-    appName={params.app}
-    item={metric}
-    schema={METRIC_METADATA_SCHEMA}
-  />
+    <MetadataTable
+      appName={params.app}
+      item={metric}
+      schema={METRIC_DEFINITION_SCHEMA}
+    />
 
-  <SubHeading
-    title={"Commentary"}
-    helpText={"Reviewed commentary from Mozilla data practitioners on this metric."}
-  />
-  <Commentary item={metric} itemType={"metric"} />
-
-  <SubHeading
-    title={"Access"}
-    helpText={"Ways to access this metric in Mozilla's data warehouse."}
-  />
-  <div class="access-selectors">
-    {#if metric.variants.length > 1}
-      <div>
-        <VariantSelector
-          name={"app_id"}
-          label={"Application Variant"}
-          bind:selectedVariant={selectedAppVariant}
-          variants={metric.variants}
+    {#if metric.extra_keys && !isEmpty(metric.extra_keys)}
+      <h2>
+        Extra keys
+        <HelpHoverable
+          content={'The acceptable keys on the "extra" object sent with events.'}
+          link={"https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys"}
         />
-      </div>
+      </h2>
+      <table>
+        <col />
+        <col />
+        {#each Object.entries(metric.extra_keys) as [keyName, definition]}
+          <tr>
+            <td><code>{keyName}</code></td>
+            <td>
+              <Markdown text={definition.description} />
+            </td>
+          </tr>
+        {/each}
+      </table>
     {/if}
 
-    {#if metric.send_in_pings.length > 1}
-      <div>
-        <VariantSelector
-          name={"ping_id"}
-          label={"Ping"}
-          bind:selectedVariant={selectedPingVariant}
-          variants={metric.send_in_pings.map((p) => ({ id: p }))}
-        />
-      </div>
-    {/if}
-  </div>
+    <SubHeading
+      title={"Metadata"}
+      helpText={"Metadata about this metric, as defined by the implementor."}
+    />
+    <MetadataTable
+      appName={params.app}
+      item={metric}
+      schema={METRIC_METADATA_SCHEMA}
+    />
 
-  {#if selectedAppVariant}
-    <table>
-      <col />
-      <col />
-      {#if selectedAppVariant.etl.glam_url}
-        <tr>
-          <td>
-            GLAM
-            <HelpHoverable
-              content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
-              link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
-            />
-          </td>
-          <td>
-            <AuthenticatedLink href={selectedAppVariant.etl.glam_url}>
-              {params.metric}
-            </AuthenticatedLink>
-          </td>
-        </tr>
+    <SubHeading
+      title={"Commentary"}
+      helpText={"Reviewed commentary from Mozilla data practitioners on this metric."}
+    />
+    <Commentary item={metric} itemType={"metric"} />
+
+    <SubHeading
+      title={"Access"}
+      helpText={"Ways to access this metric in Mozilla's data warehouse."}
+    />
+    <div class="access-selectors">
+      {#if metric.variants.length > 1}
+        <div>
+          <VariantSelector
+            name={"app_id"}
+            label={"Application Variant"}
+            bind:selectedVariant={selectedAppVariant}
+            variants={metric.variants}
+          />
+        </div>
       {/if}
-      {#if pingData.looker}
+
+      {#if metric.send_in_pings.length > 1}
+        <div>
+          <VariantSelector
+            name={"ping_id"}
+            label={"Ping"}
+            bind:selectedVariant={selectedPingVariant}
+            variants={metric.send_in_pings.map((p) => ({ id: p }))}
+          />
+        </div>
+      {/if}
+    </div>
+
+    {#if selectedAppVariant}
+      <table>
+        <col />
+        <col />
+        {#if selectedAppVariant.etl.glam_url}
+          <tr>
+            <td>
+              GLAM
+              <HelpHoverable
+                content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
+                link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
+              />
+            </td>
+            <td>
+              <AuthenticatedLink href={selectedAppVariant.etl.glam_url}>
+                {params.metric}
+              </AuthenticatedLink>
+            </td>
+          </tr>
+        {/if}
+        {#if pingData.looker}
+          <tr>
+            <td
+              >Looker <HelpHoverable
+                content={"Explore this metric in Mozilla's instance of Looker."}
+              />
+            </td>
+            <td>
+              <div>
+                In
+                <AuthenticatedLink href={pingData.looker.base}>
+                  {selectedPingVariant.id}
+                </AuthenticatedLink>
+                as
+                <AuthenticatedLink href={pingData.looker.metric}>
+                  {metric.name}
+                </AuthenticatedLink>
+              </div>
+            </td>
+          </tr>
+        {/if}
         <tr>
-          <td
-            >Looker <HelpHoverable
-              content={"Explore this metric in Mozilla's instance of Looker."}
+          <td>
+            BigQuery
+            <HelpHoverable
+              content={"The BigQuery representation of this metric."}
             />
           </td>
           <td>
             <div>
               In
-              <AuthenticatedLink href={pingData.looker.base}>
-                {selectedPingVariant.id}
-              </AuthenticatedLink>
-              as
-              <AuthenticatedLink href={pingData.looker.metric}>
-                {metric.name}
-              </AuthenticatedLink>
-            </div>
-          </td>
-        </tr>
-      {/if}
-      <tr>
-        <td>
-          BigQuery
-          <HelpHoverable
-            content={"The BigQuery representation of this metric."}
-          />
-        </td>
-        <td>
-          <div>
-            In
-            <a
-              href={getBigQueryURL(
-                params.app,
-                selectedAppVariant.id,
-                selectedPingVariant.id
-              )}>{pingData.bigquery_table}</a
-            >
-            <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
-            {#if metric.type !== "event"}
-              as
               <a
                 href={getBigQueryURL(
                   params.app,
                   selectedAppVariant.id,
-                  selectedPingVariant.id,
-                  selectedAppVariant.etl.bigquery_column_name
-                )}
+                  selectedPingVariant.id
+                )}>{pingData.bigquery_table}</a
               >
-                {selectedAppVariant.etl.bigquery_column_name}
-              </a>
-            {/if}
-          </div>
-        </td>
-      </tr>
-    </table>
-  {/if}
+              <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
+              {#if metric.type !== "event"}
+                as
+                <a
+                  href={getBigQueryURL(
+                    params.app,
+                    selectedAppVariant.id,
+                    selectedPingVariant.id,
+                    selectedAppVariant.etl.bigquery_column_name
+                  )}
+                >
+                  {selectedAppVariant.etl.bigquery_column_name}
+                </a>
+              {/if}
+            </div>
+          </td>
+        </tr>
+      </table>
+    {/if}
   </div>
 {:catch}
   <NotFound pageName={params.metric} itemType="metric" />

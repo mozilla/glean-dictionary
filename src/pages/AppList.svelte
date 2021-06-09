@@ -127,59 +127,62 @@
 </div>
 
 {#if apps}
-<div class="mzp-c-emphasis-box">
-  <div class="app-filter">
-    <FilterInput placeHolder="Search for an application" />
-    <span id="deprecation-checkbox">
-      <label>
-        <input type="checkbox" bind:checked={showDeprecated} />
-        Show deprecated applications
-      </label>
-    </span>
-  </div>
+  <div class="mzp-c-emphasis-box">
+    <div class="app-filter">
+      <FilterInput placeHolder="Search for an application" />
+      <span id="deprecation-checkbox">
+        <label>
+          <input type="checkbox" bind:checked={showDeprecated} />
+          Show deprecated applications
+        </label>
+      </span>
+    </div>
 
-  <div class="app-list">
-    {#each filteredApps as app}
-      {#if showDeprecated || !app.deprecated}
-        <div class="mzp-c-card mzp-c-card-extra-small has-aspect-3-2" id="card">
-          <a
-            class="mzp-c-card-block-link"
-            href="/apps/{app.app_name}"
-            id="media-block"
+    <div class="app-list">
+      {#each filteredApps as app}
+        {#if showDeprecated || !app.deprecated}
+          <div
+            class="mzp-c-card mzp-c-card-extra-small has-aspect-3-2"
+            id="card"
           >
-            <div class="mzp-c-card-media-wrapper" id="media-wrapper">
-              <img
-                class="mzp-c-card-imgage"
-                src={getAppLogo(app.app_name)}
-                alt="${app.canonical_app_name} Logo"
-                id="logo-img"
-              />
-              {#if isPlatform(app.app_description)}
-                <div class="corner-flag" />
+            <a
+              class="mzp-c-card-block-link"
+              href="/apps/{app.app_name}"
+              id="media-block"
+            >
+              <div class="mzp-c-card-media-wrapper" id="media-wrapper">
                 <img
-                  class="platform-logo"
-                  src={getPlatformLogo(app.app_description)}
-                  alt="Platform Logo"
+                  class="mzp-c-card-imgage"
+                  src={getAppLogo(app.app_name)}
+                  alt="${app.canonical_app_name} Logo"
+                  id="logo-img"
                 />
-              {/if}
-            </div>
-            <div class="mzp-c-card-content">
-              <h2 class="mzp-c-card-title">{app.canonical_app_name}</h2>
-              {#if app.deprecated}
-                <Label text="deprecated" />
-              {/if}
-              <p class="mzp-c-card-meta" id="card-description">
-                <Markdown text={app.app_description} />
-              </p>
-            </div>
-          </a>
-        </div>
-      {/if}
-    {:else}
-      <p>Your search didn't match any application.</p>
-    {/each}
+                {#if isPlatform(app.app_description)}
+                  <div class="corner-flag" />
+                  <img
+                    class="platform-logo"
+                    src={getPlatformLogo(app.app_description)}
+                    alt="Platform Logo"
+                  />
+                {/if}
+              </div>
+              <div class="mzp-c-card-content">
+                <h2 class="mzp-c-card-title">{app.canonical_app_name}</h2>
+                {#if app.deprecated}
+                  <Label text="deprecated" />
+                {/if}
+                <p class="mzp-c-card-meta" id="card-description">
+                  <Markdown text={app.app_description} />
+                </p>
+              </div>
+            </a>
+          </div>
+        {/if}
+      {:else}
+        <p>Your search didn't match any application.</p>
+      {/each}
+    </div>
   </div>
-</div>
 {/if}
 
 <style>

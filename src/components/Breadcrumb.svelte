@@ -1,7 +1,4 @@
 <script>
-import { log } from "console";
-
-
   export let links;
 
   const isPlatform = (app) => {

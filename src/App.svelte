@@ -122,7 +122,7 @@
     </nav>
   {/if}
   <main>
-        <svelte:component this={component} bind:params />
+    <svelte:component this={component} bind:params />
   </main>
 
   <Footer />
@@ -165,6 +165,7 @@
     top: 0;
     position: sticky;
     background: $color-light-gray-10;
+    box-shadow: 1px 1px 1px rgba($color-black, 0.1);
     z-index: 1000;
   }
 </style>
