@@ -27,12 +27,12 @@
     {#each links as link}
       <li>
         <a class="link-name" href={link.url}>{link.name} </a>
-        <span>{links.indexOf(link) === links.length - 1 ? "" : "->"}</span>
       </li>
+      {#if link && isPlatform(link.name)}
+        <img src={getPlatformLogo(link.name)} alt="Platform Logo" />{/if}
+      <span>{links.indexOf(link) === links.length - 1 ? "" : "->"}</span>
     {/each}
   </ol>
-  {#if links[1] && isPlatform(links[1].name)}
-    <img src={getPlatformLogo(links[1].name)} alt="Platform Logo" />{/if}
 </div>
 
 <style>
@@ -40,16 +40,16 @@
     display: flex;
     margin-left: $spacing-xl;
     img {
-      margin-left: 5px;
-      margin-bottom: 10px;
-      width: 27px;
+      padding-left: 5px;
+      width: 23px;
       height: auto;
       object-fit: contain;
     }
     ol {
       display: flex;
-      margin-top: 10px;
-      li {
+      margin: 0 0 0.75em;
+      li,
+      span {
         @include text-title-3xs;
         font-weight: bold;
         padding-left: $spacing-sm;
