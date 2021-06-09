@@ -40,6 +40,7 @@
       message="This application is a prototype. The metrics and pings listed below may contain inconsistencies and testing strings."
     />
   {/if}
+  <div class="mzp-c-emphasis-box">
   <PageTitle text={app.canonical_app_name} />
 
   {#if app.deprecated}
@@ -92,12 +93,14 @@
       />
     </TabContent>
   </TabGroup>
+</div>
 {:catch}
   <NotFound pageName={params.app} itemType="application" />
 {/await}
 
 <style>
   @import "../main.scss";
+  @import "@mozilla-protocol/core/protocol/css/components/_emphasis-box.scss";
   h2 {
     @include text-title-xs;
   }

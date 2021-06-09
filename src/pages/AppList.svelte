@@ -110,19 +110,24 @@
   pageTitle.set("Glean Dictionary");
 </script>
 
-{#if apps}
-  <p>
-    The Glean Dictionary documents the data collected by
-    <a href="https://mozilla.org">Mozilla</a>
-    projects that use
-    <a href="https://mozilla.github.io/glean/">Glean</a>. Select a project to
-    browse its data catalog. If you have questions, please ask in the
-    <a href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org"
-      >Glean Dictionary channel</a
+<div class="mzp-c-emphasis-box mzp-t-dark banner">
+  <h5>
+    The Glean Dictionary documents the data collected by <a
+      href="https://mozilla.org">Mozilla</a
     >
-    on Mozilla's instance of Matrix.
+    projects that use <a href="https://mozilla.github.io/glean/">Glean</a>.
+  </h5>
+  <p>
+    Select a project to browse its data catalog. If you have questions, please
+    ask in the <a
+      href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org"
+      >#glean-dictionary</a
+    > channel on Mozilla's instance of Matrix.
   </p>
+</div>
 
+{#if apps}
+<div class="mzp-c-emphasis-box">
   <div class="app-filter">
     <FilterInput placeHolder="Search for an application" />
     <span id="deprecation-checkbox">
@@ -174,9 +179,11 @@
       <p>Your search didn't match any application.</p>
     {/each}
   </div>
+</div>
 {/if}
 
 <style>
+  @import "@mozilla-protocol/core/protocol/css/components/_emphasis-box.scss";
   .app-filter {
     margin: $spacing-md $spacing-xl;
     #deprecation-checkbox {
@@ -194,6 +201,12 @@
     grid-gap: $spacing-md;
   }
 
+  .banner {
+    text-align: center;
+    p {
+      @include text-body-sm;
+    }
+  }
   .corner-flag {
     border-top: 80px solid black;
     border-right: 80px solid transparent;

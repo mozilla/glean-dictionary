@@ -122,10 +122,11 @@
     </nav>
   {/if}
   <main>
-    <div class="mzp-l-content" style="padding-top: 15px">
-      <article class="mzp-c-article">
+    <!-- <div class="mzp-l-content" style="padding-top: 15px"> -->
+      <div class="mzp-c-emphasis-box">
+      <!-- <article class="mzp-c-article"> -->
         <svelte:component this={component} bind:params />
-      </article>
+      <!-- </article> -->
     </div>
   </main>
 
@@ -168,8 +169,8 @@
   .breadcrumb {
     top: 0;
     position: sticky;
-    background: $color-light-gray-10;
-    box-shadow: 1px 1px 1px rgba($color-black, 0.1);
+    background: $color-light-gray-05;
+    /* box-shadow: 1px 1px 1px rgba($color-black, 0.1); */
     z-index: 1000;
   }
 </style>

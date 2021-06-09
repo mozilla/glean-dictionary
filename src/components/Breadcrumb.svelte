@@ -58,7 +58,7 @@
           text-decoration: none;
         }
         span {
-          color: $color-dark-gray-10;
+          /* color: $color-dark-gray-10; */
         }
       }
     }
