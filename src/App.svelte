@@ -26,7 +26,7 @@
   let title;
 
   afterUpdate(() => {
-    const { app, appId, label, ping, metric, table } = params;
+    const { app, appId, ping, metric, table } = params;
 
     links = [
       ...(app
