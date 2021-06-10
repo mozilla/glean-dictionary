@@ -122,10 +122,8 @@
     </nav>
   {/if}
   <main>
-    <div class="mzp-l-content" style="padding-top: 15px">
-      <article class="mzp-c-article">
-        <svelte:component this={component} bind:params />
-      </article>
+    <div class="mzp-l-content">
+      <svelte:component this={component} bind:params />
     </div>
   </main>
 
@@ -171,5 +169,9 @@
     background: $color-light-gray-10;
     box-shadow: 1px 1px 1px rgba($color-black, 0.1);
     z-index: 1000;
+  }
+
+  .mzp-l-content {
+    padding: $spacing-sm $spacing-xl;
   }
 </style>

@@ -110,19 +110,21 @@
   pageTitle.set("Glean Dictionary");
 </script>
 
-{#if apps}
+<div class="mzp-c-emphasis-box mzp-t-dark banner">
+  <h5>
+    The Glean Dictionary documents the data collected by Mozilla projects that
+    use <a href="https://mozilla.org">Mozilla</a>
+  </h5>
   <p>
-    The Glean Dictionary documents the data collected by
-    <a href="https://mozilla.org">Mozilla</a>
-    projects that use
-    <a href="https://mozilla.github.io/glean/">Glean</a>. Select a project to
-    browse its data catalog. If you have questions, please ask in the
-    <a href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org"
-      >Glean Dictionary channel</a
-    >
-    on Mozilla's instance of Matrix.
+    Select a project to browse its data catalog. If you have questions, please
+    ask in the <a
+      href="https://chat.mozilla.org/#/room/#glean-dictionary:mozilla.org"
+      >#glean-dictionary</a
+    > channel on Mozilla's instance of Matrix.
   </p>
+</div>
 
+{#if apps}
   <div class="app-filter">
     <FilterInput placeHolder="Search for an application" />
     <span id="deprecation-checkbox">
@@ -132,7 +134,6 @@
       </label>
     </span>
   </div>
-
   <div class="app-list">
     {#each filteredApps as app}
       {#if showDeprecated || !app.deprecated}
@@ -177,6 +178,7 @@
 {/if}
 
 <style>
+  @import "@mozilla-protocol/core/protocol/css/components/_emphasis-box.scss";
   .app-filter {
     margin: $spacing-md $spacing-xl;
     #deprecation-checkbox {
@@ -192,6 +194,14 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     grid-gap: $spacing-md;
+  }
+
+  .banner {
+    text-align: center;
+    margin: $spacing-sm;
+    p {
+      @include text-body-sm;
+    }
   }
 
   .corner-flag {
