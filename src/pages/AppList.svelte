@@ -112,8 +112,11 @@
 
 <div class="mzp-c-emphasis-box mzp-t-dark banner">
   <h5>
-    The Glean Dictionary documents the data collected by Mozilla projects that
-    use <a href="https://mozilla.org">Mozilla</a>
+    The Glean Dictionary documents the data collected by <a
+      href="https://mozilla.org">Mozilla</a
+    >
+    projects that use
+    <a href="https://mozilla.github.io/glean/">Glean</a>.
   </h5>
   <p>
     Select a project to browse its data catalog. If you have questions, please
