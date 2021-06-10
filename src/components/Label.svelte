@@ -16,20 +16,7 @@
     return num;
   };
 
-  const digitSum = (number) => {
-    let sum = 0;
-    let num = number;
-    while (num % 10 !== 0) {
-      sum += Math.floor(num % 10);
-      num /= 10;
-      if (num === 0 && sum >= 10) {
-        num = sum;
-        sum = 0;
-      }
-    }
-    return sum;
-  };
-  const getLabelNumber = (word) => digitSum(a1z26Decoder(word));
+  const getLabelNumber = (word) => a1z26Decoder(word) % 10;
 </script>
 
 <span
@@ -42,6 +29,7 @@
 <style lang="scss">
   // to choose a specific label color in this palette, use $labelNumber variable, otherwise it will be automatically generated
   $color-palette-light: (
+    "0": #eeaaff,
     "1": #77aadd,
     "2": #99ddff,
     "3": #44bb99,
@@ -83,7 +71,7 @@
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12);
   }
 
-  @each $label-number in ("1", "2", "3", "4", "5", "6", "7", "8", "9") {
+  @each $label-number in ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9") {
     @include generateLabelColor($label-number);
   }
 

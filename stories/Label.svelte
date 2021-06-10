@@ -9,6 +9,7 @@
     >labelNumber</code
   > variable.
 </p>
+<Label labelNumber="0" text="label-0" />
 <Label labelNumber="1" text="label-1" />
 <Label labelNumber="2" text="label-2" />
 <Label labelNumber="3" text="label-3" />
