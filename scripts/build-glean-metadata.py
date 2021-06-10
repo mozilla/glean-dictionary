@@ -12,7 +12,7 @@ import stringcase
 import yaml
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
-ANNOTATIONS_URL = "https://deploy-preview-12--glean-annotations.netlify.app/api.json"
+ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
 NAMESPACES_URL = "https://raw.githubusercontent.com/mozilla/looker-hub/main/namespaces.yaml"
 
 # Priority for getting metric data (use the later definitions of nightly over release)
