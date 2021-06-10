@@ -16,7 +16,6 @@
   export let appName;
   export let items;
   export let itemType;
-  export let containerName;
 
   export let showFilter = true;
 

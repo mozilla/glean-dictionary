@@ -451,30 +451,6 @@ for (app_name, app_group) in app_groups.items():
             )
         )
 
-    # write labels (if any)
-    labels = [
-        {"name": k, "description": v}
-        for (k, v) in annotations_index.get(app.app_name, {}).get("labels", {}).items()
-    ]
-    if labels:
-        app_data["labels"] = labels
-        for label in labels:
-            label_metrics = [
-                metric
-                for metric in app_data["metrics"]
-                if label["name"] in metric.get("labels", [])
-            ]
-            label["metric_count"] = len(label_metrics)
-            open(os.path.join(app_labels_dir, f"{label['name']}.json"), "w").write(
-                json.dumps(
-                    dict(
-                        label,
-                        origin=app.app_name,
-                        metrics=label_metrics,
-                    )
-                )
-            )
-
     # sort the information in the app-level summary, then write it out
     # (we don't sort application id information, that's already handled
     # above)

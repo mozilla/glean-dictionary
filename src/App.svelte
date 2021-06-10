@@ -38,7 +38,6 @@
       ...(appId
         ? [{ url: `/apps/${app}/app_ids/${appId}/`, name: appId }]
         : []),
-      ...(label ? [{ url: `/apps/${app}/labels/${label}/`, name: label }] : []),
       ...(ping ? [{ url: `/apps/${app}/pings/${ping}/`, name: ping }] : []),
       ...(metric
         ? [

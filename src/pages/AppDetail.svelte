@@ -75,7 +75,7 @@
     <Tab key="metrics">Metrics</Tab>
     <Tab key="pings">Pings</Tab>
     {#if app.labels && app.labels.length}
-      <Tab key="labels">Labels</Tab>
+      <Tab key="labels">Features</Tab>
     {/if}
     <Tab key="app_ids">Application IDs</Tab>
 
