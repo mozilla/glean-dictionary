@@ -11,8 +11,8 @@
       : `${item.origin}/${itemType}s/${item.name}/README.md`;
 </script>
 
-{#if item.annotation}
-  <Markdown text={item.annotation.content} inline={false} />
+{#if item.commentary}
+  <Markdown text={item.commentary} inline={false} />
   <p>
     <a
       href={`https://github.com/mozilla/glean-annotations/edit/main/annotations/${annotationPath}`}

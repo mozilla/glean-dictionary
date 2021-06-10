@@ -74,13 +74,13 @@
   >
     <Tab key="metrics">Metrics</Tab>
     <Tab key="pings">Pings</Tab>
-    {#if app.labels && app.labels.length}
-      <Tab key="labels">Features</Tab>
+    {#if app.tags && app.tags.length}
+      <Tab key="tags">Features</Tab>
     {/if}
     <Tab key="app_ids">Application IDs</Tab>
 
-    <TabContent key="labels">
-      <ItemList itemType="labels" items={app.labels} appName={app.app_name} />
+    <TabContent key="tags">
+      <ItemList itemType="tags" items={app.tags} appName={app.app_name} />
     </TabContent>
 
     <TabContent key="pings">
