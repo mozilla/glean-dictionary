@@ -122,7 +122,9 @@
     </nav>
   {/if}
   <main>
-    <svelte:component this={component} bind:params />
+    <div class="mzp-l-content">
+      <svelte:component this={component} bind:params />
+    </div>
   </main>
 
   <Footer />
@@ -167,5 +169,9 @@
     background: $color-light-gray-10;
     box-shadow: 1px 1px 1px rgba($color-black, 0.1);
     z-index: 1000;
+  }
+
+  .mzp-l-content {
+    padding: $spacing-sm $spacing-xl;
   }
 </style>

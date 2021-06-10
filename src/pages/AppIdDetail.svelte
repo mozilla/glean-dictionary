@@ -24,23 +24,21 @@
 </script>
 
 {#await appIdDataPromise then appId}
-  <div class="mzp-c-emphasis-box">
-    <PageTitle text={appId.app_id} />
-    {#if appId.description}
-      <p>{appId.description}</p>
-    {/if}
-    {#if appId.deprecated}
-      <Label text="deprecated" />
-    {/if}
+  <PageTitle text={appId.app_id} />
+  {#if appId.description}
+    <p>{appId.description}</p>
+  {/if}
+  {#if appId.deprecated}
+    <Label text="deprecated" />
+  {/if}
 
-    <h2>Metadata</h2>
+  <h2>Metadata</h2>
 
-    <MetadataTable
-      appName={params.app}
-      item={appId}
-      schema={APPLICATION_ID_DEFINITION_SCHEMA}
-    />
-  </div>
+  <MetadataTable
+    appName={params.app}
+    item={appId}
+    schema={APPLICATION_ID_DEFINITION_SCHEMA}
+  />
 {/await}
 
 <style>

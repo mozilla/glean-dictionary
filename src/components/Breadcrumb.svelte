@@ -57,6 +57,9 @@
         .link-name {
           text-decoration: none;
         }
+        span {
+          color: $color-dark-gray-10;
+        }
       }
     }
   }
