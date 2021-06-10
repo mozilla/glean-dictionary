@@ -172,11 +172,11 @@ open(os.path.join(OUTPUT_DIRECTORY, "apps.json"), "w").write(json.dumps(list(app
 # Write out some metadata for each app group (for the app detail page)
 for (app_name, app_group) in app_groups.items():
     app_dir = os.path.join(OUTPUT_DIRECTORY, app_name)
-    (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir, app_labels_dir) = (
+    (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir) = (
         os.path.join(app_dir, subtype)
-        for subtype in ("app_ids", "pings", "tables", "metrics", "labels")
+        for subtype in ("app_ids", "pings", "tables", "metrics")
     )
-    for directory in (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir, app_labels_dir):
+    for directory in (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir):
         os.makedirs(directory, exist_ok=True)
 
     app_data = dict(app_group, pings=[], metrics=[])
