@@ -26,14 +26,24 @@
   // update pagedItems when either pagination changes or search text changes
   // (above)
   $: {
-    const search = $pageState.search || "";
+    const search = ($pageState.search || "").toLowerCase();
+
+    // filter on match either on name, origin, or label
+    // in all cases a partial match is ok and we'll do a case insensitive
+    // match
 
     const originMatch = (item) =>
-      item.origin && item.origin.includes(search.toLowerCase());
+      item.origin && item.origin.toLowerCase().includes(search);
 
-    // filter on match either on name or on origin
+    const labelMatch = (item) =>
+      item.labels &&
+      item.labels.some((label) => label.toLowerCase().includes(search));
+
     filteredItems = items.filter(
-      (item) => item.name.includes(search) || originMatch(item)
+      (item) =>
+        item.name.toLowerCase().includes(search) ||
+        originMatch(item) ||
+        labelMatch(item)
     );
 
     // also filter out expired items (if we're not showing expired)
@@ -51,7 +61,7 @@
         : [];
   }
 
-  const originClicked = (origin) => {
+  const updateSearch = (origin) => {
     $pageState = { ...$pageState, search: origin, page: 1 };
     // when the user clicks on an origin (library name), we want to persist a new state
     updateURLState(true);
@@ -59,7 +69,9 @@
 </script>
 
 {#if !items.length}
-  <p>Currently, there are no {itemType} available for {items.name}</p>
+  <p>
+    No {itemType} found matching specified criteria.
+  </p>
 {:else}
   {#if itemType === "metrics"}
     <span class="expire-checkbox">
@@ -81,13 +93,19 @@
       <!-- We have to do inline styling here to override Protocol CSS rules -->
       <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
       <col width="35%" />
-      <col width={itemType === "metrics" ? "20%" : "65%"} />
-      <col width={itemType === "metrics" ? "45%" : "0"} />
+      <col
+        width={itemType === "metrics" || itemType === "labels" ? "20%" : "65%"}
+      />
+      <col
+        width={itemType === "metrics" || itemType === "labels" ? "45%" : "0"}
+      />
       <thead>
         <tr>
           <th scope="col" style="text-align: center;">Name</th>
           {#if itemType === "metrics"}
             <th scope="col" style="text-align: center;">Type</th>
+          {:else if itemType === "labels"}
+            <th scope="col" style="text-align: center;">Metric Count</th>
           {/if}
           <th scope="col" style="text-align: center;">Description</th>
         </tr>
@@ -103,9 +121,18 @@
                 {#if item.origin && item.origin !== appName}
                   <Label
                     text={item.origin}
-                    on:click={originClicked(item.origin)}
+                    on:click={updateSearch(item.origin)}
                     clickable
                   />
+                {/if}
+                {#if item.labels}
+                  {#each item.labels as label}
+                    <Label
+                      text={label}
+                      clickable
+                      on:click={updateSearch(label)}
+                    />
+                  {/each}
                 {/if}
                 {#if isExpired(item.expires)}
                   <Label text="expired" />
@@ -118,6 +145,12 @@
             {#if itemType === "metrics"}
               <td style="text-align: center;">
                 <div class="item-property"><code>{item.type}</code></div>
+              </td>
+            {:else if itemType === "labels"}
+              <td style="text-align: center;">
+                <div class="item-property">
+                  {item.metric_count}
+                </div>
               </td>
             {/if}
             <td class="description">
