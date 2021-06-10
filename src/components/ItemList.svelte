@@ -61,8 +61,10 @@
         : [];
   }
 
-  const updateSearch = (origin) => {
-    $pageState = { ...$pageState, search: origin, page: 1 };
+  const updateSearch = (origin, type = undefined) => {
+    $pageState = type
+      ? { ...$pageState, search: origin, page: 1, itemType: type }
+      : { ...$pageState, search: origin, page: 1 };
     // when the user clicks on an origin (library name), we want to persist a new state
     updateURLState(true);
   };
@@ -115,9 +117,17 @@
           <tr>
             <td>
               <div class="item-property">
-                <a href={getItemURL(appName, itemType, item.name)}
-                  >{item.name}</a
-                >
+                {#if itemType === "labels"}
+                  <Label
+                    text={item.name}
+                    on:click={updateSearch(item.name, "metrics")}
+                    clickable
+                  />
+                {:else}
+                  <a href={getItemURL(appName, itemType, item.name)}
+                    >{item.name}</a
+                  >
+                {/if}
                 {#if item.origin && item.origin !== appName}
                   <Label
                     text={item.origin}
