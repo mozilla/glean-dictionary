@@ -116,7 +116,7 @@
           <tr>
             <td>
               <div class="item-property">
-                {#if itemType === "labels"}
+                {#if itemType === "tags"}
                   <Label
                     text={item.name}
                     on:click={updateSearch(item.name, "metrics")}
