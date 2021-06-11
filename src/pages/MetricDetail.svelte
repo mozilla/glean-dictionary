@@ -5,6 +5,7 @@
   import VariantSelector from "../components/VariantSelector.svelte";
   import AuthenticatedLink from "../components/AuthenticatedLink.svelte";
   import Commentary from "../components/Commentary.svelte";
+  import Label from "../components/Label.svelte";
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
@@ -65,6 +66,10 @@
 
     return `${sourceDocs}${links[type]}` || sourceDocs;
   }
+
+  function getMetricSearchURL(search) {
+    return `/apps/${params.app}?search=${search}`;
+  }
 </script>
 
 {#await metricDataPromise then metric}
@@ -83,6 +88,18 @@
   {/if}
 
   <PageTitle text={metric.name} />
+  {#if metric.origin !== params.app || metric.tags.length}
+    <div class="tags-container">
+      {#if metric.origin !== params.app}
+        <a href={getMetricSearchURL(metric.origin)}
+          ><Label text={metric.origin} /></a
+        >
+      {/if}
+      {#each metric.tags as tag}
+        <a href={getMetricSearchURL(tag)}><Label text={tag} /></a>
+      {/each}
+    </div>
+  {/if}
 
   <Markdown text={metric.description} inline={false} />
 
@@ -260,6 +277,13 @@
     @include text-title-xs;
   }
 
+  .tags-container {
+    margin-top: -12px;
+    padding-bottom: 16px;
+    a {
+      padding-right: 4px;
+    }
+  }
   .access-selectors {
     display: grid;
     grid-template-columns: min-content min-content;

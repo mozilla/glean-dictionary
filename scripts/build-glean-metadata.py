@@ -219,7 +219,7 @@ for (app_name, app_group) in app_groups.items():
                     "expires": metric.definition["expires"],
                 }
                 if annotation and annotation.get("labels"):
-                    base_definition.update({"labels": annotation["labels"]})
+                    base_definition.update({"tags": annotation["labels"]})
                 if metric.definition["origin"] != app_name:
                     base_definition.update({"origin": metric.definition["origin"]})
 
@@ -235,11 +235,8 @@ for (app_name, app_group) in app_groups.items():
                 app_metrics[metric.identifier] = dict(
                     metric.definition,
                     name=metric.identifier,
-                    annotation=(
-                        annotations_index.get(metric.definition["origin"], {})
-                        .get("metrics", {})
-                        .get(metric.identifier)
-                    ),
+                    tags=annotation.get("labels") if annotation else [],
+                    commentary=annotation.get("content") if annotation else None,
                     # convert send_in_pings to a list so we can sort (see below)
                     send_in_pings=list(metric.definition["send_in_pings"]),
                     repo_url=app.app["url"],
@@ -450,20 +447,18 @@ for (app_name, app_group) in app_groups.items():
             )
         )
 
-    # write labels (if any)
-    labels = [
+    # write tags (if any)
+    tags = [
         {"name": k, "description": v}
         for (k, v) in annotations_index.get(app.app_name, {}).get("labels", {}).items()
     ]
-    if labels:
-        app_data["labels"] = labels
-        for label in labels:
-            label_metrics = [
-                metric
-                for metric in app_data["metrics"]
-                if label["name"] in metric.get("labels", [])
+    if tags:
+        app_data["tags"] = tags
+        for tag in tags:
+            tag_metrics = [
+                metric for metric in app_data["metrics"] if tag["name"] in metric.get("tags", [])
             ]
-            label["metric_count"] = len(label_metrics)
+            tag["metric_count"] = len(tag_metrics)
 
     # sort the information in the app-level summary, then write it out
     # (we don't sort application id information, that's already handled

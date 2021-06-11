@@ -28,22 +28,21 @@
   $: {
     const search = ($pageState.search || "").toLowerCase();
 
-    // filter on match either on name, origin, or label
+    // filter on match either on name, origin, or tag
     // in all cases a partial match is ok and we'll do a case insensitive
     // match
 
     const originMatch = (item) =>
       item.origin && item.origin.toLowerCase().includes(search);
 
-    const labelMatch = (item) =>
-      item.labels &&
-      item.labels.some((label) => label.toLowerCase().includes(search));
+    const tagMatch = (item) =>
+      item.tags && item.tags.some((tag) => tag.toLowerCase().includes(search));
 
     filteredItems = items.filter(
       (item) =>
         item.name.toLowerCase().includes(search) ||
         originMatch(item) ||
-        labelMatch(item)
+        tagMatch(item)
     );
 
     // also filter out expired items (if we're not showing expired)
@@ -96,17 +95,17 @@
       <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
       <col width="35%" />
       <col
-        width={itemType === "metrics" || itemType === "labels" ? "20%" : "65%"}
+        width={itemType === "metrics" || itemType === "tags" ? "20%" : "65%"}
       />
       <col
-        width={itemType === "metrics" || itemType === "labels" ? "45%" : "0"}
+        width={itemType === "metrics" || itemType === "tags" ? "45%" : "0"}
       />
       <thead>
         <tr>
           <th scope="col" style="text-align: center;">Name</th>
           {#if itemType === "metrics"}
             <th scope="col" style="text-align: center;">Type</th>
-          {:else if itemType === "labels"}
+          {:else if itemType === "tags"}
             <th scope="col" style="text-align: center;">Metric Count</th>
           {/if}
           <th scope="col" style="text-align: center;">Description</th>
@@ -135,13 +134,9 @@
                     clickable
                   />
                 {/if}
-                {#if item.labels}
-                  {#each item.labels as label}
-                    <Label
-                      text={label}
-                      clickable
-                      on:click={updateSearch(label)}
-                    />
+                {#if item.tags}
+                  {#each item.tags as tag}
+                    <Label text={tag} clickable on:click={updateSearch(tag)} />
                   {/each}
                 {/if}
                 {#if isExpired(item.expires)}
@@ -156,7 +151,7 @@
               <td style="text-align: center;">
                 <div class="item-property"><code>{item.type}</code></div>
               </td>
-            {:else if itemType === "labels"}
+            {:else if itemType === "tags"}
               <td style="text-align: center;">
                 <div class="item-property">
                   {item.metric_count}
