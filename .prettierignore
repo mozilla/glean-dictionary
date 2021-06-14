@@ -1,4 +1,6 @@
-.svelte/**
-static/**
-build/**
-node_modules/**
+public/build/bundle.js
+public/build/bundle.css
+public/data/*
+storybook-static/*
+venv
+src/ga.js

@@ -16,3 +16,34 @@ export function getBigQueryURL(appName, appId, pingName, metricName) {
 
   return base + (metricName ? `?search=${metricName}` : "");
 }
+
+export function getBreadcrumbLinks(pageParams) {
+  const { app, metric, app_id, ping, table } = pageParams;
+
+  return [
+    ...(app
+      ? [
+          { url: "/", name: "apps" },
+          { url: `/${app}/`, name: app },
+        ]
+      : []),
+    ...(app_id ? [{ url: `/${app}/app_ids/${app_id}/`, name: app_id }] : []),
+    ...(ping ? [{ url: `/${app}/pings/${ping}/`, name: ping }] : []),
+    ...(metric
+      ? [
+          {
+            url: `/${app}/metrics/${metric}/`,
+            name: metric,
+          },
+        ]
+      : []),
+    ...(table
+      ? [
+          {
+            url: `/${app}/app_ids/${app_id}/tables/${table}/`,
+            name: table,
+          },
+        ]
+      : []),
+  ];
+}

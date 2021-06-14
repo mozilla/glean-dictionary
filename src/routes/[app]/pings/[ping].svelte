@@ -1,76 +1,145 @@
 <script context="module">
-	export async function load({ page, fetch }) {
-		const res = await fetch(`/data/${page.params.app}/pings/${page.params.ping}.json`);
-		const ping = await res.json();
-		const app = page.params.app;
+  export async function load({ page, fetch }) {
+    const res = await fetch(
+      `/data/${page.params.app}/pings/${page.params.ping}.json`
+    );
+    if (res.ok) {
+      const ping = await res.json();
+      const { app } = page.params;
 
-		return {
-			props: { ping, app }
-		};
-	}
+      return {
+        props: { ping, app },
+      };
+    }
+    const { message } = await res.json();
+    return { error: new Error(message) };
+  }
 </script>
 
 <script>
-	export let ping, app;
-	import { getBigQueryURL } from '$lib/state/urls';
+  // components
+  import AppAlert from "$lib/components/AppAlert.svelte";
+  import VariantSelector from "$lib/components/VariantSelector.svelte";
+  import Commentary from "$lib/components/Commentary.svelte";
+  import HelpHoverable from "$lib/components/HelpHoverable.svelte";
+  import ItemList from "$lib/components/ItemList.svelte";
+  import MetadataTable from "$lib/components/MetadataTable.svelte";
+  import Markdown from "$lib/components/Markdown.svelte";
+  import PageTitle from "$lib/components/PageTitle.svelte";
+  import AuthenticatedLink from "$lib/components/AuthenticatedLink.svelte";
+  import SubHeading from "$lib/components/SubHeading.svelte";
 
-	import AppVariantSelector from '$lib/AppVariantSelector.svelte';
-	import Commentary from '$lib/Commentary.svelte';
-	import HelpHoverable from '$lib/HelpHoverable.svelte';
-	import ItemList from '$lib/ItemList.svelte';
-	import MetadataTable from '$lib/MetadataTable.svelte';
-	import Markdown from '$lib/Markdown.svelte';
-	import PageTitle from '$lib/PageTitle.svelte';
-	import { PING_SCHEMA } from '$lib/data/schemas';
+  import { pageState } from "$lib/state/stores";
+  import { getBigQueryURL } from "$lib/state/urls";
 
-	let selectedAppVariant;
-	
+  import { PING_SCHEMA } from "$lib/data/schemas";
+
+  export let ping;
+  export let app;
+
+  let selectedAppVariant;
+  [selectedAppVariant] = ping.variants;
+
+  $pageState = {
+    search: "",
+    showExpired: true,
+    ...$pageState,
+  };
 </script>
 
 <svelte:head>
-	<title>{ping.name} | {app}</title>
+  <title>{ping.name} | {app}</title>
 </svelte:head>
 
-<PageTitle text={ping.name} />
-<p>
-	<Markdown text={ping.description} />
-</p>
+{#if ping.origin && ping.origin !== app}
+  <AppAlert
+    status="warning"
+    message={`This ping is defined by a library used by the application (__${ping.origin}__), rather than the application itself. For more details, see the definition.`}
+  />
+{/if}
 
-<h2>Metadata</h2>
+<PageTitle text={ping.name} />
+<p><Markdown text={ping.description} /></p>
+
+<SubHeading
+title={"Metadata"}
+helpText={"Metadata about this ping, as defined by the implementor."}
+/>
 <MetadataTable appName={app} item={ping} schema={PING_SCHEMA} />
 
-<h2>Commentary</h2>
-<Commentary item={ping} itemType={'ping'} />
+<SubHeading
+title={"Commentary"}
+helpText={"Reviewed commentary from Mozilla data practitioners on this ping."}
+/>
+<Commentary item={ping} itemType={"ping"} />
 
 {#if ping.variants.length > 1}
-	<h2>Access</h2>
-	<AppVariantSelector bind:selectedAppVariant variants={ping.variants} />
-{/if}
+<SubHeading
+title={"Access"}
+helpText={"Ways to access this metric in Mozilla's data warehouse."}
+/>
+  {#if ping.variants.length > 1}
+    <VariantSelector
+      name={"app_id"}
+      label={"Application Variant"}
+      bind:selectedVariant={selectedAppVariant}
+      variants={ping.variants}
+    />
+  {/if}
 
-{#if selectedAppVariant}
-	<table>
-		<col />
-		<col />
-		<tr>
-			<td>
-				BigQuery
-				<HelpHoverable content={'The BigQuery representation of this ping.'} />
-			</td>
-			<td>
-				<a href={getBigQueryURL(app, selectedAppVariant.app_id, ping.name)}>
-					{selectedAppVariant.table}
-				</a>
-			</td>
-		</tr>
-	</table>
-{/if}
+  {#if selectedAppVariant}
+    <table>
+      <col />
+      <col />
+      <tr>
+        <td>
+          BigQuery
+          <HelpHoverable
+            content={"The BigQuery representation of this ping."}
+          />
+        </td>
+        <td>
+          <a
+            href={getBigQueryURL(
+              app,
+              selectedAppVariant.id,
+              ping
+            )}
+          >
+            {selectedAppVariant.table}
+          </a>
+        </td>
+      </tr>
+      {#if selectedAppVariant.looker_url}
+        <tr>
+          <td>
+            Looker
+            <HelpHoverable
+              content={"Explore this ping in Mozilla's instance of Looker."}
+            />
+          </td>
+          <td>
+            <AuthenticatedLink href={selectedAppVariant.looker_url}>
+              {ping.name}
+            </AuthenticatedLink>
+          </td>
+        </tr>
+      {/if}
+    </table>
+  {/if}
+  {/if}
 
-<h2>Metrics</h2>
-<ItemList itemType="metrics" items={ping.metrics} appName={app} />
+<SubHeading
+title={"Metrics"}
+helpText={"Metrics that are sent inside this ping."}
+/>
+<details>
+  <ItemList itemType="metrics" items={ping.metrics} appName={app} />
+</details>
 
 <style>
-	@include metadata-table;
-	h2 {
-		@include text-title-xs;
-	}
+  @include metadata-table;
+  h2 {
+    @include text-title-xs;
+  }
 </style>

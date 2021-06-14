@@ -11,7 +11,7 @@ import requests
 import stringcase
 import yaml
 
-OUTPUT_DIRECTORY = os.path.join("static", "data")
+OUTPUT_DIRECTORY = os.path.join("public", "data")
 ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
 NAMESPACES_URL = "https://raw.githubusercontent.com/mozilla/looker-hub/main/namespaces.yaml"
 

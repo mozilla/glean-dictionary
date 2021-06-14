@@ -1,0 +1,41 @@
+$font-path:  '/fonts';
+$image-path: '/img';
+
+@import "tippy.js/dist/tippy.css";
+
+// only import what we need from Protocol
+@import "@mozilla-protocol/core/protocol/css/protocol.css";
+@import "@mozilla-protocol/core/protocol/css/includes/tokens/dist/units/units.scss";
+@import "@mozilla-protocol/core/protocol/css/includes/tokens/dist/colors/colors.scss";
+@import "@mozilla-protocol/core/protocol/css/components/_emphasis-box.scss";
+@import "@mozilla-protocol/core/protocol/css/includes/mixins/_typography.scss";
+
+@mixin metadata-table {
+  // Styling for metadata tables in
+  // App, Metric, Ping, Table detail pages
+  table {
+    margin-top: $spacing-md;
+    margin-bottom: $spacing-lg;
+    box-shadow: 2px 2px 4px rgba($color-black, 0.1);
+    min-width: 100%;
+
+    col {
+      &:first-child {
+        background-color: $color-light-gray-20;
+      }
+    }
+    td {
+      &:first-child {
+        width: 20%;
+        white-space: nowrap;
+      }
+      border: 1px solid $color-light-gray-30;
+      padding: 0.5rem;
+      vertical-align: top;
+    }
+  }
+}
+
+.mzp-l-content {
+  padding: $spacing-sm $spacing-xl;
+}

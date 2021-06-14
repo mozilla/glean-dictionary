@@ -1,11 +1,11 @@
-import { getEmailLink } from "../formatters/emails";
-import { getExpiryInfo } from "../formatters/expiry";
+import { getEmailLink } from "$lib/formatters/emails.js";
+import { getExpiryInfo } from "$lib/formatters/expiry.js";
 import {
   getBugURL,
   getBugLinkTitle,
   getSourceUrlTitle,
-} from "../formatters/links";
-import { getCodeSearchLink } from "../formatters/codesearch";
+} from "$lib/formatters/links.js";
+import { getCodeSearchLink } from "$lib/formatters/codesearch.js";
 
 const REQUIRED_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#required-metric-parameters";
