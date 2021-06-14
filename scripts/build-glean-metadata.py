@@ -284,6 +284,24 @@ for (app_name, app_group) in app_groups.items():
                                 ]
                             )
                         )
+                    elif metric_type == "labeled_counter":
+                        counter_field_base = (
+                            f"{ping_name_snakecase}"
+                            + "__metrics__labeled_counter__"
+                            + f"{metric_name_snakecase}"
+                        )
+                        looker_metric_link = (
+                            base_looker_explore_link
+                            + "&fields="
+                            + ",".join(
+                                [
+                                    f"{ping_name_snakecase}.submission_date",
+                                    f"{counter_field_base}.label",
+                                    f"{counter_field_base}.count",
+                                ]
+                            )
+                            + f"&pivots={counter_field_base}.label"
+                        )
                     elif metric_type in SUPPORTED_LOOKER_METRIC_TYPES:
                         base_looker_dimension_name = "{}.{}".format(
                             ping_name_snakecase, bigquery_column_name.replace(".", "__")
