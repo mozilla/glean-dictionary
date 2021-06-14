@@ -1,7 +1,5 @@
 <script>
   import pkg from "lodash";
-  import { setContext } from "svelte";
-  import { writable } from "svelte/store";
   import { getItemURL } from "$lib/state/urls";
   import { isExpired } from "$lib/state/metrics";
   import { pageState, updateURLState } from "$lib/state/stores";
@@ -22,7 +20,7 @@
 
   export let showFilter = true;
 
-  let filteredItems;
+  let filteredItems = items.filter((item) => !isExpired(item.expires));
   let pagedItems;
   let paginated = true;
   let topElement;

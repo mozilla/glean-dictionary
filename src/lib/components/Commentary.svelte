@@ -1,6 +1,5 @@
 <script>
   import Markdown from "./Markdown.svelte";
-  // import defaultAnnotation from "../data/defaultAnnotation.md";
 
   export let itemType;
   export let item;
