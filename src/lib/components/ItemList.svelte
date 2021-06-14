@@ -49,14 +49,19 @@
         originMatch(item) ||
         tagMatch(item)
     );
-  }
-  // update pagination when either pagination changes or filtered list changes
-  // (above)
-  $: {
+
+    // also filter out expired items (if we're not showing expired)
+    filteredItems = $pageState.showExpired
+      ? filteredItems
+      : filteredItems.filter((item) => !isExpired(item.expires));
+
+    // update pagination
+    const currentPage = $pageState.page || 1;
     const perPage = paginated ? DEFAULT_ITEMS_PER_PAGE : filteredItems.length;
+    const chunkIndex = paginated ? currentPage - 1 : 0;
     pagedItems =
       filteredItems.length > 0
-        ? chunk([...filteredItems], perPage)[$currentPage - 1]
+        ? chunk([...filteredItems], perPage)[chunkIndex]
         : [];
   }
   const updateSearch = (origin, type = undefined) => {
