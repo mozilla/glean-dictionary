@@ -22,6 +22,8 @@
   let filteredItems = items.filter((item) => !isExpired(item.expires));
   let pagedItems;
   let paginated = true;
+  let topElement;
+  let scrollY;
 
   // update pagedItems when either pagination changes or search text changes
   // (above)
@@ -66,116 +68,128 @@
       : { ...$pageState, search: origin, page: 1 };
     // when the user clicks on an origin (library name), we want to persist a new state
     updateURLState(true);
+    // reset scroll position if we've scrolled down
+    if (scrollY > topElement.offsetTop) {
+      window.scroll(0, topElement.offsetTop);
+    }
   };
 </script>
 
-{#if !items.length}
-  <p>
-    No {itemType} found matching specified criteria.
-  </p>
-{:else}
-  {#if itemType === "metrics"}
-    <span class="expire-checkbox">
-      <label>
-        <input type="checkbox" bind:checked={$pageState.showExpired} />
-        Show expired metrics
-      </label>
-      <label>
-        <input type="checkbox" bind:checked={paginated} />
-        Paginate
-      </label>
-    </span>
-  {/if}
-  {#if showFilter}
-    <FilterInput placeHolder="Search {itemType}" />
-  {/if}
-  <div class="item-browser">
-    <table class="mzp-u-data-table">
-      <!-- We have to do inline styling here to override Protocol CSS rules -->
-      <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
-      <col width="35%" />
-      <col
-        width={itemType === "metrics" || itemType === "tags" ? "20%" : "65%"}
-      />
-      <col
-        width={itemType === "metrics" || itemType === "tags" ? "45%" : "0"}
-      />
-      <thead>
-        <tr>
-          <th scope="col" style="text-align: center;">Name</th>
-          {#if itemType === "metrics"}
-            <th scope="col" style="text-align: center;">Type</th>
-          {:else if itemType === "tags"}
-            <th scope="col" style="text-align: center;">Metric Count</th>
-          {/if}
-          <th scope="col" style="text-align: center;">Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each pagedItems as item}
+<svelte:window bind:scrollY />
+
+<div bind:this={topElement}>
+  {#if !items.length}
+    <p>
+      No {itemType} found matching specified criteria.
+    </p>
+  {:else}
+    {#if itemType === "metrics"}
+      <span class="expire-checkbox">
+        <label>
+          <input type="checkbox" bind:checked={$pageState.showExpired} />
+          Show expired metrics
+        </label>
+        <label>
+          <input type="checkbox" bind:checked={paginated} />
+          Paginate
+        </label>
+      </span>
+    {/if}
+    {#if showFilter}
+      <FilterInput placeHolder="Search {itemType}" />
+    {/if}
+    <div class="item-browser">
+      <table class="mzp-u-data-table">
+        <!-- We have to do inline styling here to override Protocol CSS rules -->
+        <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
+        <col width="35%" />
+        <col
+          width={itemType === "metrics" || itemType === "tags" ? "20%" : "65%"}
+        />
+        <col
+          width={itemType === "metrics" || itemType === "tags" ? "45%" : "0"}
+        />
+        <thead>
           <tr>
-            <td>
-              <div class="item-property">
-                {#if itemType === "tags"}
-                  <Label
-                    text={item.name}
-                    on:click={updateSearch(item.name, "metrics")}
-                    clickable
-                  />
-                {:else}
-                  <a href={getItemURL(appName, itemType, item.name)}
-                    >{item.name}</a
-                  >
-                {/if}
-                {#if item.origin && item.origin !== appName}
-                  <Label
-                    text={item.origin}
-                    on:click={updateSearch(item.origin)}
-                    clickable
-                  />
-                {/if}
-                {#if item.tags}
-                  {#each item.tags as tag}
-                    <Label text={tag} clickable on:click={updateSearch(tag)} />
-                  {/each}
-                {/if}
-                {#if isExpired(item.expires)}
-                  <Label text="expired" />
-                {/if}
-                {#if item.deprecated}
-                  <Label text="deprecated" />
-                {/if}
-              </div>
-            </td>
+            <th scope="col" style="text-align: center;">Name</th>
             {#if itemType === "metrics"}
-              <td style="text-align: center;">
-                <div class="item-property"><code>{item.type}</code></div>
-              </td>
+              <th scope="col" style="text-align: center;">Type</th>
             {:else if itemType === "tags"}
-              <td style="text-align: center;">
+              <th scope="col" style="text-align: center;">Metric Count</th>
+            {/if}
+            <th scope="col" style="text-align: center;">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {#each pagedItems as item}
+            <tr>
+              <td>
                 <div class="item-property">
-                  {item.metric_count}
+                  {#if itemType === "tags"}
+                    <Label
+                      text={item.name}
+                      on:click={updateSearch(item.name, "metrics")}
+                      clickable
+                    />
+                  {:else}
+                    <a href={getItemURL(appName, itemType, item.name)}
+                      >{item.name}</a
+                    >
+                  {/if}
+                  {#if item.origin && item.origin !== appName}
+                    <Label
+                      text={item.origin}
+                      on:click={updateSearch(item.origin)}
+                      clickable
+                    />
+                  {/if}
+                  {#if item.tags}
+                    {#each item.tags as tag}
+                      <Label
+                        text={tag}
+                        clickable
+                        on:click={updateSearch(tag)}
+                      />
+                    {/each}
+                  {/if}
+                  {#if isExpired(item.expires)}
+                    <Label text="expired" />
+                  {/if}
+                  {#if item.deprecated}
+                    <Label text="deprecated" />
+                  {/if}
                 </div>
               </td>
-            {/if}
-            <td class="description">
-              <div class="item-property" title={item.description}>
-                <Markdown text={item.description} />
-              </div>
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
-{/if}
+              {#if itemType === "metrics"}
+                <td style="text-align: center;">
+                  <div class="item-property"><code>{item.type}</code></div>
+                </td>
+              {:else if itemType === "tags"}
+                <td style="text-align: center;">
+                  <div class="item-property">
+                    {item.metric_count}
+                  </div>
+                </td>
+              {/if}
+              <td class="description">
+                <div class="item-property" title={item.description}>
+                  <Markdown text={item.description} />
+                </div>
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  {/if}
 
-{#if filteredItems.length && paginated}
-  <Pagination
-    totalItems={filteredItems.length}
-    itemsPerPage={DEFAULT_ITEMS_PER_PAGE}
-  />
-{/if}
+  {#if filteredItems.length && paginated}
+    <Pagination
+      totalItems={filteredItems.length}
+      itemsPerPage={DEFAULT_ITEMS_PER_PAGE}
+    />
+  {/if}
+</div>
 
 <style>
   .item-browser {
