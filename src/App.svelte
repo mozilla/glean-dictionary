@@ -172,6 +172,6 @@
   }
 
   .mzp-l-content {
-    padding: $spacing-sm $spacing-xl;
+    padding: $spacing-xl;
   }
 </style>
