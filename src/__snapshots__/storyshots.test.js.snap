@@ -217,16 +217,16 @@ exports[`Storyshots Breadcrumb App Details Page 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="breadcrumb svelte-b1pjqm"
+    class="breadcrumb svelte-1n0itmd"
   >
     <ol
-      class="svelte-b1pjqm"
+      class="svelte-1n0itmd"
     >
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/"
         >
           apps
@@ -235,15 +235,15 @@ exports[`Storyshots Breadcrumb App Details Page 1`] = `
        
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         -&gt;
       </span>
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/apps/fenix/"
         >
           fenix
@@ -252,12 +252,12 @@ exports[`Storyshots Breadcrumb App Details Page 1`] = `
        
       <img
         alt="Platform Logo"
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
         src="/img/app-logos/android-breadcrumb.png"
       />
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         
       </span>
@@ -271,16 +271,16 @@ exports[`Storyshots Breadcrumb Apps List Page 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="breadcrumb svelte-b1pjqm"
+    class="breadcrumb svelte-1n0itmd"
   >
     <ol
-      class="svelte-b1pjqm"
+      class="svelte-1n0itmd"
     >
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/"
         >
           apps
@@ -289,7 +289,7 @@ exports[`Storyshots Breadcrumb Apps List Page 1`] = `
        
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         
       </span>
@@ -303,16 +303,16 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="breadcrumb svelte-b1pjqm"
+    class="breadcrumb svelte-1n0itmd"
   >
     <ol
-      class="svelte-b1pjqm"
+      class="svelte-1n0itmd"
     >
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/"
         >
           apps
@@ -321,15 +321,15 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
        
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         -&gt;
       </span>
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/apps/fenix/"
         >
           fenix
@@ -338,20 +338,20 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
        
       <img
         alt="Platform Logo"
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
         src="/img/app-logos/android-breadcrumb.png"
       />
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         -&gt;
       </span>
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/apps/fenix/pings/activation"
         >
           activation
@@ -360,15 +360,15 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
        
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         -&gt;
       </span>
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/apps/fenix/tables/activation/"
         >
           activation table
@@ -377,7 +377,7 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
        
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         
       </span>
@@ -391,16 +391,16 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="breadcrumb svelte-b1pjqm"
+    class="breadcrumb svelte-1n0itmd"
   >
     <ol
-      class="svelte-b1pjqm"
+      class="svelte-1n0itmd"
     >
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/"
         >
           apps
@@ -409,15 +409,15 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
        
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         -&gt;
       </span>
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/apps/fenix/"
         >
           fenix
@@ -426,20 +426,20 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
        
       <img
         alt="Platform Logo"
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
         src="/img/app-logos/android-breadcrumb.png"
       />
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         -&gt;
       </span>
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/apps/fenix/metrics/about_page.libraries_tapped"
         >
           about_page.libraries_tapped
@@ -448,7 +448,7 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
        
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         
       </span>
@@ -462,16 +462,16 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="breadcrumb svelte-b1pjqm"
+    class="breadcrumb svelte-1n0itmd"
   >
     <ol
-      class="svelte-b1pjqm"
+      class="svelte-1n0itmd"
     >
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/"
         >
           apps
@@ -480,15 +480,15 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
        
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         -&gt;
       </span>
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/apps/fenix/"
         >
           fenix
@@ -497,20 +497,20 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
        
       <img
         alt="Platform Logo"
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
         src="/img/app-logos/android-breadcrumb.png"
       />
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         -&gt;
       </span>
       <li
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         <a
-          class="link-name svelte-b1pjqm"
+          class="link-name svelte-1n0itmd"
           href="/apps/fenix/pings/activation"
         >
           activation
@@ -519,7 +519,7 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
        
        
       <span
-        class="svelte-b1pjqm"
+        class="svelte-1n0itmd"
       >
         
       </span>
@@ -1824,61 +1824,61 @@ exports[`Storyshots Label Default 1`] = `
   </p>
    
   <span
-    class="label label-0  svelte-17z7aa0"
+    class="label label-0  svelte-9ivc39"
   >
     label-0
   </span>
    
   <span
-    class="label label-1  svelte-17z7aa0"
+    class="label label-1  svelte-9ivc39"
   >
     label-1
   </span>
    
   <span
-    class="label label-2  svelte-17z7aa0"
+    class="label label-2  svelte-9ivc39"
   >
     label-2
   </span>
    
   <span
-    class="label label-3  svelte-17z7aa0"
+    class="label label-3  svelte-9ivc39"
   >
     label-3
   </span>
    
   <span
-    class="label label-4  svelte-17z7aa0"
+    class="label label-4  svelte-9ivc39"
   >
     label-4
   </span>
    
   <span
-    class="label label-5  svelte-17z7aa0"
+    class="label label-5  svelte-9ivc39"
   >
     label-5
   </span>
    
   <span
-    class="label label-6  svelte-17z7aa0"
+    class="label label-6  svelte-9ivc39"
   >
     label-6
   </span>
    
   <span
-    class="label label-7  svelte-17z7aa0"
+    class="label label-7  svelte-9ivc39"
   >
     label-7
   </span>
    
   <span
-    class="label label-8  svelte-17z7aa0"
+    class="label label-8  svelte-9ivc39"
   >
     label-8
   </span>
    
   <span
-    class="label label-9  svelte-17z7aa0"
+    class="label label-9  svelte-9ivc39"
   >
     label-9
   </span>
@@ -1892,49 +1892,49 @@ exports[`Storyshots Label Default 1`] = `
   </h4>
    
   <span
-    class="label label-9  svelte-17z7aa0"
+    class="label label-9  svelte-9ivc39"
   >
     glean-core
   </span>
    
   <span
-    class="label label-1  svelte-17z7aa0"
+    class="label label-1  svelte-9ivc39"
   >
     glean-android
   </span>
    
   <span
-    class="label label-5  svelte-17z7aa0"
+    class="label label-5  svelte-9ivc39"
   >
     sync
   </span>
    
   <span
-    class="label label-5  svelte-17z7aa0"
+    class="label label-5  svelte-9ivc39"
   >
     lib-crash
   </span>
    
   <span
-    class="label label-6  svelte-17z7aa0"
+    class="label label-6  svelte-9ivc39"
   >
     engine-gecko
   </span>
    
   <span
-    class="label label-2  svelte-17z7aa0"
+    class="label label-2  svelte-9ivc39"
   >
     support-migration
   </span>
    
   <span
-    class="label label-4  svelte-17z7aa0"
+    class="label label-4  svelte-9ivc39"
   >
     nimbus
   </span>
    
   <span
-    class="label label-4  svelte-17z7aa0"
+    class="label label-4  svelte-9ivc39"
   >
     logins-store
   </span>
@@ -1948,13 +1948,13 @@ exports[`Storyshots Label Default 1`] = `
   </h4>
    
   <span
-    class="label label-9  svelte-17z7aa0"
+    class="label label-9  svelte-9ivc39"
   >
     deprecated
   </span>
    
   <span
-    class="label label-9  svelte-17z7aa0"
+    class="label label-9  svelte-9ivc39"
   >
     expired
   </span>

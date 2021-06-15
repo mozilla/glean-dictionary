@@ -61,6 +61,7 @@
 
   .label {
     padding: 0;
+    margin: 0.125em;
     display: inline-block;
     line-height: 20px;
     font-size: 12px;

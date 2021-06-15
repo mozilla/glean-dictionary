@@ -41,7 +41,8 @@
     margin-left: $spacing-xl;
     img {
       padding-left: 5px;
-      width: 23px;
+      margin-top: -2px;
+      width: 24px;
       height: auto;
       object-fit: contain;
     }
