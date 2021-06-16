@@ -2,7 +2,6 @@
   import { pageState } from "$lib/state/stores";
 
   export let placeHolder;
-  export let width;
 </script>
 
 <div>

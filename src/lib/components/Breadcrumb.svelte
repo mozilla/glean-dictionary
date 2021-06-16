@@ -44,7 +44,8 @@
     z-index: 1000;
     img {
       padding-left: 5px;
-      width: 23px;
+      margin-top: -2px;
+      width: 24px;
       height: auto;
       object-fit: contain;
     }

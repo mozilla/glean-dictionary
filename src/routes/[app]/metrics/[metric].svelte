@@ -266,9 +266,6 @@ helpText={"Ways to access this metric in Mozilla's data warehouse."}
   .tags-container {
     margin-top: -12px;
     padding-bottom: 16px;
-    a {
-      padding-right: 4px;
-    }
   }
   .access-selectors {
     display: grid;
