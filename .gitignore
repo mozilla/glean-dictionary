@@ -8,6 +8,7 @@ venv
 __pycache__/
 .probe_cache
 .DS_Store
-static/data/*
 public/data/*
 .svelte-kit/
+/build/
+

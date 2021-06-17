@@ -14,7 +14,7 @@
     {/if}
     {#if parentFields.length === 2 && parentFields[0] === "metrics"}
       <p class="node-link">
-        <a href={`/apps/${app}/metrics/${node.name}`}>[metric]</a>
+        <a href={`/${app}/metrics/${node.name}`}>[metric]</a>
       </p>
     {/if}
   </p>
