@@ -10,6 +10,10 @@
     type="search"
     id="filter-input"
     bind:value={$pageState.search}
+    on:input={() => {
+      // we want to reset the page number to 1 if the filter text ever changes
+      $pageState.page = 1;
+    }}
   />
 </div>
 
