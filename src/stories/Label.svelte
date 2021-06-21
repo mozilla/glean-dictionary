@@ -1,5 +1,5 @@
 <script>
-  import Label from "../src/components/Label.svelte";
+  import Label from "../components/Label.svelte";
 </script>
 
 <h4>Color Palette</h4>

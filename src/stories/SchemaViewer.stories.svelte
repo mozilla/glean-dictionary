@@ -1,6 +1,8 @@
-import SchemaViewer from "./SchemaViewer.svelte";
+<script>
+  import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
+  import SchemaViewer from "./SchemaViewer.svelte";
 
-const nodes = [
+  const nodes = [
   {
     description:
       "A JSON string containing any payload properties not present in the schema",
@@ -36,17 +38,22 @@ const nodes = [
     type: "STRING",
   },
 ];
+</script>
 
-export default {
-  title: "Schema Viewer",
-};
+<Meta
+  title="Example/SchemaViewer"
+  component={SchemaViewer}
+/>
 
-export const Basic = () => {
-  return {
-    Component: SchemaViewer,
-    props: {
-      app: "fenix",
+<Template let:args>
+  <SchemaViewer {...args} />
+</Template>
+
+<Story
+  name="Default"
+  args={{
+    app: "fenix",
       nodes,
-    },
-  };
-};
+  }}
+/>
+
