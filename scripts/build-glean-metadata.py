@@ -12,8 +12,12 @@ import stringcase
 import yaml
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
-ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json"
-NAMESPACES_URL = "https://raw.githubusercontent.com/mozilla/looker-hub/main/namespaces.yaml"
+ANNOTATIONS_URL = os.getenv(
+    "ANNOTATIONS_URL", "https://mozilla.github.io/glean-annotations/api.json"
+)
+NAMESPACES_URL = os.getenv(
+    "NAMESPACES_URL", "https://raw.githubusercontent.com/mozilla/looker-hub/main/namespaces.yaml"
+)
 
 # Priority for getting metric data (use the later definitions of nightly over release)
 METRIC_CHANNEL_PRIORITY = {"nightly": 1, "beta": 2, "release": 3, "esr": 4}
@@ -218,8 +222,8 @@ for (app_name, app_group) in app_groups.items():
                     "type": metric.definition["type"],
                     "expires": metric.definition["expires"],
                 }
-                if annotation and annotation.get("labels"):
-                    base_definition.update({"tags": annotation["labels"]})
+                if annotation and annotation.get("tags"):
+                    base_definition.update({"tags": annotation["tags"]})
                 if metric.definition["origin"] != app_name:
                     base_definition.update({"origin": metric.definition["origin"]})
 
@@ -235,7 +239,7 @@ for (app_name, app_group) in app_groups.items():
                 app_metrics[metric.identifier] = dict(
                     metric.definition,
                     name=metric.identifier,
-                    tags=annotation.get("labels") if annotation else [],
+                    tags=annotation.get("tags") if annotation else [],
                     commentary=annotation.get("content") if annotation else None,
                     # convert send_in_pings to a list so we can sort (see below)
                     send_in_pings=list(metric.definition["send_in_pings"]),
@@ -468,7 +472,7 @@ for (app_name, app_group) in app_groups.items():
     # write tags (if any)
     tags = [
         {"name": k, "description": v}
-        for (k, v) in annotations_index.get(app.app_name, {}).get("labels", {}).items()
+        for (k, v) in annotations_index.get(app.app_name, {}).get("tags", {}).items()
     ]
     if tags:
         app_data["tags"] = tags
@@ -481,7 +485,7 @@ for (app_name, app_group) in app_groups.items():
     # sort the information in the app-level summary, then write it out
     # (we don't sort application id information, that's already handled
     # above)
-    for key in ["labels", "metrics", "pings"]:
+    for key in ["tags", "metrics", "pings"]:
         if app_data.get(key):
             app_data[key].sort(key=lambda v: v["name"])
     open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))
