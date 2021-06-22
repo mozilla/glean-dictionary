@@ -18,7 +18,7 @@ const items = [
     tags: ["TopSites"],
     expires: getDateStr(tomorrow),
   },
-  { name: "metric.camel", expires: getDateStr(tomorrow) },
+  { name: "metric.camel", expires: getDateStr(tomorrow), origin: "glean-core" },
   { name: "metric.expired", expires: getDateStr(yesterday) },
 ];
 
@@ -72,6 +72,23 @@ describe("filters on tag", () => {
   it("handles multi-match", () => {
     expect(getNames(filterItems(items, "top sites", true))).toEqual([
       "metric.bestsitez",
+    ]);
+  });
+});
+
+describe("filters on origin", () => {
+  it("handles single match", () => {
+    expect(getNames(filterItems(items, "glean", true))).toEqual([
+      "metric.camel",
+    ]);
+    expect(getNames(filterItems(items, "core", true))).toEqual([
+      "metric.camel",
+    ]);
+  });
+
+  it("handles multi-match", () => {
+    expect(getNames(filterItems(items, "glean core", true))).toEqual([
+      "metric.camel",
     ]);
   });
 });
