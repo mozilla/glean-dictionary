@@ -31,8 +31,8 @@
 </script>
 
 {#await appDataPromise then app}
-  {#if app.annotation && app.annotation.warning}
-    <AppAlert status="warning" message={app.annotation.warning} />
+  {#if app.warning}
+    <AppAlert status="warning" message={app.warning} />
   {/if}
 
   {#if app.prototype}
