@@ -239,7 +239,7 @@ for (app_name, app_group) in app_groups.items():
                 app_metrics[metric.identifier] = dict(
                     metric.definition,
                     name=metric.identifier,
-                    tags=annotation.get("tags") if annotation else [],
+                    tags=annotation.get("tags", []) if annotation else [],
                     commentary=annotation.get("content") if annotation else None,
                     # convert send_in_pings to a list so we can sort (see below)
                     send_in_pings=list(metric.definition["send_in_pings"]),
