@@ -8,6 +8,7 @@
   import Markdown from "./Markdown.svelte";
   import Label from "./Label.svelte";
 
+  import { filterItems } from "../state/filter";
   import { isExpired } from "../state/metrics";
   import { pageState, updateURLState } from "../state/stores";
 
@@ -28,29 +29,12 @@
   // update pagedItems when either pagination changes or search text changes
   // (above)
   $: {
-    const search = ($pageState.search || "").toLowerCase();
-
-    // filter on match either on name, origin, or tag
-    // in all cases a partial match is ok and we'll do a case insensitive
-    // match
-
-    const originMatch = (item) =>
-      item.origin && item.origin.toLowerCase().includes(search);
-
-    const tagMatch = (item) =>
-      item.tags && item.tags.some((tag) => tag.toLowerCase().includes(search));
-
-    filteredItems = items.filter(
-      (item) =>
-        item.name.toLowerCase().includes(search) ||
-        originMatch(item) ||
-        tagMatch(item)
+    // filter items by search terms and expiry state
+    filteredItems = filterItems(
+      items,
+      $pageState.search || "",
+      $pageState.showExpired
     );
-
-    // also filter out expired items (if we're not showing expired)
-    filteredItems = $pageState.showExpired
-      ? filteredItems
-      : filteredItems.filter((item) => !isExpired(item.expires));
 
     // update pagination
     const currentPage = $pageState.page || 1;
