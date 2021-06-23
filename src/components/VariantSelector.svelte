@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { updateURLState, pageState } from "../state/stores";
 
   export let name;
   export let label;
@@ -12,7 +13,19 @@
 
   const change = () => {
     selectedVariant = variants.find((v) => v.id === selectedId);
-
+    $pageState = {
+      ...$pageState,
+      // because both app channel and ping use `id` as the identifier
+      // we check if selectedVariant.channel exists to differentiate
+      // between setting channel and ping state
+      channel: selectedVariant.channel
+        ? selectedVariant.id
+        : $pageState.channel || "",
+      ping: selectedVariant.channel
+        ? $pageState.ping || ""
+        : selectedVariant.id || "",
+    };
+    updateURLState(true);
     dispatch("change");
   };
 </script>
