@@ -1,7 +1,7 @@
 <script>
-  export let key;
   import { getContext } from "svelte";
 
+  export let key;
   const activeTab = getContext("activeTab");
 
   function selectTab() {

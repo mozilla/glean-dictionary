@@ -11,7 +11,6 @@
   }}
 />
 
-
 <Template let:args>
   <AppAlert {...args} />
 </Template>
@@ -20,7 +19,7 @@
   name="Success"
   args={{
     status: "success",
-    message: "Yay, succesful alert!"
+    message: "Yay, succesful alert!",
   }}
 />
 
@@ -36,8 +35,6 @@
   name="Warning"
   args={{
     status: "warning",
-    message: "This is a warning alert: are you sure you want to continue?"
+    message: "This is a warning alert: are you sure you want to continue?",
   }}
 />
-
-

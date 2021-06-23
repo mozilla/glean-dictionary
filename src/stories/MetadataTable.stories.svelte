@@ -4,10 +4,7 @@
   import { APPLICATION_DEFINITION_SCHEMA } from "../data/schemas";
 </script>
 
-<Meta
-  title="Example/Metadata"
-  component={MetadataTable}
-/>
+<Meta title="Example/Metadata" component={MetadataTable} />
 
 <Template let:args>
   <MetadataTable {...args} />

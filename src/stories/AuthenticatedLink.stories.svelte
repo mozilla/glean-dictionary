@@ -3,10 +3,7 @@
   import AuthenticatedLink from "./AuthenticatedLink.svelte";
 </script>
 
-<Meta
-  title="Example/AuthenticatedLink"
-  component={AuthenticatedLink}
-/>
+<Meta title="Example/AuthenticatedLink" component={AuthenticatedLink} />
 
 <Template let:args>
   <AuthenticatedLink {...args} />
@@ -15,6 +12,6 @@
 <Story
   name="Primary"
   args={{
-    href: "test"
+    href: "test",
   }}
 />

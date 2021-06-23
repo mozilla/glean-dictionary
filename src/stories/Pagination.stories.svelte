@@ -1,18 +1,14 @@
-
 <script>
   import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
   import Pagination from "./Pagination.svelte";
 
   const items = {
-  total: 210,
-  perPage: 20,
-};
+    total: 210,
+    perPage: 20,
+  };
 </script>
 
-<Meta
-  title="Example/Pagination"
-  component={Pagination}
-/>
+<Meta title="Example/Pagination" component={Pagination} />
 
 <Template let:args>
   <Pagination {...args} />
@@ -22,6 +18,6 @@
   name="Default"
   args={{
     itemsPerPage: items.perPage,
-    totalItems:  items.total,
+    totalItems: items.total,
   }}
 />

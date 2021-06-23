@@ -2,15 +2,11 @@
   import { Meta, Template, Story } from "@storybook/addon-svelte-csf";
   import SubHeading from "../components/SubHeading.svelte";
 
-  export let title = "SubHeading"
-  export let helpText = "This is a help text for this subheading."
+  export let title = "SubHeading";
+  export let helpText = "This is a help text for this subheading.";
 </script>
 
-<Meta
-  title="Example/SubHeading"
-  component={SubHeading}
-/>
-
+<Meta title="Example/SubHeading" component={SubHeading} />
 
 <Template let:args>
   <SubHeading {...args} />
@@ -19,7 +15,7 @@
 <Story
   name="Default"
   args={{
-    title: title,
-    helpText: helpText
+    title,
+    helpText,
   }}
 />

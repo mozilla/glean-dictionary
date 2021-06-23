@@ -1,5 +1,6 @@
 <script>
   import { TabGroup, Tab, TabContent } from "../components/tabs";
+
   export let tabs;
 </script>
 

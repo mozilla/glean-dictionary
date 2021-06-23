@@ -3,15 +3,10 @@
   import VariantSelector from "./VariantSelector.svelte";
 </script>
 
-<Meta
-  title="Example/VariantSelector"
-  component={VariantSelector}
-/>
+<Meta title="Example/VariantSelector" component={VariantSelector} />
 
 <Template let:args>
   <VariantSelector {...args} />
 </Template>
 
-<Story
-  name="Default"
-/>
+<Story name="Default" />
