@@ -46,6 +46,15 @@
       selectedAppVariant.etl.ping_data[selectedPingVariant.id];
   }
 
+  $: $pageState =
+    selectedAppVariant && selectedPingVariant
+      ? {
+          ...$pageState,
+          channel: selectedAppVariant.id,
+          ping: selectedPingVariant.id,
+        }
+      : $pageState;
+
   pageTitle.set(`${params.metric} | ${params.app} `);
 
   function getMetricDocumentationURI(type) {

@@ -33,6 +33,11 @@
     showExpired: true,
     ...$pageState,
   };
+
+  $: $pageState = selectedAppVariant
+    ? { ...$pageState, channel: selectedAppVariant.id }
+    : $pageState;
+
   pageTitle.set(`${params.ping} | ${params.app}`);
 </script>
 
