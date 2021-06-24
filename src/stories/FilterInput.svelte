@@ -1,7 +1,7 @@
 <script>
-  import { pageState } from "../src/state/stores";
+  import { pageState } from "../state/stores";
 
-  import FilterInput from "../src/components/FilterInput.svelte";
+  import FilterInput from "../components/FilterInput.svelte";
 
   export let listItems;
 

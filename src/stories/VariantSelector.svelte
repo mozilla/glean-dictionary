@@ -1,5 +1,5 @@
 <script>
-  import VariantSelector from "../src/components/VariantSelector.svelte";
+  import VariantSelector from "../components/VariantSelector.svelte";
 </script>
 
 <VariantSelector

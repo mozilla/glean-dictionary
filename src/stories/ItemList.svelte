@@ -1,5 +1,5 @@
 <script>
-  import ItemList from "../src/components/ItemList.svelte";
+  import ItemList from "../components/ItemList.svelte";
 
   export let items;
   export let itemType;

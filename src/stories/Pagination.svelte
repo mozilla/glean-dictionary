@@ -1,6 +1,6 @@
 <script>
-  import BackButton from "../src/components/icons/BackButton.svelte";
-  import ForwardButton from "../src/components/icons/ForwardButton.svelte";
+  import BackButton from "../components/icons/BackButton.svelte";
+  import ForwardButton from "../components/icons/ForwardButton.svelte";
 
   export let itemsPerPage;
   export let totalItems;
