@@ -68,6 +68,33 @@ def _normalize_metrics(name):
     return f"data_{metric_name}"
 
 
+def _get_annotation(annotations_index, origin, item_type, identifier=None):
+    if item_type == "app":
+        return annotations_index.get(origin, {}).get(item_type, {})
+    if not identifier:
+        raise Exception("Identifier required for non-app item types")
+    return annotations_index.get(origin, {}).get(item_type, {}).get(identifier, {})
+
+
+def _incorporate_annotation(item, annotation, app=False, full=False):
+    incorporated = dict(item)
+
+    if not app:
+        # application "tags" are in a slightly different format than
+        # other annotations, since they are defining the valid set of
+        # tags (FIXME: define this in a slightly clearer way)
+        incorporated.update({"tags": annotation.get("tags", [])})
+    if full:
+        incorporated.update(
+            {
+                "commentary": annotation.get("content"),
+                "warning": annotation.get("warning"),
+            }
+        )
+
+    return incorporated
+
+
 # ETL specific snakecase taken from:
 # https://github.com/mozilla/bigquery-etl/blob/master/bigquery_etl/util/common.py
 #
@@ -141,16 +168,16 @@ for app in apps:
         continue
 
     if not app_groups.get(app.app_name):
-        app_groups[app.app_name] = {
-            "app_name": app.app_name,
-            "app_description": app.app["app_description"],
-            "canonical_app_name": app.app["canonical_app_name"],
-            "deprecated": app.app.get("deprecated", False),
-            "url": app.app["url"],
-            "notification_emails": app.app["notification_emails"],
-            "app_ids": [],
-            "annotation": (annotations_index.get(app.app_name, {}).get("app")),
-        }
+        app_groups[app.app_name] = dict(
+            app_name=app.app_name,
+            app_description=app.app["app_description"],
+            canonical_app_name=app.app["canonical_app_name"],
+            deprecated=app.app.get("deprecated", False),
+            url=app.app["url"],
+            notification_emails=app.app["notification_emails"],
+            app_ids=[],
+        )
+
     app_groups[app.app_name]["app_ids"].extend(
         [
             {
@@ -209,21 +236,24 @@ for (app_name, app_group) in app_groups.items():
                 metric_identifiers_seen.add(metric.identifier)
 
                 # read the annotation, if any
-                annotation = (
-                    annotations_index.get(app_name, {}).get("metrics", {}).get(metric.identifier)
+                metric_annotation = _get_annotation(
+                    annotations_index, app_name, "metrics", metric.identifier
                 )
 
-                base_definition = {
-                    "name": metric.identifier,
-                    "description": metric.description,
-                    "extra_keys": metric.definition["extra_keys"]
-                    if "extra_keys" in metric.definition
-                    else None,
-                    "type": metric.definition["type"],
-                    "expires": metric.definition["expires"],
-                }
-                if annotation and annotation.get("tags"):
-                    base_definition.update({"tags": annotation["tags"]})
+                base_definition = _incorporate_annotation(
+                    dict(
+                        name=metric.identifier,
+                        description=metric.description,
+                        extra_keys=metric.definition["extra_keys"]
+                        if "extra_keys" in metric.definition
+                        else None,
+                        type=metric.definition["type"],
+                        expires=metric.definition["expires"],
+                    ),
+                    metric_annotation,
+                    full=False,
+                )
+
                 if metric.definition["origin"] != app_name:
                     base_definition.update({"origin": metric.definition["origin"]})
 
@@ -235,16 +265,18 @@ for (app_name, app_group) in app_groups.items():
                 # the summary of metrics
                 app_data["metrics"].append(base_definition)
 
-                # the full definition
-                app_metrics[metric.identifier] = dict(
-                    metric.definition,
-                    name=metric.identifier,
-                    tags=annotation.get("tags", []) if annotation else [],
-                    commentary=annotation.get("content") if annotation else None,
-                    # convert send_in_pings to a list so we can sort (see below)
-                    send_in_pings=list(metric.definition["send_in_pings"]),
-                    repo_url=app.app["url"],
-                    variants=[],
+                # the full metric definition
+                app_metrics[metric.identifier] = _incorporate_annotation(
+                    dict(
+                        metric.definition,
+                        name=metric.identifier,
+                        # convert send_in_pings to a list so we can sort (see below)
+                        send_in_pings=list(metric.definition["send_in_pings"]),
+                        repo_url=app.app["url"],
+                        variants=[],
+                    ),
+                    metric_annotation,
+                    full=True,
                 )
 
                 # sort "send in pings" alphanumerically, except that `metrics`
@@ -387,16 +419,18 @@ for (app_name, app_group) in app_groups.items():
         for ping in app.get_pings():
             if ping.identifier not in ping_identifiers_seen:
                 ping_identifiers_seen.add(ping.identifier)
-                ping_data = dict(
-                    ping.definition,
-                    variants=[],
-                    annotation=(
-                        annotations_index.get(ping.definition["origin"], {})
-                        .get("pings", {})
-                        .get(ping.identifier)
-                    ),
+                app_data["pings"].append(
+                    _incorporate_annotation(
+                        dict(
+                            ping.definition,
+                            variants=[],
+                        ),
+                        _get_annotation(
+                            annotations_index, ping.definition["origin"], "pings", ping.identifier
+                        ),
+                        full=False,
+                    )
                 )
-                app_data["pings"].append(ping_data)
 
             ping_data = next(pd for pd in app_data["pings"] if pd["name"] == ping.identifier)
 
@@ -445,13 +479,19 @@ for (app_name, app_group) in app_groups.items():
         ping_data["variants"].sort(key=lambda v: USER_CHANNEL_PRIORITY[v["channel"]])
         open(os.path.join(app_ping_dir, f"{ping_data['name']}.json"), "w").write(
             json.dumps(
-                dict(
-                    ping_data,
-                    metrics=[
-                        metric
-                        for metric in metric_pings["data"]
-                        if ping_data["name"] in metric["pings"]
-                    ],
+                _incorporate_annotation(
+                    dict(
+                        ping_data,
+                        metrics=[
+                            metric
+                            for metric in metric_pings["data"]
+                            if ping_data["name"] in metric["pings"]
+                        ],
+                    ),
+                    _get_annotation(
+                        annotations_index, ping_data["origin"], "pings", ping_data["name"]
+                    ),
+                    full=True,
                 ),
                 default=_serialize_sets,
             )
@@ -470,11 +510,9 @@ for (app_name, app_group) in app_groups.items():
         )
 
     # write tags (if any)
-    tags = [
-        {"name": k, "description": v}
-        for (k, v) in annotations_index.get(app.app_name, {}).get("tags", {}).items()
-    ]
-    if tags:
+    app_annotation = _get_annotation(annotations_index, app.app_name, "app")
+    if app_annotation and app_annotation.get("tags"):
+        tags = [{"name": k, "description": v} for (k, v) in app_annotation.get("tags").items()]
         app_data["tags"] = tags
         for tag in tags:
             tag_metrics = [
@@ -488,4 +526,6 @@ for (app_name, app_group) in app_groups.items():
     for key in ["tags", "metrics", "pings"]:
         if app_data.get(key):
             app_data[key].sort(key=lambda v: v["name"])
-    open(os.path.join(app_dir, "index.json"), "w").write(json.dumps(app_data))
+    open(os.path.join(app_dir, "index.json"), "w").write(
+        json.dumps(_incorporate_annotation(app_data, app_annotation, app=True, full=True))
+    )
