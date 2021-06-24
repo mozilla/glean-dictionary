@@ -68,7 +68,11 @@ def _normalize_metrics(name):
     return f"data_{metric_name}"
 
 
-def _get_annotation(annotations_index, origin, item_type, identifier):
+def _get_annotation(annotations_index, origin, item_type, identifier=None):
+    if item_type == "app":
+        return annotations_index.get(origin, {}).get(item_type, {})
+    if not identifier:
+        raise Exception("Identifier required for non-app item types")
     return annotations_index.get(origin, {}).get(item_type, {}).get(identifier, {})
 
 
@@ -164,7 +168,6 @@ for app in apps:
         continue
 
     if not app_groups.get(app.app_name):
-        annotation = annotations_index.get(app.app_name, {}).get("app")
         app_groups[app.app_name] = dict(
             app_name=app.app_name,
             app_description=app.app["app_description"],
@@ -507,7 +510,7 @@ for (app_name, app_group) in app_groups.items():
         )
 
     # write tags (if any)
-    app_annotation = annotations_index.get(app.app_name, {}).get("app", {})
+    app_annotation = _get_annotation(annotations_index, app.app_name, "app")
     if app_annotation and app_annotation.get("tags"):
         tags = [{"name": k, "description": v} for (k, v) in app_annotation.get("tags").items()]
         app_data["tags"] = tags
