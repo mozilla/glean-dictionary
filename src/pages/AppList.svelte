@@ -222,6 +222,7 @@
     background-color: inherit;
   }
   #card {
+    justify-self: center;
     max-width: 230px;
     #media-block {
       &:hover {
