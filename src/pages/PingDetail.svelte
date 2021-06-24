@@ -21,7 +21,9 @@
   let selectedAppVariant;
   const pingDataPromise = getPingData(params.app, params.ping).then(
     (pingData) => {
-      [selectedAppVariant] = pingData.variants;
+      [selectedAppVariant] = $pageState.channel
+        ? pingData.variants.filter((app) => app.id === $pageState.channel)
+        : pingData.variants;
       return pingData;
     }
   );
@@ -31,6 +33,11 @@
     showExpired: true,
     ...$pageState,
   };
+
+  $: $pageState = selectedAppVariant
+    ? { ...$pageState, channel: selectedAppVariant.id }
+    : $pageState;
+
   pageTitle.set(`${params.ping} | ${params.app}`);
 </script>
 

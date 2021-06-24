@@ -17,7 +17,7 @@
     METRIC_METADATA_SCHEMA,
   } from "../data/schemas";
   import { getMetricData } from "../state/api";
-  import { pageTitle } from "../state/stores";
+  import { pageTitle, pageState } from "../state/stores";
   import { getBigQueryURL } from "../state/urls";
 
   import { isExpired } from "../state/metrics";
@@ -29,8 +29,12 @@
   let pingData;
   const metricDataPromise = getMetricData(params.app, params.metric).then(
     (metricData) => {
-      [selectedAppVariant] = metricData.variants;
-      selectedPingVariant = { id: metricData.send_in_pings[0] };
+      [selectedAppVariant] = $pageState.channel
+        ? metricData.variants.filter((app) => app.id === $pageState.channel)
+        : metricData.variants;
+      selectedPingVariant = {
+        id: $pageState.ping ? $pageState.ping : metricData.send_in_pings[0],
+      };
       return metricData;
     }
   );
@@ -41,6 +45,15 @@
       selectedPingVariant &&
       selectedAppVariant.etl.ping_data[selectedPingVariant.id];
   }
+
+  $: $pageState =
+    selectedAppVariant && selectedPingVariant
+      ? {
+          ...$pageState,
+          channel: selectedAppVariant.id,
+          ping: selectedPingVariant.id,
+        }
+      : $pageState;
 
   pageTitle.set(`${params.metric} | ${params.app} `);
 
