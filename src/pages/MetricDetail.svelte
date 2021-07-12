@@ -151,6 +151,8 @@
         <tr>
           <td><code>{keyName}</code></td>
           <td>
+            {#if definition.type}<td>Type: <code>{definition.type}</code></td
+              >{/if}
             <Markdown text={definition.description} />
           </td>
         </tr>
