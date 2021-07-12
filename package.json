@@ -51,7 +51,7 @@
     "sass": "^1.32.13",
     "sass-loader": "^10.1.1",
     "svelte": "3.38.3",
-    "svelte-jester": "^1.5.0",
+    "svelte-jester": "^1.7.0",
     "svelte-loader": "2.13.6",
     "tippy.js": "^6.3.1"
   },
