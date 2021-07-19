@@ -89,6 +89,7 @@
           BigQuery
           <HelpHoverable
             content={"The BigQuery representation of this ping."}
+            link={"https://docs.telemetry.mozilla.org/cookbooks/accessing_glean_data.html"}
           />
         </td>
         <td>
