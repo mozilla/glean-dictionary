@@ -248,6 +248,7 @@
           BigQuery
           <HelpHoverable
             content={"The BigQuery representation of this metric."}
+            link={"https://docs.telemetry.mozilla.org/cookbooks/accessing_glean_data.html"}
           />
         </td>
         <td>
