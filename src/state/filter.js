@@ -13,6 +13,9 @@ export function filterItems(items, search, showExpired) {
     item.tags &&
     item.tags.some((tag) => tag.toLowerCase().includes(searchToken));
 
+  const metricTypeMatch = (item, searchToken) =>
+    item.type && item.type.toLowerCase().includes(searchToken);
+
   return items.filter(
     (item) =>
       (showExpired || !isExpired(item.expires)) &&
@@ -20,7 +23,8 @@ export function filterItems(items, search, showExpired) {
         (searchToken) =>
           item.name.toLowerCase().includes(searchToken) ||
           originMatch(item, searchToken) ||
-          tagMatch(item, searchToken)
+          tagMatch(item, searchToken) ||
+          metricTypeMatch(item, searchToken)
       )
   );
 }
