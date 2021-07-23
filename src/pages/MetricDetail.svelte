@@ -220,7 +220,7 @@
               {params.metric}
             </AuthenticatedLink>
           {:else}
-            GLAM doesn't support <code>{metric.type}</code> metrics yet.
+            Currently GLAM doesn't support <code>{metric.type}</code> metrics.
           {/if}
         </td>
       </tr>
