@@ -206,22 +206,24 @@
     <table>
       <col />
       <col />
-      {#if selectedAppVariant.etl.glam_url}
-        <tr>
-          <td>
-            GLAM
-            <HelpHoverable
-              content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
-              link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
-            />
-          </td>
-          <td>
+      <tr>
+        <td>
+          GLAM
+          <HelpHoverable
+            content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
+            link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
+          />
+        </td>
+        <td>
+          {#if selectedAppVariant.etl.glam_url}
             <AuthenticatedLink href={selectedAppVariant.etl.glam_url}>
               {params.metric}
             </AuthenticatedLink>
-          </td>
-        </tr>
-      {/if}
+          {:else}
+            GLAM doesn't support <code>{metric.type}</code> metrics yet.
+          {/if}
+        </td>
+      </tr>
       {#if pingData.looker}
         <tr>
           <td
