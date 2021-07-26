@@ -24,7 +24,7 @@
     "@rollup/plugin-node-resolve": "13.0.2",
     "@rollup/plugin-replace": "^3.0.0",
     "@storybook/addon-knobs": "6.3.0",
-    "@storybook/addon-storyshots": "^6.3.4",
+    "@storybook/addon-storyshots": "^6.3.5",
     "@storybook/addon-storysource": "6.3.4",
     "@storybook/svelte": "6.1.21",
     "@testing-library/svelte": "^3.0.3",
