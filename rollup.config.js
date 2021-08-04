@@ -73,9 +73,11 @@ export default {
     replace({
       __GOOGLE_ANALYTICS_ID__:
         process.env.CONTEXT === "production" && process.env.GOOGLE_ANALYTICS_ID,
-      __LAST_UPDATED_TIME__: execSync("git log -1 --format=%cd --date=format:'%B %d, %Y'")
-      .toString()
-      .trim(),
+      __LAST_UPDATED_TIME__: execSync(
+        "git log -1 --format=%cd --date=format:'%B %d, %Y'"
+      )
+        .toString()
+        .trim(),
       __VERSION__: execSync("git rev-list HEAD --max-count=1")
         .toString()
         .trim(),

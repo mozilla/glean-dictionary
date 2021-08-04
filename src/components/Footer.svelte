@@ -38,7 +38,7 @@
         <p>
           Last updated {lastUpdatedTime}
         </p>
-        <p> 
+        <p>
           Alpha Software - revision
           <a href="https://github.com/mozilla/glean-dictionary/tree/{rev}"
             >{rev.substring(0, 10)}</a
