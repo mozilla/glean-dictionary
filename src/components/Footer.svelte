@@ -1,5 +1,6 @@
 <script>
   const rev = "__VERSION__";
+  const lastUpdatedTime = "__LAST_UPDATED_TIME__";
 </script>
 
 <footer class="mzp-c-footer">
@@ -35,6 +36,9 @@
           </li>
         </ul>
         <p>
+          Last updated {lastUpdatedTime}
+        </p>
+        <p> 
           Alpha Software - revision
           <a href="https://github.com/mozilla/glean-dictionary/tree/{rev}"
             >{rev.substring(0, 10)}</a
