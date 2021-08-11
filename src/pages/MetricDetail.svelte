@@ -147,12 +147,14 @@
     <table>
       <col />
       <col />
+      <col />
       {#each Object.entries(metric.extra_keys) as [keyName, definition]}
         <tr>
           <td><code>{keyName}</code></td>
           <td>
-            {#if definition.type}<td>Type: <code>{definition.type}</code></td
-              >{/if}
+            <code>{definition.type || "string"}</code>
+          </td>
+          <td>
             <Markdown text={definition.description} />
           </td>
         </tr>
