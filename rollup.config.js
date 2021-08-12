@@ -12,6 +12,19 @@ import css from "rollup-plugin-css-only";
 
 const production = !process.env.ROLLUP_WATCH;
 
+function extractLastUpdatedTime(str) {
+  const tinydate = require("tinydate");
+  const json = JSON.parse(str);
+  const lastUpdatedDate = new Date(json["lastUpdate"]);
+
+  const stamp = tinydate("{MMMM} {DD} {YYYY}", {
+    MMMM: (d) => d.toLocaleString("default", { month: "long" }),
+    DD: (d) => d.getDate(),
+  });
+
+  return stamp(lastUpdatedDate);
+}
+
 function serve() {
   let server;
 
@@ -73,11 +86,13 @@ export default {
     replace({
       __GOOGLE_ANALYTICS_ID__:
         process.env.CONTEXT === "production" && process.env.GOOGLE_ANALYTICS_ID,
-      __LAST_UPDATED_TIME__: execSync(
-        "git log -1 --format=%cd --date=format:'%B %d, %Y'"
-      )
-        .toString()
-        .trim(),
+      __LAST_UPDATED_TIME__: extractLastUpdatedTime(
+        execSync(
+          "curl --compressed https://probeinfo.telemetry.mozilla.org/firefox/general"
+        )
+          .toString()
+          .trim()
+      ),
       __VERSION__: execSync("git rev-list HEAD --max-count=1")
         .toString()
         .trim(),
