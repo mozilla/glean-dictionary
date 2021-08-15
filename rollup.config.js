@@ -13,16 +13,14 @@ import css from "rollup-plugin-css-only";
 const production = !process.env.ROLLUP_WATCH;
 
 function extractLastUpdatedTime(str) {
-  const tinydate = require("tinydate");
   const json = JSON.parse(str);
-  const lastUpdatedDate = new Date(json["lastUpdate"]);
+  const lastUpdatedDate = new Date(json.lastUpdate);
 
-  const stamp = tinydate("{MMMM} {DD} {YYYY}", {
-    MMMM: (d) => d.toLocaleString("default", { month: "long" }),
-    DD: (d) => d.getDate(),
-  });
+  const month = lastUpdatedDate.toLocaleString("default", { month: "long" });
+  const year = lastUpdatedDate.toLocaleString("default", { year: "numeric" });
+  const day = lastUpdatedDate.toLocaleString("default", { day: "numeric" });
 
-  return stamp(lastUpdatedDate);
+  return `${month} ${day}, ${year}`;
 }
 
 function serve() {
