@@ -59,7 +59,7 @@
     "rollup-plugin-terser": "7.0.2",
     "sass": "^1.32.13",
     "sass-loader": "^10.1.1",
-    "sirv-cli": "1.0.12",
+    "sirv-cli": "1.0.14",
     "svelte": "3.41.0",
     "svelte-jester": "^1.5.0",
     "svelte-loader": "2.13.6",
