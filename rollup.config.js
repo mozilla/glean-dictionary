@@ -17,15 +17,12 @@ function extractLastUpdatedTime(str) {
   const lastUpdatedDate = new Date();
   lastUpdatedDate.setTime(Date.parse(json.lastUpdate));
 
-  const month = lastUpdatedDate.toLocaleDateString("default", {
-    month: "long",
-  });
-  const year = lastUpdatedDate.toLocaleDateString("default", {
+  return lastUpdatedDate.toLocaleDateString("en-US", {
+    weekday: "long",
     year: "numeric",
+    month: "long",
+    day: "numeric",
   });
-  const day = lastUpdatedDate.toLocaleDateString("default", { day: "numeric" });
-
-  return `${month} ${day}, ${year}`;
 }
 
 function serve() {
