@@ -17,9 +17,13 @@ function extractLastUpdatedTime(str) {
   const lastUpdatedDate = new Date();
   lastUpdatedDate.setTime(Date.parse(json.lastUpdate));
 
-  const month = lastUpdatedDate.toLocaleString("default", { month: "long" });
-  const year = lastUpdatedDate.toLocaleString("default", { year: "numeric" });
-  const day = lastUpdatedDate.toLocaleString("default", { day: "numeric" });
+  const month = lastUpdatedDate.toLocaleDateString("default", {
+    month: "long",
+  });
+  const year = lastUpdatedDate.toLocaleDateString("default", {
+    year: "numeric",
+  });
+  const day = lastUpdatedDate.toLocaleDateString("default", { day: "numeric" });
 
   return `${month} ${day}, ${year}`;
 }
