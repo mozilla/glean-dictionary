@@ -36,7 +36,8 @@
           </li>
         </ul>
         <p>
-          Last updated {lastUpdatedTime}
+          Last updated
+          <a href="https://protosaur.dev/mps-deploys/">{lastUpdatedTime}</a>
         </p>
         <p>
           Alpha Software - revision
