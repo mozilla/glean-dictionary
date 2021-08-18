@@ -17,10 +17,11 @@
   import GlobalStyles from "./GlobalStyles.svelte";
 
   // Stores
-  import { pageState, pageTitle, updateURLState } from "./state/stores";
+  import { pageTitle, updatePageState } from "./state/stores";
 
   let component;
   let params = {};
+  let initialState = {};
   let links = [];
 
   let title;
@@ -59,38 +60,28 @@
   });
 
   function setComponent(c) {
-    return function setComponentInner({ params: p }) {
+    return function setComponentInner(ctx) {
       component = c;
-      params = p;
+      params = ctx.params;
+      initialState = queryStringParse(ctx.querystring);
+      updatePageState(initialState);
     };
   }
 
-  function parseQuery(ctx, next) {
-    const query = queryStringParse(ctx.querystring);
-    pageState.set(query);
-    next();
-  }
-
-  page("*", parseQuery);
   page("*", (ctx, next) => {
     ga("set", "page", ctx.page.current);
     ga("send", "pageview");
     next();
   });
+
   page("/", setComponent(AppList));
   page("/apps/:app/app_ids/:appId/tables/:table", setComponent(TableDetail));
   page("/apps/:app/app_ids/:appId", setComponent(AppIdDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
   page("/apps/:app", setComponent(AppDetail));
-  page();
 
-  // set up a handler to update our URL when page state changes (we do this here,
-  // instead of the store because we want to wait until we've initialized any
-  // initial state before doing this)
-  $: {
-    $pageState, updateURLState(false); // eslint-disable-line
-  }
+  page();
 
   // Set page title
   // https://stackoverflow.com/a/59028538
@@ -123,7 +114,7 @@
   {/if}
   <main>
     <div class="mzp-l-content">
-      <svelte:component this={component} bind:params />
+      <svelte:component this={component} bind:params bind:initialState />
     </div>
   </main>
 

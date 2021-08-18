@@ -1,5 +1,5 @@
 <script>
-  import { pageState } from "../state/stores";
+  import { pageState, updatePageState } from "../state/stores";
 
   import BackButton from "./icons/BackButton.svelte";
   import ForwardButton from "./icons/ForwardButton.svelte";
@@ -38,7 +38,7 @@
   function changePage(page) {
     if (page !== currentPage) {
       currentPage = page;
-      $pageState.page = page;
+      updatePageState({ page });
     }
   }
 

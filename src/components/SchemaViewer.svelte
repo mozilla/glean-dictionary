@@ -11,11 +11,12 @@
   let nodesWithVisibility = [];
 
   $: {
-    const { search } = $pageState;
-    const filterTerms = search
-      .trim()
-      .split(" ")
-      .filter((t) => t.length > 0);
+    const filterTerms = $pageState.search
+      ? $pageState.search
+          .trim()
+          .split(" ")
+          .filter((t) => t.length > 0)
+      : [];
 
     const addVisibility = (node, parentNodeNames = ["__root__"]) => {
       let modifiedNode = node;

@@ -10,7 +10,7 @@
 
   import { filterItems } from "../state/filter";
   import { isExpired } from "../state/metrics";
-  import { pageState, updateURLState } from "../state/stores";
+  import { pageState, updatePageState } from "../state/stores";
 
   let DEFAULT_ITEMS_PER_PAGE = 20;
 
@@ -47,11 +47,13 @@
   }
 
   const updateSearch = (origin, type = undefined) => {
-    $pageState = type
-      ? { ...$pageState, search: origin, page: 1, itemType: type }
-      : { ...$pageState, search: origin, page: 1 };
+    updatePageState(
+      type
+        ? { ...$pageState, search: origin, page: 1, itemType: type }
+        : { ...$pageState, search: origin, page: 1 },
+      true
+    );
     // when the user clicks on an origin (library name), we want to persist a new state
-    updateURLState(true);
     // reset scroll position if we've scrolled down
     if (scrollY > topElement.offsetTop) {
       window.scroll(0, topElement.offsetTop);

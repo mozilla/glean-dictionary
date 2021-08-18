@@ -1,6 +1,6 @@
 <script>
   import { getPingData } from "../state/api";
-  import { pageState, pageTitle } from "../state/stores";
+  import { pageState, pageTitle, updatePageState } from "../state/stores";
   import { getBigQueryURL } from "../state/urls";
 
   import AppAlert from "../components/AppAlert.svelte";
@@ -17,6 +17,7 @@
   import { PING_SCHEMA } from "../data/schemas";
 
   export let params;
+  export let initialState;
 
   let selectedAppVariant;
   const pingDataPromise = getPingData(params.app, params.ping).then(
@@ -31,12 +32,8 @@
   $pageState = {
     search: "",
     showExpired: true,
-    ...$pageState,
+    ...initialState,
   };
-
-  $: $pageState = selectedAppVariant
-    ? { ...$pageState, channel: selectedAppVariant.id }
-    : $pageState;
 
   pageTitle.set(`${params.ping} | ${params.app}`);
 </script>
@@ -76,6 +73,7 @@
       name={"app_id"}
       label={"Application Variant"}
       bind:selectedVariant={selectedAppVariant}
+      on:change={() => updatePageState({ channel: selectedAppVariant.id })}
       variants={ping.variants}
     />
   {/if}

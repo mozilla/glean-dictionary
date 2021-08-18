@@ -12,11 +12,6 @@
 
   const URL = "data/apps.json";
 
-  $pageState = {
-    search: "",
-    ...$pageState,
-  };
-
   let apps;
   let filteredApps;
 
@@ -36,7 +31,7 @@
       filteredApps = apps.filter((appItem) =>
         appItem.canonical_app_name
           .toLowerCase()
-          .includes($pageState.search.toLowerCase())
+          .includes(($pageState.search || "").toLowerCase())
       );
     }
   }

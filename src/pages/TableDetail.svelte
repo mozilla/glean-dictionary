@@ -7,12 +7,12 @@
   import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
+  export let initialState;
 
   const pingDataPromise = getTableData(params.app, params.appId, params.table);
 
   $pageState = {
-    search: "",
-    ...$pageState,
+    ...initialState,
   };
   pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>

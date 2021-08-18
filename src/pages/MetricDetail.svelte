@@ -17,7 +17,7 @@
     METRIC_METADATA_SCHEMA,
   } from "../data/schemas";
   import { getMetricData } from "../state/api";
-  import { pageTitle, pageState } from "../state/stores";
+  import { pageTitle, pageState, updatePageState } from "../state/stores";
   import { getBigQueryURL } from "../state/urls";
 
   import { isExpired } from "../state/metrics";
@@ -26,7 +26,8 @@
 
   let selectedAppVariant;
   let selectedPingVariant;
-  let pingData;
+  let pingData = {};
+
   const metricDataPromise = getMetricData(params.app, params.metric).then(
     (metricData) => {
       [selectedAppVariant] = $pageState.channel
@@ -45,15 +46,6 @@
       selectedPingVariant &&
       selectedAppVariant.etl.ping_data[selectedPingVariant.id];
   }
-
-  $: $pageState =
-    selectedAppVariant && selectedPingVariant
-      ? {
-          ...$pageState,
-          channel: selectedAppVariant.id,
-          ping: selectedPingVariant.id,
-        }
-      : $pageState;
 
   pageTitle.set(`${params.metric} | ${params.app} `);
 
@@ -189,6 +181,7 @@
           name={"app_id"}
           label={"Application Variant"}
           bind:selectedVariant={selectedAppVariant}
+          on:change={() => updatePageState({ channel: selectedAppVariant.id })}
           variants={metric.variants}
         />
       </div>
@@ -200,6 +193,7 @@
           name={"ping_id"}
           label={"Ping"}
           bind:selectedVariant={selectedPingVariant}
+          on:change={() => updatePageState({ ping: selectedPingVariant.id })}
           variants={metric.send_in_pings.map((p) => ({ id: p }))}
         />
       </div>
