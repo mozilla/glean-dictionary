@@ -17,7 +17,7 @@
   import GlobalStyles from "./GlobalStyles.svelte";
 
   // Stores
-  import { pageTitle, updatePageState } from "./state/stores";
+  import { pageTitle, replacePageState } from "./state/stores";
 
   let component;
   let params = {};
@@ -61,10 +61,10 @@
 
   function setComponent(c) {
     return function setComponentInner(ctx) {
+      initialState = queryStringParse(ctx.querystring);
+      replacePageState(initialState);
       component = c;
       params = ctx.params;
-      initialState = queryStringParse(ctx.querystring);
-      updatePageState(initialState);
     };
   }
 

@@ -5,18 +5,27 @@ import { writable, get } from "svelte/store";
 export const pageTitle = writable("");
 export const pageState = writable({});
 
-// updates page state and synchronizes with the url
-export const updatePageState = (newState, push = false) => {
-  const mergedState = mapValues(
+// simplifies the page state (removing redundant values)
+// before updating the store
+const setPageState = (newState) => {
+  pageState.set(mapValues(
     pickBy(
       { ...get(pageState), ...newState },
-      (v) =>
-        (typeof v !== "string" && v) ||
-        (v && ((v.length > 0 && v !== "page") || v !== "1"))
+      (v) => (typeof v !== "string" && v) || v.length > 0
     ),
     (v) => (typeof v === "boolean" ? +v : v)
   );
-  pageState.set(mergedState);
+};
+
+// replaces the existing page state
+export const replacePageState = (newState) => {
+  setPageState(newState);
+};
+
+// updates page state and synchronizes with the url
+export const updatePageState = (newState, push = false) => {
+  const mergedState = { ...get(pageState), ...newState };
+  setPageState(mergedState);
 
   // convert the state into a query string like "a=b&c=d" and attach it
   // to the URL

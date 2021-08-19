@@ -53,7 +53,6 @@
         : { ...$pageState, search: origin, page: 1 },
       true
     );
-    // when the user clicks on an origin (library name), we want to persist a new state
     // reset scroll position if we've scrolled down
     if (scrollY > topElement.offsetTop) {
       window.scroll(0, topElement.offsetTop);
