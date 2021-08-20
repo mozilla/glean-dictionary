@@ -1,5 +1,5 @@
 <script>
-  import { pageState } from "../state/stores";
+  import { pageState, updateURLState } from "../state/stores";
 
   export let placeHolder;
 </script>
@@ -12,7 +12,8 @@
     bind:value={$pageState.search}
     on:input={() => {
       // we want to reset the page number to 1 if the filter text ever changes
-      $pageState.page = 1;
+      // (and also update the URL)
+      updateURLState({ page: 1 });
     }}
   />
 </div>

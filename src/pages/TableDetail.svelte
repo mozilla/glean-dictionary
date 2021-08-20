@@ -1,7 +1,7 @@
 <script>
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { getTableData } from "../state/api";
-  import { pageState, pageTitle } from "../state/stores";
+  import { pageTitle } from "../state/stores";
 
   import NotFound from "../components/NotFound.svelte";
   import PageTitle from "../components/PageTitle.svelte";
@@ -10,10 +10,6 @@
 
   const pingDataPromise = getTableData(params.app, params.appId, params.table);
 
-  $pageState = {
-    search: "",
-    ...$pageState,
-  };
   pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>
 

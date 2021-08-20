@@ -17,7 +17,7 @@
   import GlobalStyles from "./GlobalStyles.svelte";
 
   // Stores
-  import { pageState, pageTitle, updateURLState } from "./state/stores";
+  import { pageState, pageTitle } from "./state/stores";
 
   let component;
   let params = {};
@@ -59,38 +59,27 @@
   });
 
   function setComponent(c) {
-    return function setComponentInner({ params: p }) {
+    return function setComponentInner(ctx) {
+      pageState.set(queryStringParse(ctx.querystring));
       component = c;
-      params = p;
+      params = ctx.params;
     };
   }
 
-  function parseQuery(ctx, next) {
-    const query = queryStringParse(ctx.querystring);
-    pageState.set(query);
-    next();
-  }
-
-  page("*", parseQuery);
   page("*", (ctx, next) => {
     ga("set", "page", ctx.page.current);
     ga("send", "pageview");
     next();
   });
+
   page("/", setComponent(AppList));
   page("/apps/:app/app_ids/:appId/tables/:table", setComponent(TableDetail));
   page("/apps/:app/app_ids/:appId", setComponent(AppIdDetail));
   page("/apps/:app/pings/:ping", setComponent(PingDetail));
   page("/apps/:app/metrics/:metric", setComponent(MetricDetail));
   page("/apps/:app", setComponent(AppDetail));
-  page();
 
-  // set up a handler to update our URL when page state changes (we do this here,
-  // instead of the store because we want to wait until we've initialized any
-  // initial state before doing this)
-  $: {
-    $pageState, updateURLState(false); // eslint-disable-line
-  }
+  page();
 
   // Set page title
   // https://stackoverflow.com/a/59028538

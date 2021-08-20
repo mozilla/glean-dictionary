@@ -1,6 +1,6 @@
 <script>
   import { getPingData } from "../state/api";
-  import { pageState, pageTitle } from "../state/stores";
+  import { pageState, pageTitle, updateURLState } from "../state/stores";
   import { getBigQueryURL } from "../state/urls";
 
   import AppAlert from "../components/AppAlert.svelte";
@@ -27,16 +27,6 @@
       return pingData;
     }
   );
-
-  $pageState = {
-    search: "",
-    showExpired: true,
-    ...$pageState,
-  };
-
-  $: $pageState = selectedAppVariant
-    ? { ...$pageState, channel: selectedAppVariant.id }
-    : $pageState;
 
   pageTitle.set(`${params.ping} | ${params.app}`);
 </script>
@@ -76,6 +66,7 @@
       name={"app_id"}
       label={"Application Variant"}
       bind:selectedVariant={selectedAppVariant}
+      on:change={() => updateURLState({ channel: selectedAppVariant.id })}
       variants={ping.variants}
     />
   {/if}

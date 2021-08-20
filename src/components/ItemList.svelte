@@ -23,18 +23,22 @@
   let filteredItems = items.filter((item) => !isExpired(item.expires));
   let pagedItems;
   let paginated = true;
+  let search;
+  let showExpired;
   let topElement;
   let scrollY;
+
+  $: {
+    showExpired =
+      $pageState.showExpired === undefined ? true : $pageState.showExpired;
+    search = $pageState.search || "";
+  }
 
   // update pagedItems when either pagination changes or search text changes
   // (above)
   $: {
     // filter items by search terms and expiry state
-    filteredItems = filterItems(
-      items,
-      $pageState.search || "",
-      $pageState.showExpired
-    );
+    filteredItems = filterItems(items, search, showExpired);
 
     // update pagination
     const currentPage = $pageState.page || 1;
@@ -47,11 +51,12 @@
   }
 
   const updateSearch = (origin, type = undefined) => {
-    $pageState = type
-      ? { ...$pageState, search: origin, page: 1, itemType: type }
-      : { ...$pageState, search: origin, page: 1 };
-    // when the user clicks on an origin (library name), we want to persist a new state
-    updateURLState(true);
+    updateURLState(
+      type
+        ? { search: origin, page: 1, itemType: type }
+        : { search: origin, page: 1 },
+      true
+    );
     // reset scroll position if we've scrolled down
     if (scrollY > topElement.offsetTop) {
       window.scroll(0, topElement.offsetTop);
@@ -70,7 +75,15 @@
     {#if itemType === "metrics"}
       <span class="expire-checkbox">
         <label>
-          <input type="checkbox" bind:checked={$pageState.showExpired} />
+          <input
+            type="checkbox"
+            bind:checked={showExpired}
+            on:change={() => {
+              // the binding changes *after* this callback is called, so use
+              // the inverse value
+              updateURLState({ showExpired: !showExpired });
+            }}
+          />
           Show expired metrics
         </label>
         <label>
