@@ -12,22 +12,19 @@
   import { TabGroup, Tab, TabContent } from "../components/tabs";
   import PageTitle from "../components/PageTitle.svelte";
   import SubHeading from "../components/SubHeading.svelte";
-  import { pageState, pageTitle, updatePageState } from "../state/stores";
+  import { pageState, pageTitle, updateURLState } from "../state/stores";
 
   export let params;
-  export let initialState;
 
-  $pageState = {
-    itemType: "metrics",
-    page: 1,
-    search: "",
-    showExpired: true,
-    ...initialState,
-  };
+  let itemType;
 
   const appDataPromise = getAppData(params.app).then((app) => {
     return app;
   });
+
+  $: {
+    itemType = $pageState.itemType || "metrics";
+  }
 
   pageTitle.set(params.app);
 </script>
@@ -64,9 +61,9 @@
   <Commentary item={app} itemType={"application"} />
 
   <TabGroup
-    bind:active={$pageState.itemType}
+    bind:active={itemType}
     on:tabChanged={({ detail }) => {
-      updatePageState({
+      updateURLState({
         itemType: detail.active,
         search: "",
         page: 1,

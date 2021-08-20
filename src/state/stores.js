@@ -5,31 +5,18 @@ import { writable, get } from "svelte/store";
 export const pageTitle = writable("");
 export const pageState = writable({});
 
-// simplifies the page state (removing redundant values)
-// before updating the store
-const setPageState = (newState) => {
-  pageState.set(mapValues(
-    pickBy(
-      { ...get(pageState), ...newState },
-      (v) => (typeof v !== "string" && v) || v.length > 0
-    ),
-    (v) => (typeof v === "boolean" ? +v : v)
-  );
-};
-
-// replaces the existing page state
-export const replacePageState = (newState) => {
-  setPageState(newState);
-};
-
 // updates page state and synchronizes with the url
-export const updatePageState = (newState, push = false) => {
+export const updateURLState = (newState, push = false) => {
   const mergedState = { ...get(pageState), ...newState };
-  setPageState(mergedState);
+  pageState.set(mergedState);
 
   // convert the state into a query string like "a=b&c=d" and attach it
   // to the URL
-  const query = stringify(mergedState);
+  const simplifiedState = mapValues(
+    pickBy(mergedState, (v) => typeof v !== "string" || v.length > 0),
+    (v) => (typeof v === "boolean" ? +v : v)
+  );
+  const query = stringify(simplifiedState);
   const path = `${window.location.pathname}${query ? `?${query}` : ""}`;
   // in response to some actions, we want to explicitly add a url to the
   // page history

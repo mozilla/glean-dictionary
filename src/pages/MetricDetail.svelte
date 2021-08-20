@@ -17,7 +17,7 @@
     METRIC_METADATA_SCHEMA,
   } from "../data/schemas";
   import { getMetricData } from "../state/api";
-  import { pageTitle, pageState, updatePageState } from "../state/stores";
+  import { pageTitle, pageState, updateURLState } from "../state/stores";
   import { getBigQueryURL } from "../state/urls";
 
   import { isExpired } from "../state/metrics";
@@ -181,7 +181,7 @@
           name={"app_id"}
           label={"Application Variant"}
           bind:selectedVariant={selectedAppVariant}
-          on:change={() => updatePageState({ channel: selectedAppVariant.id })}
+          on:change={() => updateURLState({ channel: selectedAppVariant.id })}
           variants={metric.variants}
         />
       </div>
@@ -193,7 +193,7 @@
           name={"ping_id"}
           label={"Ping"}
           bind:selectedVariant={selectedPingVariant}
-          on:change={() => updatePageState({ ping: selectedPingVariant.id })}
+          on:change={() => updateURLState({ ping: selectedPingVariant.id })}
           variants={metric.send_in_pings.map((p) => ({ id: p }))}
         />
       </div>

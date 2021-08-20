@@ -1,19 +1,15 @@
 <script>
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import { getTableData } from "../state/api";
-  import { pageState, pageTitle } from "../state/stores";
+  import { pageTitle } from "../state/stores";
 
   import NotFound from "../components/NotFound.svelte";
   import PageTitle from "../components/PageTitle.svelte";
 
   export let params;
-  export let initialState;
 
   const pingDataPromise = getTableData(params.app, params.appId, params.table);
 
-  $pageState = {
-    ...initialState,
-  };
   pageTitle.set(`${params.table} table | ${params.appId}`);
 </script>
 

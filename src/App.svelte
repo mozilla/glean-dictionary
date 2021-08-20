@@ -17,11 +17,10 @@
   import GlobalStyles from "./GlobalStyles.svelte";
 
   // Stores
-  import { pageTitle, replacePageState } from "./state/stores";
+  import { pageState, pageTitle } from "./state/stores";
 
   let component;
   let params = {};
-  let initialState = {};
   let links = [];
 
   let title;
@@ -61,8 +60,7 @@
 
   function setComponent(c) {
     return function setComponentInner(ctx) {
-      initialState = queryStringParse(ctx.querystring);
-      replacePageState(initialState);
+      pageState.set(queryStringParse(ctx.querystring));
       component = c;
       params = ctx.params;
     };
@@ -114,7 +112,7 @@
   {/if}
   <main>
     <div class="mzp-l-content">
-      <svelte:component this={component} bind:params bind:initialState />
+      <svelte:component this={component} bind:params />
     </div>
   </main>
 

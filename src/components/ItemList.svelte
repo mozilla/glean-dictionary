@@ -10,7 +10,7 @@
 
   import { filterItems } from "../state/filter";
   import { isExpired } from "../state/metrics";
-  import { pageState, updatePageState } from "../state/stores";
+  import { pageState, updateURLState } from "../state/stores";
 
   let DEFAULT_ITEMS_PER_PAGE = 20;
 
@@ -23,18 +23,22 @@
   let filteredItems = items.filter((item) => !isExpired(item.expires));
   let pagedItems;
   let paginated = true;
+  let search;
+  let showExpired;
   let topElement;
   let scrollY;
+
+  $: {
+    showExpired =
+      $pageState.showExpired === undefined ? true : $pageState.showExpired;
+    search = $pageState.search || "";
+  }
 
   // update pagedItems when either pagination changes or search text changes
   // (above)
   $: {
     // filter items by search terms and expiry state
-    filteredItems = filterItems(
-      items,
-      $pageState.search || "",
-      $pageState.showExpired
-    );
+    filteredItems = filterItems(items, search, showExpired);
 
     // update pagination
     const currentPage = $pageState.page || 1;
@@ -47,10 +51,10 @@
   }
 
   const updateSearch = (origin, type = undefined) => {
-    updatePageState(
+    updateURLState(
       type
-        ? { ...$pageState, search: origin, page: 1, itemType: type }
-        : { ...$pageState, search: origin, page: 1 },
+        ? { search: origin, page: 1, itemType: type }
+        : { search: origin, page: 1 },
       true
     );
     // reset scroll position if we've scrolled down
@@ -71,7 +75,15 @@
     {#if itemType === "metrics"}
       <span class="expire-checkbox">
         <label>
-          <input type="checkbox" bind:checked={$pageState.showExpired} />
+          <input
+            type="checkbox"
+            bind:checked={showExpired}
+            on:change={() => {
+              // the binding changes *after* this callback is called, so use
+              // the inverse value
+              updateURLState({ showExpired: !showExpired });
+            }}
+          />
           Show expired metrics
         </label>
         <label>
