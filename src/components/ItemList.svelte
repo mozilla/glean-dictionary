@@ -1,6 +1,6 @@
 <script>
-  import { Index } from "flexsearch";
   import { chunk } from "lodash";
+  import { Index } from "flexsearch";
 
   import { getItemURL } from "../state/urls";
 
@@ -29,6 +29,16 @@
   let topElement;
   let scrollY;
 
+  function fullTextSearch(query) {
+    // create an index of item names and descriptions for full-text search
+    const searchIndex = new Index();
+    items.forEach((item) => searchIndex.add(item.name, item.description));
+    const results = searchIndex.search(query);
+    return results.map((result) => {
+      return items.find((item) => item.name === result);
+    });
+  }
+
   $: {
     showExpired =
       $pageState.showExpired === undefined ? true : $pageState.showExpired;
@@ -39,7 +49,10 @@
   // (above)
   $: {
     // filter items by search terms and expiry state
-    filteredItems = filterItems(items, search, showExpired);
+    filteredItems =
+      (filterItems(items, search, showExpired).length &&
+        filterItems(items, search, showExpired)) ||
+      fullTextSearch(search);
 
     // update pagination
     const currentPage = $pageState.page || 1;
