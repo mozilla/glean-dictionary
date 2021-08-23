@@ -15,7 +15,7 @@
     "build-glean-metadata": "node scripts/build-glean-metadata.js"
   },
   "devDependencies": {
-    "autoprefixer": "^10.2.5",
+    "autoprefixer": "^10.3.2",
     "@babel/core": "^7.15.0",
     "@babel/plugin-transform-runtime": "7.15.0",
     "@babel/preset-env": "^7.15.0",
