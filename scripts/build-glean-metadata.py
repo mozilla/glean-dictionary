@@ -437,7 +437,7 @@ for (app_name, app_group) in app_groups.items():
             # write table description (app variant specific)
             ping_name_snakecase = stringcase.snakecase(ping.identifier)
             stable_ping_table_name = f"{app.app['bq_dataset_family']}.{ping_name_snakecase}"
-            live_ping_table_name = f"{app.app['bq_dataset_family']}_live_v1.{ping_name_snakecase}"
+            live_ping_table_name = f"{app.app['bq_dataset_family']}_live.{ping_name_snakecase}_v1"
             bq_path = f"{app.app['document_namespace']}/{ping.identifier}/{ping.identifier}.1.bq"
             bq_definition = (
                 "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"  # noqa
