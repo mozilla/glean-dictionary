@@ -77,7 +77,7 @@ def _get_annotation(annotations_index, origin, item_type, identifier=None):
 
 
 def _incorporate_annotation(item, annotation, app=False, full=False):
-    incorporated = dict(item, has_annotation=len(annotation) > 1)
+    incorporated = dict(item, has_annotation=len(annotation) > 0)
 
     if not app:
         # application "tags" are in a slightly different format than
