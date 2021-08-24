@@ -23,7 +23,7 @@
       <td>
         Stable
         <HelpHoverable
-          content={"BigQuery table containing stable ping data, rolled up once per day with additional deduplication applied as well as partitioning by sample id. Use this table for most analysis."}
+          content={"BigQuery table containing stable ping data, rolled up once per day, deduplicated on document_id, and clustered on normalized_channel and sample_id fields. Use this table for most analysis."}
           link={"https://docs.telemetry.mozilla.org/cookbooks/bigquery/querying.html#table-layout-and-naming"}
         />
       </td>
