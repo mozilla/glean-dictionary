@@ -53,7 +53,7 @@
   }
 
   $: {
-    currentPage = Number($pageState.page || 1);
+    currentPage = $pageState.page || 1;
   }
 </script>
 
