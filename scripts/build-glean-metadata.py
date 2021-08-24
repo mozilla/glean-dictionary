@@ -77,7 +77,7 @@ def _get_annotation(annotations_index, origin, item_type, identifier=None):
 
 
 def _incorporate_annotation(item, annotation, app=False, full=False):
-    incorporated = dict(item)
+    incorporated = dict(item, has_annotation=True)
 
     if not app:
         # application "tags" are in a slightly different format than
@@ -85,12 +85,9 @@ def _incorporate_annotation(item, annotation, app=False, full=False):
         # tags (FIXME: define this in a slightly clearer way)
         incorporated.update({"tags": annotation.get("tags", [])})
     if full:
-        incorporated.update(
-            {
-                "commentary": annotation.get("content"),
-                "warning": annotation.get("warning"),
-            }
-        )
+        for annotation_type in ["commentary", "warning"]:
+            if annotation.get(annotation_type):
+                incorporated[annotation_type] = annotation[annotation_type]
 
     return incorporated
 
