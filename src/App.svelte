@@ -60,7 +60,7 @@
 
   function setComponent(c) {
     return function setComponentInner(ctx) {
-      pageState.set(queryStringParse(ctx.querystring));
+      pageState.set(queryStringParse(ctx.querystring, { parseNumbers: true }));
       component = c;
       params = ctx.params;
     };
