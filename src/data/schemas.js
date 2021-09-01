@@ -1,3 +1,4 @@
+import { capitalize } from "lodash";
 import { getEmailLink } from "../formatters/emails";
 import { getExpiryInfo } from "../formatters/expiry";
 import {
@@ -69,6 +70,21 @@ export const METRIC_DEFINITION_SCHEMA = [
   },
 ];
 export const METRIC_METADATA_SCHEMA = [
+  {
+    title: "Data Sensitivity",
+    id: "data_sensitivity",
+    type: "list",
+    helpText:
+      "A list of data sensitivity categories that the metric falls under.",
+    helpLink:
+      "https://mozilla.github.io/glean/book/reference/yaml/metrics.html#data_sensitivity",
+    valueFormatter: (item) => {
+      return item
+        .split("_")
+        .map((s) => capitalize(s))
+        .join(" ");
+    },
+  },
   {
     title: "Lifetime",
     id: "lifetime",

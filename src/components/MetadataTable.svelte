@@ -48,7 +48,7 @@
           {:else if schemaEntry.type === "list"}
             <ul>
               {#each item[schemaEntry.id] as ref}
-                <li>{ref}</li>
+                <li>{format(ref, schemaEntry.valueFormatter)}</li>
               {/each}
             </ul>
           {:else}{format(item[schemaEntry.id], schemaEntry.valueFormatter)}{/if}
