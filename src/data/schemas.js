@@ -27,6 +27,17 @@ export const APPLICATION_DEFINITION_SCHEMA = [
       "A list of email addresses to notify for important events with the application or when people with context or ownership for the application need to be contacted.",
     linkFormatter: getEmailLink,
   },
+  {
+    title: "Rentention Period",
+    id: "retention_days",
+    displayNull: true,
+    type: "value",
+    helpText:
+      "The number of days Mozilla retains raw decoded ping data received for this application. If not specified, retention will be unlimited.",
+    valueFormatter: (value) => {
+      return value !== null ? `${value} days` : "Unlimited";
+    },
+  },
 ];
 
 export const APPLICATION_ID_DEFINITION_SCHEMA = [
