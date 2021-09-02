@@ -15,7 +15,7 @@
   <col />
   <col />
   {#each schema as schemaEntry}
-    {#if !isUndefined(item[schemaEntry.id]) && !isNull(item[schemaEntry.id])}
+    {#if !isUndefined(item[schemaEntry.id]) && (!isNull(item[schemaEntry.id]) || schemaEntry.displayNull)}
       <tr>
         <td>
           {schemaEntry.title}

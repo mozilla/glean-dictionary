@@ -14,6 +14,7 @@ export const Default = () => ({
       url: "https://github.com/mozilla/testapp",
       app_id: "org.mozilla.testapp",
       notification_emails: ["test@mozilla.com"],
+      retention_days: null,
     },
   },
 });

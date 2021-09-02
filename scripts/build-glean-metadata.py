@@ -169,6 +169,7 @@ for app in apps:
             app_name=app.app_name,
             app_description=app.app["app_description"],
             canonical_app_name=app.app["canonical_app_name"],
+            retention_days=app.app.get("retention_days"),
             deprecated=app.app.get("deprecated", False),
             url=app.app["url"],
             notification_emails=app.app["notification_emails"],
