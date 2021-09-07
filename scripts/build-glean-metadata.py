@@ -242,6 +242,7 @@ for (app_name, app_group) in app_groups.items():
                     dict(
                         name=metric.identifier,
                         description=metric.description,
+                        in_source=metric.definition["in_source"],
                         extra_keys=metric.definition["extra_keys"]
                         if "extra_keys" in metric.definition
                         else None,

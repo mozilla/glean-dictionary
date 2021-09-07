@@ -9,7 +9,7 @@
   import Markdown from "./Markdown.svelte";
   import Label from "./Label.svelte";
 
-  import { filterExpiredItems } from "../state/filter";
+  import { filterUncollectedItems } from "../state/filter";
   import { isExpired } from "../state/metrics";
   import { pageState, updateURLState } from "../state/stores";
 
@@ -25,7 +25,7 @@
   let pagedItems;
   let paginated = true;
   let search;
-  let showExpired;
+  let showUncollected;
   let topElement;
   let scrollY;
 
@@ -55,7 +55,7 @@
 
   function handleSearch(searchItems, text, expired) {
     const searchResult = text ? fullTextSearch(text, searchItems) : searchItems;
-    return filterExpiredItems(searchResult, expired);
+    return filterUncollectedItems(searchResult, expired);
   }
 
   function highlightSearch(text, query) {
@@ -68,15 +68,17 @@
   }
 
   $: {
-    showExpired =
-      $pageState.showExpired === undefined ? true : $pageState.showExpired;
+    showUncollected =
+      $pageState.showUncollected === undefined
+        ? true
+        : $pageState.showUncollected;
     search = $pageState.search || "";
   }
 
   // update pagedItems when either pagination changes or search text changes
   // (above)
   $: {
-    filteredItems = handleSearch(items, search, showExpired);
+    filteredItems = handleSearch(items, search, showUncollected);
 
     // update pagination
     const currentPage = $pageState.page || 1;
@@ -115,14 +117,14 @@
         <label>
           <input
             type="checkbox"
-            bind:checked={showExpired}
+            bind:checked={showUncollected}
             on:change={() => {
               // the binding changes *after* this callback is called, so use
               // the inverse value
-              updateURLState({ showExpired: !showExpired });
+              updateURLState({ showUncollected: !showUncollected });
             }}
           />
-          Show expired metrics
+          Show expired and removed metrics
         </label>
         <label>
           <input type="checkbox" bind:checked={paginated} />
@@ -187,7 +189,9 @@
                       />
                     {/each}
                   {/if}
-                  {#if isExpired(item.expires)}
+                  {#if !item.in_source}
+                    <Label text="removed" />
+                  {:else if isExpired(item.expires)}
                     <Label text="expired" />
                   {/if}
                   {#if item.deprecated}

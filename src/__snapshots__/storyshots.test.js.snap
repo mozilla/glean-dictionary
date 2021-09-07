@@ -584,7 +584,7 @@ exports[`Storyshots ItemList Default 1`] = `
           type="checkbox"
         />
         
-          Show expired metrics
+          Show expired and removed metrics
       </label>
        
       <label
