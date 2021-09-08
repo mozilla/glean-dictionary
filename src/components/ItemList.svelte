@@ -9,7 +9,7 @@
   import Markdown from "./Markdown.svelte";
   import Label from "./Label.svelte";
 
-  import { filterByOriginOrTag, filterExpiredItems } from "../state/filter";
+  import { filterExpiredItems } from "../state/filter";
   import { isExpired } from "../state/metrics";
   import { pageState, updateURLState } from "../state/stores";
 
@@ -28,51 +28,49 @@
   let showExpired;
   let topElement;
   let scrollY;
-  let origin;
 
-  //  create an index of item name, type, and description for full-text search
   const searchIndex = new Document({
     tokenize: "forward",
-    index: ["id", "type", "description"],
+    index: ["id", "type", "tags", "origin", "description"],
   });
+
   items.forEach((item) => {
     searchIndex.add({
       id: item.name,
       type: item.type,
+      tags: item.tags,
+      origin: item.origin,
       description: item.description,
     });
   });
 
-  function fullTextSearch(query, items) {
+  function fullTextSearch(query, searchItems) {
     let results = [];
-    // combine results of 3 fields: name, type, description
+    // combine results of all fields
     searchIndex.search(query).forEach((result) => {
       results = [...results, ...result.result];
     });
 
     return results.map((result) => {
-      return items.find((item) => item.name === result);
+      return searchItems.find((item) => item.name === result);
     });
   }
 
-  function handleSearch(items, search, origin, showExpired) {
-    let searchResult = items;
-    if (search) searchResult = fullTextSearch(search, items);
-    else if (origin) searchResult = filterByOriginOrTag(items, origin);
-    return filterExpiredItems(searchResult, showExpired);
+  function handleSearch(searchItems, text, expired) {
+    let searchResult = text ? fullTextSearch(text, searchItems) : searchItems;
+    return filterExpiredItems(searchResult, expired);
   }
 
   $: {
     showExpired =
       $pageState.showExpired === undefined ? true : $pageState.showExpired;
     search = $pageState.search || "";
-    origin = $pageState.origin || "";
   }
 
   // update pagedItems when either pagination changes or search text changes
   // (above)
   $: {
-    filteredItems = handleSearch(items, search, origin, showExpired);
+    filteredItems = handleSearch(items, search, showExpired);
 
     // update pagination
     const currentPage = $pageState.page || 1;
@@ -87,8 +85,8 @@
   const updateSearch = (origin, type = undefined) => {
     updateURLState(
       type
-        ? { origin: origin, search: "", page: 1, itemType: type }
-        : { origin: origin, search: "", page: 1 },
+        ? { search: origin, page: 1, itemType: type }
+        : { search: origin, page: 1 },
       true
     );
     // reset scroll position if we've scrolled down
