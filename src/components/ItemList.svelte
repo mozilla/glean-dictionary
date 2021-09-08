@@ -1,4 +1,5 @@
 <script>
+  import { Index } from "flexsearch";
   import { chunk } from "lodash";
 
   import { getItemURL } from "../state/urls";
