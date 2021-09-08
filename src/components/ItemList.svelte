@@ -61,6 +61,15 @@
     return filterExpiredItems(searchResult, expired);
   }
 
+  function highlightSearch(text, query) {
+    if (query !== "") {
+      let re = new RegExp(query, "gi"); // search for all instances
+      let newText = text.replace(re, `<mark>${query}</mark>`);
+      return newText;
+    }
+    return text;
+  }
+
   $: {
     showExpired =
       $pageState.showExpired === undefined ? true : $pageState.showExpired;
@@ -162,7 +171,7 @@
                     />
                   {:else}
                     <a href={getItemURL(appName, itemType, item.name)}
-                      >{item.name}</a
+                      >{@html highlightSearch(item.name, search)}</a
                     >
                   {/if}
                   {#if item.origin && item.origin !== appName}
@@ -191,7 +200,9 @@
               </td>
               {#if itemType === "metrics"}
                 <td style="text-align: center;">
-                  <div class="item-property"><code>{item.type}</code></div>
+                  <div class="item-property">
+                    <code>{@html highlightSearch(item.type, search)}</code>
+                  </div>
                 </td>
               {:else if itemType === "tags"}
                 <td style="text-align: center;">
@@ -202,7 +213,7 @@
               {/if}
               <td class="description">
                 <div class="item-property" title={item.description}>
-                  <Markdown text={item.description} />
+                  <Markdown text={highlightSearch(item.description, search)} />
                 </div>
               </td>
             </tr>

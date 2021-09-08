@@ -14,7 +14,9 @@
       } class="mzp-u-list-styled">${body}</${outerEl}>`;
     },
     html(html) {
-      return `<code>${html.replace("<", "&lt;")}</code>`;
+      // convert markdown with angle brackets to html,
+      // but escape <mark> tags so we can highlight search results
+      return `${html.replace("/<[^mark]+/g", "&lt;")}`;
     },
   };
   use({ renderer });
