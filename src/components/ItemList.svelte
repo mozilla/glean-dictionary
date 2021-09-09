@@ -50,14 +50,13 @@
     searchIndex.search(query).forEach((result) => {
       results = [...results, ...result.result];
     });
-
-    return results.map((result) => {
+    return [...new Set(results)].map((result) => {
       return searchItems.find((item) => item.name === result);
     });
   }
 
   function handleSearch(searchItems, text, expired) {
-    let searchResult = text ? fullTextSearch(text, searchItems) : searchItems;
+    const searchResult = text ? fullTextSearch(text, searchItems) : searchItems;
     return filterExpiredItems(searchResult, expired);
   }
 
