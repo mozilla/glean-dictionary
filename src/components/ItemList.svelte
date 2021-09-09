@@ -62,12 +62,12 @@
   }
 
   function highlightSearch(text, query) {
-    if (query !== "") {
-      let re = new RegExp(query, "gi"); // search for all instances
-      let newText = text.replace(re, `<mark>${query}</mark>`);
-      return newText;
-    }
-    return text;
+    return query.length
+      ? text.replace(
+          new RegExp(query, "gi"),
+          (match) => `<mark>${match}</mark>`
+        )
+      : text;
   }
 
   $: {
