@@ -1,4 +1,4 @@
-import { filterExpiredItems } from "../src/state/filter";
+import { filterUncollectedItems } from "../src/state/filter";
 
 const today = new Date();
 const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
@@ -17,14 +17,21 @@ const items = [
     name: "metric.bestsitez",
     tags: ["TopSites"],
     expires: getDateStr(tomorrow),
+    in_source: true,
   },
-  { name: "metric.camel", expires: getDateStr(tomorrow), origin: "glean-core" },
-  { name: "metric.expired", expires: getDateStr(yesterday) },
+  {
+    name: "metric.camel",
+    expires: getDateStr(tomorrow),
+    origin: "glean-core",
+    in_source: true,
+  },
+  { name: "metric.expired", expires: getDateStr(yesterday), in_source: true },
+  { name: "metric.removed", expires: getDateStr(tomorrow), in_source: false },
 ];
 
 describe("expiry", () => {
-  it("doesn't return expired items when showExpired is false", () =>
-    expect(getNames(filterExpiredItems(items, false))).toEqual([
+  it("doesn't return expired or removed items when showUncollected is false", () =>
+    expect(getNames(filterUncollectedItems(items, false))).toEqual([
       "metric.bestsitez",
       "metric.camel",
     ]));

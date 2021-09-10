@@ -6,6 +6,7 @@ const testData = {
     name: `test metric ${i}`,
     description: `This is test metric ${i}`,
     type: `metric_type`,
+    in_source: true,
   })),
 };
 export default {

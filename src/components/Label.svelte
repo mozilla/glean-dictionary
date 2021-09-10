@@ -3,8 +3,8 @@
   export let labelNumber;
   export let clickable = false;
 
-  // gray color if it's a deprecated/expired label
-  if (text === "deprecated" || text === "expired") {
+  // gray color if it's a deprecated/expired/removed label
+  if (text === "deprecated" || text === "expired" || text === "removed") {
     labelNumber = 9;
   }
 

@@ -78,10 +78,15 @@
 </script>
 
 {#await metricDataPromise then metric}
-  {#if isExpired(metric.expires)}
+  {#if !metric.in_source}
     <AppAlert
       status="warning"
-      message="This metric has expired: it may not be present in the source code, new data will not be ingested into BigQuery, and it will not appear in dashboards."
+      message={"This metric is no longer defined in the source code: new data will not be collected by the application."}
+    />
+  {:else if isExpired(metric.expires)}
+    <AppAlert
+      status="warning"
+      message={"This metric has expired: new data will not be collected by the application."}
     />
   {/if}
 

@@ -1,4 +1,6 @@
 import { isExpired } from "./metrics";
 
-export const filterExpiredItems = (items, showExpired) =>
-  items.filter((item) => showExpired || !isExpired(item.expires));
+export const filterUncollectedItems = (items, showUncollected) =>
+  items.filter(
+    (item) => showUncollected || (!isExpired(item.expires) && item.in_source)
+  );
