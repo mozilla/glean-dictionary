@@ -45,12 +45,10 @@
   });
 
   function fullTextSearch(query, searchItems) {
-    let results = [];
-    // combine results of all fields
-    searchIndex.search(query).forEach((result) => {
-      results = [...results, ...result.result];
-    });
-    return [...new Set(results)].map((result) => {
+    const results = [
+      ...new Set(searchIndex.search(query).flatMap((match) => match.result)),
+    ];
+    return results.map((result) => {
       return searchItems.find((item) => item.name === result);
     });
   }
