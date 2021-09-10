@@ -1,5 +1,6 @@
 <script>
   import { chunk } from "lodash";
+  import { Document } from "flexsearch";
 
   import { getItemURL } from "../state/urls";
 
@@ -8,7 +9,7 @@
   import Markdown from "./Markdown.svelte";
   import Label from "./Label.svelte";
 
-  import { filterItems } from "../state/filter";
+  import { filterExpiredItems } from "../state/filter";
   import { isExpired } from "../state/metrics";
   import { pageState, updateURLState } from "../state/stores";
 
@@ -28,6 +29,44 @@
   let topElement;
   let scrollY;
 
+  const searchIndex = new Document({
+    tokenize: "forward",
+    index: ["id", "type", "tags", "origin", "description"],
+  });
+
+  items.forEach((item) => {
+    searchIndex.add({
+      id: item.name,
+      type: item.type,
+      tags: item.tags,
+      origin: item.origin,
+      description: item.description,
+    });
+  });
+
+  function fullTextSearch(query, searchItems) {
+    const results = [
+      ...new Set(searchIndex.search(query).flatMap((match) => match.result)),
+    ];
+    return results.map((result) => {
+      return searchItems.find((item) => item.name === result);
+    });
+  }
+
+  function handleSearch(searchItems, text, expired) {
+    const searchResult = text ? fullTextSearch(text, searchItems) : searchItems;
+    return filterExpiredItems(searchResult, expired);
+  }
+
+  function highlightSearch(text, query) {
+    return query.length
+      ? text.replace(
+          new RegExp(query, "gi"),
+          (match) => `<mark>${match}</mark>`
+        )
+      : text;
+  }
+
   $: {
     showExpired =
       $pageState.showExpired === undefined ? true : $pageState.showExpired;
@@ -37,8 +76,7 @@
   // update pagedItems when either pagination changes or search text changes
   // (above)
   $: {
-    // filter items by search terms and expiry state
-    filteredItems = filterItems(items, search, showExpired);
+    filteredItems = handleSearch(items, search, showExpired);
 
     // update pagination
     const currentPage = $pageState.page || 1;
@@ -130,7 +168,7 @@
                     />
                   {:else}
                     <a href={getItemURL(appName, itemType, item.name)}
-                      >{item.name}</a
+                      >{@html highlightSearch(item.name, search)}</a
                     >
                   {/if}
                   {#if item.origin && item.origin !== appName}
@@ -159,7 +197,9 @@
               </td>
               {#if itemType === "metrics"}
                 <td style="text-align: center;">
-                  <div class="item-property"><code>{item.type}</code></div>
+                  <div class="item-property">
+                    <code>{@html highlightSearch(item.type, search)}</code>
+                  </div>
                 </td>
               {:else if itemType === "tags"}
                 <td style="text-align: center;">
@@ -170,7 +210,7 @@
               {/if}
               <td class="description">
                 <div class="item-property" title={item.description}>
-                  <Markdown text={item.description} />
+                  <Markdown text={highlightSearch(item.description, search)} />
                 </div>
               </td>
             </tr>
