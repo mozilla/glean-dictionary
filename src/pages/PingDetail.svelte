@@ -95,7 +95,7 @@
           </a>
         </td>
       </tr>
-      {#if selectedAppVariant.looker_url}
+      {#if selectedAppVariant.looker_explore}
         <tr>
           <td>
             Looker
@@ -104,8 +104,8 @@
             />
           </td>
           <td>
-            <AuthenticatedLink href={selectedAppVariant.looker_url}>
-              {params.ping}
+            <AuthenticatedLink href={selectedAppVariant.looker_explore.url}>
+              {selectedAppVariant.looker_explore.name}
             </AuthenticatedLink>
           </td>
         </tr>

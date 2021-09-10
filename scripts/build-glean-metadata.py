@@ -121,7 +121,7 @@ def etl_snake_case(line: str) -> str:
     return "_".join([w.lower() for w in words if w.strip()])[::-1]
 
 
-def get_looker_explore_url(looker_namespaces, app_name, ping_name, table_name):
+def get_looker_ping_explore_url(looker_namespaces, app_name, ping_name, table_name):
     ping_name_snakecase = stringcase.snakecase(ping_name)
     if (
         looker_namespaces.get(app_name)
@@ -129,11 +129,27 @@ def get_looker_explore_url(looker_namespaces, app_name, ping_name, table_name):
         and looker_namespaces[app_name]["explores"].get(ping_name_snakecase)
     ):
         channel_identifier = "mozdata." + table_name.replace("_", "%5E_")
-
         return (
             f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}"
             + f"?f[{ping_name_snakecase}.channel]={channel_identifier}"
         )
+    return None
+
+
+def get_looker_event_count_explore_url(looker_namespaces, app_name, channel_name):
+    if (
+        looker_namespaces.get(app_name)
+        and looker_namespaces[app_name].get("glean_app")
+        and looker_namespaces[app_name]["explores"].get("events")
+    ):
+        base_url = (
+            f"https://mozilla.cloud.looker.com/explore/{app_name}/event_counts"
+            + "?fields=events.event_count,events.client_count"
+        )
+        return (
+            base_url + f"&f[events.normalized_channel]={channel_name}" if channel_name else base_url
+        )
+
     return None
 
 
@@ -169,7 +185,6 @@ for app in apps:
             app_name=app.app_name,
             app_description=app.app["app_description"],
             canonical_app_name=app.app["canonical_app_name"],
-            retention_days=app.app.get("retention_days"),
             deprecated=app.app.get("deprecated", False),
             url=app.app["url"],
             notification_emails=app.app["notification_emails"],
@@ -301,12 +316,24 @@ for (app_name, app_group) in app_groups.items():
                 ping_name_snakecase = stringcase.snakecase(ping)
                 table_name = f"{app.app['bq_dataset_family']}.{ping_name_snakecase}"
                 ping_data[ping] = {"bigquery_table": table_name}
-                base_looker_explore_link = get_looker_explore_url(
-                    looker_namespaces, app_name, ping, table_name
+                base_looker_explore_name = "event_counts" if ping == "events" else ping
+                base_looker_explore_link = (
+                    get_looker_event_count_explore_url(
+                        looker_namespaces, app_name, app.app.get("app_channel")
+                    )
+                    if ping == "events"
+                    else get_looker_ping_explore_url(looker_namespaces, app_name, ping, table_name)
                 )
                 # we deliberately don't show looker information for deprecated applications
                 if not app_is_deprecated and base_looker_explore_link:
                     looker_metric_link = None
+                    if metric_type == "event":
+                        (metric_category, metric_name) = metric.identifier.split(".", 1)
+                        looker_metric_link = (
+                            base_looker_explore_link
+                            + f"&f[events.event_name]=%22{metric_name}%22"
+                            + f"&f[events.event_category]=%22{metric_category}%22"
+                        )
                     # for counters, we can use measures directly
                     if metric_type == "counter":
                         looker_metric_link = (
@@ -387,8 +414,14 @@ for (app_name, app_group) in app_groups.items():
 
                     if looker_metric_link:
                         ping_data[ping]["looker"] = {
-                            "base": base_looker_explore_link,
-                            "metric": f"{looker_metric_link}&toggle=vis",
+                            "base": {
+                                "name": base_looker_explore_name,
+                                "url": base_looker_explore_link,
+                            },
+                            "metric": {
+                                "name": metric.identifier,
+                                "url": f"{looker_metric_link}&toggle=vis",
+                            },
                         }
 
             etl = dict(
@@ -446,17 +479,30 @@ for (app_name, app_group) in app_groups.items():
                 "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"  # noqa
                 + bq_path
             ).json()
+            app_channel = app.app.get("app_channel")
             variant_data = dict(
                 id=app_id,
                 description=get_app_variant_description(app),
                 table=stable_ping_table_name,
-                channel=app.app.get("app_channel", "release"),
+                channel=app_channel if app_channel else "release",
             )
-            looker_url = get_looker_explore_url(
-                looker_namespaces, app_name, ping.identifier, stable_ping_table_name
+            looker_explore = (
+                {
+                    "name": "event_counts",
+                    "url": get_looker_event_count_explore_url(
+                        looker_namespaces, app_name, app_channel
+                    ),
+                }
+                if ping.identifier == "events"
+                else {
+                    "name": ping.identifier,
+                    "url": get_looker_ping_explore_url(
+                        looker_namespaces, app_name, ping.identifier, stable_ping_table_name
+                    ),
+                }
             )
-            if not app_is_deprecated and looker_url:
-                variant_data.update({"looker_url": looker_url})
+            if not app_is_deprecated and looker_explore:
+                variant_data.update({"looker_explore": looker_explore})
             ping_data["variants"].append(variant_data)
             app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
             os.makedirs(app_variant_table_dir, exist_ok=True)
