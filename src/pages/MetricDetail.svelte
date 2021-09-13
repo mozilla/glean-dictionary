@@ -237,12 +237,12 @@
           <td>
             <div>
               In
-              <AuthenticatedLink href={pingData.looker.base}>
-                {selectedPingVariant.id}
+              <AuthenticatedLink href={pingData.looker.base.url}>
+                {pingData.looker.base.name}
               </AuthenticatedLink>
               as
-              <AuthenticatedLink href={pingData.looker.metric}>
-                {metric.name}
+              <AuthenticatedLink href={pingData.looker.metric.url}>
+                {pingData.looker.metric.name}
               </AuthenticatedLink>
             </div>
           </td>
