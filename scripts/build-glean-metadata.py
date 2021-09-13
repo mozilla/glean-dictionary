@@ -501,7 +501,7 @@ for (app_name, app_group) in app_groups.items():
                     ),
                 }
             )
-            if not app_is_deprecated and looker_explore:
+            if not app_is_deprecated and looker_explore.get("url"):
                 variant_data.update({"looker_explore": looker_explore})
             ping_data["variants"].append(variant_data)
             app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
