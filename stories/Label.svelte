@@ -23,6 +23,12 @@
 <br />
 <br />
 
+<h4>Labels with description (hover over)</h4>
+<Label text="Descriptive" description="A description" />
+
+<br />
+<br />
+
 <h4>Glean labels</h4>
 <Label text="glean-core" />
 <Label text="glean-android" />

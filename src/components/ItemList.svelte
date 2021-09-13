@@ -3,6 +3,7 @@
   import { Document } from "flexsearch";
 
   import { getItemURL } from "../state/urls";
+  import { stripLinks } from "../formatters/markdown";
 
   import Pagination from "./Pagination.svelte";
   import FilterInput from "./FilterInput.svelte";
@@ -12,12 +13,19 @@
   import { filterUncollectedItems } from "../state/filter";
   import { isExpired, isRemoved } from "../state/items";
   import { pageState, updateURLState } from "../state/stores";
+  import {
+    getDeprecatedItemDescription,
+    getExpiredItemDescription,
+    getRemovedItemDescription,
+    getLibraryDescription,
+  } from "../data/help";
 
   let DEFAULT_ITEMS_PER_PAGE = 20;
 
   export let appName;
   export let items;
   export let itemType;
+  export let tagDescriptions;
 
   export let showFilter = true;
 
@@ -43,6 +51,11 @@
       description: item.description,
     });
   });
+
+  function getItemTypeSingular(pluralized) {
+    // cut off the trailing 's'
+    return pluralized.slice(0, -1);
+  }
 
   function fullTextSearch(query, searchItems) {
     const results = [
@@ -176,6 +189,10 @@
                   {#if item.origin && item.origin !== appName}
                     <Label
                       text={item.origin}
+                      description={getLibraryDescription(
+                        getItemTypeSingular(itemType),
+                        item.origin
+                      )}
                       on:click={updateSearch(item.origin)}
                       clickable
                     />
@@ -184,18 +201,34 @@
                     {#each item.tags as tag}
                       <Label
                         text={tag}
+                        description={stripLinks(tagDescriptions[tag])}
                         clickable
                         on:click={updateSearch(tag)}
                       />
                     {/each}
                   {/if}
                   {#if isRemoved(item)}
-                    <Label text="removed" />
+                    <Label
+                      text="removed"
+                      description={getRemovedItemDescription(
+                        getItemTypeSingular(itemType)
+                      )}
+                    />
                   {:else if isExpired(item)}
-                    <Label text="expired" />
+                    <Label
+                      text="expired"
+                      description={getExpiredItemDescription(
+                        getItemTypeSingular(itemType)
+                      )}
+                    />
                   {/if}
                   {#if item.deprecated}
-                    <Label text="deprecated" />
+                    <Label
+                      text="deprecated"
+                      description={getDeprecatedItemDescription(
+                        getItemTypeSingular(itemType)
+                      )}
+                    />
                   {/if}
                 </div>
               </td>

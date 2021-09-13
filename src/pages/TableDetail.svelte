@@ -6,7 +6,7 @@
   import { pageTitle } from "../state/stores";
 
   import NotFound from "../components/NotFound.svelte";
-  import PageTitle from "../components/PageTitle.svelte";
+  import PageHeader from "../components/PageHeader.svelte";
 
   export let params;
 
@@ -16,7 +16,7 @@
 </script>
 
 {#await pingDataPromise then table}
-  <PageTitle text={`Table <code>${table.name}</code> for ${table.app_id}`} />
+  <PageHeader title={`Table <code>${table.name}</code> for ${table.app_id}`} />
   <table>
     <col />
     <col />

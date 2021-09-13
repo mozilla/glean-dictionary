@@ -1,5 +1,8 @@
 <script>
+  import tippy from "./tippy";
+
   export let text;
+  export let description;
   export let labelNumber;
   export let clickable = false;
 
@@ -23,7 +26,12 @@
   class="label label-{labelNumber || getLabelNumber(text)} {clickable
     ? 'clickable'
     : ''}"
-  on:click>{text}</span
+  on:click
+  use:tippy={description && {
+    content: description,
+    allowHTML: true,
+    placement: "top",
+  }}>{text}</span
 >
 
 <style lang="scss">
@@ -70,6 +78,7 @@
     background: silver;
     padding: 0 9px;
     box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+    cursor: default;
   }
 
   @each $label-number in ("0", "1", "2", "3", "4", "5", "6", "7", "8", "9") {

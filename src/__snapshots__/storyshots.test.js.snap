@@ -1824,63 +1824,77 @@ exports[`Storyshots Label Default 1`] = `
   </p>
    
   <span
-    class="label label-0  svelte-9ivc39"
+    class="label label-0  svelte-1ng65jt"
   >
     label-0
   </span>
    
   <span
-    class="label label-1  svelte-9ivc39"
+    class="label label-1  svelte-1ng65jt"
   >
     label-1
   </span>
    
   <span
-    class="label label-2  svelte-9ivc39"
+    class="label label-2  svelte-1ng65jt"
   >
     label-2
   </span>
    
   <span
-    class="label label-3  svelte-9ivc39"
+    class="label label-3  svelte-1ng65jt"
   >
     label-3
   </span>
    
   <span
-    class="label label-4  svelte-9ivc39"
+    class="label label-4  svelte-1ng65jt"
   >
     label-4
   </span>
    
   <span
-    class="label label-5  svelte-9ivc39"
+    class="label label-5  svelte-1ng65jt"
   >
     label-5
   </span>
    
   <span
-    class="label label-6  svelte-9ivc39"
+    class="label label-6  svelte-1ng65jt"
   >
     label-6
   </span>
    
   <span
-    class="label label-7  svelte-9ivc39"
+    class="label label-7  svelte-1ng65jt"
   >
     label-7
   </span>
    
   <span
-    class="label label-8  svelte-9ivc39"
+    class="label label-8  svelte-1ng65jt"
   >
     label-8
   </span>
    
   <span
-    class="label label-9  svelte-9ivc39"
+    class="label label-9  svelte-1ng65jt"
   >
     label-9
+  </span>
+   
+  <br />
+   
+  <br />
+   
+  <h4>
+    Labels with description (hover over)
+  </h4>
+   
+  <span
+    class="label label-4  svelte-1ng65jt"
+  >
+    Descriptive
   </span>
    
   <br />
@@ -1892,49 +1906,49 @@ exports[`Storyshots Label Default 1`] = `
   </h4>
    
   <span
-    class="label label-9  svelte-9ivc39"
+    class="label label-9  svelte-1ng65jt"
   >
     glean-core
   </span>
    
   <span
-    class="label label-1  svelte-9ivc39"
+    class="label label-1  svelte-1ng65jt"
   >
     glean-android
   </span>
    
   <span
-    class="label label-5  svelte-9ivc39"
+    class="label label-5  svelte-1ng65jt"
   >
     sync
   </span>
    
   <span
-    class="label label-5  svelte-9ivc39"
+    class="label label-5  svelte-1ng65jt"
   >
     lib-crash
   </span>
    
   <span
-    class="label label-6  svelte-9ivc39"
+    class="label label-6  svelte-1ng65jt"
   >
     engine-gecko
   </span>
    
   <span
-    class="label label-2  svelte-9ivc39"
+    class="label label-2  svelte-1ng65jt"
   >
     support-migration
   </span>
    
   <span
-    class="label label-4  svelte-9ivc39"
+    class="label label-4  svelte-1ng65jt"
   >
     nimbus
   </span>
    
   <span
-    class="label label-4  svelte-9ivc39"
+    class="label label-4  svelte-1ng65jt"
   >
     logins-store
   </span>
@@ -1948,13 +1962,13 @@ exports[`Storyshots Label Default 1`] = `
   </h4>
    
   <span
-    class="label label-9  svelte-9ivc39"
+    class="label label-9  svelte-1ng65jt"
   >
     deprecated
   </span>
    
   <span
-    class="label label-9  svelte-9ivc39"
+    class="label label-9  svelte-1ng65jt"
   >
     expired
   </span>

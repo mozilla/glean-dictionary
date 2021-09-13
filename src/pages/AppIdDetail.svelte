@@ -4,8 +4,9 @@
   import { APPLICATION_ID_DEFINITION_SCHEMA } from "../data/schemas";
   import MetadataTable from "../components/MetadataTable.svelte";
   import Label from "../components/Label.svelte";
-  import PageTitle from "../components/PageTitle.svelte";
+  import PageHeader from "../components/PageHeader.svelte";
   import { pageTitle } from "../state/stores";
+  import { getDeprecatedItemDescription } from "../data/help";
 
   export let params;
 
@@ -24,12 +25,19 @@
 </script>
 
 {#await appIdDataPromise then appId}
-  <PageTitle text={appId.app_id} />
+  <PageHeader title={appId.app_id}>
+    <svelte:fragment slot="tags">
+      {#if appId.deprecated}
+        <Label
+          text="deprecated"
+          description={getDeprecatedItemDescription("app id")}
+        />
+      {/if}
+    </svelte:fragment>
+  </PageHeader>
+
   {#if appId.description}
     <p>{appId.description}</p>
-  {/if}
-  {#if appId.deprecated}
-    <Label text="deprecated" />
   {/if}
 
   <h2>Metadata</h2>
