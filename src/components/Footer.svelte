@@ -36,7 +36,7 @@
           </li>
         </ul>
         <p>
-          Data last updated
+          Data last updated on
           <a href="https://protosaur.dev/mps-deploys/">{lastUpdatedTime}</a>.
           Built from revision
           <a href="https://github.com/mozilla/glean-dictionary/tree/{rev}"
