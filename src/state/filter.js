@@ -1,6 +1,6 @@
-import { isExpired } from "./metrics";
+import { isExpired, isRemoved } from "./items";
 
 export const filterUncollectedItems = (items, showUncollected) =>
   items.filter(
-    (item) => showUncollected || (!isExpired(item.expires) && item.in_source)
+    (item) => showUncollected || (!isExpired(item) && !isRemoved(item))
   );

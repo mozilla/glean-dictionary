@@ -20,7 +20,7 @@
   import { pageTitle, pageState, updateURLState } from "../state/stores";
   import { getBigQueryURL } from "../state/urls";
 
-  import { isExpired } from "../state/metrics";
+  import { isExpired, isRemoved } from "../state/items";
 
   export let params;
 
@@ -78,12 +78,12 @@
 </script>
 
 {#await metricDataPromise then metric}
-  {#if !metric.in_source}
+  {#if isRemoved(metric)}
     <AppAlert
       status="warning"
       message={"This metric is no longer defined in the source code: new data will not be collected by the application."}
     />
-  {:else if isExpired(metric.expires)}
+  {:else if isExpired(metric)}
     <AppAlert
       status="warning"
       message={"This metric has expired: new data will not be collected by the application."}
