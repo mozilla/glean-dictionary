@@ -36,14 +36,12 @@
           </li>
         </ul>
         <p>
-          Last updated
-          <a href="https://protosaur.dev/mps-deploys/">{lastUpdatedTime}</a>
-        </p>
-        <p>
-          Alpha Software - revision
+          Data last updated on
+          <a href="https://protosaur.dev/mps-deploys/">{lastUpdatedTime}</a>.
+          Built from revision
           <a href="https://github.com/mozilla/glean-dictionary/tree/{rev}"
             >{rev.substring(0, 10)}</a
-          >
+          >.
         </p>
         <p>
           The Glean Dictionary is built by Mozilla Data. Our vision is to build
