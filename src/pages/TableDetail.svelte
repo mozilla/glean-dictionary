@@ -1,6 +1,7 @@
 <script>
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import SchemaViewer from "../components/SchemaViewer.svelte";
+  import SubHeading from "../components/SubHeading.svelte";
   import { getTableData } from "../state/api";
   import { pageTitle } from "../state/stores";
 
@@ -70,6 +71,11 @@
     <a href="https://docs.telemetry.mozilla.org">docs.telemetry.mozilla.org</a>
     .
   </p>
+
+  <SubHeading
+    title={"Schema Browser"}
+    helpText={"Browse and filter the BigQuery schema for this table."}
+  />
   <SchemaViewer app={params.app} nodes={table.bq_schema} />
 {:catch}
   <NotFound pageName={params.appId} itemType="table" />
