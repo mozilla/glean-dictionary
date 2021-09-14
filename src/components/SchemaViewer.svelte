@@ -1,8 +1,6 @@
 <script>
   import SchemaNode from "./SchemaNode.svelte";
   import FilterInput from "./FilterInput.svelte";
-  import PageTitle from "./PageTitle.svelte";
-
   import { pageState } from "../state/stores";
 
   export let app;
@@ -50,8 +48,6 @@
 </script>
 
 <div class="schema-viewer">
-  <PageTitle text={"Schema"} />
-
   <FilterInput />
   <div class="schema-browser">
     <p>
