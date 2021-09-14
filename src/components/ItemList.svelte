@@ -10,7 +10,7 @@
   import Label from "./Label.svelte";
 
   import { filterUncollectedItems } from "../state/filter";
-  import { isExpired } from "../state/metrics";
+  import { isExpired, isRemoved } from "../state/items";
   import { pageState, updateURLState } from "../state/stores";
 
   let DEFAULT_ITEMS_PER_PAGE = 20;
@@ -21,7 +21,7 @@
 
   export let showFilter = true;
 
-  let filteredItems = items.filter((item) => !isExpired(item.expires));
+  let filteredItems = items.filter((item) => !isExpired(item));
   let pagedItems;
   let paginated = true;
   let search;
@@ -189,9 +189,9 @@
                       />
                     {/each}
                   {/if}
-                  {#if !item.in_source}
+                  {#if isRemoved(item)}
                     <Label text="removed" />
-                  {:else if isExpired(item.expires)}
+                  {:else if isExpired(item)}
                     <Label text="expired" />
                   {/if}
                   {#if item.deprecated}
