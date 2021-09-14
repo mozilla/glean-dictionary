@@ -56,7 +56,6 @@ export const APPLICATION_ID_DEFINITION_SCHEMA = [
     type: "list",
     helpText:
       "List of library dependencies that this application id depends on.",
-    valueFormatter: (item) => item.join(", "),
   },
 ];
 
