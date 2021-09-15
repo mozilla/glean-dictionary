@@ -585,6 +585,8 @@ for (app_name, app_group) in app_groups.items():
                 metric for metric in app_data["metrics"] if tag["name"] in metric.get("tags", [])
             ]
             tag["metric_count"] = len(tag_metrics)
+    else:
+        app_data["tags"] = []
 
     # sort the information in the app-level summary, then write it out
     # (we don't sort application id information, that's already handled
