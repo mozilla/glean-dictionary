@@ -19,3 +19,7 @@ export function getBigQueryURL(appName, appId, pingName, metricName) {
 
   return base + (metricName ? `?search=${metricName}` : "");
 }
+
+export function getMetricSearchURL(app, search) {
+  return `/apps/${app}?search=${search}`;
+}

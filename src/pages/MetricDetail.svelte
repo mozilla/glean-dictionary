@@ -9,16 +9,22 @@
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
-  import PageTitle from "../components/PageTitle.svelte";
+  import PageHeader from "../components/PageHeader.svelte";
   import SubHeading from "../components/SubHeading.svelte";
   import MetadataTable from "../components/MetadataTable.svelte";
   import {
     METRIC_DEFINITION_SCHEMA,
     METRIC_METADATA_SCHEMA,
   } from "../data/schemas";
+  import {
+    getExpiredItemDescription,
+    getRemovedItemDescription,
+    getLibraryDescription,
+  } from "../data/help";
+  import { stripLinks } from "../formatters/markdown";
   import { getMetricData } from "../state/api";
   import { pageTitle, pageState, updateURLState } from "../state/stores";
-  import { getBigQueryURL } from "../state/urls";
+  import { getBigQueryURL, getMetricSearchURL } from "../state/urls";
 
   import { isExpired, isRemoved } from "../state/items";
 
@@ -71,46 +77,37 @@
 
     return `${sourceDocs}${links[type]}` || sourceDocs;
   }
-
-  function getMetricSearchURL(search) {
-    return `/apps/${params.app}?search=${search}`;
-  }
 </script>
 
 {#await metricDataPromise then metric}
   {#if isRemoved(metric)}
-    <AppAlert
-      status="warning"
-      message={"This metric is no longer defined in the source code: new data will not be collected by the application."}
-    />
+    <AppAlert status="warning" message={getRemovedItemDescription("metric")} />
   {:else if isExpired(metric)}
-    <AppAlert
-      status="warning"
-      message={"This metric has expired: new data will not be collected by the application."}
-    />
+    <AppAlert status="warning" message={getExpiredItemDescription("metric")} />
   {/if}
 
-  {#if metric.origin !== params.app}
-    <AppAlert
-      status="warning"
-      message={`This metric is defined by a library used by the application (__${metric.origin}__), rather than the application itself. For more details, see the definition.`}
-    />
-  {/if}
-
-  <PageTitle text={metric.name} />
-  {#if metric.origin !== params.app || metric.tags.length}
-    <div class="tags-container">
-      {#if metric.origin !== params.app}
-        <a href={getMetricSearchURL(metric.origin)}
-          ><Label text={metric.origin} /></a
-        >
+  <PageHeader title={metric.name}>
+    <svelte:fragment slot="tags">
+      {#if metric.origin !== params.app || metric.tags.length}
+        {#if metric.origin !== params.app}
+          <a href={getMetricSearchURL(params.app, metric.origin)}
+            ><Label
+              text={metric.origin}
+              description={getLibraryDescription("metric", metric.origin)}
+            /></a
+          >
+        {/if}
+        {#each metric.tags as tag}
+          <a href={getMetricSearchURL(params.app, tag.name)}
+            ><Label
+              text={tag.name}
+              description={stripLinks(tag.description)}
+            /></a
+          >
+        {/each}
       {/if}
-      {#each metric.tags as tag}
-        <a href={getMetricSearchURL(tag)}><Label text={tag} /></a>
-      {/each}
-    </div>
-  {/if}
-
+    </svelte:fragment>
+  </PageHeader>
   <Markdown text={metric.description} inline={false} />
 
   <p>
@@ -294,11 +291,6 @@
   @include metadata-table;
   h2 {
     @include text-title-xs;
-  }
-
-  .tags-container {
-    margin-top: -12px;
-    padding-bottom: 16px;
   }
   .access-selectors {
     display: grid;

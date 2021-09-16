@@ -3,18 +3,20 @@
   import { pageState, pageTitle, updateURLState } from "../state/stores";
   import { getBigQueryURL } from "../state/urls";
 
-  import AppAlert from "../components/AppAlert.svelte";
   import VariantSelector from "../components/VariantSelector.svelte";
   import AuthenticatedLink from "../components/AuthenticatedLink.svelte";
   import Commentary from "../components/Commentary.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import ItemList from "../components/ItemList.svelte";
+  import Label from "../components/Label.svelte";
   import MetadataTable from "../components/MetadataTable.svelte";
   import NotFound from "../components/NotFound.svelte";
   import Markdown from "../components/Markdown.svelte";
-  import PageTitle from "../components/PageTitle.svelte";
+  import PageHeader from "../components/PageHeader.svelte";
   import SubHeading from "../components/SubHeading.svelte";
+  import { getLibraryDescription } from "../data/help";
   import { PING_SCHEMA } from "../data/schemas";
+  import { getMetricSearchURL } from "../state/urls";
 
   export let params;
 
@@ -32,17 +34,19 @@
 </script>
 
 {#await pingDataPromise then ping}
-  {#if ping.origin && ping.origin !== params.app}
-    <AppAlert
-      status="warning"
-      message={`This ping is defined by a library used by the application (__${ping.origin}__), rather than the application itself. For more details, see the definition.`}
-    />
-  {/if}
-
-  <PageTitle text={ping.name} />
-  <p>
-    <Markdown text={ping.description} />
-  </p>
+  <PageHeader title={ping.name}>
+    <svelte:fragment slot="tags">
+      {#if ping.origin && ping.origin !== params.app}
+        <a href={getMetricSearchURL(params.app, ping.origin)}
+          ><Label
+            text={ping.origin}
+            description={getLibraryDescription("ping", ping.origin)}
+          /></a
+        >
+      {/if}
+    </svelte:fragment>
+  </PageHeader>
+  <Markdown text={ping.description} inline={false} />
 
   <SubHeading
     title={"Metadata"}
@@ -117,7 +121,12 @@
     title={"Metrics"}
     helpText={"Metrics that are sent inside this ping."}
   />
-  <ItemList itemType="metrics" items={ping.metrics} appName={params.app} />
+  <ItemList
+    itemType="metrics"
+    items={ping.metrics}
+    appName={params.app}
+    tagDescriptions={ping.tag_descriptions}
+  />
 {:catch}
   <NotFound pageName={params.ping} itemType="ping" />
 {/await}
@@ -126,7 +135,4 @@
   @import "../main.scss";
 
   @include metadata-table;
-  h2 {
-    @include text-title-xs;
-  }
 </style>
