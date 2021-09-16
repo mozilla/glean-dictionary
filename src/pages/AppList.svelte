@@ -25,9 +25,14 @@
     filteredApps = apps;
   });
 
+  const appOrder = ["firefox_ios", "fenix", "firefox_desktop"];
+
   $: {
     // update page state when user filters something
     if (apps) {
+      apps.sort(
+        (a, b) => appOrder.indexOf(b.app_name) - appOrder.indexOf(a.app_name)
+      );
       filteredApps = apps.filter((appItem) =>
         appItem.canonical_app_name
           .toLowerCase()
