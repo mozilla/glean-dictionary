@@ -242,7 +242,7 @@ for (app_name, app_group) in app_groups.items():
         app_data["prototype"] = True
 
     app_annotation = _get_annotation(annotations_index, app_name, "app")
-    app_tags = app_annotation.get("tags")
+    app_tags = app_annotation.get("tags", {})
 
     app_metrics = {}
     metric_pings = dict(data=[])
