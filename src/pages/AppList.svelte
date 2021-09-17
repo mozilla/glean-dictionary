@@ -11,6 +11,7 @@
   import { pageState, pageTitle } from "../state/stores";
 
   const URL = "data/apps.json";
+  const APP_SORT_ORDER = ["firefox_ios", "fenix", "firefox_desktop"];
 
   let apps;
   let filteredApps;
@@ -21,6 +22,10 @@
       a.canonical_app_name.toLowerCase() > b.canonical_app_name.toLowerCase()
         ? 1
         : -1
+    );
+    apps.sort(
+      (a, b) =>
+        APP_SORT_ORDER.indexOf(b.app_name) - APP_SORT_ORDER.indexOf(a.app_name)
     );
     filteredApps = apps;
   });
