@@ -16,6 +16,7 @@
   import SubHeading from "../components/SubHeading.svelte";
   import { getLibraryDescription } from "../data/help";
   import { PING_SCHEMA } from "../data/schemas";
+  import { getLibraryName } from "../formatters/library";
   import { getMetricSearchURL } from "../state/urls";
 
   export let params;
@@ -39,7 +40,7 @@
       {#if ping.origin && ping.origin !== params.app}
         <a href={getMetricSearchURL(params.app, ping.origin)}
           ><Label
-            text={ping.origin}
+            text={getLibraryName(ping)}
             description={getLibraryDescription("ping", ping.origin)}
           /></a
         >
