@@ -595,5 +595,9 @@ for (app_name, app_group) in app_groups.items():
         if app_data.get(key):
             app_data[key].sort(key=lambda v: v["name"])
     open(os.path.join(app_dir, "index.json"), "w").write(
-        json.dumps(_incorporate_annotation(app_data, app_annotation, app_tags, app=True, full=True))
+        json.dumps(
+            _incorporate_annotation(
+                app_data, app_annotation.get("app", {}), app_tags, app=True, full=True
+            )
+        )
     )
