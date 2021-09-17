@@ -13,6 +13,7 @@
   import { filterUncollectedItems } from "../state/filter";
   import { isExpired, isRemoved } from "../state/items";
   import { pageState, updateURLState } from "../state/stores";
+  import { getLibraryName } from "../formatters/library";
   import {
     getDeprecatedItemDescription,
     getExpiredItemDescription,
@@ -188,7 +189,7 @@
                   {/if}
                   {#if item.origin && item.origin !== appName}
                     <Label
-                      text={item.origin}
+                      text={getLibraryName(item)}
                       description={getLibraryDescription(
                         getItemTypeSingular(itemType),
                         item.origin

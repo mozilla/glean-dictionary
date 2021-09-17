@@ -22,6 +22,7 @@
     getLibraryDescription,
   } from "../data/help";
   import { stripLinks } from "../formatters/markdown";
+  import { getLibraryName } from "../formatters/library";
   import { getMetricData } from "../state/api";
   import { pageTitle, pageState, updateURLState } from "../state/stores";
   import { getBigQueryURL, getMetricSearchURL } from "../state/urls";
@@ -92,7 +93,7 @@
         {#if metric.origin !== params.app}
           <a href={getMetricSearchURL(params.app, metric.origin)}
             ><Label
-              text={metric.origin}
+              text={getLibraryName(metric)}
               description={getLibraryDescription("metric", metric.origin)}
             /></a
           >
