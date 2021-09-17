@@ -11,6 +11,7 @@
   import { pageState, pageTitle } from "../state/stores";
 
   const URL = "data/apps.json";
+  const APP_SORT_ORDER = ["firefox_ios", "fenix", "firefox_desktop"];
 
   let apps;
   let filteredApps;
@@ -22,17 +23,16 @@
         ? 1
         : -1
     );
+    apps.sort(
+      (a, b) =>
+        APP_SORT_ORDER.indexOf(b.app_name) - APP_SORT_ORDER.indexOf(a.app_name)
+    );
     filteredApps = apps;
   });
-
-  const appOrder = ["firefox_ios", "fenix", "firefox_desktop"];
 
   $: {
     // update page state when user filters something
     if (apps) {
-      apps.sort(
-        (a, b) => appOrder.indexOf(b.app_name) - appOrder.indexOf(a.app_name)
-      );
       filteredApps = apps.filter((appItem) =>
         appItem.canonical_app_name
           .toLowerCase()
