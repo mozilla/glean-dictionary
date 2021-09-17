@@ -1,7 +1,11 @@
 {
   "name": "glean-dictionary",
   "version": "0.1.0",
-  "scripts": {
+  "engines": {
+    "node": ">=12.0.0",
+    "npm": ">=7.0.0"
+  },
+    "scripts": {
     "build": "rollup --config",
     "build-storybook": "build-storybook --static-dir ./public --config-dir .storybook",
     "dev": "rollup --config --watch",

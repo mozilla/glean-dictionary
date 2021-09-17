@@ -18,8 +18,11 @@ https://dictionary.telemetry.mozilla.org
 ## Getting Started
 
 You should be able to create your own local copy of the dictionary so long as
-you have [Python](https://www.python.org/) (version 3.8) and
-[node.js](https://nodejs.org/) installed. Follow these instructions:
+you have [Python](https://www.python.org/) (version 3.8+) and
+[node.js](https://nodejs.org/) (version 12+) installed. You will also need npm
+v7 or greater: run `npm install -g npm@latest` if you need to upgrade.
+
+Assuming those requirements are met, follow these instructions:
 
 ```bash
 # Create and activate a python virtual environment.
