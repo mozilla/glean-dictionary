@@ -13,3 +13,9 @@ export function getDeprecatedItemDescription(itemType) {
 export function getLibraryDescription(itemType, origin) {
   return `This ${itemType} is defined in the ${origin} library, not the application.`;
 }
+
+export function getRecentlyAddedItemDescription(numberOfChannels, itemType) {
+  return numberOfChannels > 1
+    ? `This ${itemType} was recently added. It may take some time before it is available on all channels.`
+    : `This ${itemType} was recently added. Data may not be available until a new version is released with this ${itemType} and clients are updated to it.`;
+}

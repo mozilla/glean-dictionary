@@ -104,6 +104,12 @@ export const METRIC_METADATA_SCHEMA = [
     helpLink: OPTIONAL_METRIC_PARAMS_DOCS,
   },
   {
+    title: "First Seen",
+    id: "date_first_seen",
+    type: "value",
+    helpText: "The date when this metric was first seen.",
+  },
+  {
     title: "Time Unit",
     id: "time_unit",
     type: "value",
@@ -208,6 +214,12 @@ export const PING_SCHEMA = [
     type: "link",
     helpText: "Where the source definition of the ping may be found.",
     valueFormatter: getSourceUrlTitle,
+  },
+  {
+    title: "First Seen",
+    id: "date_first_seen",
+    type: "value",
+    helpText: "The date when this ping was first seen.",
   },
   {
     title: "Includes Client Identifier",

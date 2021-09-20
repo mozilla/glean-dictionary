@@ -1,4 +1,4 @@
-import { isExpired, isRemoved } from "../src/state/items";
+import { isExpired, isRemoved, isRecent } from "../src/state/items";
 
 describe("checking if a date has expired", () => {
   it("returns True if input is 'never' or undefined", () => {
@@ -21,5 +21,14 @@ describe("isRemoved works as expected", () => {
   });
   it("returns false if in_source is true", () => {
     expect(isRemoved({ in_source: true })).toEqual(false);
+  });
+});
+
+describe("checking if a date is recent", () => {
+  it("returns True if it's less than 30 days ago", () => {
+    expect(isRecent({ date_first_seen: new Date() })).toEqual(true);
+  });
+  it("returns False if more than 30 days have passed", () => {
+    expect(isRecent({ date_first_seen: "2021-01-01 00:00:00" })).toEqual(false);
   });
 });
