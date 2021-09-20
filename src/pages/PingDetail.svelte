@@ -14,10 +14,15 @@
   import Markdown from "../components/Markdown.svelte";
   import PageHeader from "../components/PageHeader.svelte";
   import SubHeading from "../components/SubHeading.svelte";
-  import { getLibraryDescription } from "../data/help";
+  import AppAlert from "../components/AppAlert.svelte";
+  import {
+    getLibraryDescription,
+    getRecentlyAddedItemDescription,
+  } from "../data/help";
   import { PING_SCHEMA } from "../data/schemas";
   import { getLibraryName } from "../formatters/library";
   import { getMetricSearchURL } from "../state/urls";
+  import { isRecent } from "../state/items";
 
   export let params;
 
@@ -65,7 +70,11 @@
     title={"Access"}
     helpText={"Ways to access this metric in Mozilla's data warehouse."}
   />
-
+  {#if isRecent(ping)}
+    <AppAlert
+      status="warning"
+      message={getRecentlyAddedItemDescription(ping.variants.length, "ping")}
+    />{/if}
   {#if ping.variants.length > 1}
     <VariantSelector
       name={"app_id"}

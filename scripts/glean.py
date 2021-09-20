@@ -81,6 +81,7 @@ class GleanMetric(GleanObject):
         self.definition["name"] = full_defn[self.NAME_KEY]
         self.definition["origin"] = full_defn[self.ORIGIN_KEY]
         self.definition["in_source"] = full_defn[self.IN_SOURCE_KEY]
+        self.definition["date_first_seen"] = self.definition_history[-1]["dates"]["first"]
 
     def _set_dates(self, definition: dict):
         vals = [datetime.fromisoformat(d["dates"]["first"]) for d in definition[self.HISTORY_KEY]]
@@ -124,6 +125,7 @@ class GleanPing(GleanObject):
         self.definition = self.definition_history[0]
         self.definition["name"] = full_defn[self.NAME_KEY]
         self.definition["origin"] = full_defn[self.ORIGIN_KEY]
+        self.definition["date_first_seen"] = self.definition_history[-1]["dates"]["first"]
 
     def _set_description(self, definition: dict):
         if "description" in definition:

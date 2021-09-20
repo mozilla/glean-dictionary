@@ -20,6 +20,7 @@
     getExpiredItemDescription,
     getRemovedItemDescription,
     getLibraryDescription,
+    getRecentlyAddedItemDescription,
   } from "../data/help";
   import { stripLinks } from "../formatters/markdown";
   import { getLibraryName } from "../formatters/library";
@@ -27,7 +28,7 @@
   import { pageTitle, pageState, updateURLState } from "../state/stores";
   import { getBigQueryURL, getMetricSearchURL } from "../state/urls";
 
-  import { isExpired, isRemoved } from "../state/items";
+  import { isExpired, isRemoved, isRecent } from "../state/items";
 
   export let params;
 
@@ -177,6 +178,14 @@
     title={"Access"}
     helpText={"Ways to access this metric in Mozilla's data warehouse."}
   />
+  {#if isRecent(metric)}
+    <AppAlert
+      status="warning"
+      message={getRecentlyAddedItemDescription(
+        metric.variants.length,
+        "metric"
+      )}
+    />{/if}
   <div class="access-selectors">
     {#if metric.variants.length > 1}
       <div>

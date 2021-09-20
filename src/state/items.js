@@ -10,3 +10,9 @@ export const isExpired = (item) => {
   }
   return new Date() > new Date(item.expires);
 };
+
+export const isRecent = (item) => {
+  const daysDifference =
+    (new Date() - new Date(item.date_first_seen)) / (1000 * 3600 * 24);
+  return daysDifference < 30;
+};
