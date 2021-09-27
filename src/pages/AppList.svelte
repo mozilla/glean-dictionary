@@ -18,7 +18,7 @@
 
   onMount(async () => {
     apps = await fetchJSON(URL);
-    console.log("App name", apps)
+    console.log("App name", apps);
     apps.sort((a, b) =>
       a.canonical_app_name.toLowerCase() > b.canonical_app_name.toLowerCase()
         ? 1
