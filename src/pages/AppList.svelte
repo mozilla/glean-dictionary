@@ -56,9 +56,6 @@
   };
 
   function getAppLogo(app) {
-    if (app.match(/fenix/) || app.match(/nightly/)) {
-      return appLogos.nightly;
-    }
     if (app.match(/beta/)) {
       return appLogos.beta;
     }
@@ -77,7 +74,7 @@
     if (app.match(/dev/)) {
       return appLogos.dev;
     }
-    if (app.match(/firefox/)) {
+    if (app.match(/firefox/) || app.match(/fenix/)) {
       return appLogos.browser;
     }
     return appLogos.others;
