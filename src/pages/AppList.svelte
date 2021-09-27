@@ -18,7 +18,6 @@
 
   onMount(async () => {
     apps = await fetchJSON(URL);
-    console.log("App name", apps);
     apps.sort((a, b) =>
       a.canonical_app_name.toLowerCase() > b.canonical_app_name.toLowerCase()
         ? 1
@@ -57,9 +56,6 @@
   };
 
   function getAppLogo(app) {
-    if (app.match(/fenix/) || app.match(/nightly/)) {
-      return appLogos.browser;
-    }
     if (app.match(/beta/)) {
       return appLogos.beta;
     }
@@ -78,7 +74,7 @@
     if (app.match(/dev/)) {
       return appLogos.dev;
     }
-    if (app.match(/firefox/)) {
+    if (app.match(/firefox/) || app.match(/fenix/)) {
       return appLogos.browser;
     }
     return appLogos.others;
