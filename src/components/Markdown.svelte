@@ -13,17 +13,14 @@
         start ? `start="${start}"` : ""
       } class="mzp-u-list-styled">${body}</${outerEl}>`;
     },
-    html(html) {
-      // convert markdown with angle brackets to html,
-      // but escape <mark> tags so we can highlight search results
-      return `${html.replace("/<[^mark]+/g", "&lt;")}`;
-    },
   };
   use({ renderer });
 
   export let text;
   // if inline is set, do not wrap the markdown in a paragraph -- useful for short snippets
   export let inline = true;
+  console.log(text);
+  console.log(parse(text));
 </script>
 
 {#if inline}

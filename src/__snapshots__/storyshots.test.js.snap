@@ -2038,17 +2038,18 @@ exports[`Storyshots Markdown Text 1`] = `
 </section>
 `;
 
-exports[`Storyshots Markdown Text With Angle Brackets 1`] = `
+exports[`Storyshots Markdown Text With HTML 1`] = `
 <section
   class="storybook-snapshot-container"
 >
   <p>
-    A &lt;text&gt; in
-  </p>
-  
-
-  <p>
-    markdown &lt;&gt; with angle &lt;brackets&gt; (unquoted) and more angle 
+    Markdown with inline 
+    <span
+      style="color: blue"
+    >
+      HTML
+    </span>
+     (unquoted) and more angle 
     <code>
       &lt;brackets&gt;
     </code>
