@@ -19,8 +19,6 @@
   export let text;
   // if inline is set, do not wrap the markdown in a paragraph -- useful for short snippets
   export let inline = true;
-  console.log(text);
-  console.log(parse(text));
 </script>
 
 {#if inline}
