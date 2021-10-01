@@ -135,9 +135,7 @@ def etl_snake_case(line: str) -> str:
     return "_".join([w.lower() for w in words if w.strip()])[::-1]
 
 
-def get_looker_ping_explore_url(
-    looker_namespaces, app_name, ping_name, table_name, app_channel
-):
+def get_looker_ping_explore_url(looker_namespaces, app_name, ping_name, table_name, app_channel):
     ping_name_snakecase = stringcase.snakecase(ping_name)
     if (
         looker_namespaces.get(app_name)
