@@ -13,11 +13,6 @@
         start ? `start="${start}"` : ""
       } class="mzp-u-list-styled">${body}</${outerEl}>`;
     },
-    html(html) {
-      // convert markdown with angle brackets to html,
-      // but escape <mark> tags so we can highlight search results
-      return `${html.replace("/<[^mark]+/g", "&lt;")}`;
-    },
   };
   use({ renderer });
 
