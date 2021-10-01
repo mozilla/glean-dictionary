@@ -5,7 +5,7 @@
     "node": ">=12.0.0",
     "npm": ">=7.0.0"
   },
-    "scripts": {
+  "scripts": {
     "build": "rollup --config",
     "build-storybook": "build-storybook --static-dir ./public --config-dir .storybook",
     "dev": "rollup --config --watch",
@@ -14,8 +14,9 @@
     "lint": "eslint .",
     "start": "sirv public",
     "storybook": "start-storybook --static-dir ./public -p 6006",
-    "test": "npm-run-all format:check lint test:jest",
+    "test": "npm-run-all format:check lint test:jest test:playwright",
     "test:jest": "jest tests src --no-cache",
+    "test:playwright": "npx playwright test",
     "build-glean-metadata": "node scripts/build-glean-metadata.js"
   },
   "devDependencies": {
@@ -23,6 +24,7 @@
     "@babel/plugin-transform-runtime": "7.15.0",
     "@babel/preset-env": "^7.15.6",
     "@mozilla-protocol/core": "^14.0.3",
+    "@playwright/test": "^1.15.0",
     "@rollup/plugin-commonjs": "20.0.0",
     "@rollup/plugin-node-resolve": "13.0.4",
     "@rollup/plugin-replace": "^3.0.0",

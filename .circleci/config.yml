@@ -7,6 +7,8 @@ jobs:
     executor:
       name: node/default
       tag: "12.16"
+    docker:
+      - image: mcr.microsoft.com/playwright:focal # https://playwright.dev/docs/ci#circleci
     steps:
       - checkout
       - node/install-packages
