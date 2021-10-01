@@ -135,7 +135,7 @@ def etl_snake_case(line: str) -> str:
     return "_".join([w.lower() for w in words if w.strip()])[::-1]
 
 
-def get_looker_ping_explore_url(looker_namespaces, app_name, ping_name, table_name):
+def get_looker_ping_explore_url(looker_namespaces, app_name, ping_name, table_name, app_channel):
     ping_name_snakecase = stringcase.snakecase(ping_name)
     if (
         looker_namespaces.get(app_name)
@@ -143,9 +143,8 @@ def get_looker_ping_explore_url(looker_namespaces, app_name, ping_name, table_na
         and looker_namespaces[app_name]["explores"].get(ping_name_snakecase)
     ):
         channel_identifier = "mozdata." + table_name.replace("_", "%5E_")
-        return (
-            f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}"
-            + f"?f[{ping_name_snakecase}.channel]={channel_identifier}"
+        return f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}?" + (
+            f"f[{ping_name_snakecase}.channel]={channel_identifier}" if app_channel else ""
         )
     return None
 
@@ -341,7 +340,9 @@ for (app_name, app_group) in app_groups.items():
                         looker_namespaces, app_name, app.app.get("app_channel")
                     )
                     if ping == "events"
-                    else get_looker_ping_explore_url(looker_namespaces, app_name, ping, table_name)
+                    else get_looker_ping_explore_url(
+                        looker_namespaces, app_name, ping, table_name, app.app.get("app_channel")
+                    )
                 )
                 # we deliberately don't show looker information for deprecated applications
                 if not app_is_deprecated and base_looker_explore_link:
@@ -517,7 +518,11 @@ for (app_name, app_group) in app_groups.items():
                 else {
                     "name": ping.identifier,
                     "url": get_looker_ping_explore_url(
-                        looker_namespaces, app_name, ping.identifier, stable_ping_table_name
+                        looker_namespaces,
+                        app_name,
+                        ping.identifier,
+                        stable_ping_table_name,
+                        app_channel,
                     ),
                 }
             )
