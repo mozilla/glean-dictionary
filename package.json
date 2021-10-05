@@ -44,7 +44,7 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-svelte3": "3.2.1",
     "flexsearch": "^0.7.21",
-    "jest": "^26.6.3",
+    "jest": "^27.2.4",
     "lodash": "^4.17.21",
     "marked": "^3.0.4",
     "node-fetch": "^2.6.1",
