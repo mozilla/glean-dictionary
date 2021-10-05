@@ -74,10 +74,8 @@
   >
     <Tab key="metrics">Metrics</Tab>
     <Tab key="pings">Pings</Tab>
-
-    {#if false && app.tags && app.tags.length}
-      <!-- commenting this out for now, see: https://github.com/mozilla/glean-dictionary/issues/832 -->
-      <Tab key="tags">Features</Tab>
+    {#if app.tags && app.tags.length}
+      <Tab key="tags">Tags</Tab>
     {/if}
     <Tab key="app_ids">Application IDs</Tab>
 

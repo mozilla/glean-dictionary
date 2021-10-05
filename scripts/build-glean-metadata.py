@@ -599,6 +599,11 @@ for (app_name, app_group) in app_groups.items():
     for key in ["tags", "metrics", "pings"]:
         if app_data.get(key):
             app_data[key].sort(key=lambda v: v["name"])
+            # for tags, put those with no metrics associated with them at the
+            # end
+            if key == "tags":
+                app_data[key].sort(key=lambda v: v["metric_count"] > 0, reverse=True)
+
     open(os.path.join(app_dir, "index.json"), "w").write(
         json.dumps(
             _incorporate_annotation(
