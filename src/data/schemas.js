@@ -13,6 +13,10 @@ const REQUIRED_METRIC_PARAMS_DOCS =
 const OPTIONAL_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#optional-metric-parameters";
 
+const getFirstSeenTemplate = (itemType) => {
+  return `The date when this ${itemType} was first added to the product's source code. It may take some time before the software is released to users and data starts showing up.`;
+};
+
 export const APPLICATION_DEFINITION_SCHEMA = [
   {
     title: "Source",
@@ -107,7 +111,7 @@ export const METRIC_METADATA_SCHEMA = [
     title: "First Seen",
     id: "date_first_seen",
     type: "value",
-    helpText: "The date when this metric was first seen.",
+    helpText: getFirstSeenTemplate("metric"),
   },
   {
     title: "Time Unit",
@@ -219,7 +223,7 @@ export const PING_SCHEMA = [
     title: "First Seen",
     id: "date_first_seen",
     type: "value",
-    helpText: "The date when this ping was first seen.",
+    helpText: getFirstSeenTemplate("ping"),
   },
   {
     title: "Includes Client Identifier",
