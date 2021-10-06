@@ -108,7 +108,7 @@ export const METRIC_METADATA_SCHEMA = [
     helpLink: OPTIONAL_METRIC_PARAMS_DOCS,
   },
   {
-    title: "First Seen",
+    title: "First Added",
     id: "date_first_seen",
     type: "value",
     helpText: getFirstSeenTemplate("metric"),
@@ -220,7 +220,7 @@ export const PING_SCHEMA = [
     valueFormatter: getSourceUrlTitle,
   },
   {
-    title: "First Seen",
+    title: "First Added",
     id: "date_first_seen",
     type: "value",
     helpText: getFirstSeenTemplate("ping"),
