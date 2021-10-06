@@ -91,8 +91,9 @@ procedure:
 
 - Do a quick test of https://glean-dictionary-dev.netlify.app to make sure it's
   working as expected.
-- Create a new release, typically off of the `main` branch (use the [auto-generated
-  release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes), omitting dependency updates).
+- Create a new release, typically off of the `main` branch (use the
+  [auto-generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes),
+  omitting dependency updates).
 - From a local checkout, update the `production` branch to be in sync with the
   tag you just created, then push to the production branch. After the
   integration tests pass, dictionary.telemetry.mozilla.org should be
