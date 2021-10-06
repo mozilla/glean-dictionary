@@ -91,13 +91,14 @@ procedure:
 
 - Do a quick test of https://glean-dictionary-dev.netlify.app to make sure it's
   working as expected.
-- Create a new release, typically off of the `main` branch (you might find
-  [this iodide notebook](https://alpha.iodide.io/notebooks/6616/) useful for
-  creating a set of notes on what changed).
+- Create a new release, typically off of the `main` branch (use the [auto-generated
+  release notes], omitting dependency updates).
 - From a local checkout, update the `production` branch to be in sync with the
   tag you just created, then push to the production branch. After the
   integration tests pass, dictionary.telemetry.mozilla.org should be
   automatically updated to the latest version.
+
+[auto-generated release notes]: https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
 
 A version of the Glean Dictionary running the development branch (`main`) is
 accessible at https://glean-dictionary-dev.netlify.app/
