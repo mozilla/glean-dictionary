@@ -14,7 +14,7 @@ const OPTIONAL_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#optional-metric-parameters";
 
 const getFirstSeenTemplate = (itemType) => {
-  return `The date when this ${itemType} was first added to the product's source code. It may take some time before the software is released to users and data starts showing up.`;
+  return `The date when this ${itemType} was first added to the product source code. If it was added recently, it may take some time before the software is released to users and data starts showing up.`;
 };
 
 export const APPLICATION_DEFINITION_SCHEMA = [
