@@ -151,7 +151,7 @@
             <code>{definition.type || "string"}</code>
           </td>
           <td>
-            <Markdown text={definition.description} />
+            <Markdown text={definition.description} inline={false} />
           </td>
         </tr>
       {/each}
