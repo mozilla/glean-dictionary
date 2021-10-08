@@ -14,3 +14,10 @@ publish = "public"
 [context.production]
   [context.production.environment]
   CONTEXT = "production"
+
+
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  for = "/data/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
