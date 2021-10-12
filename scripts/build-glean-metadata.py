@@ -258,7 +258,7 @@ for (app_name, app_group) in app_groups.items():
             json.dumps(app.app)
         )
 
-        pings_with_client_id = []
+        pings_with_client_id = set()
         # ping data
         for ping in app.get_pings():
             if ping.identifier not in ping_identifiers_seen:
@@ -280,7 +280,7 @@ for (app_name, app_group) in app_groups.items():
             ping_data = next(pd for pd in app_data["pings"] if pd["name"] == ping.identifier)
 
             if ping_data["include_client_id"]:
-                pings_with_client_id.append(ping_data["name"])
+                pings_with_client_id.add(ping_data["name"])
 
             # write table description (app variant specific)
             ping_name_snakecase = stringcase.snakecase(ping.identifier)
