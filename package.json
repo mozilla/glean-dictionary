@@ -31,7 +31,7 @@
     "@storybook/addon-knobs": "6.3.1",
     "@storybook/addon-storyshots": "^6.3.10",
     "@storybook/addon-storysource": "6.3.9",
-    "@storybook/svelte": "6.1.21",
+    "@storybook/svelte": "6.3.11",
     "@testing-library/svelte": "^3.0.3",
     "autoprefixer": "^10.3.7",
     "babel-jest": "^27.2.5",
