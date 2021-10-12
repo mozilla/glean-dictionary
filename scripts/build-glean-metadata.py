@@ -40,15 +40,12 @@ GLEAN_DISTRIBUTION_TYPES = {
 # supported glam metric types, from:
 # https://github.com/mozilla/bigquery-etl/blob/c48ab6649448cdf41191f6c24cb00fe46ca2323d/bigquery_etl/glam/clients_daily_histogram_aggregates.py#L39
 # https://github.com/mozilla/bigquery-etl/blob/c48ab6649448cdf41191f6c24cb00fe46ca2323d/bigquery_etl/glam/clients_daily_scalar_aggregates.py#L95
-SUPPORTED_GLAM_METRIC_TYPES = {
+SUPPORTED_GLAM_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
     "boolean",
     "counter",
     "quantity",
     "timespan",
     "labeled_counter",
-    "timing_distribution",
-    "memory_distribution",
-    "custom_distribution",
 }
 
 SUPPORTED_LOOKER_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
