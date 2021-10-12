@@ -33,7 +33,7 @@
     "@storybook/addon-storysource": "6.3.9",
     "@storybook/svelte": "6.1.21",
     "@testing-library/svelte": "^3.0.3",
-    "autoprefixer": "^10.3.6",
+    "autoprefixer": "^10.3.7",
     "babel-jest": "^27.2.4",
     "babel-loader": "8.2.2",
     "eslint": "7.32.0",
