@@ -225,12 +225,12 @@
           />
         </td>
         <td>
-          {#if selectedAppVariant.etl.glam_url}
-            <AuthenticatedLink href={selectedAppVariant.etl.glam_url}>
+          {#if pingData.glam_url}
+            <AuthenticatedLink href={pingData.glam_url}>
               {params.metric}
             </AuthenticatedLink>
           {:else}
-            Currently GLAM doesn't support <code>{metric.type}</code> metrics.
+            <Markdown text={pingData.glam_unsupported_reason} inline={true} />
           {/if}
         </td>
       </tr>
