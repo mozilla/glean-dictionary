@@ -258,6 +258,87 @@ for (app_name, app_group) in app_groups.items():
             json.dumps(app.app)
         )
 
+        pings_with_client_id = set()
+        # ping data
+        for ping in app.get_pings():
+            if ping.identifier not in ping_identifiers_seen:
+                ping_identifiers_seen.add(ping.identifier)
+                app_data["pings"].append(
+                    _incorporate_annotation(
+                        dict(
+                            ping.definition,
+                            variants=[],
+                        ),
+                        _get_annotation(
+                            annotations_index, ping.definition["origin"], "pings", ping.identifier
+                        ),
+                        app_tags,
+                        full=False,
+                    )
+                )
+
+            ping_data = next(pd for pd in app_data["pings"] if pd["name"] == ping.identifier)
+
+            if ping_data["include_client_id"]:
+                pings_with_client_id.add(ping_data["name"])
+
+            # write table description (app variant specific)
+            ping_name_snakecase = stringcase.snakecase(ping.identifier)
+            stable_ping_table_name = f"{app.app['bq_dataset_family']}.{ping_name_snakecase}"
+            live_ping_table_name = f"{app.app['bq_dataset_family']}_live.{ping_name_snakecase}_v1"
+            bq_path = f"{app.app['document_namespace']}/{ping.identifier}/{ping.identifier}.1.bq"
+            bq_definition = (
+                "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"  # noqa
+                + bq_path
+            )
+            bq_schema = requests.get(
+                "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"  # noqa
+                + bq_path
+            ).json()
+            app_channel = app.app.get("app_channel")
+            variant_data = dict(
+                id=app_id,
+                description=get_app_variant_description(app),
+                table=stable_ping_table_name,
+                channel=app_channel if app_channel else "release",
+            )
+            looker_explore = (
+                {
+                    "name": "event_counts",
+                    "url": get_looker_event_count_explore_url(
+                        looker_namespaces, app_name, app_channel
+                    ),
+                }
+                if ping.identifier == "events"
+                else {
+                    "name": ping.identifier,
+                    "url": get_looker_ping_explore_url(
+                        looker_namespaces,
+                        app_name,
+                        ping.identifier,
+                        stable_ping_table_name,
+                        app_channel,
+                    ),
+                }
+            )
+            if not app_is_deprecated and looker_explore.get("url"):
+                variant_data.update({"looker_explore": looker_explore})
+            ping_data["variants"].append(variant_data)
+            app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
+            os.makedirs(app_variant_table_dir, exist_ok=True)
+            open(os.path.join(app_variant_table_dir, f"{ping.identifier}.json"), "w").write(
+                json.dumps(
+                    dict(
+                        bq_definition=bq_definition,
+                        bq_schema=bq_schema,
+                        live_table=live_ping_table_name,
+                        name=ping.identifier,
+                        stable_table=stable_ping_table_name,
+                        app_id=app_id,
+                    )
+                )
+            )
+
         # metrics data
         metrics = app.get_metrics()
         for metric in metrics:
@@ -426,7 +507,11 @@ for (app_name, app_group) in app_groups.items():
                                     [
                                         f"{ping_name_snakecase}.submission_date",
                                         base_looker_dimension_name,
-                                        f"{ping_name_snakecase}.clients",
+                                        (
+                                            f"{ping_name_snakecase}.clients"
+                                            if ping in pings_with_client_id
+                                            else f"{ping_name_snakecase}.ping_count"
+                                        ),
                                     ]
                                 )
                                 + f"&pivots={base_looker_dimension_name}"
@@ -465,82 +550,6 @@ for (app_name, app_group) in app_groups.items():
                     channel=app.app.get("app_channel", "release"),
                     description=get_app_variant_description(app),
                     etl=etl,
-                )
-            )
-
-        for ping in app.get_pings():
-            if ping.identifier not in ping_identifiers_seen:
-                ping_identifiers_seen.add(ping.identifier)
-                app_data["pings"].append(
-                    _incorporate_annotation(
-                        dict(
-                            ping.definition,
-                            variants=[],
-                        ),
-                        _get_annotation(
-                            annotations_index, ping.definition["origin"], "pings", ping.identifier
-                        ),
-                        app_tags,
-                        full=False,
-                    )
-                )
-
-            ping_data = next(pd for pd in app_data["pings"] if pd["name"] == ping.identifier)
-
-            # write table description (app variant specific)
-            ping_name_snakecase = stringcase.snakecase(ping.identifier)
-            stable_ping_table_name = f"{app.app['bq_dataset_family']}.{ping_name_snakecase}"
-            live_ping_table_name = f"{app.app['bq_dataset_family']}_live.{ping_name_snakecase}_v1"
-            bq_path = f"{app.app['document_namespace']}/{ping.identifier}/{ping.identifier}.1.bq"
-            bq_definition = (
-                "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"  # noqa
-                + bq_path
-            )
-            bq_schema = requests.get(
-                "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"  # noqa
-                + bq_path
-            ).json()
-            app_channel = app.app.get("app_channel")
-            variant_data = dict(
-                id=app_id,
-                description=get_app_variant_description(app),
-                table=stable_ping_table_name,
-                channel=app_channel if app_channel else "release",
-            )
-            looker_explore = (
-                {
-                    "name": "event_counts",
-                    "url": get_looker_event_count_explore_url(
-                        looker_namespaces, app_name, app_channel
-                    ),
-                }
-                if ping.identifier == "events"
-                else {
-                    "name": ping.identifier,
-                    "url": get_looker_ping_explore_url(
-                        looker_namespaces,
-                        app_name,
-                        ping.identifier,
-                        stable_ping_table_name,
-                        app_channel,
-                    ),
-                }
-            )
-            if not app_is_deprecated and looker_explore.get("url"):
-                variant_data.update({"looker_explore": looker_explore})
-            ping_data["variants"].append(variant_data)
-            app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
-            os.makedirs(app_variant_table_dir, exist_ok=True)
-            open(os.path.join(app_variant_table_dir, f"{ping.identifier}.json"), "w").write(
-                json.dumps(
-                    dict(
-                        bq_definition=bq_definition,
-                        bq_schema=bq_schema,
-                        live_table=live_ping_table_name,
-                        name=ping.identifier,
-                        stable_table=stable_ping_table_name,
-                        app_id=app_id,
-                    )
                 )
             )
 
