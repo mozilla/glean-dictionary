@@ -555,9 +555,11 @@ for (app_name, app_group) in app_groups.items():
                         "glam_unsupported_reason"
                     ] = f"Currently GLAM does not support `{metric_type}` metrics."
                 elif ping != "metrics":
-                    ping_data[ping][
-                        "glam_unsupported_reason"
-                    ] = f"Metrics sent in the `{ping}` ping are not supported by GLAM."
+                    ping_data[ping]["glam_unsupported_reason"] = (
+                        f"Metrics sent in the `{ping}` ping are not supported "
+                        "by GLAM "
+                        "([mozilla/glam#1652](https://github.com/mozilla/glam/issues/1652))."
+                    )
                 else:
                     (glam_product, glam_app_id) = GLAM_PRODUCT_MAPPINGS[app.app_id]
                     glam_metric_id = etl_snake_case(metric.identifier)
