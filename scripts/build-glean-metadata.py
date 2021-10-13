@@ -37,6 +37,17 @@ GLEAN_DISTRIBUTION_TYPES = {
     "custom_distribution",
 }
 
+# supported glam metric types, from:
+# https://github.com/mozilla/bigquery-etl/blob/c48ab6649448cdf41191f6c24cb00fe46ca2323d/bigquery_etl/glam/clients_daily_histogram_aggregates.py#L39
+# https://github.com/mozilla/bigquery-etl/blob/c48ab6649448cdf41191f6c24cb00fe46ca2323d/bigquery_etl/glam/clients_daily_scalar_aggregates.py#L95
+SUPPORTED_GLAM_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
+    "boolean",
+    "counter",
+    "quantity",
+    "timespan",
+    "labeled_counter",
+}
+
 SUPPORTED_LOOKER_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
     "boolean",
     "counter",
@@ -528,21 +539,40 @@ for (app_name, app_group) in app_groups.items():
                                 "url": f"{looker_metric_link}&toggle=vis",
                             },
                         }
+                # GLAM data is similarly per application and per ping (well,
+                # only the metrics ping right now), when it exists
+                app_supports_glam = GLAM_PRODUCT_MAPPINGS.get(app.app_id)
+                if not GLAM_PRODUCT_MAPPINGS.get(app.app_id):
+                    ping_data[ping][
+                        "glam_unsupported_reason"
+                    ] = "This application is not supported by GLAM."
+                elif metric.bq_prefix in ["client_info", "ping_info"]:
+                    ping_data[ping][
+                        "glam_unsupported_reason"
+                    ] = "Internal Glean metrics are not supported by GLAM."
+                elif metric_type not in SUPPORTED_GLAM_METRIC_TYPES:
+                    ping_data[ping][
+                        "glam_unsupported_reason"
+                    ] = f"Currently GLAM does not support `{metric_type}` metrics."
+                elif ping != "metrics":
+                    ping_data[ping]["glam_unsupported_reason"] = (
+                        f"Metrics sent in the `{ping}` ping are not supported "
+                        "by GLAM "
+                        "([mozilla/glam#1652](https://github.com/mozilla/glam/issues/1652))."
+                    )
+                else:
+                    (glam_product, glam_app_id) = GLAM_PRODUCT_MAPPINGS[app.app_id]
+                    glam_metric_id = etl_snake_case(metric.identifier)
+                    ping_data[ping]["glam_url"] = (
+                        "https://glam.telemetry.mozilla.org/"
+                        + f"{glam_product}/probe/{glam_metric_id}/explore"
+                        + f"?app_id={glam_app_id}"
+                    )
 
             etl = dict(
                 ping_data=ping_data,
                 bigquery_column_name=bigquery_column_name,
             )
-
-            # GLAM metadata is per app / app-id
-            if metric_type != "event" and GLAM_PRODUCT_MAPPINGS.get(app.app_id):
-                (glam_product, glam_app_id) = GLAM_PRODUCT_MAPPINGS[app.app_id]
-                glam_metric_id = etl_snake_case(metric.identifier)
-                etl["glam_url"] = (
-                    "https://glam.telemetry.mozilla.org/"
-                    + f"{glam_product}/probe/{glam_metric_id}/explore"
-                    + f"?app_id={glam_app_id}"
-                )
 
             app_metrics[metric.identifier]["variants"].append(
                 dict(
