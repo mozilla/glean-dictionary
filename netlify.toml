@@ -8,7 +8,7 @@ command = """
       mv storybook-static public/storybook
     fi
 """
-environment = { PYTHON_VERSION = "3.7" }
+environment = { PYTHON_VERSION = "3.8" }
 publish = "public"
 
 [context.production]
