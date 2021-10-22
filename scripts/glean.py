@@ -9,6 +9,13 @@ import requests
 logger = logging.getLogger(__name__)
 
 
+GLEAN_DISTRIBUTION_TYPES = {
+    "timing_distribution",
+    "memory_distribution",
+    "custom_distribution",
+}
+
+
 class _Cache:
     """
     Simple cache manager so we can avoid refetching the same dependency data
