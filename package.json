@@ -26,7 +26,7 @@
     "@mozilla-protocol/core": "^14.0.3",
     "@playwright/test": "^1.16.1",
     "@rollup/plugin-commonjs": "21.0.0",
-    "@rollup/plugin-node-resolve": "13.0.5",
+    "@rollup/plugin-node-resolve": "13.0.6",
     "@rollup/plugin-replace": "^3.0.0",
     "@storybook/addon-knobs": "6.3.1",
     "@storybook/addon-storyshots": "^6.3.12",
