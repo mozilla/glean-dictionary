@@ -2,14 +2,15 @@
 
 import json
 import os
-import re
 import sys
-import urllib.parse
 
 import glean
 import requests
 import stringcase
 import yaml
+from bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
+from glam import get_glam_metadata_for_metric
+from looker import get_looker_explore_metadata_for_metric, get_looker_explore_metadata_for_ping
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
 ANNOTATIONS_URL = os.getenv(
@@ -23,42 +24,6 @@ NAMESPACES_URL = os.getenv(
 METRIC_CHANNEL_PRIORITY = {"nightly": 1, "beta": 2, "release": 3, "esr": 4}
 # Priority for sorting app ids in the UI (of anticipated relevance to the suer)
 USER_CHANNEL_PRIORITY = {"release": 1, "beta": 2, "nightly": 3, "esr": 4}
-
-
-GLAM_PRODUCT_MAPPINGS = {
-    "org.mozilla.fenix": ("fenix", ""),
-    "org.mozilla.firefox_beta": ("fenix", "beta"),
-    "org.mozilla.firefox": ("fenix", "release"),
-}
-
-GLEAN_DISTRIBUTION_TYPES = {
-    "timing_distribution",
-    "memory_distribution",
-    "custom_distribution",
-}
-
-# supported glam metric types, from:
-# https://github.com/mozilla/bigquery-etl/blob/c48ab6649448cdf41191f6c24cb00fe46ca2323d/bigquery_etl/glam/clients_daily_histogram_aggregates.py#L39
-# https://github.com/mozilla/bigquery-etl/blob/c48ab6649448cdf41191f6c24cb00fe46ca2323d/bigquery_etl/glam/clients_daily_scalar_aggregates.py#L95
-SUPPORTED_GLAM_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
-    "boolean",
-    "counter",
-    "quantity",
-    "timespan",
-    "labeled_counter",
-}
-
-SUPPORTED_LOOKER_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
-    "boolean",
-    "counter",
-    "datetime",
-    "jwe",
-    "quantity",
-    "string",
-    "rate",
-    "timespan",
-    "uuid",
-}
 
 
 def _serialize_sets(obj):
@@ -117,64 +82,8 @@ def _incorporate_annotation(item, item_annotation, tag_descriptions, app=False, 
     return incorporated
 
 
-# ETL specific snakecase taken from:
-# https://github.com/mozilla/bigquery-etl/blob/master/bigquery_etl/util/common.py
-#
-# Search for all camelCase situations in reverse with arbitrary lookaheads.
-REV_WORD_BOUND_PAT = re.compile(
-    r"""
-    \b                                  # standard word boundary
-    |(?<=[a-z][A-Z])(?=\d*[A-Z])        # A7Aa -> A7|Aa boundary
-    |(?<=[a-z][A-Z])(?=\d*[a-z])        # a7Aa -> a7|Aa boundary
-    |(?<=[A-Z])(?=\d*[a-z])             # a7A -> a7|A boundary
-    """,
-    re.VERBOSE,
-)
-
-
 def get_resource_path(line: str) -> str:
     return line.replace(".", "_")
-
-
-def etl_snake_case(line: str) -> str:
-    """Convert a string into a snake_cased string."""
-    # replace non-alphanumeric characters with spaces in the reversed line
-    subbed = re.sub(r"[^\w]|_", " ", line[::-1])
-    # apply the regex on the reversed string
-    words = REV_WORD_BOUND_PAT.split(subbed)
-    # filter spaces between words and snake_case and reverse again
-    return "_".join([w.lower() for w in words if w.strip()])[::-1]
-
-
-def get_looker_ping_explore_url(looker_namespaces, app_name, ping_name, table_name, app_channel):
-    ping_name_snakecase = stringcase.snakecase(ping_name)
-    if (
-        looker_namespaces.get(app_name)
-        and looker_namespaces[app_name].get("glean_app")
-        and looker_namespaces[app_name]["explores"].get(ping_name_snakecase)
-    ):
-        channel_identifier = "mozdata." + table_name.replace("_", "%5E_")
-        return f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}?" + (
-            f"f[{ping_name_snakecase}.channel]={channel_identifier}" if app_channel else ""
-        )
-    return None
-
-
-def get_looker_event_count_explore_url(looker_namespaces, app_name, channel_name):
-    if (
-        looker_namespaces.get(app_name)
-        and looker_namespaces[app_name].get("glean_app")
-        and looker_namespaces[app_name]["explores"].get("events")
-    ):
-        base_url = (
-            f"https://mozilla.cloud.looker.com/explore/{app_name}/event_counts"
-            + "?fields=events.event_count,events.client_count"
-        )
-        return (
-            base_url + f"&f[events.normalized_channel]={channel_name}" if channel_name else base_url
-        )
-
-    return None
 
 
 def get_app_variant_description(app):
@@ -313,25 +222,7 @@ for (app_name, app_group) in app_groups.items():
                 table=stable_ping_table_name,
                 channel=app_channel if app_channel else "release",
             )
-            looker_explore = (
-                {
-                    "name": "event_counts",
-                    "url": get_looker_event_count_explore_url(
-                        looker_namespaces, app_name, app_channel
-                    ),
-                }
-                if ping.identifier == "events"
-                else {
-                    "name": ping.identifier,
-                    "url": get_looker_ping_explore_url(
-                        looker_namespaces,
-                        app_name,
-                        ping.identifier,
-                        stable_ping_table_name,
-                        app_channel,
-                    ),
-                }
-            )
+            looker_explore = get_looker_explore_metadata_for_ping(looker_namespaces, app, ping)
             if not app_is_deprecated and looker_explore.get("url"):
                 variant_data.update({"looker_explore": looker_explore})
             ping_data["variants"].append(variant_data)
@@ -411,167 +302,32 @@ for (app_name, app_group) in app_groups.items():
                     key=lambda ping: ping_priority.get(ping, 1)
                 )
 
-            metric_type = metric.definition["type"]
-            metric_name_snakecase = stringcase.snakecase(metric.identifier)
-            bigquery_column_name = (
-                f"{metric.bq_prefix}.{metric_name_snakecase}"
-                if metric.bq_prefix
-                else f"metrics.{metric_type}.{metric_name_snakecase}"
-            )
-
             # BigQuery and Looker metadata is ping based
             ping_data = {}
             bigquery_stable_ping_tables = []
-            for ping in metric.definition["send_in_pings"]:
-                ping_name_snakecase = stringcase.snakecase(ping)
-                table_name = f"{app.app['bq_dataset_family']}.{ping_name_snakecase}"
-                ping_data[ping] = {"bigquery_table": table_name}
-                base_looker_explore_name = "event_counts" if ping == "events" else ping
-                base_looker_explore_link = (
-                    get_looker_event_count_explore_url(
-                        looker_namespaces, app_name, app.app.get("app_channel")
+            for ping_name in metric.definition["send_in_pings"]:
+                ping_data[ping_name] = {
+                    "bigquery_table": get_bigquery_ping_table_name(
+                        app.app["bq_dataset_family"], ping_name
                     )
-                    if ping == "events"
-                    else get_looker_ping_explore_url(
-                        looker_namespaces, app_name, ping, table_name, app.app.get("app_channel")
-                    )
+                }
+                # FIXME: if we allow the metadata format to change, we can
+                # just set it up all in one go above
+                looker_metadata = get_looker_explore_metadata_for_metric(
+                    looker_namespaces,
+                    app,
+                    metric,
+                    ping_name,
+                    ping_name in pings_with_client_id,
                 )
-                # we deliberately don't show looker information for deprecated applications
-                if not app_is_deprecated and base_looker_explore_link:
-                    looker_metric_link = None
-                    if metric_type == "event":
-                        (metric_category, metric_name) = metric.identifier.split(".", 1)
-                        looker_metric_link = (
-                            base_looker_explore_link
-                            + f"&f[events.event_name]=%22{metric_name}%22"
-                            + f"&f[events.event_category]=%22{metric_category}%22"
-                        )
-                    # for counters, we can use measures directly
-                    if metric_type == "counter":
-                        looker_metric_link = (
-                            base_looker_explore_link
-                            + "&fields="
-                            + ",".join(
-                                [
-                                    f"{ping_name_snakecase}.submission_date",
-                                    f"{ping_name_snakecase}.{metric_name_snakecase}",
-                                ]
-                            )
-                        )
-                    elif metric_type == "labeled_counter":
-                        counter_field_base = (
-                            f"{ping_name_snakecase}"
-                            + "__metrics__labeled_counter__"
-                            + f"{metric_name_snakecase}"
-                        )
-                        looker_metric_link = (
-                            base_looker_explore_link
-                            + "&fields="
-                            + ",".join(
-                                [
-                                    f"{ping_name_snakecase}.submission_date",
-                                    f"{counter_field_base}.label",
-                                    f"{counter_field_base}.count",
-                                ]
-                            )
-                            + f"&pivots={counter_field_base}.label"
-                        )
-                    elif metric_type in SUPPORTED_LOOKER_METRIC_TYPES:
-                        base_looker_dimension_name = "{}.{}".format(
-                            ping_name_snakecase, bigquery_column_name.replace(".", "__")
-                        )
-
-                        # For distribution types, we'll aggregate the sum of all distributions per
-                        # day. In most cases, this isn't super meaningful, but provides a starting
-                        # place for further analysis
-                        if metric_type in GLEAN_DISTRIBUTION_TYPES:
-                            looker_dimension_name = base_looker_dimension_name + "__sum"
-                            custom_field_name = f"sum_of_{metric_name_snakecase}"
-                            dynamic_fields = [
-                                dict(
-                                    measure=custom_field_name,
-                                    label=f"Sum of {metric.identifier}",
-                                    based_on=looker_dimension_name,
-                                    expression="",
-                                    type="sum",
-                                )
-                            ]
-                            looker_metric_link = (
-                                base_looker_explore_link
-                                + "&fields="
-                                + ",".join(
-                                    [
-                                        f"{ping_name_snakecase}.submission_date",
-                                        custom_field_name,
-                                    ]
-                                )
-                                + "&dynamic_fields="
-                                + urllib.parse.quote_plus(json.dumps(dynamic_fields))
-                            )
-                        else:
-                            # otherwise pivoting on the dimension is the best we can do (this works
-                            # well for boolean measures)
-                            looker_metric_link = (
-                                base_looker_explore_link
-                                + "&fields="
-                                + ",".join(
-                                    [
-                                        f"{ping_name_snakecase}.submission_date",
-                                        base_looker_dimension_name,
-                                        (
-                                            f"{ping_name_snakecase}.clients"
-                                            if ping in pings_with_client_id
-                                            else f"{ping_name_snakecase}.ping_count"
-                                        ),
-                                    ]
-                                )
-                                + f"&pivots={base_looker_dimension_name}"
-                            )
-
-                    if looker_metric_link:
-                        ping_data[ping]["looker"] = {
-                            "base": {
-                                "name": base_looker_explore_name,
-                                "url": base_looker_explore_link,
-                            },
-                            "metric": {
-                                "name": metric.identifier,
-                                "url": f"{looker_metric_link}&toggle=vis",
-                            },
-                        }
-                # GLAM data is similarly per application and per ping (well,
-                # only the metrics ping right now), when it exists
-                app_supports_glam = GLAM_PRODUCT_MAPPINGS.get(app.app_id)
-                if not GLAM_PRODUCT_MAPPINGS.get(app.app_id):
-                    ping_data[ping][
-                        "glam_unsupported_reason"
-                    ] = "This application is not supported by GLAM."
-                elif metric.bq_prefix in ["client_info", "ping_info"]:
-                    ping_data[ping][
-                        "glam_unsupported_reason"
-                    ] = "Internal Glean metrics are not supported by GLAM."
-                elif metric_type not in SUPPORTED_GLAM_METRIC_TYPES:
-                    ping_data[ping][
-                        "glam_unsupported_reason"
-                    ] = f"Currently GLAM does not support `{metric_type}` metrics."
-                elif ping != "metrics":
-                    ping_data[ping]["glam_unsupported_reason"] = (
-                        f"Metrics sent in the `{ping}` ping are not supported "
-                        "by GLAM "
-                        "([mozilla/glam#1652](https://github.com/mozilla/glam/issues/1652))."
-                    )
-                else:
-                    (glam_product, glam_app_id) = GLAM_PRODUCT_MAPPINGS[app.app_id]
-                    glam_metric_id = etl_snake_case(metric.identifier)
-                    ping_data[ping]["glam_url"] = (
-                        "https://glam.telemetry.mozilla.org/"
-                        + f"{glam_product}/probe/{glam_metric_id}/explore"
-                        + f"?app_id={glam_app_id}"
-                    )
+                if looker_metadata:
+                    ping_data[ping_name].update({"looker": looker_metadata})
+                glam_metadata = get_glam_metadata_for_metric(app, metric, ping_name)
+                ping_data[ping_name].update(glam_metadata)
 
             etl = dict(
                 ping_data=ping_data,
-                bigquery_column_name=bigquery_column_name,
+                bigquery_column_name=get_bigquery_column_name(metric),
             )
 
             app_metrics[metric.identifier]["variants"].append(
