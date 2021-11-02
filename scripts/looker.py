@@ -19,95 +19,109 @@ SUPPORTED_LOOKER_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
 }
 
 
-def _get_looker_ping_explore_url(looker_namespaces, app_name, ping_name, table_name, app_channel):
-    ping_name_snakecase = stringcase.snakecase(ping_name)
-    if (
+def _looker_explore_exists(looker_namespaces, app_name, explore_name):
+    return (
         looker_namespaces.get(app_name)
         and looker_namespaces[app_name].get("glean_app")
-        and looker_namespaces[app_name]["explores"].get(ping_name_snakecase)
-    ):
-        channel_identifier = "mozdata." + table_name.replace("_", "%5E_")
-        return f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}?" + (
-            f"f[{ping_name_snakecase}.channel]={channel_identifier}" if app_channel else ""
-        )
+        and looker_namespaces[app_name]["explores"].get(explore_name)
+    )
+
+
+def _get_looker_ping_explore(
+    looker_namespaces, app_name, ping_name, table_name, app_channel, app_group
+):
+    ping_name_snakecase = stringcase.snakecase(ping_name)
+    if _looker_explore_exists(looker_namespaces, app_name, ping_name_snakecase):
+        url = f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}"
+        # if there are multiple channels, we need a channel identifier
+        if len(app_group["app_ids"]) > 1 and app_channel:
+            channel_identifier = "mozdata." + table_name.replace("_", "%5E_")
+            url += f"?f[{ping_name_snakecase}.channel]={channel_identifier}"
+        return {"name": ping_name_snakecase, "url": url}
     return None
 
 
-def _get_looker_event_count_explore_url(looker_namespaces, app_name, channel_name):
-    if (
-        looker_namespaces.get(app_name)
-        and looker_namespaces[app_name].get("glean_app")
-        and looker_namespaces[app_name]["explores"].get("events")
-    ):
-        base_url = (
+def _get_looker_event_explore(looker_namespaces, app_name, app_channel, app_group):
+    if _looker_explore_exists(looker_namespaces, app_name, "events"):
+        url = (
             f"https://mozilla.cloud.looker.com/explore/{app_name}/event_counts"
             + "?fields=events.event_count,events.client_count"
         )
-        return (
-            base_url + f"&f[events.normalized_channel]={channel_name}" if channel_name else base_url
+        if len(app_group["app_ids"]) > 1 and app_channel:
+            url += f"&f[events.normalized_channel]={app_channel}"
+        return {"name": "event_counts", "url": url}
+    elif _looker_explore_exists(looker_namespaces, app_name, "funnel_analysis"):
+        url = (
+            f"https://mozilla.cloud.looker.com/explore/{app_name}/funnel_analysis"
+            + "?fields=funnel_analysis.count_completed_step_1"
         )
-
+        if len(app_group["app_ids"]) > 1 and app_channel:
+            url += f"&f[funnel_analysis.app_channel]={app_channel}"
+        return {"name": "funnel_analysis", "url": url}
     return None
 
 
-def get_looker_explore_metadata_for_ping(looker_namespaces, app, ping):
+def get_looker_explore_metadata_for_ping(looker_namespaces, app, app_group, ping):
+    if ping.identifier == "events":
+        return _get_looker_event_explore(
+            looker_namespaces, app.app_name, app.app.get("app_channel"), app_group
+        )
+
     return (
-        {
-            "name": "event_counts",
-            "url": _get_looker_event_count_explore_url(
-                looker_namespaces, app.app_name, app.app.get("app_channel")
-            ),
-        }
-        if ping.identifier == "events"
-        else {
-            "name": ping.identifier,
-            "url": _get_looker_ping_explore_url(
-                looker_namespaces,
-                app.app_name,
-                ping.identifier,
-                get_bigquery_ping_table_name(app.app["bq_dataset_family"], ping.identifier),
-                app.app.get("app_channel"),
-            ),
-        }
+        _get_looker_ping_explore(
+            looker_namespaces,
+            app.app_name,
+            ping.identifier,
+            get_bigquery_ping_table_name(app.app["bq_dataset_family"], ping.identifier),
+            app.app.get("app_channel"),
+            app_group,
+        ),
     )
 
 
 def get_looker_explore_metadata_for_metric(
-    looker_namespaces, app, metric, ping_name, ping_has_client_id
+    looker_namespaces, app, app_group, metric, ping_name, ping_has_client_id
 ):
     metric_type = metric.definition["type"]
     metric_name_snakecase = stringcase.snakecase(metric.identifier)
     ping_name_snakecase = stringcase.snakecase(ping_name)
 
-    base_looker_explore_name = "event_counts" if ping_name == "events" else ping_name
-    base_looker_explore_link = (
-        _get_looker_event_count_explore_url(
-            looker_namespaces, app.app_name, app.app.get("app_channel")
+    base_looker_explore = (
+        _get_looker_event_explore(
+            looker_namespaces, app.app_name, app.app.get("app_channel"), app_group
         )
-        if ping_name == "events"
-        else _get_looker_ping_explore_url(
+        if metric_type == "event"
+        else _get_looker_ping_explore(
             looker_namespaces,
             app.app_name,
             ping_name,
             get_bigquery_ping_table_name(app.app["bq_dataset_family"], ping_name),
             app.app.get("app_channel"),
+            app_group,
         )
     )
 
     # we deliberately don't show looker information for deprecated applications
-    if not app.app.get("deprecated") and base_looker_explore_link:
+    if not app.app.get("deprecated") and base_looker_explore:
         looker_metric_link = None
         if metric_type == "event":
             (metric_category, metric_name) = metric.identifier.split(".", 1)
-            looker_metric_link = (
-                base_looker_explore_link
-                + f"&f[events.event_name]=%22{metric_name}%22"
-                + f"&f[events.event_category]=%22{metric_category}%22"
-            )
+            if base_looker_explore["name"] == "event_counts":
+                looker_metric_link = (
+                    base_looker_explore["url"]
+                    + f"&f[events.event_name]=%22{metric_name}%22"
+                    + f"&f[events.event_category]=%22{metric_category}%22"
+                )
+            else:
+                looker_metric_link = (
+                    base_looker_explore["url"]
+                    + f"&f[step_1.event]=%22{metric_name}%22"
+                    + f"&f[step_1.category]=%22{metric_category}%22"
+                )
         # for counters, we can use measures directly
         if metric_type == "counter":
             looker_metric_link = (
-                base_looker_explore_link
+                base_looker_explore["url"]
                 + "&fields="
                 + ",".join(
                     [
@@ -123,7 +137,7 @@ def get_looker_explore_metadata_for_metric(
                 + f"{metric_name_snakecase}"
             )
             looker_metric_link = (
-                base_looker_explore_link
+                base_looker_explore["url"]
                 + "&fields="
                 + ",".join(
                     [
@@ -155,7 +169,7 @@ def get_looker_explore_metadata_for_metric(
                     )
                 ]
                 looker_metric_link = (
-                    base_looker_explore_link
+                    base_looker_explore["url"]
                     + "&fields="
                     + ",".join(
                         [
@@ -170,7 +184,7 @@ def get_looker_explore_metadata_for_metric(
                 # otherwise pivoting on the dimension is the best we can do (this works
                 # well for boolean measures)
                 looker_metric_link = (
-                    base_looker_explore_link
+                    base_looker_explore["url"]
                     + "&fields="
                     + ",".join(
                         [
@@ -188,10 +202,7 @@ def get_looker_explore_metadata_for_metric(
 
         if looker_metric_link:
             return {
-                "base": {
-                    "name": base_looker_explore_name,
-                    "url": base_looker_explore_link,
-                },
+                "base": base_looker_explore,
                 "metric": {
                     "name": metric.identifier,
                     "url": f"{looker_metric_link}&toggle=vis",
