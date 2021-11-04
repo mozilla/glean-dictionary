@@ -118,6 +118,10 @@ def get_looker_explore_metadata_for_metric(
                     + f"&f[step_1.event]=%22{metric_name}%22"
                     + f"&f[step_1.category]=%22{metric_category}%22"
                 )
+            else:
+                # this should never happen (unless we made a mistake in getting the
+                # base looker explore link)
+                raise Exception(f"Unexpected base looker explore {base_looker_explore['name']}")
         # for counters, we can use measures directly
         if metric_type == "counter":
             looker_metric_link = (
