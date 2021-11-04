@@ -112,7 +112,7 @@ def get_looker_explore_metadata_for_metric(
                     + f"&f[events.event_name]=%22{metric_name}%22"
                     + f"&f[events.event_category]=%22{metric_category}%22"
                 )
-            else:
+            elif base_looker_explore["name"] == "funnel_analysis":
                 looker_metric_link = (
                     base_looker_explore["url"]
                     + f"&f[step_1.event]=%22{metric_name}%22"
