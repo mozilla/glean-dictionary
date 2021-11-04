@@ -222,8 +222,10 @@ for (app_name, app_group) in app_groups.items():
                 table=stable_ping_table_name,
                 channel=app_channel if app_channel else "release",
             )
-            looker_explore = get_looker_explore_metadata_for_ping(looker_namespaces, app, ping)
-            if not app_is_deprecated and looker_explore.get("url"):
+            looker_explore = get_looker_explore_metadata_for_ping(
+                looker_namespaces, app, app_group, ping
+            )
+            if not app_is_deprecated and looker_explore:
                 variant_data.update({"looker_explore": looker_explore})
             ping_data["variants"].append(variant_data)
             app_variant_table_dir = os.path.join(app_table_dir, get_resource_path(app.app_id))
@@ -316,6 +318,7 @@ for (app_name, app_group) in app_groups.items():
                 looker_metadata = get_looker_explore_metadata_for_metric(
                     looker_namespaces,
                     app,
+                    app_group,
                     metric,
                     ping_name,
                     ping_name in pings_with_client_id,
