@@ -163,7 +163,7 @@
           }}>Show</button
         >
       {:else}
-        <p>Try entering less specific or alternate search terms.</p>
+        <p>Try entering less specific or alternative search terms.</p>
       {/if}
     </div>
   {:else}
