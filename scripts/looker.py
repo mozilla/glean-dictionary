@@ -67,15 +67,13 @@ def get_looker_explore_metadata_for_ping(looker_namespaces, app, app_group, ping
             looker_namespaces, app.app_name, app.app.get("app_channel"), app_group
         )
 
-    return (
-        _get_looker_ping_explore(
-            looker_namespaces,
-            app.app_name,
-            ping.identifier,
-            get_bigquery_ping_table_name(app.app["bq_dataset_family"], ping.identifier),
-            app.app.get("app_channel"),
-            app_group,
-        ),
+    return _get_looker_ping_explore(
+        looker_namespaces,
+        app.app_name,
+        ping.identifier,
+        get_bigquery_ping_table_name(app.app["bq_dataset_family"], ping.identifier),
+        app.app.get("app_channel"),
+        app_group,
     )
 
 
