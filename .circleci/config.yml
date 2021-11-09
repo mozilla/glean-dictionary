@@ -3,7 +3,7 @@ orbs:
   node: circleci/node@2.0.1
   python: circleci/python@0.2.1
 jobs:
-  build-and-test:
+  frontend-build-and-test:
     executor:
       name: node/default
       tag: "12.16"
@@ -15,8 +15,13 @@ jobs:
       - run: npm install
       - run: npm run build
       - run: npm run build-storybook
+      # for playwright integration tests, we want the data files we
+      # collected in the previous step
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: cp -r /tmp/workspace/data/* public/data/
       - run: npm test
-  python-build-and-test:
+  backend-build-and-test:
     executor: python/default
     steps:
       - checkout
@@ -25,8 +30,16 @@ jobs:
           name: Run lint
           command: make lint
       - run: scripts/build-glean-metadata.py
+      - run: cp -r public /tmp/workspace
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - data
+
 workflows:
   build-and-test:
     jobs:
-      - build-and-test
-      - python-build-and-test
+      - backend-build-and-test
+      - frontend-build-and-test:
+          requires:
+            - backend-build-and-test
