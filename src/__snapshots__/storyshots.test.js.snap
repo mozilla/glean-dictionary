@@ -571,31 +571,31 @@ exports[`Storyshots ItemList Default 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="svelte-iia7x6"
+    class="svelte-lsmn69"
   >
     <span
-      class="expire-checkbox svelte-iia7x6"
+      class="expire-checkbox svelte-lsmn69"
     >
       <label
-        class="svelte-iia7x6"
+        class="svelte-lsmn69"
       >
         <input
-          class="svelte-iia7x6"
+          class="svelte-lsmn69"
           type="checkbox"
         />
         
-          Show expired and removed metrics
+        Show expired and removed metrics
       </label>
        
       <label
-        class="svelte-iia7x6"
+        class="svelte-lsmn69"
       >
         <input
-          class="svelte-iia7x6"
+          class="svelte-lsmn69"
           type="checkbox"
         />
         
-          Paginate
+        Paginate
       </label>
     </span>
      
@@ -611,34 +611,34 @@ exports[`Storyshots ItemList Default 1`] = `
     </div>
      
     <div
-      class="item-browser svelte-iia7x6"
+      class="item-browser svelte-lsmn69"
     >
       <table
-        class="mzp-u-data-table svelte-iia7x6"
+        class="mzp-u-data-table svelte-lsmn69"
       >
         <col
-          class="svelte-iia7x6"
+          class="svelte-lsmn69"
           width="35%"
         />
          
         <col
-          class="svelte-iia7x6"
+          class="svelte-lsmn69"
           width="20%"
         />
          
         <col
-          class="svelte-iia7x6"
+          class="svelte-lsmn69"
           width="45%"
         />
          
         <thead
-          class="svelte-iia7x6"
+          class="svelte-lsmn69"
         >
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <th
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               scope="col"
               style="text-align: center;"
             >
@@ -646,7 +646,7 @@ exports[`Storyshots ItemList Default 1`] = `
             </th>
              
             <th
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               scope="col"
               style="text-align: center;"
             >
@@ -654,7 +654,7 @@ exports[`Storyshots ItemList Default 1`] = `
             </th>
              
             <th
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               scope="col"
               style="text-align: center;"
             >
@@ -664,19 +664,19 @@ exports[`Storyshots ItemList Default 1`] = `
         </thead>
          
         <tbody
-          class="svelte-iia7x6"
+          class="svelte-lsmn69"
         >
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 0"
                 >
                   test metric 0
@@ -689,14 +689,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -704,10 +704,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 0"
               >
                 This is test metric 0
@@ -718,16 +718,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 1"
                 >
                   test metric 1
@@ -740,14 +740,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -755,10 +755,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 1"
               >
                 This is test metric 1
@@ -769,16 +769,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 2"
                 >
                   test metric 2
@@ -791,14 +791,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -806,10 +806,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 2"
               >
                 This is test metric 2
@@ -820,16 +820,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 3"
                 >
                   test metric 3
@@ -842,14 +842,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -857,10 +857,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 3"
               >
                 This is test metric 3
@@ -871,16 +871,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 4"
                 >
                   test metric 4
@@ -893,14 +893,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -908,10 +908,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 4"
               >
                 This is test metric 4
@@ -922,16 +922,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 5"
                 >
                   test metric 5
@@ -944,14 +944,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -959,10 +959,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 5"
               >
                 This is test metric 5
@@ -973,16 +973,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 6"
                 >
                   test metric 6
@@ -995,14 +995,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1010,10 +1010,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 6"
               >
                 This is test metric 6
@@ -1024,16 +1024,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 7"
                 >
                   test metric 7
@@ -1046,14 +1046,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1061,10 +1061,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 7"
               >
                 This is test metric 7
@@ -1075,16 +1075,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 8"
                 >
                   test metric 8
@@ -1097,14 +1097,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1112,10 +1112,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 8"
               >
                 This is test metric 8
@@ -1126,16 +1126,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 9"
                 >
                   test metric 9
@@ -1148,14 +1148,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1163,10 +1163,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 9"
               >
                 This is test metric 9
@@ -1177,16 +1177,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 10"
                 >
                   test metric 10
@@ -1199,14 +1199,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1214,10 +1214,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 10"
               >
                 This is test metric 10
@@ -1228,16 +1228,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 11"
                 >
                   test metric 11
@@ -1250,14 +1250,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1265,10 +1265,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 11"
               >
                 This is test metric 11
@@ -1279,16 +1279,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 12"
                 >
                   test metric 12
@@ -1301,14 +1301,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1316,10 +1316,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 12"
               >
                 This is test metric 12
@@ -1330,16 +1330,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 13"
                 >
                   test metric 13
@@ -1352,14 +1352,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1367,10 +1367,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 13"
               >
                 This is test metric 13
@@ -1381,16 +1381,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 14"
                 >
                   test metric 14
@@ -1403,14 +1403,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1418,10 +1418,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 14"
               >
                 This is test metric 14
@@ -1432,16 +1432,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 15"
                 >
                   test metric 15
@@ -1454,14 +1454,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1469,10 +1469,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 15"
               >
                 This is test metric 15
@@ -1483,16 +1483,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 16"
                 >
                   test metric 16
@@ -1505,14 +1505,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1520,10 +1520,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 16"
               >
                 This is test metric 16
@@ -1534,16 +1534,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 17"
                 >
                   test metric 17
@@ -1556,14 +1556,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1571,10 +1571,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 17"
               >
                 This is test metric 17
@@ -1585,16 +1585,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 18"
                 >
                   test metric 18
@@ -1607,14 +1607,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1622,10 +1622,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 18"
               >
                 This is test metric 18
@@ -1636,16 +1636,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-iia7x6"
+            class="svelte-lsmn69"
           >
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <a
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 19"
                 >
                   test metric 19
@@ -1658,14 +1658,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-iia7x6"
+              class="svelte-lsmn69"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
               >
                 <code
-                  class="svelte-iia7x6"
+                  class="svelte-lsmn69"
                 >
                   metric_type
                 </code>
@@ -1673,10 +1673,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-iia7x6"
+              class="description svelte-lsmn69"
             >
               <div
-                class="item-property svelte-iia7x6"
+                class="item-property svelte-lsmn69"
                 title="This is test metric 19"
               >
                 This is test metric 19
@@ -1689,6 +1689,7 @@ exports[`Storyshots ItemList Default 1`] = `
         </tbody>
       </table>
     </div>
+     
      
     <div
       class="pagination-position svelte-dgls7k"

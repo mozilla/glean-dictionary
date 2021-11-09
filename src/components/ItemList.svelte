@@ -37,6 +37,7 @@
   let showUncollected;
   let topElement;
   let scrollY;
+  let totalItems;
 
   const searchIndex = new Document({
     tokenize: "forward",
@@ -67,11 +68,6 @@
     });
   }
 
-  function handleSearch(searchItems, text, expired) {
-    const searchResult = text ? fullTextSearch(text, searchItems) : searchItems;
-    return filterUncollectedItems(searchResult, expired);
-  }
-
   function highlightSearch(text, query) {
     return query.length
       ? text.replace(
@@ -82,17 +78,22 @@
   }
 
   $: {
-    showUncollected =
-      $pageState.showUncollected === undefined
-        ? true
-        : $pageState.showUncollected;
+    showUncollected = $pageState.showUncollected;
     search = $pageState.search || "";
   }
 
   // update pagedItems when either pagination changes or search text changes
   // (above)
   $: {
-    filteredItems = handleSearch(items, search, showUncollected);
+    // after filtering for text, but before filtering for uncollected
+    // (expired or removed)
+    filteredItems = search ? fullTextSearch(search, items) : items;
+    totalItems = filteredItems.length;
+
+    // now filter for uncollected items (if applicable)
+    filteredItems = showUncollected
+      ? filteredItems
+      : filterUncollectedItems(filteredItems);
 
     // update pagination
     const currentPage = $pageState.page || 1;
@@ -121,34 +122,51 @@
 <svelte:window bind:scrollY />
 
 <div bind:this={topElement}>
-  {#if !items.length}
-    <p>
-      No {itemType} found matching specified criteria.
-    </p>
+  {#if itemType === "metrics"}
+    <span class="expire-checkbox">
+      <label>
+        <input
+          type="checkbox"
+          bind:checked={showUncollected}
+          on:change={() => {
+            // the binding changes *after* this callback is called, so use
+            // the inverse value
+            updateURLState({ showUncollected: !showUncollected });
+          }}
+        />
+        Show expired and removed metrics
+      </label>
+      <label>
+        <input type="checkbox" bind:checked={paginated} />
+        Paginate
+      </label>
+    </span>
+  {/if}
+  {#if showFilter}
+    <FilterInput placeHolder="Search {itemType}" />
+  {/if}
+  {#if !filteredItems.length}
+    <div class="items-not-found">
+      <h3>
+        No {totalItems > 0 ? "active" : ""}
+        {itemType} found matching specified criteria
+      </h3>
+      {#if totalItems > 0}
+        <p>
+          {totalItems} expired or removed {itemType} found.
+        </p>
+        <button
+          class="mzp-c-button mzp-t-secondary mzp-t-md"
+          on:click={() => {
+            showUncollected = true;
+            updateURLState({ showUncollected });
+          }}>Show</button
+        >
+      {:else}
+        <p>Try entering less specific or alternative search terms.</p>
+      {/if}
+    </div>
   {:else}
-    {#if itemType === "metrics"}
-      <span class="expire-checkbox">
-        <label>
-          <input
-            type="checkbox"
-            bind:checked={showUncollected}
-            on:change={() => {
-              // the binding changes *after* this callback is called, so use
-              // the inverse value
-              updateURLState({ showUncollected: !showUncollected });
-            }}
-          />
-          Show expired and removed metrics
-        </label>
-        <label>
-          <input type="checkbox" bind:checked={paginated} />
-          Paginate
-        </label>
-      </span>
-    {/if}
-    {#if showFilter}
-      <FilterInput placeHolder="Search {itemType}" />
-    {/if}
     <div class="item-browser">
       <table class="mzp-u-data-table">
         <!-- We have to do inline styling here to override Protocol CSS rules -->
@@ -259,6 +277,14 @@
   {/if}
 
   {#if filteredItems.length && paginated}
+    {#if totalItems - filteredItems.length > 0}
+      <div class="items-not-found">
+        <p>
+          {totalItems - filteredItems.length} additional expired or removed {itemType}
+          found.
+        </p>
+      </div>
+    {/if}
     <Pagination
       totalItems={filteredItems.length}
       itemsPerPage={DEFAULT_ITEMS_PER_PAGE}
@@ -267,6 +293,8 @@
 </div>
 
 <style>
+  @import "@mozilla-protocol/core/protocol/css/components/_button.scss";
+
   .item-browser {
     a {
       text-decoration: none;
@@ -277,6 +305,10 @@
     height: 50px;
     overflow-y: auto;
     margin: -0.25rem;
+  }
+  .items-not-found {
+    padding-top: 40px;
+    text-align: center;
   }
 
   table {
