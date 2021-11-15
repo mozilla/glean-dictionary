@@ -1,5 +1,6 @@
 <script>
   import { chunk } from "lodash";
+  import { Document } from "flexsearch";
 
   import { getItemURL } from "../state/urls";
   import { stripLinks } from "../formatters/markdown";
@@ -40,14 +41,24 @@
   let scrollY;
   let totalItems;
 
+  const searchIndex = new Document({
+    tokenize: "forward",
+    index: ["id", "type", "tags", "origin", "description"],
+  });
+
+  items.forEach((item) => {
+    searchIndex.add({
+      id: item.name,
+      type: item.type,
+      tags: item.tags,
+      origin: item.origin,
+      description: item.description,
+    });
+  });
+
   function getItemTypeSingular(pluralized) {
     // cut off the trailing 's'
     return pluralized.slice(0, -1);
-  }
-
-  function handleSearch(searchItems, text, expired) {
-    const searchResult = text ? fullTextSearch(text, searchItems) : searchItems;
-    return filterUncollectedItems(searchResult, expired);
   }
 
   function highlightSearch(text, query) {

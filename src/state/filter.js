@@ -11,7 +11,8 @@ export const filterUnmatchedItems = (firstArray, secondArray) =>
 export const filterItemsByLabels = (items, labels) => {
   let itemsFilteredByLabels = items;
 
-  const filteredItems = (label) => {
+  // filter items that match specified tags and origin
+  const getItemsByLabel = (label) => {
     return items.filter(
       (item) =>
         item[label] && labels[label].every((el) => item[label].includes(el))
@@ -21,7 +22,7 @@ export const filterItemsByLabels = (items, labels) => {
   Object.keys(labels).forEach((key) => {
     if (labels[key].length) {
       itemsFilteredByLabels = filterUnmatchedItems(
-        filteredItems(key),
+        getItemsByLabel(key),
         itemsFilteredByLabels
       );
     }
