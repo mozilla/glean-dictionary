@@ -5,21 +5,17 @@ export const filterUncollectedItems = (items, showUncollected) =>
     (item) => showUncollected || (!isExpired(item) && !isRemoved(item))
   );
 
-const filterUnmatchedItems = (firstArray, secondArray) =>
+export const filterUnmatchedItems = (firstArray, secondArray) =>
   firstArray.filter((l) => secondArray.includes(l));
 
 export const filterItemsByLabels = (items, labels) => {
   let itemsFilteredByLabels = items;
 
-  // an item can have many tags, but only one origin
   const filteredItems = (label) => {
-    return label === "tags"
-      ? items.filter((item) =>
-          labels.tags.every((tag) => item.tags.includes(tag))
-        )
-      : items.filter(
-          (item) => item.origin && item.origin.includes(labels.origin[0])
-        );
+    return items.filter(
+      (item) =>
+        item[label] && labels[label].every((el) => item[label].includes(el))
+    );
   };
 
   Object.keys(labels).forEach((key) => {
