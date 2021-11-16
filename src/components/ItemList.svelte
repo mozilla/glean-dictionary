@@ -21,6 +21,8 @@
     getLibraryDescription,
   } from "../data/help";
 
+  import { fullTextSearch } from "../state/search";
+
   let DEFAULT_ITEMS_PER_PAGE = 20;
 
   export let appName;
@@ -59,36 +61,9 @@
     return pluralized.slice(0, -1);
   }
 
-  function fullTextSearch(query, searchItems) {
-    let filteredSearchItems = searchItems;
-    let searchQuery = query;
-
-    if (query.startsWith("tags:") || query.startsWith("origin:")) {
-      const labelType = query.split(":")[0]; // e.g. "tags" or "origin"
-      // separate label query from search query
-      const [label, searchValue] = query.split(":")[1].split(" ");
-
-      filteredSearchItems = searchItems.filter(
-        (item) => item[labelType] && item[labelType].includes(label)
-      );
-
-      // returns all items of that label if no extra search term is specified
-      if (!searchValue) return filteredSearchItems;
-      searchQuery = searchValue;
-    }
-
-    const results = [
-      ...new Set(
-        searchIndex
-          .search(searchQuery, { limit: 10000 })
-          .flatMap((match) => match.result)
-      ),
-    ];
-    return results
-      .map((result) => {
-        return filteredSearchItems.find((item) => item.name === result);
-      })
-      .filter((el) => el !== undefined);
+  function handleSearch(searchItems, text, expired) {
+    const searchResult = text ? fullTextSearch(text, searchItems) : searchItems;
+    return filterUncollectedItems(searchResult, expired);
   }
 
   function highlightSearch(text, query) {
