@@ -16,7 +16,7 @@
     "storybook": "start-storybook --static-dir ./public -p 6006",
     "test": "npm-run-all format:check lint test:jest test:playwright",
     "test:jest": "jest tests src --no-cache",
-    "test:playwright": "npx playwright test",
+    "test:playwright": "npx playwright install && npx playwright test",
     "build-glean-metadata": "node scripts/build-glean-metadata.js"
   },
   "devDependencies": {
