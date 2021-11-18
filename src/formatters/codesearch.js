@@ -9,6 +9,8 @@ const searchfoxMap = {
 
   firefox_desktop: "https://searchfox.org/mozilla-central/source/",
 
+  focus_android: "focus-android",
+
   focus_ios: "focus-ios",
 
   firefox_echo_show: "firefox-echo-show",
@@ -42,6 +44,8 @@ const sourcegraphMap = {
   mozphab: "review",
 
   mozregression: "mozregression",
+
+  mozilla_vpn: "mozilla-vpn-client",
 };
 
 export const getCodeSearchLink = (app, metric) => {
