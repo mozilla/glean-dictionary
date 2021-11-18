@@ -1,6 +1,5 @@
 import {
   filterUncollectedItems,
-  filterUnmatchedItems,
   filterItemsByLabels,
 } from "../src/state/filter";
 
@@ -59,13 +58,6 @@ describe("expiry", () => {
     expect(getNames(filterUncollectedItems(items, false))).toEqual([
       "metric.bestsitez",
       "metric.camel",
-    ]));
-});
-
-describe("filter unmatched items", () => {
-  it("returns the inner join of 2 arrays", () =>
-    expect(filterUnmatchedItems([1, 2, 3, 4, 5], [3, 4, 5, 6, 7])).toEqual([
-      3, 4, 5,
     ]));
 });
 

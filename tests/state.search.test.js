@@ -36,6 +36,13 @@ const items = [
     type: "event",
     description: "z abc",
   },
+  {
+    name: "metric.six",
+    tags: ["A:Tag"],
+    origin: "engine-gecko",
+    type: "boolean",
+    description: "def ghi",
+  },
 ];
 
 describe("search", () => {
@@ -45,19 +52,27 @@ describe("search", () => {
       "metric.four",
       "metric.five",
     ]));
+
   it("returns items of Foo tags, sync origin, with search word 'three'", () =>
     expect(
       getNames(fullTextSearch("three tags:Foo origin:sync", items))
     ).toEqual(["metric.three"]));
-  it("returns the items that match the description abc", () =>
+
+  it("returns the items that match the description `abc`", () =>
     expect(getNames(fullTextSearch("abc", items))).toEqual([
       "metric.one",
       "metric.five",
     ]));
+
   it("returns only type string items", () =>
     expect(getNames(fullTextSearch("string", items))).toEqual([
       "metric.one",
       "metric.two",
       "metric.four",
+    ]));
+
+  it("works correctly with tags that has a `:` in its name", () =>
+    expect(getNames(fullTextSearch("tags:A:Tag", items))).toEqual([
+      "metric.six",
     ]));
 });
