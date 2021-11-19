@@ -81,6 +81,29 @@ following command:
 npm run test:jest -- -u
 ```
 
+## End-to-End Testing
+
+We use [Playwright](https://playwright.dev/) for our end-to-end tests.
+
+Before testing, download the supported browsers needed for Playwright to execute
+successfully by running:
+
+```bash
+npx playwright install
+```
+
+To run the end-to-end tests along with other tests:
+
+```bash
+npm run test
+```
+
+To run only the Playwright tests:
+
+```bash
+npx playwright test
+```
+
 ## Deployment
 
 The production version of the Glean Dictionary
