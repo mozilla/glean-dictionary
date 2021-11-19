@@ -20,6 +20,8 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run: cp -r /tmp/workspace/data/* public/data/
+      # Install Playwright browsers
+      - run: npx playwright install
       - run: npm test
   backend-build-and-test:
     executor: python/default
