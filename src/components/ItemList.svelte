@@ -21,6 +21,8 @@
     getLibraryDescription,
   } from "../data/help";
 
+  import { fullTextSearch } from "../state/search";
+
   let DEFAULT_ITEMS_PER_PAGE = 20;
 
   export let appName;
@@ -57,15 +59,6 @@
   function getItemTypeSingular(pluralized) {
     // cut off the trailing 's'
     return pluralized.slice(0, -1);
-  }
-
-  function fullTextSearch(query, searchItems) {
-    const results = [
-      ...new Set(searchIndex.search(query).flatMap((match) => match.result)),
-    ];
-    return results.map((result) => {
-      return searchItems.find((item) => item.name === result);
-    });
   }
 
   function highlightSearch(text, query) {
@@ -197,7 +190,7 @@
                   {#if itemType === "tags"}
                     <Label
                       text={item.name}
-                      on:click={updateSearch(item.name, "metrics")}
+                      on:click={updateSearch(`tags:${item.name}`, "metrics")}
                       clickable
                     />
                   {:else}
@@ -212,7 +205,7 @@
                         getItemTypeSingular(itemType),
                         item.origin
                       )}
-                      on:click={updateSearch(item.origin)}
+                      on:click={updateSearch(`origin:${item.origin}`)}
                       clickable
                     />
                   {/if}
@@ -222,7 +215,7 @@
                         text={tag}
                         description={stripLinks(tagDescriptions[tag])}
                         clickable
-                        on:click={updateSearch(tag)}
+                        on:click={updateSearch(`tags:${tag}`)}
                       />
                     {/each}
                   {/if}
