@@ -297,8 +297,9 @@ for (app_name, app_group) in app_groups.items():
                 )
 
                 # sort "send in pings" alphanumerically, except that `metrics`
-                # should always be first if present
-                ping_priority = {"metrics": 0}
+                # should always be first if present and `deletion-request`
+                # should be last
+                ping_priority = {"metrics": 0, "deletion-request": 2}
                 app_metrics[metric.identifier]["send_in_pings"].sort()
                 app_metrics[metric.identifier]["send_in_pings"].sort(
                     key=lambda ping: ping_priority.get(ping, 1)
