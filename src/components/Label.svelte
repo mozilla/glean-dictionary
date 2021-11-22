@@ -1,4 +1,5 @@
 <script>
+  import { parseInline } from "marked";
   import tippy from "./tippy";
 
   export let text;
@@ -28,7 +29,7 @@
     : ''}"
   on:click
   use:tippy={description && {
-    content: description,
+    content: parseInline(description),
     allowHTML: true,
     placement: "top",
   }}>{text}</span

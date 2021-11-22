@@ -25,6 +25,10 @@
 
 <h4>Labels with description (hover over)</h4>
 <Label text="Descriptive" description="A description" />
+<Label
+  text="Descriptive markdown"
+  description="A description with *markdown*"
+/>
 
 <br />
 <br />
