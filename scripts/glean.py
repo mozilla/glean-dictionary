@@ -60,7 +60,9 @@ class GleanMetric(GleanObject):
         self.identifier = identifier
         self._set_dates(definition)
         self._set_definition(definition)
-        self._set_description(self.definition)
+
+        self.description = self.definition.get("description")
+        self.tags = self.definition["metadata"].get("tags", [])
 
         self.bq_prefix = None
         if "glean_client_info" in self.definition["send_in_pings"]:
@@ -96,12 +98,6 @@ class GleanMetric(GleanObject):
         self.first_added = min(vals)
         self.last_change = max(vals)
 
-    def _set_description(self, definition):
-        if "description" in definition:
-            self.description = definition["description"]
-        else:
-            self.description = None
-
     def get_first_added(self) -> datetime:
         return self.first_added
 
@@ -117,7 +113,9 @@ class GleanPing(GleanObject):
     def __init__(self, identifier: str, definition: dict):
         self.identifier = identifier
         self._set_definition(definition)
-        self._set_description(self.definition)
+
+        self.description = self.definition.get("description")
+        self.tags = self.definition["metadata"].get("tags", [])
 
     def _set_definition(self, full_defn: dict):
         self.definition_history = list(
@@ -134,11 +132,30 @@ class GleanPing(GleanObject):
         self.definition["origin"] = full_defn[self.ORIGIN_KEY]
         self.definition["date_first_seen"] = self.definition_history[-1]["dates"]["first"]
 
-    def _set_description(self, definition: dict):
-        if "description" in definition:
-            self.description = definition["description"]
-        else:
-            self.description = None
+
+class GleanTag(GleanObject):
+    """
+    Represents an individual Glean Tag, as defined by probe scraper
+    """
+
+    def __init__(self, identifier: str, definition: dict):
+        self.identifier = identifier
+        self._set_definition(definition)
+        self.description = self.definition_history[0].get("description")
+
+    def _set_definition(self, full_defn: dict):
+        self.definition_history = list(
+            sorted(
+                full_defn[self.HISTORY_KEY],
+                key=lambda x: datetime.fromisoformat(x["dates"]["last"]),
+                reverse=True,
+            )
+        )
+
+        # The canonical definition for up-to-date schemas
+        self.definition = self.definition_history[0]
+        self.definition["name"] = full_defn[self.NAME_KEY]
+        self.definition["date_first_seen"] = self.definition_history[-1]["dates"]["first"]
 
 
 class GleanApp(object):
@@ -153,6 +170,7 @@ class GleanApp(object):
 
     METRICS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/metrics"
     PING_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/pings"
+    TAGS_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/tags"
     DEPENDENCIES_URL_TEMPLATE = PROBE_INFO_BASE_URL + "/glean/{}/dependencies"
 
     DEFAULT_DEPENDENCIES = ["glean"]
@@ -269,4 +287,12 @@ class GleanApp(object):
         return [
             GleanPing(ping_name, ping_data)
             for ping_name, ping_data in self._get_ping_data().items()
+        ]
+
+    def get_tags(self) -> List[GleanTag]:
+        return [
+            GleanTag(tag_name, tag_data)
+            for tag_name, tag_data in _cache.get_json(
+                GleanApp.TAGS_URL_TEMPLATE.format(self.app["v1_name"])
+            ).items()
         ]
