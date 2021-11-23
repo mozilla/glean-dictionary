@@ -1898,6 +1898,12 @@ exports[`Storyshots Label Default 1`] = `
     Descriptive
   </span>
    
+  <span
+    class="label label-3  svelte-1ng65jt"
+  >
+    Descriptive markdown
+  </span>
+   
   <br />
    
   <br />
