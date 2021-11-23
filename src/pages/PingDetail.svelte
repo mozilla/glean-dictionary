@@ -21,6 +21,7 @@
   } from "../data/help";
   import { PING_SCHEMA } from "../data/schemas";
   import { getLibraryName } from "../formatters/library";
+  import { stripLinks } from "../formatters/markdown";
   import { getMetricSearchURL } from "../state/urls";
   import { isRecent } from "../state/items";
 
@@ -50,6 +51,14 @@
           /></a
         >
       {/if}
+      {#each ping.tags as tag}
+        <a href={getMetricSearchURL(params.app, tag.name)}
+          ><Label
+            text={tag.name}
+            description={stripLinks(tag.description)}
+          /></a
+        >
+      {/each}
     </svelte:fragment>
   </PageHeader>
   <Markdown text={ping.description} inline={false} />

@@ -19,7 +19,12 @@
   let itemType;
 
   const appDataPromise = getAppData(params.app).then((app) => {
-    return app;
+    return {
+      ...app,
+      tagDescriptions: Object.fromEntries(
+        app.tags.map((t) => [t.name, t.description])
+      ),
+    };
   });
 
   $: {
@@ -84,7 +89,12 @@
     </TabContent>
 
     <TabContent key="pings">
-      <ItemList itemType="pings" items={app.pings} appName={app.app_name} />
+      <ItemList
+        itemType="pings"
+        items={app.pings}
+        appName={app.app_name}
+        tagDescriptions={app.tagDescriptions}
+      />
     </TabContent>
 
     <TabContent key="metrics">
@@ -92,9 +102,7 @@
         itemType="metrics"
         items={app.metrics}
         appName={app.app_name}
-        tagDescriptions={Object.fromEntries(
-          app.tags.map((t) => [t.name, t.description])
-        )}
+        tagDescriptions={app.tagDescriptions}
       />
     </TabContent>
 

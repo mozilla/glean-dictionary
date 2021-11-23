@@ -52,34 +52,37 @@ def _get_annotation(annotations_index, origin, item_type, identifier=None):
     return annotations_index.get(origin, {}).get(item_type, {}).get(identifier, {})
 
 
-def _incorporate_annotation(item, item_annotation, tag_descriptions, app=False, full=False):
+def _incorporate_annotation(item, item_annotation, app=False, full=False):
     incorporated = dict(item, has_annotation=len(item_annotation) > 0)
 
     # handle tags, which are in a slightly different format than other types
     # of annotations (and we want to apply to both full and non-full)
-    if not app:
-        if full:
-            # we want an extended tag definition for a full description
-            incorporated.update(
-                {
-                    "tags": [
-                        {"name": tag, "description": tag_descriptions[tag]}
-                        for tag in item_annotation.get("tags", [])
-                    ]
-                }
-            )
-        else:
-            # for the non-full description, we just want the names
-            incorporated.update({"tags": item_annotation.get("tags", [])})
+    if not app and item_annotation.get("tags"):
+        # annotation tags always take precedence over any tags defined in
+        # metrics.yaml
+        incorporated.update({"tags": item_annotation["tags"]})
 
-    # other annotations are only applied to the full version (not the
-    # summaries we list out in various places)
     if full:
+        # other annotations are only applied to the full version (not the
+        # summaries we list out in various places)
         for annotation_type in ["commentary", "warning"]:
             if item_annotation.get(annotation_type):
                 incorporated[annotation_type] = item_annotation[annotation_type]
 
     return incorporated
+
+
+def _expand_tags(item, tag_descriptions):
+    """
+    Expand the tags into full name/description objects (for full definitions)
+    """
+    return dict(
+        item,
+        tags=[
+            {"name": tag_name, "description": tag_descriptions[tag_name]}
+            for tag_name in item["tags"]
+        ],
+    )
 
 
 def get_resource_path(line: str) -> str:
@@ -173,6 +176,12 @@ for (app_name, app_group) in app_groups.items():
         app = next(app for app in apps if app.app_id == app_id)
         app_is_deprecated = app.app.get("deprecated")
 
+        # app-id tags: tags specified in the annotations (and or more recent versions of an app)
+        # will always override older ones
+        for tag in app.get_tags():
+            if not app_tags.get(tag.identifier):
+                app_tags[tag.identifier] = tag.description
+
         # information about this app_id
         open(os.path.join(app_id_dir, f"{get_resource_path(app_id)}.json"), "w").write(
             json.dumps(app.app)
@@ -187,13 +196,12 @@ for (app_name, app_group) in app_groups.items():
                     _incorporate_annotation(
                         dict(
                             ping.definition,
+                            tags=ping.tags,
                             variants=[],
                         ),
                         _get_annotation(
                             annotations_index, ping.definition["origin"], "pings", ping.identifier
                         ),
-                        app_tags,
-                        full=False,
                     )
                 )
 
@@ -258,6 +266,7 @@ for (app_name, app_group) in app_groups.items():
                     dict(
                         name=metric.identifier,
                         description=metric.description,
+                        tags=metric.tags,
                         in_source=metric.definition["in_source"],
                         extra_keys=metric.definition["extra_keys"]
                         if "extra_keys" in metric.definition
@@ -266,8 +275,6 @@ for (app_name, app_group) in app_groups.items():
                         expires=metric.definition["expires"],
                     ),
                     metric_annotation,
-                    app_tags,
-                    full=False,
                 )
 
                 if metric.definition["origin"] != app_name:
@@ -282,18 +289,21 @@ for (app_name, app_group) in app_groups.items():
                 app_data["metrics"].append(base_definition)
 
                 # the full metric definition
-                app_metrics[metric.identifier] = _incorporate_annotation(
-                    dict(
-                        metric.definition,
-                        name=metric.identifier,
-                        # convert send_in_pings to a list so we can sort (see below)
-                        send_in_pings=list(metric.definition["send_in_pings"]),
-                        repo_url=app.app["url"],
-                        variants=[],
+                app_metrics[metric.identifier] = _expand_tags(
+                    _incorporate_annotation(
+                        dict(
+                            metric.definition,
+                            name=metric.identifier,
+                            tags=metric.tags,
+                            # convert send_in_pings to a list so we can sort (see below)
+                            send_in_pings=list(metric.definition["send_in_pings"]),
+                            repo_url=app.app["url"],
+                            variants=[],
+                        ),
+                        metric_annotation,
+                        full=True,
                     ),
-                    metric_annotation,
                     app_tags,
-                    full=True,
                 )
 
                 # sort "send in pings" alphanumerically, except that `metrics`
@@ -348,21 +358,23 @@ for (app_name, app_group) in app_groups.items():
         ping_data["variants"].sort(key=lambda v: USER_CHANNEL_PRIORITY[v["channel"]])
         open(os.path.join(app_ping_dir, f"{ping_data['name']}.json"), "w").write(
             json.dumps(
-                _incorporate_annotation(
-                    dict(
-                        ping_data,
-                        metrics=[
-                            metric
-                            for metric in metric_pings["data"]
-                            if ping_data["name"] in metric["pings"]
-                        ],
-                        tag_descriptions=app_tags,
-                    ),
-                    _get_annotation(
-                        annotations_index, ping_data["origin"], "pings", ping_data["name"]
+                _expand_tags(
+                    _incorporate_annotation(
+                        dict(
+                            ping_data,
+                            metrics=[
+                                metric
+                                for metric in metric_pings["data"]
+                                if ping_data["name"] in metric["pings"]
+                            ],
+                            tag_descriptions=app_tags,
+                        ),
+                        _get_annotation(
+                            annotations_index, ping_data["origin"], "pings", ping_data["name"]
+                        ),
+                        full=True,
                     ),
                     app_tags,
-                    full=True,
                 ),
                 default=_serialize_sets,
             )
@@ -381,8 +393,8 @@ for (app_name, app_group) in app_groups.items():
         )
 
     # write tag metadata (if any)
-    if app_annotation and app_annotation.get("tags"):
-        tags = [{"name": k, "description": v} for (k, v) in app_annotation["tags"].items()]
+    if app_tags:
+        tags = [{"name": k, "description": v} for (k, v) in app_tags.items()]
         app_data["tags"] = tags
         for tag in tags:
             tag_metrics = [
@@ -405,8 +417,6 @@ for (app_name, app_group) in app_groups.items():
 
     open(os.path.join(app_dir, "index.json"), "w").write(
         json.dumps(
-            _incorporate_annotation(
-                app_data, app_annotation.get("app", {}), app_tags, app=True, full=True
-            )
+            _incorporate_annotation(app_data, app_annotation.get("app", {}), app=True, full=True)
         )
     )
