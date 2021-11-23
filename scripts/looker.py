@@ -1,8 +1,8 @@
 import json
-import urllib.parse
 
 import stringcase
 from bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
+from furl import furl
 from glean import GLEAN_DISTRIBUTION_TYPES
 
 SUPPORTED_LOOKER_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
@@ -32,32 +32,30 @@ def _get_looker_ping_explore(
 ):
     ping_name_snakecase = stringcase.snakecase(ping_name)
     if _looker_explore_exists(looker_namespaces, app_name, ping_name_snakecase):
-        url = f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}"
+        url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}")
         # if there are multiple channels, we need a channel identifier
         if len(app_group["app_ids"]) > 1 and app_channel:
-            channel_identifier = "mozdata." + table_name.replace("_", "%5E_")
-            url += f"?f[{ping_name_snakecase}.channel]={channel_identifier}"
-        return {"name": ping_name_snakecase, "url": url}
+            channel_identifier = "mozdata." + table_name.replace("_", "^_")
+            url = url.add({f"f[{ping_name_snakecase}.channel]": channel_identifier})
+        return {"name": ping_name_snakecase, "url": url.url}
     return None
 
 
 def _get_looker_event_explore(looker_namespaces, app_name, app_channel, app_group):
     if _looker_explore_exists(looker_namespaces, app_name, "events"):
-        url = (
-            f"https://mozilla.cloud.looker.com/explore/{app_name}/event_counts"
-            + "?fields=events.event_count,events.client_count"
+        url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/event_counts").add(
+            {"fields": "events.event_count,events.client_count"}
         )
         if len(app_group["app_ids"]) > 1 and app_channel:
-            url += f"&f[events.normalized_channel]={app_channel}"
-        return {"name": "event_counts", "url": url}
+            url.add({"f[events.normalized_channel]": app_channel})
+        return {"name": "event_counts", "url": url.url}
     elif _looker_explore_exists(looker_namespaces, app_name, "funnel_analysis"):
-        url = (
-            f"https://mozilla.cloud.looker.com/explore/{app_name}/funnel_analysis"
-            + "?fields=funnel_analysis.count_completed_step_1"
+        url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/funnel_analysis").add(
+            {"fields": "funnel_analysis.count_completed_step_1"}
         )
         if len(app_group["app_ids"]) > 1 and app_channel:
-            url += f"&f[funnel_analysis.app_channel]={app_channel}"
-        return {"name": "funnel_analysis", "url": url}
+            url.add({"f[funnel_analysis.app_channel]": app_channel})
+        return {"name": "funnel_analysis", "url": url.url}
     return None
 
 
@@ -105,16 +103,18 @@ def get_looker_explore_metadata_for_metric(
         if metric_type == "event":
             (metric_category, metric_name) = metric.identifier.split(".", 1)
             if base_looker_explore["name"] == "event_counts":
-                looker_metric_link = (
-                    base_looker_explore["url"]
-                    + f"&f[events.event_name]=%22{metric_name}%22"
-                    + f"&f[events.event_category]=%22{metric_category}%22"
+                looker_metric_link = furl(base_looker_explore["url"]).add(
+                    {
+                        "f[events.event_name]": f'"{metric_name}"',
+                        "f[events.event_category]": f'"{metric_category}"',
+                    }
                 )
             elif base_looker_explore["name"] == "funnel_analysis":
-                looker_metric_link = (
-                    base_looker_explore["url"]
-                    + f"&f[step_1.event]=%22{metric_name}%22"
-                    + f"&f[step_1.category]=%22{metric_category}%22"
+                looker_metric_link = furl(base_looker_explore["url"]).add(
+                    {
+                        "f[step_1.event]": f'"{metric_name}"',
+                        "f[step_1.category]": f'"{metric_category}"',
+                    }
                 )
             else:
                 # this should never happen (unless we made a mistake in getting the
@@ -122,15 +122,15 @@ def get_looker_explore_metadata_for_metric(
                 raise Exception(f"Unexpected base looker explore {base_looker_explore['name']}")
         # for counters, we can use measures directly
         if metric_type == "counter":
-            looker_metric_link = (
-                base_looker_explore["url"]
-                + "&fields="
-                + ",".join(
-                    [
-                        f"{ping_name_snakecase}.submission_date",
-                        f"{ping_name_snakecase}.{metric_name_snakecase}",
-                    ]
-                )
+            looker_metric_link = furl(base_looker_explore["url"]).add(
+                {
+                    "fields": ",".join(
+                        [
+                            f"{ping_name_snakecase}.submission_date",
+                            f"{ping_name_snakecase}.{metric_name_snakecase}",
+                        ]
+                    )
+                }
             )
         elif metric_type == "labeled_counter":
             counter_field_base = (
@@ -138,18 +138,19 @@ def get_looker_explore_metadata_for_metric(
                 + "__metrics__labeled_counter__"
                 + f"{metric_name_snakecase}"
             )
-            looker_metric_link = (
-                base_looker_explore["url"]
-                + "&fields="
-                + ",".join(
-                    [
-                        f"{ping_name_snakecase}.submission_date",
-                        f"{counter_field_base}.label",
-                        f"{counter_field_base}.count",
-                    ]
-                )
-                + f"&pivots={counter_field_base}.label"
+            looker_metric_link = furl(base_looker_explore["url"]).add(
+                {
+                    "fields": ",".join(
+                        [
+                            f"{ping_name_snakecase}.submission_date",
+                            f"{counter_field_base}.label",
+                            f"{counter_field_base}.count",
+                        ]
+                    ),
+                    "pivots": f"{counter_field_base}.label",
+                }
             )
+
         elif metric_type in SUPPORTED_LOOKER_METRIC_TYPES:
             base_looker_dimension_name = "{}.{}".format(
                 ping_name_snakecase, get_bigquery_column_name(metric).replace(".", "__")
@@ -170,36 +171,35 @@ def get_looker_explore_metadata_for_metric(
                         type="sum",
                     )
                 ]
-                looker_metric_link = (
-                    base_looker_explore["url"]
-                    + "&fields="
-                    + ",".join(
-                        [
-                            f"{ping_name_snakecase}.submission_date",
-                            custom_field_name,
-                        ]
-                    )
-                    + "&dynamic_fields="
-                    + urllib.parse.quote_plus(json.dumps(dynamic_fields))
+                looker_metric_link = furl(base_looker_explore["url"]).add(
+                    {
+                        "fields": ",".join(
+                            [
+                                f"{ping_name_snakecase}.submission_date",
+                                custom_field_name,
+                            ]
+                        ),
+                        "dynamic_fields": json.dumps(dynamic_fields),
+                    }
                 )
             else:
                 # otherwise pivoting on the dimension is the best we can do (this works
                 # well for boolean measures)
-                looker_metric_link = (
-                    base_looker_explore["url"]
-                    + "&fields="
-                    + ",".join(
-                        [
-                            f"{ping_name_snakecase}.submission_date",
-                            base_looker_dimension_name,
-                            (
-                                f"{ping_name_snakecase}.clients"
-                                if ping_has_client_id
-                                else f"{ping_name_snakecase}.ping_count"
-                            ),
-                        ]
-                    )
-                    + f"&pivots={base_looker_dimension_name}"
+                looker_metric_link = furl(base_looker_explore["url"]).add(
+                    {
+                        "fields": ",".join(
+                            [
+                                f"{ping_name_snakecase}.submission_date",
+                                base_looker_dimension_name,
+                                (
+                                    f"{ping_name_snakecase}.clients"
+                                    if ping_has_client_id
+                                    else f"{ping_name_snakecase}.ping_count"
+                                ),
+                            ]
+                        ),
+                        "pivots": base_looker_dimension_name,
+                    }
                 )
 
         if looker_metric_link:
@@ -207,7 +207,7 @@ def get_looker_explore_metadata_for_metric(
                 "base": base_looker_explore,
                 "metric": {
                     "name": metric.identifier,
-                    "url": f"{looker_metric_link}&toggle=vis",
+                    "url": looker_metric_link.add({"toggle": "vis"}).url,
                 },
             }
 
