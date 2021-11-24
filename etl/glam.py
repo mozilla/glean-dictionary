@@ -1,6 +1,6 @@
 import re
 
-from glean import GLEAN_DISTRIBUTION_TYPES
+from .glean import GLEAN_DISTRIBUTION_TYPES
 
 GLAM_PRODUCT_MAPPINGS = {
     "org.mozilla.fenix": ("fenix", ""),

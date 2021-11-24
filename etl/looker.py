@@ -2,8 +2,9 @@ import json
 import urllib.parse
 
 import stringcase
-from bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
-from glean import GLEAN_DISTRIBUTION_TYPES
+
+from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
+from .glean import GLEAN_DISTRIBUTION_TYPES
 
 SUPPORTED_LOOKER_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
     "boolean",
@@ -20,6 +21,11 @@ SUPPORTED_LOOKER_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
 
 
 def _looker_explore_exists(looker_namespaces, app_name, explore_name):
+    print(
+        looker_namespaces.get(app_name),
+        looker_namespaces[app_name].get("glean_app"),
+        looker_namespaces[app_name]["explores"].get(explore_name),
+    )
     return (
         looker_namespaces.get(app_name)
         and looker_namespaces[app_name].get("glean_app")
