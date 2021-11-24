@@ -13,5 +13,5 @@ force_grid_wrap = 0
 use_parentheses = "True"
 
 [tool.pytest.ini_options]
-testpaths = ['etl', 'etl_tests']
+testpaths = ['.', 'etl', 'etl_tests']
 addopts = '--black --flake8 --isort'
