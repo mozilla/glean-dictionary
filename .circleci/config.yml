@@ -48,6 +48,9 @@ jobs:
           name: PyTest with linters
           command: venv/bin/pytest
       - run:
+          name: Install package locally
+          command: venv/bin/pip install -e .
+      - run:
           name: Build glean metadata
           command: venv/bin/build-glean-metadata
       - run: cp -r public /tmp/workspace

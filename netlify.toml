@@ -1,7 +1,7 @@
 [build]
 command = """
     set -e
-    scripts/build-glean-metadata.py
+    build-glean-metadata
     npm run build
     if [ "$STORYBOOK" ]; then
       npm run build-storybook
