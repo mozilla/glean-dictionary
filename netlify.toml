@@ -1,6 +1,7 @@
 [build]
 command = """
     set -e
+    pip install -e .
     build-glean-metadata
     npm run build
     if [ "$STORYBOOK" ]; then

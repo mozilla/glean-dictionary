@@ -27,11 +27,10 @@ Assuming those requirements are met, follow these instructions:
 ```bash
 # Create and activate a python virtual environment.
 python3 -m venv venv/
-source venv/bin/activate
-pip install -r requirements.txt
+venv/bin/pip install -r requirements.txt
 
 # Build data needed by dashboard
-./scripts/build-glean-metadata.py
+./scripts/build-glean-metadata
 
 # Install npm dependencies and start a local
 # instance of the GUI
@@ -48,7 +47,7 @@ considerably. For example, to build a metadata index for Fenix (Firefox for
 Android) only, try:
 
 ```bash
-./scripts/build-glean-metadata.py fenix
+./scripts/build-glean-metadata fenix
 ```
 
 ## Storybook
@@ -102,6 +101,14 @@ To run only the Playwright tests:
 
 ```bash
 npx playwright test
+```
+
+## ETL Testing
+
+The transforms used by the Glean Dictionary have their own tests. Assuming you've run the set up as described above, you can run these tests by executing:
+
+```bash
+venv/bin/pytest
 ```
 
 ## Deployment

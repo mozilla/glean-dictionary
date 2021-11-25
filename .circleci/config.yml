@@ -52,7 +52,7 @@ jobs:
           command: venv/bin/pip install -e .
       - run:
           name: Build glean metadata
-          command: venv/bin/build-glean-metadata
+          command: scripts/build-glean-metadata
       - run: cp -r public /tmp/workspace
       - persist_to_workspace:
           root: /tmp/workspace
