@@ -105,7 +105,8 @@ npx playwright test
 
 ## ETL Testing
 
-The transforms used by the Glean Dictionary have their own tests. Assuming you've run the set up as described above, you can run these tests by executing:
+The transforms used by the Glean Dictionary have their own tests. Assuming
+you've run the set up as described above, you can run these tests by executing:
 
 ```bash
 venv/bin/pytest
