@@ -296,7 +296,7 @@
   <NotFound pageName={params.metric} itemType="metric" />
 {/await}
 
-<style>
+<style lang="scss">
   @import "../main.scss";
   @include metadata-table;
   h2 {

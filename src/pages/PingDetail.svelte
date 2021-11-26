@@ -150,7 +150,7 @@
   <NotFound pageName={params.ping} itemType="ping" />
 {/await}
 
-<style>
+<style lang="scss">
   @import "../main.scss";
 
   @include metadata-table;

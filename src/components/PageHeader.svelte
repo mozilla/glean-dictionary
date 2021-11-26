@@ -12,7 +12,7 @@
   </div>
 {/if}
 
-<style>
+<style lang="scss">
   h1 {
     @include text-title-sm;
   }

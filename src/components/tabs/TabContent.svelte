@@ -11,7 +11,7 @@
   </div>
 {/if}
 
-<style>
+<style lang="scss">
   .box {
     padding: 2rem;
     border: 1px solid $color-light-gray-60;

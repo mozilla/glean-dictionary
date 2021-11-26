@@ -23,7 +23,7 @@
   </div>
 </div>
 
-<style>
+<style lang="scss">
   .mzp-c-notification-bar {
     display: flex;
     align-items: center;

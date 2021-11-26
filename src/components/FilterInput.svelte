@@ -18,7 +18,7 @@
   />
 </div>
 
-<style>
+<style lang="scss">
   div {
     margin-top: $spacing-xs;
     margin-bottom: $spacing-xs;

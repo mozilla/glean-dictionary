@@ -35,7 +35,7 @@
   </ol>
 </div>
 
-<style>
+<style lang="scss">
   .breadcrumb {
     display: flex;
     margin-left: $spacing-xl;

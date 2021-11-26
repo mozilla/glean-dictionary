@@ -20,7 +20,7 @@
   /></svg
 >
 
-<style>
+<style lang="scss">
   svg {
     display: block;
   }
