@@ -179,7 +179,7 @@
 
 <style lang="scss">
   @import "@mozilla-protocol/core/protocol/css/components/card";
-  @import "@mozilla-protocol/core/protocol/css/components/_emphasis-box.scss";
+  @import "@mozilla-protocol/core/protocol/css/components/emphasis-box";
   .app-filter {
     margin: $spacing-md $spacing-xl;
     #deprecation-checkbox {
