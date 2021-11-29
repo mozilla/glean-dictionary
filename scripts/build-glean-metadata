@@ -6,4 +6,4 @@ if [ -e venv ]; then
   . venv/bin/activate
 fi
 
-exec python3 -c "from etl.__main__ import main; main()" "$@"
+exec python3 -m etl "$@"
