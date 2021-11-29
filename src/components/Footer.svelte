@@ -58,3 +58,7 @@
     </nav>
   </div>
 </footer>
+
+<style lang="scss">
+  @import "@mozilla-protocol/core/protocol/css/components/footer";
+</style>

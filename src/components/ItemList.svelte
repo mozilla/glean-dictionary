@@ -285,8 +285,8 @@
   {/if}
 </div>
 
-<style>
-  @import "@mozilla-protocol/core/protocol/css/components/_button.scss";
+<style lang="scss">
+  @import "@mozilla-protocol/core/protocol/css/components/button";
 
   .item-browser {
     a {

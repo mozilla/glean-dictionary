@@ -49,7 +49,7 @@
   />
 {/await}
 
-<style>
+<style lang="scss">
   @import "../main.scss";
   h2 {
     @include text-title-xs;

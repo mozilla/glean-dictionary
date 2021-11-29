@@ -81,7 +81,7 @@
   <NotFound pageName={params.appId} itemType="table" />
 {/await}
 
-<style>
+<style lang="scss">
   @import "../main.scss";
   @include metadata-table;
 </style>

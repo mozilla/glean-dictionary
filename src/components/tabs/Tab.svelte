@@ -17,7 +17,7 @@
   <slot />
 </div>
 
-<style>
+<style lang="scss">
   .title {
     @include text-title-3xs;
     border-top-width: 0px;

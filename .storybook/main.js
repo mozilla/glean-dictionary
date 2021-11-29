@@ -14,11 +14,8 @@ module.exports = {
       ...svelteLoader.options,
       preprocess: sveltePreprocess({
         postcss: true,
-        defaults: {
-          style: "scss",
-        },
         scss: {
-          prependData: `@import '@mozilla-protocol/core/protocol/css/protocol.scss';`,
+          prependData: `@import 'src/protocol-tokens.scss';`,
         },
         postcss: {
           plugins: [autoPrefixer],

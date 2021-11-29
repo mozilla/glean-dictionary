@@ -58,7 +58,7 @@
   </div>
 </div>
 
-<style>
+<style lang="scss">
   .schema-viewer {
     margin-top: 2rem;
     .schema-browser {

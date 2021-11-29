@@ -14,7 +14,7 @@
 <p>Success Alert</p>
 <AppAlert status="success" message={alertMessage} />
 
-<style>
+<style lang="scss">
   p {
     @include text-title-xs;
   }

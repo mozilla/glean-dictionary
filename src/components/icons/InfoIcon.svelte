@@ -11,7 +11,7 @@
   />
 </svg>
 
-<style>
+<style lang="scss">
   svg {
     display: inline-block;
     width: 15px;

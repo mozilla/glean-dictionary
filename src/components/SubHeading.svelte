@@ -12,7 +12,7 @@
   {/if}
 </h2>
 
-<style>
+<style lang="scss">
   h2 {
     @include text-title-xs;
   }

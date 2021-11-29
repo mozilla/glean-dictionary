@@ -59,7 +59,7 @@
   <slot />
 </table>
 
-<style>
+<style lang="scss">
   @import "../main.scss";
   @include metadata-table;
 </style>

@@ -71,11 +71,8 @@ export default {
       // a separate file - better for performance
       preprocess: sveltePreprocess({
         postcss: true,
-        defaults: {
-          style: "scss",
-        },
         scss: {
-          prependData: `@import 'node_modules/@mozilla-protocol/core/protocol/css/protocol.scss';`,
+          prependData: `@import 'src/protocol-tokens.scss';`,
         },
       }),
     }),

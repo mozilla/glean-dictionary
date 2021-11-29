@@ -25,7 +25,7 @@
   <slot />
 </div>
 
-<style>
+<style lang="scss">
   .tab-content {
     margin-top: $spacing-lg;
   }

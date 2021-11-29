@@ -119,7 +119,7 @@
   <Footer />
 </div>
 
-<style>
+<style lang="scss">
   .app {
     min-height: 100vh;
     display: grid;
