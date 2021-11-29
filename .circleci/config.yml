@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   node: circleci/node@2.0.1
-  python: circleci/python@0.2.1
 jobs:
   frontend-build-and-test:
     executor:
@@ -24,19 +23,45 @@ jobs:
       - run: npx playwright install
       - run: npm test
   backend-build-and-test:
-    executor: python/default
+    docker:
+      - image: python:3.8
     steps:
       - checkout
-      - python/install-deps
+      - restore_cache:
+          keys:
+            # when lock files change, use increasingly general
+            # patterns to restore cache
+            - &cache_key # yamllint disable-line rule:line-length
+              python-3.8-packages-v1-{{ .Branch }}-{{ checksum "requirements.in" }}-{{ checksum "requirements.txt" }}
+              # yamllint disable-line rule:line-length
+            - python-3.8-packages-v1-{{ .Branch }}-{{ checksum "requirements.in" }}-
+            - python-3.8-packages-v1-{{ .Branch }}-
+            - python-3.8-packages-v1-main-
+            - python-3.8-packages-v1-
       - run:
-          name: Run lint
-          command: make lint
-      - run: scripts/build-glean-metadata.py
+          name: Build
+          command: |
+            python3.8 -m venv venv/
+            venv/bin/pip install pip-tools --constraint requirements.in
+            venv/bin/pip-sync
+      - run:
+          name: PyTest with linters
+          command: venv/bin/pytest
+      - run:
+          name: Install package locally
+          command: venv/bin/pip install -e .
+      - run:
+          name: Build glean metadata
+          command: scripts/build-glean-metadata
       - run: cp -r public /tmp/workspace
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
             - data
+      - save_cache:
+          paths:
+            - venv/
+          key: *cache_key
 
 workflows:
   build-and-test:

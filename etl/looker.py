@@ -1,9 +1,10 @@
 import json
 
 import stringcase
-from bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
 from furl import furl
-from glean import GLEAN_DISTRIBUTION_TYPES
+
+from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
+from .glean import GLEAN_DISTRIBUTION_TYPES
 
 SUPPORTED_LOOKER_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
     "boolean",
