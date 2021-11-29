@@ -94,7 +94,7 @@
   </div>
 {/if}
 
-<style>
+<style lang="scss">
   .pagination-position {
     margin-top: 3rem;
   }
