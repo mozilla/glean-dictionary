@@ -53,6 +53,9 @@ jobs:
       - run:
           name: Build glean metadata
           command: scripts/build-glean-metadata
+      - run:
+          name: Build legacy firefox metadata
+          command: scripts/build-legacy-metadata
       - run: cp -r public /tmp/workspace
       - persist_to_workspace:
           root: /tmp/workspace
