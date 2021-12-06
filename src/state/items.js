@@ -4,11 +4,8 @@ export const isRemoved = (item) => {
   return item.in_source === false;
 };
 
-export const isExpired = (item) => {
-  if (item.expires === "never" || item.expires === undefined) {
-    return false;
-  }
-  return new Date() > new Date(item.expires);
+export const isExpired = (expiry_date) => {
+  return expiry_date ? new Date() > new Date(expiry_date) : false;
 };
 
 export const isRecent = (item) => {

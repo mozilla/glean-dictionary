@@ -22,6 +22,10 @@ ANNOTATIONS_URL = os.getenv(
 NAMESPACES_URL = os.getenv(
     "NAMESPACES_URL", "https://raw.githubusercontent.com/mozilla/looker-hub/main/namespaces.yaml"
 )
+FIREFOX_PRODUCT_DETAIL_URL = os.getenv(
+    "FIREFOX_PRODUCT_DETAIL_URL",
+    "https://product-details.mozilla.org/1.0/firefox_history_major_releases.json",
+)
 
 # Priority for getting metric data (use the later definitions of nightly over release)
 METRIC_CHANNEL_PRIORITY = {"nightly": 1, "beta": 2, "release": 3, "esr": 4}
@@ -107,6 +111,7 @@ def main():
     # Pull down the annotations
     annotations_index = requests.get(ANNOTATIONS_URL).json()
     looker_namespaces = yaml.safe_load(requests.get(NAMESPACES_URL).text)
+    product_details = requests.get(FIREFOX_PRODUCT_DETAIL_URL).json()
 
     # Then, get the apps we're using
     apps = [app for app in GleanApp.get_apps()]
@@ -285,7 +290,12 @@ def main():
                             if "extra_keys" in metric.definition
                             else None,
                             type=metric.definition["type"],
-                            expires=metric.definition["expires"],
+                            expiry_date=get_expiry_date(
+                                metric.definition["expires"], app_name, product_details
+                            ),
+                            expiry_text=get_expiry_text(
+                                metric.definition["expires"], app_name, product_details
+                            ),
                         ),
                         metric_annotation,
                     )
@@ -312,6 +322,8 @@ def main():
                                 send_in_pings=list(metric.definition["send_in_pings"]),
                                 repo_url=app.app["url"],
                                 variants=[],
+                                expiry_date=base_definition["expiry_date"],
+                                expiry_text=base_definition["expiry_text"],
                             ),
                             metric_annotation,
                             full=True,
