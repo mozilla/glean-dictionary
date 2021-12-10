@@ -16,9 +16,7 @@
       <div class="mzp-c-footer-legal">
         <ul class="mzp-c-footer-terms">
           <li>
-            <a href="https://www.mozilla.org/privacy/websites/#cookies"
-              >Cookies</a
-            >
+            <a href="https://www.mozilla.org/privacy/websites/">Privacy</a>
           </li>
           <li>
             <a
