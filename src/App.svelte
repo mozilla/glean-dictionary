@@ -67,8 +67,11 @@
   }
 
   page("*", (ctx, next) => {
-    ga("set", "page", ctx.page.current);
-    ga("send", "pageview");
+    if (window.ga) {
+      // `ga` will not be set if not using google analytics
+      ga("set", "page", ctx.page.current);
+      ga("send", "pageview");
+    }
     next();
   });
 

@@ -82,7 +82,9 @@ export default {
     // only use google analytics on production builds
     replace({
       __GOOGLE_ANALYTICS_ID__:
-        process.env.CONTEXT === "production" && process.env.GOOGLE_ANALYTICS_ID,
+        (process.env.CONTEXT === "production" &&
+          process.env.GOOGLE_ANALYTICS_ID) ||
+        "",
       __LAST_UPDATED_TIME__: extractLastUpdatedTime(
         execSync(
           "curl --compressed https://probeinfo.telemetry.mozilla.org/firefox/general"
