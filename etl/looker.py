@@ -151,12 +151,37 @@ def get_looker_explore_metadata_for_metric(
                     "pivots": f"{counter_field_base}.label",
                 }
             )
-
+        elif metric_type == "timespan":
+            # Timespans are currently implemented as a dimension rather than a metric.
+            # Let's derive the median value
+            looker_dimension_name = "{}.{}__value".format(
+                ping_name_snakecase, get_bigquery_column_name(metric).replace(".", "__")
+            )
+            custom_field_name = f"median_of_{metric_name_snakecase}"
+            dynamic_fields = [
+                dict(
+                    measure=custom_field_name,
+                    label=f"Median of {metric.identifier}",
+                    based_on=looker_dimension_name,
+                    expression="",
+                    type="median",
+                )
+            ]
+            looker_metric_link = furl(base_looker_explore["url"]).add(
+                {
+                    "fields": ",".join(
+                        [
+                            f"{ping_name_snakecase}.submission_date",
+                            custom_field_name,
+                        ]
+                    ),
+                    "dynamic_fields": json.dumps(dynamic_fields),
+                }
+            )
         elif metric_type in SUPPORTED_LOOKER_METRIC_TYPES:
             base_looker_dimension_name = "{}.{}".format(
                 ping_name_snakecase, get_bigquery_column_name(metric).replace(".", "__")
             )
-
             # For distribution types, we'll aggregate the sum of all distributions per
             # day. In most cases, this isn't super meaningful, but provides a starting
             # place for further analysis
