@@ -81,6 +81,8 @@ export default {
     css({ output: "bundle.css" }),
     // only use google analytics on production builds
     replace({
+      __GLEAN_APPLICATION_ID__:
+        process.env.GLEAN_APPLICATION_ID || "glean-dictionary-dev",
       __GOOGLE_ANALYTICS_ID__:
         (process.env.CONTEXT === "production" &&
           process.env.GOOGLE_ANALYTICS_ID) ||
@@ -99,6 +101,9 @@ export default {
       "process.env.NODE_ENV": JSON.stringify(
         production ? "production" : "development"
       ),
+      __DISPLAY_VERSION__: execSync("git describe --abbrev=0 --tags")
+        .toString()
+        .trim(),
     }),
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
