@@ -3,6 +3,9 @@
   import { parse as queryStringParse } from "query-string";
   import { afterUpdate } from "svelte";
 
+  import * as pageMetrics from "./telemetry/generated/page";
+  import { pageView as pageViewPing } from "./telemetry/generated/pings";
+
   // Pages
   import AppList from "./pages/AppList.svelte";
   import AppDetail from "./pages/AppDetail.svelte";
@@ -72,6 +75,11 @@
       ga("set", "page", ctx.page.current);
       ga("send", "pageview");
     }
+
+    pageMetrics.loaded.set();
+    pageMetrics.path.set(ctx.page.current.split("?")[0]);
+    pageViewPing.submit();
+
     next();
   });
 

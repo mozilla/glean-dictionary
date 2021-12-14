@@ -8,13 +8,15 @@
   "scripts": {
     "build": "rollup --config",
     "build-storybook": "build-storybook --static-dir ./public --config-dir .storybook",
+    "build-glean": "VIRTUAL_ENV=venv glean translate src/telemetry/metrics.yaml src/telemetry/pings.yaml -f javascript -o src/telemetry/generated",
     "dev": "rollup --config --watch",
     "format": "prettier --plugin-search-dir=. --write .",
     "format:check": "prettier --plugin-search-dir=. --check .",
     "lint": "eslint .",
+    "lint-glean": "VIRTUAL_ENV=venv glean glinter src/telemetry/metrics.yaml src/telemetry/pings.yaml",
     "start": "sirv public",
     "storybook": "start-storybook --static-dir ./public -p 6006",
-    "test": "npm-run-all format:check lint test:jest test:playwright",
+    "test": "npm-run-all format:check lint lint-glean test:jest test:playwright",
     "test:jest": "jest tests src --no-cache",
     "test:playwright": "npx playwright test",
     "build-glean-metadata": "node scripts/build-glean-metadata.js"
