@@ -12,16 +12,18 @@ PROBES_URL = "https://probeinfo.telemetry.mozilla.org/firefox/all/main/all_probe
 # a bit of a hack, we would ideally make this public data. this data is already implicitly
 # public via the probe search service, so putting this here. probably best to make this
 # a public data set produced by bigquery-etl in the long run though
-PROBE_RECORDED_IN_PROCESSES_URL = "https://sql.telemetry.mozilla.org/api/queries/83152/results.json?api_key=Z1WhC2sRmLXmSwZyUwhIOFQQQAUK3JvGNLZgtZGW"  # noqa
+PROBE_RECORDED_IN_PROCESSES_URL = "https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/client_probe_processes/v1/files/000000000000.json"  # noqa
 
 
 def get_legacy_firefox_metric_summary():
+    """
+    Get a summary of legacy firefox metrics, which we can use as a search index
+    """
+
     # pull down the recorded in process information, which we use as the
     # authoritative guide on whether a legacy probe is still "active"
-    activity_mapping = {}
     recorded_in_process_data = requests.get(PROBE_RECORDED_IN_PROCESSES_URL).json()
-    for row in recorded_in_process_data["query_result"]["data"]["rows"]:
-        activity_mapping[row["metric"].lower()] = row["processes"]
+    activity_mapping = {row["metric"]: row["processes"] for row in recorded_in_process_data}
 
     # get the actual probe data
     probe_data = requests.get(PROBES_URL).json()

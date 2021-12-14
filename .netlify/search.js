@@ -50,6 +50,7 @@ exports.getSearchFunction = function (metricData, legacy) {
           // sort expired metrics below non-expired ones
           score += !isExpired(item) ? 1 : 0;
           // if in glam mode, we want to move unsupported metrics right to the bottom
+          // (do this by adding a higher score to these types of metrics)
           score +=
             glamMode && SUPPORTED_GLAM_METRIC_TYPES.has(item.type) ? 10 : 0;
           return score;
