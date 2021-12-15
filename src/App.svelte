@@ -3,8 +3,7 @@
   import { parse as queryStringParse } from "query-string";
   import { afterUpdate } from "svelte";
 
-  import * as pageMetrics from "./telemetry/generated/page";
-  import { pageView as pageViewPing } from "./telemetry/generated/pings";
+  import { submitPageViewTelemetry } from "./telemetry";
 
   // Pages
   import AppList from "./pages/AppList.svelte";
@@ -70,16 +69,7 @@
   }
 
   page("*", (ctx, next) => {
-    if (window.ga) {
-      // `ga` will not be set if not using google analytics
-      ga("set", "page", ctx.page.current);
-      ga("send", "pageview");
-    }
-
-    pageMetrics.loaded.set();
-    pageMetrics.path.set(ctx.page.current.split("?")[0]);
-    pageViewPing.submit();
-
+    submitPageViewTelemetry(ctx.page.current);
     next();
   });
 
