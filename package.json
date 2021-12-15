@@ -6,10 +6,10 @@
     "npm": ">=7.0.0"
   },
   "scripts": {
-    "build": "rollup --config",
+    "build": "npm run build-glean && rollup --config",
     "build-storybook": "build-storybook --static-dir ./public --config-dir .storybook",
     "build-glean": "VIRTUAL_ENV=venv glean translate src/telemetry/metrics.yaml src/telemetry/pings.yaml -f javascript -o src/telemetry/generated",
-    "dev": "rollup --config --watch",
+    "dev": "npm run build-glean && rollup --config --watch",
     "format": "prettier --plugin-search-dir=. --write .",
     "format:check": "prettier --plugin-search-dir=. --check .",
     "lint": "eslint .",
