@@ -21,11 +21,6 @@ setup(
     url="https://github.com/mozilla/glean-dictionary",
     packages=find_packages(include=["etl"]),
     package_dir={"glean-dictionary": "etl"},
-    entry_points={
-        "console_scripts": [
-            "build-glean-metadata=etl.__main__:main",
-        ]
-    },
     include_package_data=True,
     zip_safe=False,
     keywords="glean-dictionary",

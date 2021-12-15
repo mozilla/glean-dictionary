@@ -2,7 +2,8 @@
 command = """
     set -e
     pip install -e .
-    build-glean-metadata
+    ./scripts/build-glean-metadata
+    ./scripts/build-legacy-metadata
     npm run build
     if [ "$STORYBOOK" ]; then
       npm run build-storybook
@@ -22,3 +23,6 @@ publish = "public"
   for = "/data/*"
     [headers.values]
     Access-Control-Allow-Origin = "*"
+
+[functions]
+directory = ".netlify"

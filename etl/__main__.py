@@ -9,11 +9,13 @@ import stringcase
 import yaml
 
 from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
-from .glam import get_glam_metadata_for_metric
+from .glam import SUPPORTED_GLAM_METRIC_TYPES, get_glam_metadata_for_metric
 from .glean import GleanApp
 from .looker import get_looker_explore_metadata_for_metric, get_looker_explore_metadata_for_ping
+from .search import create_metrics_search_js
 
 OUTPUT_DIRECTORY = os.path.join("public", "data")
+FUNCTIONS_DIRECTORY = ".netlify"
 ANNOTATIONS_URL = os.getenv(
     "ANNOTATIONS_URL", "https://mozilla.github.io/glean-annotations/api.json"
 )
@@ -435,6 +437,16 @@ def main():
                 )
             )
         )
+
+        # write a search index for the app
+        open(os.path.join(FUNCTIONS_DIRECTORY, f"metrics_search_{app_name}.js"), "w").write(
+            create_metrics_search_js(app_metrics.values(), legacy=False)
+        )
+
+    # also write some metadata for use by the netlify functions
+    open(os.path.join(FUNCTIONS_DIRECTORY, "supported_glam_metric_types.json"), "w").write(
+        json.dumps(list(SUPPORTED_GLAM_METRIC_TYPES))
+    )
 
 
 if __name__ == "__main__":

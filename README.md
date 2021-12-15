@@ -50,6 +50,38 @@ Android) only, try:
 ./scripts/build-glean-metadata fenix
 ```
 
+For the search service _only_ (see below), the Glean Dictionary also indexes
+legacy Firefox telemetry metadata. To build this index (not necessary for most
+testing), you need to run a seperate script:
+
+```bash
+./scripts/build-legacy-metadata
+```
+
+## Search Service
+
+The Glean Dictionary also includes a search service which enables searching
+through active metrics. Under the hood, this service is implemented with
+[netlify functions]. For example:
+
+https://dictionary.telemetry.mozilla.org/.netlify/functions/metrics_search_burnham?search=techno
+
+You can start it up via the [netlify command line interface] (assuming you have
+it installed):
+
+```bash
+netlify dev
+```
+
+If you have generated metadata as described above, you should then be able to
+test the search functions locally:
+
+http://localhost:8888/.netlify/functions/metrics_search_burnham?search=techno
+http://localhost:8888/.netlify/functions/metrics_search_firefox_legacy?search=ms
+
+[netlify command line interface]: https://docs.netlify.com/cli/get-started/
+[netlify functions]: https://docs.netlify.com/functions/overview/
+
 ## Storybook
 
 We use [Storybook](https://storybook.js.org/) for developing and validating
