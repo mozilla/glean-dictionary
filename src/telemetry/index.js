@@ -1,3 +1,7 @@
+// ESlint does not support subpath exports, which are used by Glean.
+// https://github.com/import-js/eslint-plugin-import/issues/1868
+//
+// eslint-disable-next-line import/no-unresolved
 import Glean from "@mozilla/glean/web";
 
 import { googleAnalytics } from "./ga";

@@ -4,6 +4,7 @@ command = """
     pip install -e .
     ./scripts/build-glean-metadata
     ./scripts/build-legacy-metadata
+    # glean.js currently requires a virtual environment
     python -mvenv venv --without-pip
     wget https://bootstrap.pypa.io/get-pip.py
     venv/bin/python get-pip.py

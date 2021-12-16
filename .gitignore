@@ -8,4 +8,4 @@ venv
 __pycache__/
 .probe_cache
 .DS_Store
-/src/telemetry/generated/*.js
+src/telemetry/generated/*.js
