@@ -3,6 +3,7 @@
 
 public/build/bundle.js
 scripts/build-glean-metadata.js
-src/ga.js
 storybook-static/*
 venv/*
+src/telemetry/ga.js
+src/telemetry/generated/*

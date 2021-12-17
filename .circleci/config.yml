@@ -5,12 +5,17 @@ jobs:
   frontend-build-and-test:
     executor:
       name: node/default
-      tag: "12.16"
+      tag: "12.20"
     docker:
       - image: mcr.microsoft.com/playwright:focal # https://playwright.dev/docs/ci#circleci
     steps:
       - checkout
       - node/install-packages
+      - run:
+          name: Install Python virtualenv (for glean.js)
+          command: |
+            apt-get update
+            apt-get install python3-venv --assume-yes
       - run: npm install
       - run: npm run build
       - run: npm run build-storybook

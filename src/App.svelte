@@ -3,6 +3,8 @@
   import { parse as queryStringParse } from "query-string";
   import { afterUpdate } from "svelte";
 
+  import { submitPageViewTelemetry } from "./telemetry";
+
   // Pages
   import AppList from "./pages/AppList.svelte";
   import AppDetail from "./pages/AppDetail.svelte";
@@ -67,11 +69,7 @@
   }
 
   page("*", (ctx, next) => {
-    if (window.ga) {
-      // `ga` will not be set if not using google analytics
-      ga("set", "page", ctx.page.current);
-      ga("send", "pageview");
-    }
+    submitPageViewTelemetry(ctx.page.current);
     next();
   });
 

@@ -4,4 +4,5 @@ public/build/bundle.css
 public/data/*
 storybook-static/*
 venv
-src/ga.js
+src/telemetry/ga.js
+src/telemetry/generated/*
