@@ -11,9 +11,9 @@ page-view:
   include_client_id: true
   send_if_empty: false
   bugs:
-    - https://bugzilla.mozilla.org/TODO
+    - https://bugzilla.mozilla.org/show_bug.cgi?id=1741582
   data_reviews:
-    - https://bugzilla.mozilla.org/show_bug.cgi?id=TODO#c6
+    - https://github.com/mozilla/glean-dictionary/pull/1015#issuecomment-996051009
   notification_emails:
     - brizental@mozilla.com
     - glean-team@mozilla.com
