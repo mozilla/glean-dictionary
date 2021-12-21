@@ -226,7 +226,7 @@
                         getItemTypeSingular(itemType)
                       )}
                     />
-                  {:else if isExpired(item.expiry_date)}
+                  {:else if isExpired(item)}
                     <Label
                       text="expired"
                       description={getExpiredItemDescription(

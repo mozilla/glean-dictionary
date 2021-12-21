@@ -9,6 +9,7 @@ import stringcase
 import yaml
 
 from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
+from .expiry import get_expiry_date, get_expiry_text
 from .glam import SUPPORTED_GLAM_METRIC_TYPES, get_glam_metadata_for_metric
 from .glean import GleanApp
 from .looker import get_looker_explore_metadata_for_metric, get_looker_explore_metadata_for_ping
@@ -290,7 +291,7 @@ def main():
                             if "extra_keys" in metric.definition
                             else None,
                             type=metric.definition["type"],
-                            expiry_date=get_expiry_date(
+                            expires=get_expiry_date(
                                 metric.definition["expires"], app_name, product_details
                             ),
                             expiry_text=get_expiry_text(
@@ -322,7 +323,7 @@ def main():
                                 send_in_pings=list(metric.definition["send_in_pings"]),
                                 repo_url=app.app["url"],
                                 variants=[],
-                                expiry_date=base_definition["expiry_date"],
+                                expires=base_definition["expires"],
                                 expiry_text=base_definition["expiry_text"],
                             ),
                             metric_annotation,
