@@ -1,5 +1,6 @@
 <script>
   import { isNull, isUndefined } from "lodash";
+  import { parseInline } from "marked";
   import HelpHoverable from "./HelpHoverable.svelte";
 
   export let appName = "";
@@ -45,6 +46,10 @@
                 >
               </div>
             {/each}
+          {:else if schemaEntry.type === "markdown"}
+            {@html parseInline(
+              format(item[schemaEntry.id], schemaEntry.valueFormatter)
+            )}
           {:else if schemaEntry.type === "list"}
             <ul>
               {#each item[schemaEntry.id] as ref}
