@@ -5,7 +5,7 @@ export const isRemoved = (item) => {
 };
 
 export const isExpired = (item) => {
-  if (item.expires === "never" || item.expires === (undefined || null)) {
+  if (item.expires === "never" || !item.expires) {
     return false;
   }
   return new Date() > new Date(item.expires);

@@ -1,7 +1,7 @@
 import datetime
 
 
-def validate(date_text):
+def _validate(date_text):
     try:
         datetime.datetime.strptime(date_text, "%Y-%m-%d")
         return True
@@ -12,9 +12,7 @@ def validate(date_text):
 def get_expiry_date(expiry, app_name, product_details):
     if app_name == "firefox_desktop":
         return product_details.get(f"{expiry}.0")
-    if validate(expiry):
-        return expiry
-    return None
+    return expiry if _validate(expiry) else return None
 
 
 def get_expiry_text(expiry, app_name, product_details):
@@ -22,8 +20,8 @@ def get_expiry_text(expiry, app_name, product_details):
 
     if expiry == "never" or expiry is None:
         return expiry
-    if app_name == "firefox_desktop":
+    elif app_name == "firefox_desktop":
         return f"{expiry}. Latest release is \
-     [{latest_release_version}](https://wiki.mozilla.org/Release_Management/Calendar)"
+     [{latest_release_version}](https://wiki.mozilla.org/Release_Management/Calendar)."
 
     return expiry
