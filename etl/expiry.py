@@ -12,7 +12,7 @@ def _validate(date_text):
 def get_expiry_date(expiry, app_name, product_details):
     if app_name == "firefox_desktop":
         return product_details.get(f"{expiry}.0")
-    return expiry if _validate(expiry) else return None
+    return expiry if _validate(expiry) else None
 
 
 def get_expiry_text(expiry, app_name, product_details):
