@@ -1,11 +1,6 @@
 import pytest
 
-from etl.expiry import get_expiry_date, get_expiry_text, validate
-
-
-def test_validate():
-    assert validate("2021-12-31") is True
-    assert validate("foo bar") is False
+from etl.expiry import get_expiry_date, get_expiry_text
 
 
 @pytest.fixture
