@@ -29,5 +29,10 @@ publish = "public"
     [headers.values]
     Access-Control-Allow-Origin = "*"
 
+[[redirects]]
+  from = "/api/v1/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
 [functions]
 directory = ".netlify"
