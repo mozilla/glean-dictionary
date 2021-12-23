@@ -1,9 +1,0 @@
-#!/bin/sh
-
-cd "$(dirname "$0")/.."
-
-if [ -e venv ]; then
-  . venv/bin/activate
-fi
-
-exec python3 -m etl.firefox_legacy "$@"

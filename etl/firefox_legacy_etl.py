@@ -5,29 +5,19 @@ import requests
 
 from .search import create_metrics_search_js
 
-OUTPUT_DIRECTORY = os.path.join("public", "data")
-FUNCTIONS_DIRECTORY = ".netlify"
-PROBES_URL = "https://probeinfo.telemetry.mozilla.org/firefox/all/main/all_probes"
+PROBES_URL = os.getenv(
+    "PROBES_URL", "https://probeinfo.telemetry.mozilla.org/firefox/all/main/all_probes"
+)
+PROBE_RECORDED_IN_PROCESSES_URL = os.getenv(
+    "PROBE_RECORDED_IN_PROCESSES_URL",
+    "https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/client_probe_processes/v1/files/000000000000.json",  # noqa
+)
 
-# a bit of a hack, we would ideally make this public data. this data is already implicitly
-# public via the probe search service, so putting this here. probably best to make this
-# a public data set produced by bigquery-etl in the long run though
-PROBE_RECORDED_IN_PROCESSES_URL = "https://public-data.telemetry.mozilla.org/api/v1/tables/telemetry_derived/client_probe_processes/v1/files/000000000000.json"  # noqa
 
-
-def get_legacy_firefox_metric_summary():
+def _get_legacy_firefox_metric_summary(probe_data, activity_mapping):
     """
     Get a summary of legacy firefox metrics, which we can use as a search index
     """
-
-    # pull down the recorded in process information, which we use as the
-    # authoritative guide on whether a legacy probe is still "active"
-    recorded_in_process_data = requests.get(PROBE_RECORDED_IN_PROCESSES_URL).json()
-    activity_mapping = {row["metric"]: row["processes"] for row in recorded_in_process_data}
-
-    # get the actual probe data
-    probe_data = requests.get(PROBES_URL).json()
-
     probe_summary = {}
 
     for (probe_id, probe) in probe_data.items():
@@ -61,16 +51,25 @@ def get_legacy_firefox_metric_summary():
     return probe_summary
 
 
-if __name__ == "__main__":
-    probe_output_directory = os.path.join(OUTPUT_DIRECTORY, "firefox_legacy", "metrics")
+def write_firefox_legacy_metadata(output_dir, functions_dir):
+    # pull down the recorded in process information, which we use as the
+    # authoritative guide on whether a legacy probe is still "active"
+    recorded_in_process_data = requests.get(PROBE_RECORDED_IN_PROCESSES_URL).json()
+    activity_mapping = {row["metric"]: row["processes"] for row in recorded_in_process_data}
+
+    # get the actual probe data
+    probe_data = requests.get(PROBES_URL).json()
+
+    # then write it out
+    probe_output_directory = os.path.join(output_dir, "firefox_legacy", "metrics")
     os.makedirs(probe_output_directory, exist_ok=True)
 
-    probe_summary = get_legacy_firefox_metric_summary()
+    probe_summary = _get_legacy_firefox_metric_summary(probe_data, activity_mapping)
     for probe_name, probe_metadata in probe_summary.items():
         with open(os.path.join(probe_output_directory, f"data_{probe_name}.json"), "w") as f:
             json.dump(probe_metadata, f)
 
     # write a search index for the app
-    open(os.path.join(FUNCTIONS_DIRECTORY, "metrics_search_firefox_legacy.js"), "w").write(
+    open(os.path.join(functions_dir, "metrics_search_firefox_legacy.js"), "w").write(
         create_metrics_search_js(probe_summary.values(), legacy=True)
     )
