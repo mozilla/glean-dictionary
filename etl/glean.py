@@ -86,7 +86,7 @@ class GleanMetric(GleanObject):
         )
 
         # The canonical definition for up-to-date schemas
-        self.definition = self.definition_history[0]
+        self.definition = self.definition_history[-1]
         self.definition["name"] = full_defn[self.NAME_KEY]
         self.definition["origin"] = full_defn[self.ORIGIN_KEY]
         self.definition["in_source"] = full_defn[self.IN_SOURCE_KEY]

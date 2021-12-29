@@ -30,7 +30,7 @@ python3 -m venv venv/
 venv/bin/pip install -r requirements.txt
 
 # Build data needed by dashboard
-./scripts/build-glean-metadata
+./scripts/gd build-metadata
 
 # Install npm dependencies and start a local
 # instance of the GUI
@@ -47,15 +47,7 @@ considerably. For example, to build a metadata index for Fenix (Firefox for
 Android) only, try:
 
 ```bash
-./scripts/build-glean-metadata fenix
-```
-
-For the search service _only_ (see below), the Glean Dictionary also indexes
-legacy Firefox telemetry metadata. To build this index (not necessary for most
-testing), you need to run a seperate script:
-
-```bash
-./scripts/build-legacy-metadata
+./scripts/build-metadata fenix
 ```
 
 ## Search Service
