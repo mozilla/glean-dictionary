@@ -25,8 +25,13 @@
   import { stripLinks } from "../formatters/markdown";
   import { getLibraryName } from "../formatters/library";
   import { getMetricData } from "../state/api";
-  import { pageTitle, pageState, updateURLState } from "../state/stores";
+  import {
+    pageState,
+    updateURLState,
+    updateBreadcrumbs,
+  } from "../state/stores";
   import { getBigQueryURL, getMetricSearchURL } from "../state/urls";
+  import { getAppBreadcrumbs } from "./AppDetail.svelte";
 
   import { isExpired, isRemoved, isRecent } from "../state/items";
 
@@ -38,6 +43,13 @@
 
   const metricDataPromise = getMetricData(params.app, params.metric).then(
     (metricData) => {
+      updateBreadcrumbs([
+        ...getAppBreadcrumbs(params, metricData),
+        {
+          url: `/apps/${params.app}/metrics/${params.metric}/`,
+          name: metricData.name,
+        },
+      ]);
       [selectedAppVariant] = $pageState.channel
         ? metricData.variants.filter((app) => app.id === $pageState.channel)
         : metricData.variants;
@@ -54,8 +66,6 @@
       selectedPingVariant &&
       selectedAppVariant.etl.ping_data[selectedPingVariant.id];
   }
-
-  pageTitle.set(`${params.metric} | ${params.app} `);
 
   function getMetricDocumentationURI(type) {
     const sourceDocs = "https://mozilla.github.io/glean/book/user/metrics/";

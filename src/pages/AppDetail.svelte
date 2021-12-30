@@ -1,3 +1,15 @@
+<script context="module">
+  export const getAppBreadcrumbs = (params, obj) => {
+    return [
+      {
+        url: `/apps/${params.app}`,
+        name: obj.canonical_app_name,
+        tags: obj.app_tags,
+      },
+    ];
+  };
+</script>
+
 <script>
   import { getAppData } from "../state/api";
 
@@ -12,13 +24,18 @@
   import { TabGroup, Tab, TabContent } from "../components/tabs";
   import PageHeader from "../components/PageHeader.svelte";
   import SubHeading from "../components/SubHeading.svelte";
-  import { pageState, pageTitle, updateURLState } from "../state/stores";
+  import {
+    pageState,
+    updateURLState,
+    updateBreadcrumbs,
+  } from "../state/stores";
 
   export let params;
 
   let itemType;
 
   const appDataPromise = getAppData(params.app).then((app) => {
+    updateBreadcrumbs(getAppBreadcrumbs(params, app));
     return {
       ...app,
       tagDescriptions: Object.fromEntries(
@@ -30,8 +47,6 @@
   $: {
     itemType = $pageState.itemType || "metrics";
   }
-
-  pageTitle.set(params.app);
 </script>
 
 {#await appDataPromise then app}

@@ -1,22 +1,20 @@
 <script>
+  import { some } from "lodash";
+
   export let links;
 
-  const isPlatform = (app) => {
-    const platforms = ["ios", "android", "fenix", "amazon", "echo", "fire_tv"];
-    const match = platforms.filter((item) => app.includes(item));
-    if (match.length) return true;
-    return false;
+  const isPlatform = (link) => {
+    return some(
+      ["iOS", "Android", "Amazon"],
+      (platformTag) => link.tags && link.tags.includes(platformTag)
+    );
   };
 
-  const getPlatformLogo = (app) => {
-    if (app.includes("ios")) return "/img/app-logos/apple-breadcrumb.png";
-    if (app.includes("fenix") || app.includes("android"))
+  const getPlatformLogo = (link) => {
+    if (link.tags.includes("iOS")) return "/img/app-logos/apple-breadcrumb.png";
+    if (link.tags.includes("Android"))
       return "/img/app-logos/android-breadcrumb.png";
-    if (
-      app.includes("amazon") ||
-      app.includes("echo") ||
-      app.includes("fire_tv")
-    )
+    if (link.tags.includes("Amazon"))
       return "/img/app-logos/amazon-breadcrumb.png";
     return undefined;
   };
@@ -28,8 +26,8 @@
       <li>
         <a class="link-name" href={link.url}>{link.name} </a>
       </li>
-      {#if link && isPlatform(link.name)}
-        <img src={getPlatformLogo(link.name)} alt="Platform Logo" />{/if}
+      {#if isPlatform(link)}
+        <img src={getPlatformLogo(link)} alt="Platform Logo" />{/if}
       <span>{links.indexOf(link) === links.length - 1 ? "" : "->"}</span>
     {/each}
   </ol>

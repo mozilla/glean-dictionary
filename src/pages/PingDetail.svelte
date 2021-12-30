@@ -1,6 +1,10 @@
 <script>
   import { getPingData } from "../state/api";
-  import { pageState, pageTitle, updateURLState } from "../state/stores";
+  import {
+    pageState,
+    updateURLState,
+    updateBreadcrumbs,
+  } from "../state/stores";
   import { getBigQueryURL } from "../state/urls";
 
   import VariantSelector from "../components/VariantSelector.svelte";
@@ -24,20 +28,27 @@
   import { stripLinks } from "../formatters/markdown";
   import { getMetricSearchURL } from "../state/urls";
   import { isRecent } from "../state/items";
+  import { getAppBreadcrumbs } from "./AppDetail.svelte";
 
   export let params;
 
   let selectedAppVariant;
   const pingDataPromise = getPingData(params.app, params.ping).then(
     (pingData) => {
+      updateBreadcrumbs([
+        ...getAppBreadcrumbs(params, pingData),
+        {
+          url: `/apps/${params.app}/pings/${params.ping}/`,
+          name: pingData.name,
+        },
+      ]);
+
       [selectedAppVariant] = $pageState.channel
         ? pingData.variants.filter((app) => app.id === $pageState.channel)
         : pingData.variants;
       return pingData;
     }
   );
-
-  pageTitle.set(`${params.ping} | ${params.app}`);
 </script>
 
 {#await pingDataPromise then ping}

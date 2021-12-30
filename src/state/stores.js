@@ -4,6 +4,7 @@ import { writable, get } from "svelte/store";
 
 export const pageTitle = writable("");
 export const pageState = writable({});
+export const pageBreadcrumbs = writable([]);
 
 // updates page state and synchronizes with the url
 export const updateURLState = (newState, push = false) => {
@@ -24,5 +25,23 @@ export const updateURLState = (newState, push = false) => {
     window.history.pushState(null, undefined, path);
   } else {
     window.history.replaceState(null, undefined, path);
+  }
+};
+
+export const updateBreadcrumbs = (newBreadcrumbs) => {
+  if (newBreadcrumbs.length > 0) {
+    // add a breadcrumb to return to the root
+    pageBreadcrumbs.set([{ url: "/", name: "apps" }, ...newBreadcrumbs]);
+    // set a pagetitle in reverse order
+    pageTitle.set(
+      newBreadcrumbs
+        .slice(0)
+        .reverse()
+        .map((b) => b.name)
+        .join(" | ")
+    );
+  } else {
+    pageBreadcrumbs.set([]);
+    pageTitle.set("Glean Dictionary");
   }
 };
