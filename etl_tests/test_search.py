@@ -28,6 +28,9 @@ def test_create_metrics_search_js():
             "description": "Fun Metric 2",
         },
     }
+
+    # this implicitly also tests utils.dump_json
     assert create_metrics_search_js(metrics_input) == SEARCH_JS_TEMPLATE.render(
-        metric_data=json.dumps(expected_metrics_output), legacy=json.dumps(False)
+        metric_data=json.dumps(expected_metrics_output, separators=(",", ":")),
+        legacy=json.dumps(False),
     )
