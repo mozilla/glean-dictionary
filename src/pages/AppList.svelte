@@ -11,22 +11,12 @@
   import { pageState, pageTitle } from "../state/stores";
 
   const URL = "data/apps.json";
-  const APP_SORT_ORDER = ["firefox_ios", "fenix", "firefox_desktop"];
 
   let apps;
   let filteredApps;
 
   onMount(async () => {
     apps = await fetchJSON(URL);
-    apps.sort((a, b) =>
-      a.canonical_app_name.toLowerCase() > b.canonical_app_name.toLowerCase()
-        ? 1
-        : -1
-    );
-    apps.sort(
-      (a, b) =>
-        APP_SORT_ORDER.indexOf(b.app_name) - APP_SORT_ORDER.indexOf(a.app_name)
-    );
     filteredApps = apps;
   });
 
@@ -43,62 +33,14 @@
 
   let showDeprecated = false;
 
-  const appLogos = {
-    browser: "/img/app-logos/browser.png",
-    beta: "/img/app-logos/beta.png",
-    amazon: "/img/app-logos/amazon.png",
-    "klar-focus": "/img/app-logos/klar-focus.png",
-    lockwise: "/img/app-logos/lockwise.png",
-    nightly: "/img/app-logos/nightly.png",
-    reality: "/img/app-logos/reality.png",
-    others: "/img/app-logos/mozilla.png",
-    dev: "/img/app-logos/dev.png",
-  };
-
-  function getAppLogo(app) {
-    if (app.match(/beta/)) {
-      return appLogos.beta;
-    }
-    if (app.match(/echo/) || app.match(/fire-tv/)) {
-      return appLogos.amazon;
-    }
-    if (app.match(/focus/) || app.match(/klar/)) {
-      return appLogos["klar-focus"];
-    }
-    if (app.match(/lockwise/)) {
-      return appLogos.lockwise;
-    }
-    if (app.match(/reality/)) {
-      return appLogos.reality;
-    }
-    if (app.match(/dev/)) {
-      return appLogos.dev;
-    }
-    if (app.match(/firefox/) || app.match(/fenix/)) {
-      return appLogos.browser;
-    }
-    return appLogos.others;
-  }
-
-  function isPlatform(app) {
-    if (
-      includes(app, "iOS") ||
-      includes(app, "Android") ||
-      includes(app, "Amazon")
-    ) {
-      return true;
-    }
-    return false;
-  }
-
-  function getPlatformLogo(app) {
-    if (includes(app, "iOS")) {
+  function getAppTagLogo(app) {
+    if (includes(app.app_tags, "iOS")) {
       return "img/app-logos/platform-apple.jpg";
     }
-    if (includes(app, "Android")) {
+    if (includes(app.app_tags, "Android")) {
       return "img/app-logos/platform-android.png";
     }
-    if (includes(app, "Amazon")) {
+    if (includes(app.app_tags, "Amazon")) {
       return "img/app-logos/platform-amazon.png";
     }
     return undefined;
@@ -146,15 +88,15 @@
             <div class="mzp-c-card-media-wrapper" id="media-wrapper">
               <img
                 class="mzp-c-card-imgage"
-                src={getAppLogo(app.app_name)}
+                src={app.logo || "/img/app-logos/mozilla.png"}
                 alt="${app.canonical_app_name} Logo"
                 id="logo-img"
               />
-              {#if isPlatform(app.app_description)}
+              {#if getAppTagLogo(app)}
                 <div class="corner-flag" />
                 <img
                   class="platform-logo"
-                  src={getPlatformLogo(app.app_description)}
+                  src={getAppTagLogo(app)}
                   alt="Platform Logo"
                 />
               {/if}
@@ -230,7 +172,8 @@
     #media-wrapper {
       border-radius: 15px;
       #logo-img {
-        width: 230px;
+        width: 200px;
+        padding: 15px;
       }
     }
   }

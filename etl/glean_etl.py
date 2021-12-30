@@ -59,9 +59,25 @@ def _get_annotation(annotations_index, origin, item_type, identifier=None):
 def _incorporate_annotation(item, item_annotation, app=False, full=False):
     incorporated = dict(item, has_annotation=len(item_annotation) > 0)
 
-    # handle tags, which are in a slightly different format than other types
-    # of annotations (and we want to apply to both full and non-full)
-    if not app and item_annotation.get("tags"):
+    if app:
+        # app annotations have some special properties
+        if item_annotation.get("logo"):
+            # the logo is dowloaded locally elsewhere
+            incorporated.update(
+                {"logo": f"/data/{item['app_name']}/" + _get_logo_filename(item_annotation["logo"])}
+            )
+
+        if item_annotation.get("featured"):
+            incorporated["featured"] = True
+
+        # we use the `app_tags` property to disambiguate between the tags
+        # that are a property of an application vs. the list of tags that
+        # it has (and can be applied to other things)
+        if item_annotation.get("tags"):
+            incorporated["app_tags"] = item_annotation["tags"]
+    elif item_annotation.get("tags"):
+        # for non-apps, just use the tags from the annotation directly, if they
+        # exist
         # annotation tags always take precedence over any tags defined in
         # metrics.yaml
         incorporated.update({"tags": item_annotation["tags"]})
@@ -91,6 +107,11 @@ def _expand_tags(item, tag_descriptions):
 
 def _get_resource_path(line: str) -> str:
     return line.replace(".", "_")
+
+
+def _get_logo_filename(logo_url: str) -> str:
+    _, file_extension = os.path.splitext(logo_url)
+    return f"logo{file_extension}"
 
 
 def _get_app_variant_description(app):
@@ -154,10 +175,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
         app_group["app_ids"].sort(key=lambda app_id: METRIC_CHANNEL_PRIORITY[app_id["channel"]])
         app_group["app_ids"].sort(key=lambda app_id: app_id["deprecated"])
 
-    # Write out a list of app groups (for the landing page)
-    open(os.path.join(output_dir, "apps.json"), "w").write(json.dumps(list(app_groups.values())))
-
-    # Write out some metadata for each app group (for the app detail page)
+    # Process each grouping of apps into a set of summaries, app details, and all the rest
+    app_summaries = []
     for (app_name, app_group) in app_groups.items():
         app_dir = os.path.join(output_dir, app_name)
         (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir) = (
@@ -166,12 +185,26 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
         for directory in (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir):
             os.makedirs(directory, exist_ok=True)
 
-        app_data = dict(app_group, pings=[], metrics=[])
+        app_annotation = _get_annotation(annotations_index, app_name, "app")
+
+        # Create a summary (used in the top-level list of apps, and base metadata for the
+        # app detail page)
+        app_summary = _incorporate_annotation(app_group, app_annotation.get("app", {}), app=True)
+
+        if app_summary.get("logo"):
+            with open(os.path.join(app_dir, _get_logo_filename(app_summary["logo"])), "wb") as f:
+                # want the original URL for getting the logo
+                f.write(requests.get(app_annotation["app"]["logo"]).content)
+
         # An application group is considered a prototype only if all its application ids are
         if all([app_id.get("prototype") for app_id in app_group["app_ids"]]):
-            app_data["prototype"] = True
+            app_summary["prototype"] = True
 
-        app_annotation = _get_annotation(annotations_index, app_name, "app")
+        # add the summary application to the app list
+        app_summaries.append(app_summary)
+
+        # Now get more detail on the application for the detail page and all the metrics
+        app_data = dict(app_summary, pings=[], metrics=[])
         app_tags = app_annotation.get("tags", {})
 
         app_metrics = {}
@@ -451,6 +484,18 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
         open(os.path.join(functions_dir, f"metrics_search_{app_name}.js"), "w").write(
             create_metrics_search_js(app_metrics.values(), legacy=False)
         )
+
+    # Write out a list of app groups (for the landing page)
+    # put "featured" apps first, then sort by name
+    open(os.path.join(output_dir, "apps.json"), "w").write(
+        json.dumps(
+            sorted(
+                sorted(app_summaries, key=lambda s: s["app_name"]),
+                key=lambda s: s.get("featured", False),
+                reverse=True,
+            )
+        )
+    )
 
     # also write some metadata for use by the netlify functions
     open(os.path.join(functions_dir, "supported_glam_metric_types.json"), "w").write(
