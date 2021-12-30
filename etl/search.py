@@ -1,7 +1,8 @@
-import json
 from pathlib import Path
 
 import jinja2
+
+from .utils import dump_json
 
 SEARCH_JS_TEMPLATE = jinja2.Template(
     open(Path(__file__).resolve().parent / "metrics_search.js.tmpl").read()
@@ -21,4 +22,4 @@ def create_metrics_search_js(metrics, legacy=False):
         if metric_val.get("expires") == "never":
             del metric_val["expires"]
 
-    return SEARCH_JS_TEMPLATE.render(metric_data=json.dumps(metric_data), legacy=json.dumps(legacy))
+    return SEARCH_JS_TEMPLATE.render(metric_data=dump_json(metric_data), legacy=dump_json(legacy))
