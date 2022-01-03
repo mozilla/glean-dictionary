@@ -101,6 +101,8 @@ export default {
       "process.env.NODE_ENV": JSON.stringify(
         production ? "production" : "development"
       ),
+      GLEAN_LOG_PINGS: !!process.env.GLEAN_LOG_PINGS,
+      GLEAN_DEBUG_VIEW_TAG: process.env.GLEAN_DEBUG_VIEW_TAG,
       __DISPLAY_VERSION__: execSync("git describe --abbrev=0 --tags")
         .toString()
         .trim(),

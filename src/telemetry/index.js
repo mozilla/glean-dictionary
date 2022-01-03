@@ -40,9 +40,19 @@ export function initializeTelemetry() {
     appDisplayVersion: "__DISPLAY_VERSION__",
   });
 
-  // Log Glean pings to the console in development mode.
-  if (process.env.NODE_ENV === "development") {
+  // eslint-disable-next-line no-constant-condition
+  if ("GLEAN_LOG_PINGS" === true) {
     Glean.setLogPings(true);
+  }
+
+  // eslint-disable-next-line no-constant-condition
+  if ("GLEAN_DEBUG_VIEW_TAG") {
+    Glean.setDebugViewTag("GLEAN_DEBUG_VIEW_TAG");
+  }
+
+  // eslint-disable-next-line no-constant-condition
+  if ("GLEAN_SOURCE_TAGS") {
+    Glean.setSourceTags("GLEAN_SOURCE_TAGS");
   }
 }
 
