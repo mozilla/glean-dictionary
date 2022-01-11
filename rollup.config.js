@@ -103,6 +103,7 @@ export default {
       ),
       GLEAN_LOG_PINGS: !!process.env.GLEAN_LOG_PINGS,
       GLEAN_DEBUG_VIEW_TAG: process.env.GLEAN_DEBUG_VIEW_TAG,
+      GLEAN_SOURCE_TAGS: process.env.GLEAN_SOURCE_TAGS,
       __DISPLAY_VERSION__: execSync("git describe --abbrev=0 --tags")
         .toString()
         .trim(),
