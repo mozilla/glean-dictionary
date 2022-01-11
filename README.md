@@ -138,14 +138,16 @@ venv/bin/pytest
 
 ## Glean Debugging
 
-In order to enable [ping logging](https://mozilla.github.io/glean/book/reference/debug/logPings.html)
+In order to enable
+[ping logging](https://mozilla.github.io/glean/book/reference/debug/logPings.html)
 set the `GLEAN_LOG_PINGS` environment variable.
 
 ```bash
 GLEAN_LOG_PINGS=true npm run dev
 ```
 
-In order to send Glean pings to the [debug viewer](https://mozilla.github.io/glean/book/reference/debug/debugViewTag.html)
+In order to send Glean pings to the
+[debug viewer](https://mozilla.github.io/glean/book/reference/debug/debugViewTag.html)
 set the `GLEAN_DEBUG_VIEW_TAG` environment variable.
 
 ```bash
