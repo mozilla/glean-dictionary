@@ -71,6 +71,7 @@ export function submitPageViewTelemetry(path) {
 
   // Send telemetry to Glean.
   pageMetrics.loaded.set();
-  pageMetrics.path.set(path.split("?")[0]);
+  // Remove query params and trailing `/` characters.
+  pageMetrics.path.set(path.split("?")[0].replace(/\/$/, ""));
   pageViewPing.submit();
 }
