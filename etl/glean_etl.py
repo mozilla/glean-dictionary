@@ -99,7 +99,7 @@ def _expand_tags(item, tag_descriptions):
     return dict(
         item,
         tags=[
-            {"name": tag_name, "description": tag_descriptions[tag_name]}
+            {"name": tag_name, "description": tag_descriptions.get(tag_name, "Unknown tag")}
             for tag_name in item["tags"]
         ],
     )
