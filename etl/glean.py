@@ -77,6 +77,7 @@ class GleanMetric(GleanObject):
             self.definition["send_in_pings"] = set(pings)
 
     def _set_definition(self, full_defn: dict):
+        # sort from latest to earliest
         self.definition_history = list(
             sorted(
                 full_defn[self.HISTORY_KEY],
@@ -86,10 +87,12 @@ class GleanMetric(GleanObject):
         )
 
         # The canonical definition for up-to-date schemas
-        self.definition = self.definition_history[-1]
+        self.definition = self.definition_history[0]
         self.definition["name"] = full_defn[self.NAME_KEY]
         self.definition["origin"] = full_defn[self.ORIGIN_KEY]
         self.definition["in_source"] = full_defn[self.IN_SOURCE_KEY]
+
+        # first seen is the earliest date in the history
         self.definition["date_first_seen"] = self.definition_history[-1]["dates"]["first"]
 
     def _set_dates(self, definition: dict):
