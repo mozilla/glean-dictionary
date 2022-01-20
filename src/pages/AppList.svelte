@@ -8,7 +8,7 @@
   import Markdown from "../components/Markdown.svelte";
   import Label from "../components/Label.svelte";
 
-  import { pageState, pageTitle } from "../state/stores";
+  import { pageState, updateBreadcrumbs } from "../state/stores";
 
   const URL = "data/apps.json";
 
@@ -46,7 +46,7 @@
     return undefined;
   }
 
-  pageTitle.set("Glean Dictionary");
+  updateBreadcrumbs([]);
 </script>
 
 <div class="mzp-c-emphasis-box mzp-t-dark banner">

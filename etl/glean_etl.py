@@ -205,7 +205,10 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
 
         # Now get more detail on the application for the detail page and all the metrics
         app_data = dict(app_summary, pings=[], metrics=[])
-        app_tags = app_annotation.get("tags", {})
+        app_tags_for_objects = app_annotation.get(
+            "tags", {}
+        )  # tags for objects in the app (e.g. metrics)
+        app_tags_for_app = app_summary.get("app_tags", [])  # tags for the app itself
 
         app_metrics = {}
         metric_pings = dict(data=[])
@@ -220,12 +223,12 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
             # app-id tags: tags specified in the annotations (and or more recent versions of an app)
             # will always override older ones
             for tag in app.get_tags():
-                if not app_tags.get(tag.identifier):
-                    app_tags[tag.identifier] = tag.description
+                if not app_tags_for_objects.get(tag.identifier):
+                    app_tags_for_objects[tag.identifier] = tag.description
 
             # information about this app_id
             open(os.path.join(app_id_dir, f"{_get_resource_path(app_id)}.json"), "w").write(
-                json.dumps(app.app)
+                json.dumps(dict(app.app, app_tags=app_tags_for_app))
             )
 
             pings_with_client_id = set()
@@ -295,6 +298,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             name=ping.identifier,
                             stable_table=stable_ping_table_name,
                             app_id=app_id,
+                            canonical_app_name=app.app["canonical_app_name"],
+                            app_tags=app_tags_for_app,
                         )
                     )
                 )
@@ -354,11 +359,13 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                                 variants=[],
                                 expires=base_definition["expires"],
                                 expiry_text=base_definition["expiry_text"],
+                                canonical_app_name=app.app["canonical_app_name"],
+                                app_tags=app_tags_for_app,
                             ),
                             metric_annotation,
                             full=True,
                         ),
-                        app_tags,
+                        app_tags_for_objects,
                     )
 
                     # sort "send in pings" alphanumerically, except that `metrics`
@@ -421,14 +428,16 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                                     for metric in metric_pings["data"]
                                     if ping_data["name"] in metric["pings"]
                                 ],
-                                tag_descriptions=app_tags,
+                                tag_descriptions=app_tags_for_objects,
+                                canonical_app_name=app.app["canonical_app_name"],
+                                app_tags=app_tags_for_app,
                             ),
                             _get_annotation(
                                 annotations_index, ping_data["origin"], "pings", ping_data["name"]
                             ),
                             full=True,
                         ),
-                        app_tags,
+                        app_tags_for_objects,
                     ),
                     default=_serialize_sets,
                 )
@@ -448,8 +457,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
             )
 
         # write tag metadata (if any)
-        if app_tags:
-            tags = [{"name": k, "description": v} for (k, v) in app_tags.items()]
+        if app_tags_for_objects:
+            tags = [{"name": k, "description": v} for (k, v) in app_tags_for_objects.items()]
             app_data["tags"] = tags
             for tag in tags:
                 tag_metrics = [

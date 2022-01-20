@@ -4,16 +4,16 @@ const [AppsLinks, AppDetailsLinks, PingsLinks, MetricsLinks, TableLinks] = [
   [{ url: "/", name: "apps" }],
   [
     { url: "/", name: "apps" },
-    { url: "/apps/fenix/", name: "fenix" },
+    { url: "/apps/fenix/", name: "fenix", tags: ["Android"] },
   ],
   [
     { url: "/", name: "apps" },
-    { url: "/apps/fenix/", name: "fenix" },
+    { url: "/apps/fenix/", name: "fenix", tags: ["Android"] },
     { url: "/apps/fenix/pings/activation", name: "activation" },
   ],
   [
     { url: "/", name: "apps" },
-    { url: "/apps/fenix/", name: "fenix" },
+    { url: "/apps/fenix/", name: "fenix", tags: ["Android"] },
     {
       url: "/apps/fenix/metrics/about_page.libraries_tapped",
       name: "about_page.libraries_tapped",
@@ -21,7 +21,7 @@ const [AppsLinks, AppDetailsLinks, PingsLinks, MetricsLinks, TableLinks] = [
   ],
   [
     { url: "/", name: "apps" },
-    { url: "/apps/fenix/", name: "fenix" },
+    { url: "/apps/fenix/", name: "fenix", tags: ["Android"] },
     { url: "/apps/fenix/pings/activation", name: "activation" },
     { url: "/apps/fenix/tables/activation/", name: "activation table" },
   ],

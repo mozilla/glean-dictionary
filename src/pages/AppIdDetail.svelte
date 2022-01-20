@@ -1,3 +1,14 @@
+<script context="module">
+  import { getAppBreadcrumbs } from "./AppDetail.svelte";
+
+  export const getAppIdBreadcrumbs = (params, obj) => {
+    return [
+      ...getAppBreadcrumbs(params, obj),
+      { url: `/apps/${params.app}/app_ids/${params.appId}`, name: obj.app_id },
+    ];
+  };
+</script>
+
 <script>
   import { getAppIdData } from "../state/api";
 
@@ -5,23 +16,17 @@
   import MetadataTable from "../components/MetadataTable.svelte";
   import Label from "../components/Label.svelte";
   import PageHeader from "../components/PageHeader.svelte";
-  import { pageTitle } from "../state/stores";
+  import { updateBreadcrumbs } from "../state/stores";
   import { getDeprecatedItemDescription } from "../data/help";
 
   export let params;
 
-  function setTitle(appId, app) {
-    pageTitle.set(`${appId.app_id} | ${app}`);
-  }
-
   const appIdDataPromise = getAppIdData(params.app, params.appId).then(
     (appId) => {
-      setTitle(appId, params.app);
+      updateBreadcrumbs(getAppIdBreadcrumbs(params, appId));
       return appId;
     }
   );
-
-  setTitle(params.appId, params.app);
 </script>
 
 {#await appIdDataPromise then appId}

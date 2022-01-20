@@ -1,7 +1,6 @@
 <script>
   import page from "page";
   import { parse as queryStringParse } from "query-string";
-  import { afterUpdate } from "svelte";
 
   import { submitPageViewTelemetry } from "./telemetry";
 
@@ -19,46 +18,12 @@
   import GlobalStyles from "./GlobalStyles.svelte";
 
   // Stores
-  import { pageState, pageTitle } from "./state/stores";
+  import { pageState, pageTitle, pageBreadcrumbs } from "./state/stores";
 
   let component;
   let params = {};
-  let links = [];
 
   let title;
-
-  afterUpdate(() => {
-    const { app, appId, ping, metric, table } = params;
-
-    links = [
-      ...(app
-        ? [
-            { url: "/", name: "apps" },
-            { url: `/apps/${app}/`, name: app },
-          ]
-        : []),
-      ...(appId
-        ? [{ url: `/apps/${app}/app_ids/${appId}/`, name: appId }]
-        : []),
-      ...(ping ? [{ url: `/apps/${app}/pings/${ping}/`, name: ping }] : []),
-      ...(metric
-        ? [
-            {
-              url: `/apps/${app}/metrics/${metric}/`,
-              name: metric.replaceAll("-", "."),
-            },
-          ]
-        : []),
-      ...(table
-        ? [
-            {
-              url: `/apps/${app}/app_ids/${appId}/tables/${table}/`,
-              name: table,
-            },
-          ]
-        : []),
-    ];
-  });
 
   function setComponent(c) {
     return function setComponentInner(ctx) {
@@ -86,6 +51,7 @@
   // https://stackoverflow.com/a/59028538
 
   $: title = $pageTitle ? `${$pageTitle}` : "Glean Dictionary";
+  $: breadCrumbLinks = $pageBreadcrumbs;
   $: document.title = title;
 </script>
 
@@ -106,9 +72,9 @@
       </div>
     </div>
   </header>
-  {#if links.length}
+  {#if breadCrumbLinks.length}
     <nav class="mzp-c-navigation breadcrumb">
-      <Breadcrumb {links} />
+      <Breadcrumb links={breadCrumbLinks} />
     </nav>
   {/if}
   <main>

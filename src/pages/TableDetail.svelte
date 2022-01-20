@@ -3,16 +3,30 @@
   import SchemaViewer from "../components/SchemaViewer.svelte";
   import SubHeading from "../components/SubHeading.svelte";
   import { getTableData } from "../state/api";
-  import { pageTitle } from "../state/stores";
+  import { updateBreadcrumbs } from "../state/stores";
 
   import NotFound from "../components/NotFound.svelte";
   import PageHeader from "../components/PageHeader.svelte";
 
+  import { getAppIdBreadcrumbs } from "./AppIdDetail.svelte";
+
   export let params;
 
-  const pingDataPromise = getTableData(params.app, params.appId, params.table);
+  const pingDataPromise = getTableData(
+    params.app,
+    params.appId,
+    params.table
+  ).then((tableData) => {
+    updateBreadcrumbs([
+      ...getAppIdBreadcrumbs(params, tableData),
+      {
+        url: `/apps/${params.app}/app_ids/${params.appId}/tables/${params.table}/`,
+        name: tableData.stable_table,
+      },
+    ]);
 
-  pageTitle.set(`${params.table} table | ${params.appId}`);
+    return tableData;
+  });
 </script>
 
 {#await pingDataPromise then table}
