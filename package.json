@@ -27,7 +27,7 @@
     "@babel/preset-env": "^7.16.5",
     "@mozilla-protocol/core": "^14.0.3",
     "@mozilla/glean": "^0.28.0",
-    "@playwright/test": "^1.16.3",
+    "@playwright/test": "^1.18.0",
     "@rollup/plugin-commonjs": "21.0.1",
     "@rollup/plugin-node-resolve": "13.1.1",
     "@rollup/plugin-replace": "^3.0.0",
