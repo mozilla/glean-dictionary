@@ -72,7 +72,7 @@
     "svelte": "3.46.3",
     "svelte-jester": "^1.6.0",
     "svelte-loader": "2.13.6",
-    "svelte-preprocess": "^4.10.1",
+    "svelte-preprocess": "^4.10.2",
     "tippy.js": "^6.3.7"
   }
 }
