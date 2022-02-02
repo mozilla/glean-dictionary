@@ -1,4 +1,3 @@
-import json
 import os
 
 import requests
@@ -11,6 +10,7 @@ from .glam import SUPPORTED_GLAM_METRIC_TYPES, get_glam_metadata_for_metric
 from .glean import GleanApp
 from .looker import get_looker_explore_metadata_for_metric, get_looker_explore_metadata_for_ping
 from .search import create_metrics_search_js
+from .utils import dump_json
 
 # Various additional sources of metadata
 ANNOTATIONS_URL = os.getenv(
@@ -28,12 +28,6 @@ FIREFOX_PRODUCT_DETAIL_URL = os.getenv(
 METRIC_CHANNEL_PRIORITY = {"nightly": 1, "beta": 2, "release": 3, "esr": 4}
 # Priority for sorting app ids in the UI (of anticipated relevance to the suer)
 USER_CHANNEL_PRIORITY = {"release": 1, "beta": 2, "nightly": 3, "esr": 4}
-
-
-def _serialize_sets(obj):
-    if isinstance(obj, set):
-        return list(obj)
-    return obj
 
 
 def _normalize_metrics(name):
@@ -228,7 +222,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
 
             # information about this app_id
             open(os.path.join(app_id_dir, f"{_get_resource_path(app_id)}.json"), "w").write(
-                json.dumps(dict(app.app, app_tags=app_tags_for_app))
+                dump_json(dict(app.app, app_tags=app_tags_for_app))
             )
 
             pings_with_client_id = set()
@@ -290,7 +284,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                 app_variant_table_dir = os.path.join(app_table_dir, _get_resource_path(app.app_id))
                 os.makedirs(app_variant_table_dir, exist_ok=True)
                 open(os.path.join(app_variant_table_dir, f"{ping.identifier}.json"), "w").write(
-                    json.dumps(
+                    dump_json(
                         dict(
                             bq_definition=bq_definition,
                             bq_schema=bq_schema,
@@ -418,7 +412,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
         for ping_data in app_data["pings"]:
             ping_data["variants"].sort(key=lambda v: USER_CHANNEL_PRIORITY[v["channel"]])
             open(os.path.join(app_ping_dir, f"{ping_data['name']}.json"), "w").write(
-                json.dumps(
+                dump_json(
                     _expand_tags(
                         _incorporate_annotation(
                             dict(
@@ -438,8 +432,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             full=True,
                         ),
                         app_tags_for_objects,
-                    ),
-                    default=_serialize_sets,
+                    )
                 )
             )
 
@@ -449,12 +442,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
             open(
                 os.path.join(app_metrics_dir, f"{_normalize_metrics(metric_data['name'])}.json"),
                 "w",
-            ).write(
-                json.dumps(
-                    metric_data,
-                    default=_serialize_sets,
-                )
-            )
+            ).write(dump_json(metric_data))
 
         # write tag metadata (if any)
         if app_tags_for_objects:
@@ -482,7 +470,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                     app_data[key].sort(key=lambda v: v["metric_count"] > 0, reverse=True)
 
         open(os.path.join(app_dir, "index.json"), "w").write(
-            json.dumps(
+            dump_json(
                 _incorporate_annotation(
                     app_data, app_annotation.get("app", {}), app=True, full=True
                 )
@@ -497,7 +485,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
     # Write out a list of app groups (for the landing page)
     # put "featured" apps first, then sort by name
     open(os.path.join(output_dir, "apps.json"), "w").write(
-        json.dumps(
+        dump_json(
             sorted(
                 sorted(app_summaries, key=lambda s: s["app_name"]),
                 key=lambda s: s.get("featured", False),
@@ -508,5 +496,5 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
 
     # also write some metadata for use by the netlify functions
     open(os.path.join(functions_dir, "supported_glam_metric_types.json"), "w").write(
-        json.dumps(list(SUPPORTED_GLAM_METRIC_TYPES))
+        dump_json(list(SUPPORTED_GLAM_METRIC_TYPES))
     )
