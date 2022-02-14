@@ -218,6 +218,7 @@
                     {#each item.tags as tag}
                       <Label
                         text={tag}
+                        description={stripLinks(tagDescriptions[tag])}
                         clickable
                         on:click={updateSearch(`tags:${tag}`)}
                       />
