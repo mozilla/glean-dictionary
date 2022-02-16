@@ -24,6 +24,7 @@
   import { TabGroup, Tab, TabContent } from "../components/tabs";
   import PageHeader from "../components/PageHeader.svelte";
   import SubHeading from "../components/SubHeading.svelte";
+  import ThirdPartyData from "../components/iOSThirdPartyData.svelte";
   import {
     pageState,
     updateURLState,
@@ -98,6 +99,10 @@
       <Tab key="tags">Tags</Tab>
     {/if}
     <Tab key="app_ids">Application IDs</Tab>
+    {#if app.app_name === "firefox_ios"}
+      <!-- for now, only Firefox iOS uses third-party data collection -->
+      <Tab key="third_party_data">Third-Party Data</Tab>
+    {/if}
 
     <TabContent key="tags">
       <ItemList itemType="tags" items={app.tags} appName={app.app_name} />
@@ -128,6 +133,9 @@
         appName={app.app_name}
         showFilter={false}
       />
+    </TabContent>
+    <TabContent key="third_party_data">
+      <ThirdPartyData />
     </TabContent>
   </TabGroup>
 {:catch}

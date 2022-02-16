@@ -21,6 +21,8 @@
     getLibraryDescription,
   } from "../data/help";
 
+  import { adjustDataTypes } from "./iOSThirdPartyData.svelte";
+
   import { fullTextSearch } from "../state/search";
 
   let DEFAULT_ITEMS_PER_PAGE = 20;
@@ -194,8 +196,11 @@
                       clickable
                     />
                   {:else}
-                    <a href={getItemURL(appName, itemType, item.name)}
-                      >{@html highlightSearch(item.name, search)}</a
+                    <a
+                      href={getItemURL(appName, itemType, item.name)}
+                      style={itemType === "third-party data"
+                        ? "pointer-events: none"
+                        : ""}>{@html highlightSearch(item.name, search)}</a
                     >
                   {/if}
                   {#if item.origin && item.origin !== appName}
@@ -217,6 +222,11 @@
                         clickable
                         on:click={updateSearch(`tags:${tag}`)}
                       />
+                    {/each}
+                  {/if}
+                  {#if item.types}
+                    {#each item.types as type}
+                      <Label text={type} description={adjustDataTypes[type]} />
                     {/each}
                   {/if}
                   {#if isRemoved(item)}
