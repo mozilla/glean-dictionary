@@ -678,9 +678,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 0"
+                  style=""
                 >
                   test metric 0
                 </a>
+                 
                  
                  
                  
@@ -729,9 +731,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 1"
+                  style=""
                 >
                   test metric 1
                 </a>
+                 
                  
                  
                  
@@ -780,9 +784,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 2"
+                  style=""
                 >
                   test metric 2
                 </a>
+                 
                  
                  
                  
@@ -831,9 +837,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 3"
+                  style=""
                 >
                   test metric 3
                 </a>
+                 
                  
                  
                  
@@ -882,9 +890,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 4"
+                  style=""
                 >
                   test metric 4
                 </a>
+                 
                  
                  
                  
@@ -933,9 +943,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 5"
+                  style=""
                 >
                   test metric 5
                 </a>
+                 
                  
                  
                  
@@ -984,9 +996,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 6"
+                  style=""
                 >
                   test metric 6
                 </a>
+                 
                  
                  
                  
@@ -1035,9 +1049,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 7"
+                  style=""
                 >
                   test metric 7
                 </a>
+                 
                  
                  
                  
@@ -1086,9 +1102,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 8"
+                  style=""
                 >
                   test metric 8
                 </a>
+                 
                  
                  
                  
@@ -1137,9 +1155,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 9"
+                  style=""
                 >
                   test metric 9
                 </a>
+                 
                  
                  
                  
@@ -1188,9 +1208,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 10"
+                  style=""
                 >
                   test metric 10
                 </a>
+                 
                  
                  
                  
@@ -1239,9 +1261,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 11"
+                  style=""
                 >
                   test metric 11
                 </a>
+                 
                  
                  
                  
@@ -1290,9 +1314,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 12"
+                  style=""
                 >
                   test metric 12
                 </a>
+                 
                  
                  
                  
@@ -1341,9 +1367,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 13"
+                  style=""
                 >
                   test metric 13
                 </a>
+                 
                  
                  
                  
@@ -1392,9 +1420,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 14"
+                  style=""
                 >
                   test metric 14
                 </a>
+                 
                  
                  
                  
@@ -1443,9 +1473,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 15"
+                  style=""
                 >
                   test metric 15
                 </a>
+                 
                  
                  
                  
@@ -1494,9 +1526,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 16"
+                  style=""
                 >
                   test metric 16
                 </a>
+                 
                  
                  
                  
@@ -1545,9 +1579,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 17"
+                  style=""
                 >
                   test metric 17
                 </a>
+                 
                  
                  
                  
@@ -1596,9 +1632,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 18"
+                  style=""
                 >
                   test metric 18
                 </a>
+                 
                  
                  
                  
@@ -1647,9 +1685,11 @@ exports[`Storyshots ItemList Default 1`] = `
                 <a
                   class="svelte-lsmn69"
                   href="/apps/app-name/metrics/test metric 19"
+                  style=""
                 >
                   test metric 19
                 </a>
+                 
                  
                  
                  

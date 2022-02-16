@@ -3,7 +3,7 @@ import datetime
 
 def _validate(date_text):
     try:
-        datetime.datetime.strptime(date_text, "%Y-%m-%d")
+        datetime.datetime.strptime(str(date_text), "%Y-%m-%d")
         return True
     except ValueError:
         return False
