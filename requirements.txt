@@ -190,6 +190,7 @@ pytest==6.2.5 \
     #   -r requirements.in
     #   pytest-black
     #   pytest-flake8
+    #   pytest-isort
 pytest-black==0.3.12 \
     --hash=sha256:1d339b004f764d6cd0f06e690f6dd748df3d62e6fe1a692d6a5500ac2c5b75a5
     # via -r requirements.in
@@ -197,9 +198,9 @@ pytest-flake8==1.0.7 \
     --hash=sha256:c28cf23e7d359753c896745fd4ba859495d02e16c84bac36caa8b1eec58f5bc1 \
     --hash=sha256:f0259761a903563f33d6f099914afef339c085085e643bee8343eb323b32dd6b
     # via -r requirements.in
-pytest-isort==2.0.0 \
-    --hash=sha256:821a8c5c9c4f3a3c52cfa9c541fbe89ac9e28728125125af53724c4c3f129117 \
-    --hash=sha256:ab949c593213dad38ba75db32a0ce361fcddd11d4152be4a2c93b85104cc4376
+pytest-isort==3.0.0 \
+    --hash=sha256:2d96a25a135d6fd084ac36878e7d54f26f27c6987c2c65f0d12809bffade9cb9 \
+    --hash=sha256:4fe4b26ead2af776730ec23f5870d7421f35aace22a41c4e938586ef4d8787cb
     # via -r requirements.in
 pyyaml==6.0 \
     --hash=sha256:0283c35a6a9fbf047493e3a0ce8d79ef5030852c51e9d911a27badfde0605293 \
