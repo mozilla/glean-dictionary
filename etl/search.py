@@ -8,8 +8,15 @@ SEARCH_JS_TEMPLATE = jinja2.Template(
     open(Path(__file__).resolve().parent / "metrics_search.js.tmpl").read()
 )
 
+FOG_AND_LEGACY_SEARCH_JS_TEMPLATE = jinja2.Template(
+    open(Path(__file__).resolve().parent / "fog_and_legacy.js.tmpl").read()
+)
 
-def create_metrics_search_js(metrics, legacy=False):
+FOG_DATA_JS_TEMPLATE = jinja2.Template(
+    open(Path(__file__).resolve().parent / "fog.js.tmpl").read()
+)
+
+def create_metrics_search_js(metrics, app_name=None, legacy=False):
     search_keys = (
         ["type", "description", "active"] if legacy else ["type", "description", "expires"]
     )
@@ -21,5 +28,13 @@ def create_metrics_search_js(metrics, legacy=False):
             del metric_val["active"]
         if metric_val.get("expires") == "never":
             del metric_val["expires"]
+
+    if app_name == "fog":
+        for metric_val in metric_data.values():
+            metric_val["fog"] = True;
+        return FOG_DATA_JS_TEMPLATE.render(metric_data=dump_json(metric_data), legacy=dump_json(legacy))
+
+    if app_name == "fog_and_legacy":
+        return FOG_AND_LEGACY_SEARCH_JS_TEMPLATE.render(metric_data=dump_json(metric_data), legacy=dump_json(legacy))
 
     return SEARCH_JS_TEMPLATE.render(metric_data=dump_json(metric_data), legacy=dump_json(legacy))
