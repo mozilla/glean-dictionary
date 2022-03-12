@@ -43,6 +43,19 @@ const items = [
     type: "boolean",
     description: "def ghi",
   },
+  {
+    name: "metric.seven",
+    tags: ["Tag with spaces"],
+    origin: "engine-gecko",
+    type: "boolean",
+    description: "jkl mno",
+  },
+  {
+    name: "metric.eight",
+    origin: "engine-gecko",
+    type: "boolean",
+    description: "mno pqr stu",
+  },
 ];
 
 describe("search", () => {
@@ -74,5 +87,15 @@ describe("search", () => {
   it("works correctly with tags that has a `:` in its name", () =>
     expect(getNames(fullTextSearch("tags:A:Tag", items))).toEqual([
       "metric.six",
+    ]));
+
+  it("works correctly with tags with spaces", () =>
+    expect(getNames(fullTextSearch('tags:"Tag with spaces"', items))).toEqual([
+      "metric.seven",
+    ]));
+
+  it("exact match non-tokenized", () =>
+    expect(getNames(fullTextSearch('"mno pqr stu"', items))).toEqual([
+      "metric.eight",
     ]));
 });
