@@ -3,12 +3,11 @@
 
   export let links;
 
-  const isPlatform = (link) => {
-    return some(
+  const isPlatform = (link) =>
+    some(
       ["iOS", "Android", "Amazon"],
       (platformTag) => link.tags && link.tags.includes(platformTag)
     );
-  };
 
   const getPlatformLogo = (link) => {
     if (link.tags.includes("iOS")) return "/img/app-logos/apple-breadcrumb.png";

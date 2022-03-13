@@ -1,13 +1,11 @@
 <script context="module">
-  export const getAppBreadcrumbs = (params, obj) => {
-    return [
-      {
-        url: `/apps/${params.app}`,
-        name: obj.canonical_app_name,
-        tags: obj.app_tags,
-      },
-    ];
-  };
+  export const getAppBreadcrumbs = (params, obj) => [
+    {
+      url: `/apps/${params.app}`,
+      name: obj.canonical_app_name,
+      tags: obj.app_tags,
+    },
+  ];
 </script>
 
 <script>

@@ -54,8 +54,6 @@ export const fullTextSearch = (query, searchItems) => {
   ];
 
   return results
-    .map((result) => {
-      return itemsFilteredByLabels.find((item) => item.name === result);
-    })
+    .map((result) => itemsFilteredByLabels.find((item) => item.name === result))
     .filter((el) => el !== undefined);
 };

@@ -17,9 +17,8 @@ export function getBugLinkTitle(ref) {
     return url
       .replace(
         /[^\d]+\/([^\d]+)\/([^\d]+)\/[^\d]+\/([\d]+)/,
-        (_, orgName, repoName, issueNumber) => {
-          return `${orgName}/${repoName}#${issueNumber}`;
-        }
+        (_, orgName, repoName, issueNumber) =>
+          `${orgName}/${repoName}#${issueNumber}`
       )
       .replace(/#issuecomment.*/, "-comment");
   }
@@ -32,9 +31,8 @@ export function getSourceUrlTitle(url) {
   if (url.includes("github.com")) {
     return url.replace(
       /[^\d]+\/([^\d]+)\/([^\d]+)\/([^\d]+)\/([^/]+)\/(.*)/,
-      (_, orgName, repoName, _blob, _hash, path) => {
-        return `${orgName}/${repoName}/${path}`;
-      }
+      (_, orgName, repoName, _blob, _hash, path) =>
+        `${orgName}/${repoName}/${path}`
     );
   }
   return url;

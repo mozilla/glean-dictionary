@@ -13,9 +13,8 @@ const REQUIRED_METRIC_PARAMS_DOCS =
 const OPTIONAL_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#optional-metric-parameters";
 
-const getFirstAddedText = (itemType) => {
-  return `The date when this ${itemType} was first added to the product source code. If it was added recently, it may take some time before the software is released to users and data starts showing up.`;
-};
+const getFirstAddedText = (itemType) =>
+  `The date when this ${itemType} was first added to the product source code. If it was added recently, it may take some time before the software is released to users and data starts showing up.`;
 
 export const APPLICATION_DEFINITION_SCHEMA = [
   {
@@ -39,9 +38,7 @@ export const APPLICATION_DEFINITION_SCHEMA = [
     type: "value",
     helpText:
       "The number of days Mozilla retains raw decoded ping data received for this application. If not specified, retention will be unlimited.",
-    valueFormatter: (value) => {
-      return value !== null ? `${value} days` : "Unlimited";
-    },
+    valueFormatter: (value) => (value !== null ? `${value} days` : "Unlimited"),
   },
 ];
 
@@ -78,9 +75,7 @@ export const METRIC_DEFINITION_SCHEMA = [
     type: "link",
     helpText:
       "Finds uses of this metric using simple matching. Metrics used dynamically may not appear in the results, only metrics defined in the application will be found.",
-    linkFormatter: (metricId, appName) => {
-      return getCodeSearchLink(appName, metricId);
-    },
+    linkFormatter: (metricId, appName) => getCodeSearchLink(appName, metricId),
   },
 ];
 export const METRIC_METADATA_SCHEMA = [
@@ -92,12 +87,11 @@ export const METRIC_METADATA_SCHEMA = [
       "A list of data sensitivity categories that the metric falls under.",
     helpLink:
       "https://mozilla.github.io/glean/book/reference/yaml/metrics.html#data_sensitivity",
-    valueFormatter: (item) => {
-      return item
+    valueFormatter: (item) =>
+      item
         .split("_")
         .map((s) => capitalize(s))
-        .join(" ");
-    },
+        .join(" "),
   },
   {
     title: "Lifetime",
