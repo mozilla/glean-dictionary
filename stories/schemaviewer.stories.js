@@ -41,12 +41,10 @@ export default {
   title: "Schema Viewer",
 };
 
-export const Basic = () => {
-  return {
-    Component: SchemaViewer,
-    props: {
-      app: "fenix",
-      nodes,
-    },
-  };
-};
+export const Basic = () => ({
+  Component: SchemaViewer,
+  props: {
+    app: "fenix",
+    nodes,
+  },
+});

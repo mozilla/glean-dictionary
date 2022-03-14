@@ -1,12 +1,10 @@
 <script context="module">
   import { getAppBreadcrumbs } from "./AppDetail.svelte";
 
-  export const getAppIdBreadcrumbs = (params, obj) => {
-    return [
-      ...getAppBreadcrumbs(params, obj),
-      { url: `/apps/${params.app}/app_ids/${params.appId}`, name: obj.app_id },
-    ];
-  };
+  export const getAppIdBreadcrumbs = (params, obj) => [
+    ...getAppBreadcrumbs(params, obj),
+    { url: `/apps/${params.app}/app_ids/${params.appId}`, name: obj.app_id },
+  ];
 </script>
 
 <script>
