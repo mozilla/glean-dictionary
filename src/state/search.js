@@ -23,32 +23,34 @@ const generateSearchIndex = (items) => {
 
 export const fullTextSearch = (query, searchItems) => {
   let itemsFilteredByLabels = searchItems;
-  let unlabeledSearchWords = [];
+  let unlabeledsearchTerms = [];
 
-  const searchWords = query.split(" ");
+  const searchTerms = query.match(/(?:(?:tags:)?".+")|"?[^ ]+"?/g);
   const labels = { tags: [], origin: [] };
   const searchIndex = generateSearchIndex(searchItems);
 
-  searchWords.forEach((word) => {
-    if (word.startsWith("tags:") || word.startsWith("origin:")) {
-      const splitter = word.indexOf(":");
-      const labelType = word.slice(0, splitter);
-      labels[labelType] = [...labels[labelType], word.slice(splitter + 1)];
+  searchTerms.forEach((term) => {
+    if (term.startsWith("tags:") || term.startsWith("origin:")) {
+      const splitter = term.indexOf(":");
+      const labelType = term.slice(0, splitter);
+      labels[labelType] = [
+        ...labels[labelType],
+        term.slice(splitter + 1).replace(/"?(.*?)"?$/, "$1"),
+      ];
     } else {
       // join the rest of the search tokens
-      unlabeledSearchWords = word && [...unlabeledSearchWords, word];
+      unlabeledsearchTerms = term && [...unlabeledsearchTerms, term];
     }
   });
-
   itemsFilteredByLabels = filterItemsByLabels(searchItems, labels);
 
-  if (!unlabeledSearchWords.length) return itemsFilteredByLabels;
+  if (!unlabeledsearchTerms.length) return itemsFilteredByLabels;
 
   const results = [
     ...new Set(
       searchIndex
         // manually set the limit here to get all results (FlexSearch only returns 100 entries: https://github.com/nextapps-de/flexsearch#limit--offset)
-        .search(unlabeledSearchWords.join(" "), { limit: 10000 })
+        .search(unlabeledsearchTerms.join(" "), { limit: 10000 })
         .flatMap((match) => match.result)
     ),
   ];

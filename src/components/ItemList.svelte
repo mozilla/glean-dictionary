@@ -72,6 +72,10 @@
       : text;
   }
 
+  function quote(text) {
+    return text.includes(" ") ? `"${text}"` : text;
+  }
+
   $: {
     showUncollected = $pageState.showUncollected;
     search = $pageState.search || "";
@@ -192,7 +196,10 @@
                   {#if itemType === "tags"}
                     <Label
                       text={item.name}
-                      on:click={updateSearch(`tags:${item.name}`, "metrics")}
+                      on:click={updateSearch(
+                        `tags:${quote(item.name)}`,
+                        "metrics"
+                      )}
                       clickable
                     />
                   {:else}
@@ -220,7 +227,7 @@
                         text={tag}
                         description={stripLinks(tagDescriptions[tag])}
                         clickable
-                        on:click={updateSearch(`tags:${tag}`)}
+                        on:click={updateSearch(`tags:${quote(tag)}`)}
                       />
                     {/each}
                   {/if}
