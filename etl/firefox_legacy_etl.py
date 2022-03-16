@@ -25,12 +25,12 @@ def _get_legacy_firefox_metric_summary(probe_data, activity_mapping):
             # let's just skip legacy firefox events, since we're just doing
             # this for GLAM's benefit (which doesn't display events)
             continue
-        if probe["history"].get("nightly") is None:
+        if not probe["history"].get("nightly"):
             most_recent_metadata = probe["history"]["beta"][0]
         else:
             most_recent_metadata = probe["history"]["nightly"][0]
+        
         normalized_probe_name = probe["name"].lower().replace(".", "_")
-
         probe_summary[normalized_probe_name] = {
             "name": normalized_probe_name,
             "id": probe_id,
