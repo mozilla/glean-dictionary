@@ -101,9 +101,13 @@ export default {
       "process.env.NODE_ENV": JSON.stringify(
         production ? "production" : "development"
       ),
+      // These environment variables are always strings,
+      // so _any_ value will be read as `true` here
+      // i.e. GLEAN_LOG_PINGS=false will become `true` here.
+      // The only option when GLEAN_LOG_PINGS is `false` is when it is not set at all
       GLEAN_LOG_PINGS: !!process.env.GLEAN_LOG_PINGS,
-      GLEAN_DEBUG_VIEW_TAG: process.env.GLEAN_DEBUG_VIEW_TAG,
-      GLEAN_SOURCE_TAGS: process.env.GLEAN_SOURCE_TAGS,
+      GLEAN_DEBUG_VIEW_TAG: process.env.GLEAN_DEBUG_VIEW_TAG || "",
+      GLEAN_SOURCE_TAGS: process.env.GLEAN_SOURCE_TAGS || "",
       __DISPLAY_VERSION__: execSync("git describe --abbrev=0 --tags")
         .toString()
         .trim(),
