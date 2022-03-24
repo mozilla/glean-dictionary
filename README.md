@@ -4,7 +4,7 @@
 
 The Glean dictionary aims to provide a comprehensive index of datasets generated
 inside Mozilla for applications built using the
-[Glean SDK](https://mozilla.github.io/glean/book/index.html).
+[Glean SDKs](https://mozilla.github.io/glean/book/index.html).
 
 This project is under active development. For up to date information on project
 structure and governance, see:
