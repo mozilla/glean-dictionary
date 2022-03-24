@@ -40,20 +40,24 @@ export function initializeTelemetry() {
     appDisplayVersion: "__DISPLAY_VERSION__",
   });
 
-  // eslint-disable-next-line no-constant-condition
-  if ("GLEAN_LOG_PINGS" === true) {
+  /* eslint-disable no-undef, no-constant-condition */
+
+  // GLEAN_LOG_PINGS is a boolean value,
+  // thus it should not have quotes around it.
+  if (GLEAN_LOG_PINGS === true) {
     Glean.setLogPings(true);
   }
 
-  // eslint-disable-next-line no-constant-condition
   if ("GLEAN_DEBUG_VIEW_TAG") {
     Glean.setDebugViewTag("GLEAN_DEBUG_VIEW_TAG");
   }
 
-  // eslint-disable-next-line no-constant-condition
   if ("GLEAN_SOURCE_TAGS") {
-    Glean.setSourceTags("GLEAN_SOURCE_TAGS");
+    // GLEAN_SOURCE_TAGS is supposed to be a comma separated string of tags
+    const sourceTags = "GLEAN_SOURCE_TAGS".split(",").map((tag) => tag.trim());
+    Glean.setSourceTags(sourceTags);
   }
+  /* eslint-enable no-undef */
 }
 
 /**
