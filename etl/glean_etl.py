@@ -479,8 +479,14 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
 
         # write a search index for the app
         open(os.path.join(functions_dir, f"metrics_search_{app_name}.js"), "w").write(
-            create_metrics_search_js(app_metrics.values(), legacy=False)
+            create_metrics_search_js(app_metrics.values(), app_name, legacy=False)
         )
+
+        # export FOG data to a separate file for the FOG + legacy search index
+        if app_name == "firefox_desktop":
+            open(os.path.join(functions_dir, f"metrics_search_fog.js"), "w").write(
+                create_metrics_search_js(app_metrics.values(), app_name="fog", legacy=False)
+            )
 
     # Write out a list of app groups (for the landing page)
     # put "featured" apps first, then sort by name

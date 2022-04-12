@@ -73,7 +73,12 @@ def write_firefox_legacy_metadata(output_dir, functions_dir):
         with open(os.path.join(probe_output_directory, f"data_{probe_name}.json"), "w") as f:
             json.dump(probe_metadata, f)
 
-    # write a search index for the app
+    # write a search index for legacy telemetry data
     open(os.path.join(functions_dir, "metrics_search_firefox_legacy.js"), "w").write(
         create_metrics_search_js(probe_summary.values(), legacy=True)
+    )
+
+    # write a search index for legacy telemetry + FOG data
+    open(os.path.join(functions_dir, "metrics_search_fog_and_legacy.js"), "w").write(
+        create_metrics_search_js(probe_summary.values(), app_name="fog_and_legacy", legacy=True)
     )

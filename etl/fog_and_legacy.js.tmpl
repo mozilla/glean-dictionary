@@ -1,0 +1,8 @@
+const { getSearchFunction } = require("./search");
+const { fogData } = require("./metrics_search_fog");
+
+const metricData = {...{{ metric_data }}, ...fogData};
+
+const legacy = {{ legacy }};
+
+exports.handler = getSearchFunction(metricData, legacy);
