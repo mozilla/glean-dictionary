@@ -78,4 +78,3 @@ def write_firefox_legacy_metadata(output_dir, functions_dir):
     open(os.path.join(functions_dir, "metrics_search_fog_and_legacy.js"), "w").write(
         create_metrics_search_js(probe_summary.values(), app_name="fog_and_legacy", legacy=True)
     )
-

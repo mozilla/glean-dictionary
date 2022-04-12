@@ -483,7 +483,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
         )
 
         # export FOG data to a separate file for the FOG + legacy search index
-        if app_name =="firefox_desktop": 
+        if app_name == "firefox_desktop":
             open(os.path.join(functions_dir, f"metrics_search_fog.js"), "w").write(
                 create_metrics_search_js(app_metrics.values(), app_name="fog", legacy=False)
             )
