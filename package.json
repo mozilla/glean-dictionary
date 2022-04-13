@@ -25,7 +25,7 @@
     "@babel/core": "^7.17.5",
     "@babel/plugin-transform-runtime": "7.16.10",
     "@babel/preset-env": "^7.16.11",
-    "@mozilla-protocol/core": "^14.0.3",
+    "@mozilla-protocol/core": "^16.0.0",
     "@mozilla/glean": "^1.0.0",
     "@playwright/test": "^1.20.0",
     "@rollup/plugin-commonjs": "21.0.1",
