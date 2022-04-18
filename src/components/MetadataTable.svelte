@@ -1,5 +1,5 @@
 <script>
-  import { isNull, isUndefined } from "lodash";
+  import { isNull, isUndefined, isEmpty } from "lodash";
   import { parseInline } from "marked";
   import HelpHoverable from "./HelpHoverable.svelte";
 
@@ -16,7 +16,7 @@
   <col />
   <col />
   {#each schema as schemaEntry}
-    {#if !isUndefined(item[schemaEntry.id]) && (!isNull(item[schemaEntry.id]) || schemaEntry.displayNull)}
+    {#if !isUndefined(item[schemaEntry.id]) && ((!isNull(item[schemaEntry.id]) && !isEmpty(item[schemaEntry.id])) || schemaEntry.displayNull)}
       <tr>
         <td>
           {schemaEntry.title}
@@ -56,7 +56,10 @@
                 <li>{format(ref, schemaEntry.valueFormatter)}</li>
               {/each}
             </ul>
-          {:else}{format(item[schemaEntry.id], schemaEntry.valueFormatter)}{/if}
+          {:else}{@html format(
+              item[schemaEntry.id],
+              schemaEntry.valueFormatter
+            )}{/if}
         </td>
       </tr>
     {/if}
