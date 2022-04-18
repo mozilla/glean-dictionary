@@ -306,7 +306,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
 
                     # read the annotation, if any
                     metric_annotation = _get_annotation(
-                        annotations_index, app_name, "metrics", metric.identifier
+                        annotations_index, metric.definition["origin"], "metrics", metric.identifier
                     )
 
                     base_definition = _incorporate_annotation(
