@@ -7,11 +7,14 @@ import {
   getSourceUrlTitle,
 } from "../formatters/links";
 import { getCodeSearchLink } from "../formatters/codesearch";
+import { getPingReasons } from "../formatters/text";
 
 const REQUIRED_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#required-metric-parameters";
 const OPTIONAL_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#optional-metric-parameters";
+const PING_REASONS_DOCS =
+  "https://mozilla.github.io/glean/book/reference/yaml/pings.html#reasons";
 
 const getFirstAddedText = (itemType) =>
   `The date when this ${itemType} was first added to the product source code. If it was added recently, it may take some time before the software is released to users and data starts showing up.`;
@@ -250,5 +253,13 @@ export const PING_SCHEMA = [
       "A list of email addresses to notify for important events with the ping or when people with context or ownership for the ping need to be contacted.",
     helpLink: REQUIRED_METRIC_PARAMS_DOCS, // all the stuff applying to metrics applies to pings here
     linkFormatter: getEmailLink,
+  },
+  {
+    title: "Reasons",
+    id: "reasons",
+    helpText:
+      "The reasons that this ping may be sent. The keys are the reason codes, and the values are a textual description of each reason. The ping payload will (optionally) contain one of these reasons in the ping_info.reason field.",
+    helpLink: PING_REASONS_DOCS,
+    valueFormatter: getPingReasons,
   },
 ];
