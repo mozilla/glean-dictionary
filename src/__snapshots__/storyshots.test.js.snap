@@ -5,13 +5,13 @@ exports[`Storyshots App Alert Text 1`] = `
   class="storybook-snapshot-container"
 >
   <p
-    class="svelte-1yerjgp"
+    class="svelte-hu9od6"
   >
     Error Alert
   </p>
    
   <div
-    class="mzp-c-notification-bar mzp-t-error error svelte-qysvcw"
+    class="mzp-c-notification-bar mzp-t-error error svelte-brev3v"
   >
     <svg
       height="50px"
@@ -42,7 +42,7 @@ exports[`Storyshots App Alert Text 1`] = `
     </svg>
      
     <div
-      class="alert-text svelte-qysvcw"
+      class="alert-text svelte-brev3v"
     >
       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
       
@@ -51,13 +51,13 @@ exports[`Storyshots App Alert Text 1`] = `
   </div>
    
   <p
-    class="svelte-1yerjgp"
+    class="svelte-hu9od6"
   >
     Warning Alert
   </p>
    
   <div
-    class="mzp-c-notification-bar mzp-t-warning warning svelte-qysvcw"
+    class="mzp-c-notification-bar mzp-t-warning warning svelte-brev3v"
   >
     <svg
       height="50px"
@@ -99,7 +99,7 @@ exports[`Storyshots App Alert Text 1`] = `
     </svg>
      
     <div
-      class="alert-text svelte-qysvcw"
+      class="alert-text svelte-brev3v"
     >
       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
       
@@ -108,13 +108,13 @@ exports[`Storyshots App Alert Text 1`] = `
   </div>
    
   <p
-    class="svelte-1yerjgp"
+    class="svelte-hu9od6"
   >
     Success Alert
   </p>
    
   <div
-    class="mzp-c-notification-bar mzp-t-success success svelte-qysvcw"
+    class="mzp-c-notification-bar mzp-t-success success svelte-brev3v"
   >
     <svg
       height="50px"
@@ -139,7 +139,7 @@ exports[`Storyshots App Alert Text 1`] = `
     </svg>
      
     <div
-      class="alert-text svelte-qysvcw"
+      class="alert-text svelte-brev3v"
     >
       Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
       
@@ -191,19 +191,19 @@ exports[`Storyshots Authenticated Link Text 1`] = `
   class="storybook-snapshot-container"
 >
   <a
-    class="svelte-1db1y01"
+    class="svelte-1j28ehe"
     href="https://glam.telemetry.mozilla.org"
   >
     GLAM
   </a>
    
   <a
-    class="lock-link svelte-1db1y01"
+    class="lock-link svelte-1j28ehe"
     href="https://docs.telemetry.mozilla.org/concepts/gaining_access.html"
   >
     <span
       aria-label="access limited"
-      class="svelte-1db1y01"
+      class="svelte-1j28ehe"
       role="img"
     >
       🔒
@@ -217,16 +217,16 @@ exports[`Storyshots Breadcrumb App Details Page 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="breadcrumb svelte-1n0itmd"
+    class="breadcrumb svelte-4hkg9y"
   >
     <ol
-      class="svelte-1n0itmd"
+      class="svelte-4hkg9y"
     >
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/"
         >
           apps
@@ -235,15 +235,15 @@ exports[`Storyshots Breadcrumb App Details Page 1`] = `
        
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         -&gt;
       </span>
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/apps/fenix/"
         >
           fenix
@@ -252,12 +252,12 @@ exports[`Storyshots Breadcrumb App Details Page 1`] = `
        
       <img
         alt="Platform Logo"
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
         src="/img/app-logos/android-breadcrumb.png"
       />
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         
       </span>
@@ -271,16 +271,16 @@ exports[`Storyshots Breadcrumb Apps List Page 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="breadcrumb svelte-1n0itmd"
+    class="breadcrumb svelte-4hkg9y"
   >
     <ol
-      class="svelte-1n0itmd"
+      class="svelte-4hkg9y"
     >
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/"
         >
           apps
@@ -289,7 +289,7 @@ exports[`Storyshots Breadcrumb Apps List Page 1`] = `
        
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         
       </span>
@@ -303,16 +303,16 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="breadcrumb svelte-1n0itmd"
+    class="breadcrumb svelte-4hkg9y"
   >
     <ol
-      class="svelte-1n0itmd"
+      class="svelte-4hkg9y"
     >
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/"
         >
           apps
@@ -321,15 +321,15 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
        
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         -&gt;
       </span>
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/apps/fenix/"
         >
           fenix
@@ -338,20 +338,20 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
        
       <img
         alt="Platform Logo"
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
         src="/img/app-logos/android-breadcrumb.png"
       />
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         -&gt;
       </span>
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/apps/fenix/pings/activation"
         >
           activation
@@ -360,15 +360,15 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
        
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         -&gt;
       </span>
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/apps/fenix/tables/activation/"
         >
           activation table
@@ -377,7 +377,7 @@ exports[`Storyshots Breadcrumb Big Query Table Page 1`] = `
        
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         
       </span>
@@ -391,16 +391,16 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="breadcrumb svelte-1n0itmd"
+    class="breadcrumb svelte-4hkg9y"
   >
     <ol
-      class="svelte-1n0itmd"
+      class="svelte-4hkg9y"
     >
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/"
         >
           apps
@@ -409,15 +409,15 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
        
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         -&gt;
       </span>
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/apps/fenix/"
         >
           fenix
@@ -426,20 +426,20 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
        
       <img
         alt="Platform Logo"
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
         src="/img/app-logos/android-breadcrumb.png"
       />
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         -&gt;
       </span>
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/apps/fenix/metrics/about_page.libraries_tapped"
         >
           about_page.libraries_tapped
@@ -448,7 +448,7 @@ exports[`Storyshots Breadcrumb Metric Page 1`] = `
        
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         
       </span>
@@ -462,16 +462,16 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="breadcrumb svelte-1n0itmd"
+    class="breadcrumb svelte-4hkg9y"
   >
     <ol
-      class="svelte-1n0itmd"
+      class="svelte-4hkg9y"
     >
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/"
         >
           apps
@@ -480,15 +480,15 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
        
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         -&gt;
       </span>
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/apps/fenix/"
         >
           fenix
@@ -497,20 +497,20 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
        
       <img
         alt="Platform Logo"
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
         src="/img/app-logos/android-breadcrumb.png"
       />
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         -&gt;
       </span>
       <li
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         <a
-          class="link-name svelte-1n0itmd"
+          class="link-name svelte-4hkg9y"
           href="/apps/fenix/pings/activation"
         >
           activation
@@ -519,7 +519,7 @@ exports[`Storyshots Breadcrumb Ping Page 1`] = `
        
        
       <span
-        class="svelte-1n0itmd"
+        class="svelte-4hkg9y"
       >
         
       </span>
@@ -536,10 +536,10 @@ exports[`Storyshots FilterInput Basic 1`] = `
     class="container"
   >
     <div
-      class="svelte-ggdpb7"
+      class="svelte-150ybko"
     >
       <input
-        class="svelte-ggdpb7"
+        class="svelte-150ybko"
         id="filter-input"
         type="search"
       />
@@ -571,16 +571,16 @@ exports[`Storyshots ItemList Default 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="svelte-lsmn69"
+    class="svelte-1cr1lhe"
   >
     <span
-      class="expire-checkbox svelte-lsmn69"
+      class="expire-checkbox svelte-1cr1lhe"
     >
       <label
-        class="svelte-lsmn69"
+        class="svelte-1cr1lhe"
       >
         <input
-          class="svelte-lsmn69"
+          class="svelte-1cr1lhe"
           type="checkbox"
         />
         
@@ -588,10 +588,10 @@ exports[`Storyshots ItemList Default 1`] = `
       </label>
        
       <label
-        class="svelte-lsmn69"
+        class="svelte-1cr1lhe"
       >
         <input
-          class="svelte-lsmn69"
+          class="svelte-1cr1lhe"
           type="checkbox"
         />
         
@@ -600,10 +600,10 @@ exports[`Storyshots ItemList Default 1`] = `
     </span>
      
     <div
-      class="svelte-ggdpb7"
+      class="svelte-150ybko"
     >
       <input
-        class="svelte-ggdpb7"
+        class="svelte-150ybko"
         id="filter-input"
         placeholder="Search metrics"
         type="search"
@@ -611,34 +611,34 @@ exports[`Storyshots ItemList Default 1`] = `
     </div>
      
     <div
-      class="item-browser svelte-lsmn69"
+      class="item-browser svelte-1cr1lhe"
     >
       <table
-        class="mzp-u-data-table svelte-lsmn69"
+        class="mzp-u-data-table svelte-1cr1lhe"
       >
         <col
-          class="svelte-lsmn69"
+          class="svelte-1cr1lhe"
           width="35%"
         />
          
         <col
-          class="svelte-lsmn69"
+          class="svelte-1cr1lhe"
           width="20%"
         />
          
         <col
-          class="svelte-lsmn69"
+          class="svelte-1cr1lhe"
           width="45%"
         />
          
         <thead
-          class="svelte-lsmn69"
+          class="svelte-1cr1lhe"
         >
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <th
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               scope="col"
               style="text-align: center;"
             >
@@ -646,7 +646,7 @@ exports[`Storyshots ItemList Default 1`] = `
             </th>
              
             <th
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               scope="col"
               style="text-align: center;"
             >
@@ -654,7 +654,7 @@ exports[`Storyshots ItemList Default 1`] = `
             </th>
              
             <th
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               scope="col"
               style="text-align: center;"
             >
@@ -664,19 +664,19 @@ exports[`Storyshots ItemList Default 1`] = `
         </thead>
          
         <tbody
-          class="svelte-lsmn69"
+          class="svelte-1cr1lhe"
         >
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 0"
                   style=""
                 >
@@ -691,14 +691,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -706,10 +706,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 0"
               >
                 This is test metric 0
@@ -720,16 +720,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 1"
                   style=""
                 >
@@ -744,14 +744,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -759,10 +759,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 1"
               >
                 This is test metric 1
@@ -773,16 +773,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 2"
                   style=""
                 >
@@ -797,14 +797,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -812,10 +812,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 2"
               >
                 This is test metric 2
@@ -826,16 +826,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 3"
                   style=""
                 >
@@ -850,14 +850,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -865,10 +865,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 3"
               >
                 This is test metric 3
@@ -879,16 +879,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 4"
                   style=""
                 >
@@ -903,14 +903,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -918,10 +918,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 4"
               >
                 This is test metric 4
@@ -932,16 +932,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 5"
                   style=""
                 >
@@ -956,14 +956,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -971,10 +971,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 5"
               >
                 This is test metric 5
@@ -985,16 +985,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 6"
                   style=""
                 >
@@ -1009,14 +1009,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1024,10 +1024,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 6"
               >
                 This is test metric 6
@@ -1038,16 +1038,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 7"
                   style=""
                 >
@@ -1062,14 +1062,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1077,10 +1077,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 7"
               >
                 This is test metric 7
@@ -1091,16 +1091,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 8"
                   style=""
                 >
@@ -1115,14 +1115,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1130,10 +1130,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 8"
               >
                 This is test metric 8
@@ -1144,16 +1144,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 9"
                   style=""
                 >
@@ -1168,14 +1168,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1183,10 +1183,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 9"
               >
                 This is test metric 9
@@ -1197,16 +1197,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 10"
                   style=""
                 >
@@ -1221,14 +1221,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1236,10 +1236,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 10"
               >
                 This is test metric 10
@@ -1250,16 +1250,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 11"
                   style=""
                 >
@@ -1274,14 +1274,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1289,10 +1289,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 11"
               >
                 This is test metric 11
@@ -1303,16 +1303,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 12"
                   style=""
                 >
@@ -1327,14 +1327,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1342,10 +1342,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 12"
               >
                 This is test metric 12
@@ -1356,16 +1356,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 13"
                   style=""
                 >
@@ -1380,14 +1380,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1395,10 +1395,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 13"
               >
                 This is test metric 13
@@ -1409,16 +1409,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 14"
                   style=""
                 >
@@ -1433,14 +1433,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1448,10 +1448,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 14"
               >
                 This is test metric 14
@@ -1462,16 +1462,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 15"
                   style=""
                 >
@@ -1486,14 +1486,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1501,10 +1501,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 15"
               >
                 This is test metric 15
@@ -1515,16 +1515,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 16"
                   style=""
                 >
@@ -1539,14 +1539,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1554,10 +1554,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 16"
               >
                 This is test metric 16
@@ -1568,16 +1568,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 17"
                   style=""
                 >
@@ -1592,14 +1592,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1607,10 +1607,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 17"
               >
                 This is test metric 17
@@ -1621,16 +1621,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 18"
                   style=""
                 >
@@ -1645,14 +1645,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1660,10 +1660,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 18"
               >
                 This is test metric 18
@@ -1674,16 +1674,16 @@ exports[`Storyshots ItemList Default 1`] = `
              
           </tr>
           <tr
-            class="svelte-lsmn69"
+            class="svelte-1cr1lhe"
           >
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <a
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                   href="/apps/app-name/metrics/test metric 19"
                   style=""
                 >
@@ -1698,14 +1698,14 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="svelte-lsmn69"
+              class="svelte-1cr1lhe"
               style="text-align: center;"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
               >
                 <code
-                  class="svelte-lsmn69"
+                  class="svelte-1cr1lhe"
                 >
                   metric_type
                 </code>
@@ -1713,10 +1713,10 @@ exports[`Storyshots ItemList Default 1`] = `
             </td>
              
             <td
-              class="description svelte-lsmn69"
+              class="description svelte-1cr1lhe"
             >
               <div
-                class="item-property svelte-lsmn69"
+                class="item-property svelte-1cr1lhe"
                 title="This is test metric 19"
               >
                 This is test metric 19
@@ -1732,15 +1732,15 @@ exports[`Storyshots ItemList Default 1`] = `
      
      
     <div
-      class="pagination-position svelte-dgls7k"
+      class="pagination-position svelte-1j3q2vf"
     >
       <p
-        class="svelte-dgls7k"
+        class="svelte-1j3q2vf"
       >
         Page
     
         <code
-          class="svelte-dgls7k"
+          class="svelte-1j3q2vf"
         >
           1
         </code>
@@ -1748,14 +1748,14 @@ exports[`Storyshots ItemList Default 1`] = `
     of
     
         <code
-          class="svelte-dgls7k"
+          class="svelte-1j3q2vf"
         >
           2
         </code>
         
     (
         <code
-          class="svelte-dgls7k"
+          class="svelte-1j3q2vf"
         >
           1
         </code>
@@ -1763,7 +1763,7 @@ exports[`Storyshots ItemList Default 1`] = `
     -
     
         <code
-          class="svelte-dgls7k"
+          class="svelte-1j3q2vf"
         >
           20
         </code>
@@ -1771,7 +1771,7 @@ exports[`Storyshots ItemList Default 1`] = `
     on
     
         <code
-          class="svelte-dgls7k"
+          class="svelte-1j3q2vf"
         >
           21
         </code>
@@ -1781,10 +1781,10 @@ exports[`Storyshots ItemList Default 1`] = `
     </div>
      
     <div
-      class="pagination-bar svelte-dgls7k"
+      class="pagination-bar svelte-1j3q2vf"
     >
       <div
-        class="pagination-button current-page svelte-dgls7k"
+        class="pagination-button current-page svelte-1j3q2vf"
       >
         <svg
           class="feather feather-chevron-left w-6 h-6"
@@ -1805,16 +1805,16 @@ exports[`Storyshots ItemList Default 1`] = `
       </div>
        
       <div
-        class="pages svelte-dgls7k"
+        class="pages svelte-1j3q2vf"
       >
         <div
-          class="page current-page svelte-dgls7k"
+          class="page current-page svelte-1j3q2vf"
         >
           1
            
         </div>
         <div
-          class="page  svelte-dgls7k"
+          class="page  svelte-1j3q2vf"
         >
           2
            
@@ -1822,7 +1822,7 @@ exports[`Storyshots ItemList Default 1`] = `
       </div>
        
       <div
-        class="pagination-button  svelte-dgls7k"
+        class="pagination-button  svelte-1j3q2vf"
       >
         <svg
           class="feather feather-chevron-right w-6 h-6"
@@ -1865,61 +1865,61 @@ exports[`Storyshots Label Default 1`] = `
   </p>
    
   <span
-    class="label label-0  svelte-1ng65jt"
+    class="label label-0  svelte-3vlii"
   >
     label-0
   </span>
    
   <span
-    class="label label-1  svelte-1ng65jt"
+    class="label label-1  svelte-3vlii"
   >
     label-1
   </span>
    
   <span
-    class="label label-2  svelte-1ng65jt"
+    class="label label-2  svelte-3vlii"
   >
     label-2
   </span>
    
   <span
-    class="label label-3  svelte-1ng65jt"
+    class="label label-3  svelte-3vlii"
   >
     label-3
   </span>
    
   <span
-    class="label label-4  svelte-1ng65jt"
+    class="label label-4  svelte-3vlii"
   >
     label-4
   </span>
    
   <span
-    class="label label-5  svelte-1ng65jt"
+    class="label label-5  svelte-3vlii"
   >
     label-5
   </span>
    
   <span
-    class="label label-6  svelte-1ng65jt"
+    class="label label-6  svelte-3vlii"
   >
     label-6
   </span>
    
   <span
-    class="label label-7  svelte-1ng65jt"
+    class="label label-7  svelte-3vlii"
   >
     label-7
   </span>
    
   <span
-    class="label label-8  svelte-1ng65jt"
+    class="label label-8  svelte-3vlii"
   >
     label-8
   </span>
    
   <span
-    class="label label-9  svelte-1ng65jt"
+    class="label label-9  svelte-3vlii"
   >
     label-9
   </span>
@@ -1933,13 +1933,13 @@ exports[`Storyshots Label Default 1`] = `
   </h4>
    
   <span
-    class="label label-4  svelte-1ng65jt"
+    class="label label-4  svelte-3vlii"
   >
     Descriptive
   </span>
    
   <span
-    class="label label-3  svelte-1ng65jt"
+    class="label label-3  svelte-3vlii"
   >
     Descriptive markdown
   </span>
@@ -1953,49 +1953,49 @@ exports[`Storyshots Label Default 1`] = `
   </h4>
    
   <span
-    class="label label-9  svelte-1ng65jt"
+    class="label label-9  svelte-3vlii"
   >
     glean-core
   </span>
    
   <span
-    class="label label-1  svelte-1ng65jt"
+    class="label label-1  svelte-3vlii"
   >
     glean-android
   </span>
    
   <span
-    class="label label-5  svelte-1ng65jt"
+    class="label label-5  svelte-3vlii"
   >
     sync
   </span>
    
   <span
-    class="label label-5  svelte-1ng65jt"
+    class="label label-5  svelte-3vlii"
   >
     lib-crash
   </span>
    
   <span
-    class="label label-6  svelte-1ng65jt"
+    class="label label-6  svelte-3vlii"
   >
     engine-gecko
   </span>
    
   <span
-    class="label label-2  svelte-1ng65jt"
+    class="label label-2  svelte-3vlii"
   >
     support-migration
   </span>
    
   <span
-    class="label label-4  svelte-1ng65jt"
+    class="label label-4  svelte-3vlii"
   >
     nimbus
   </span>
    
   <span
-    class="label label-4  svelte-1ng65jt"
+    class="label label-4  svelte-3vlii"
   >
     logins-store
   </span>
@@ -2009,13 +2009,13 @@ exports[`Storyshots Label Default 1`] = `
   </h4>
    
   <span
-    class="label label-9  svelte-1ng65jt"
+    class="label label-9  svelte-3vlii"
   >
     deprecated
   </span>
    
   <span
-    class="label label-9  svelte-1ng65jt"
+    class="label label-9  svelte-3vlii"
   >
     expired
   </span>
@@ -2114,38 +2114,38 @@ exports[`Storyshots Metadata Table Default 1`] = `
   class="storybook-snapshot-container"
 >
   <table
-    class="svelte-1ddmzxb"
+    class="svelte-pv533o"
   >
     <col
-      class="svelte-1ddmzxb"
+      class="svelte-pv533o"
     />
      
     <col
-      class="svelte-1ddmzxb"
+      class="svelte-pv533o"
     />
      
     <tr
-      class="svelte-1ddmzxb"
+      class="svelte-pv533o"
     >
       <td
-        class="svelte-1ddmzxb"
+        class="svelte-pv533o"
       >
         Source
          
         <div
-          class="main svelte-rmkku3"
+          class="main svelte-1q4i4i8"
         >
           <span
-            class="svelte-rmkku3"
+            class="svelte-1q4i4i8"
           >
             <svg
-              class="w-5 inline-block svelte-1recnuw"
+              class="w-5 inline-block svelte-iwm6zn"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                class="svelte-1recnuw"
+                class="svelte-iwm6zn"
                 clip-rule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                 fill-rule="evenodd"
@@ -2156,10 +2156,10 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-1ddmzxb"
+        class="svelte-pv533o"
       >
         <a
-          class="svelte-1ddmzxb"
+          class="svelte-pv533o"
           href="https://github.com/mozilla/testapp"
         >
           https://github.com/mozilla/testapp
@@ -2168,27 +2168,27 @@ exports[`Storyshots Metadata Table Default 1`] = `
     </tr>
     
     <tr
-      class="svelte-1ddmzxb"
+      class="svelte-pv533o"
     >
       <td
-        class="svelte-1ddmzxb"
+        class="svelte-pv533o"
       >
         Notification Emails
          
         <div
-          class="main svelte-rmkku3"
+          class="main svelte-1q4i4i8"
         >
           <span
-            class="svelte-rmkku3"
+            class="svelte-1q4i4i8"
           >
             <svg
-              class="w-5 inline-block svelte-1recnuw"
+              class="w-5 inline-block svelte-iwm6zn"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                class="svelte-1recnuw"
+                class="svelte-iwm6zn"
                 clip-rule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                 fill-rule="evenodd"
@@ -2199,13 +2199,13 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-1ddmzxb"
+        class="svelte-pv533o"
       >
         <div
-          class="svelte-1ddmzxb"
+          class="svelte-pv533o"
         >
           <a
-            class="svelte-1ddmzxb"
+            class="svelte-pv533o"
             href="mailto:test@mozilla.com"
           >
             test@mozilla.com
@@ -2216,27 +2216,27 @@ exports[`Storyshots Metadata Table Default 1`] = `
     </tr>
     
     <tr
-      class="svelte-1ddmzxb"
+      class="svelte-pv533o"
     >
       <td
-        class="svelte-1ddmzxb"
+        class="svelte-pv533o"
       >
         Rentention Period
          
         <div
-          class="main svelte-rmkku3"
+          class="main svelte-1q4i4i8"
         >
           <span
-            class="svelte-rmkku3"
+            class="svelte-1q4i4i8"
           >
             <svg
-              class="w-5 inline-block svelte-1recnuw"
+              class="w-5 inline-block svelte-iwm6zn"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                class="svelte-1recnuw"
+                class="svelte-iwm6zn"
                 clip-rule="evenodd"
                 d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                 fill-rule="evenodd"
@@ -2247,7 +2247,7 @@ exports[`Storyshots Metadata Table Default 1`] = `
       </td>
        
       <td
-        class="svelte-1ddmzxb"
+        class="svelte-pv533o"
       >
         Unlimited
       </td>
@@ -2263,15 +2263,15 @@ exports[`Storyshots Pagination Default 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="pagination-position svelte-1u02mha"
+    class="pagination-position svelte-142bri5"
   >
     <p
-      class="svelte-1u02mha"
+      class="svelte-142bri5"
     >
       Page
     
       <code
-        class="svelte-1u02mha"
+        class="svelte-142bri5"
       >
         1
       </code>
@@ -2279,14 +2279,14 @@ exports[`Storyshots Pagination Default 1`] = `
     of
     
       <code
-        class="svelte-1u02mha"
+        class="svelte-142bri5"
       >
         11
       </code>
       
     (
       <code
-        class="svelte-1u02mha"
+        class="svelte-142bri5"
       >
         1
       </code>
@@ -2294,7 +2294,7 @@ exports[`Storyshots Pagination Default 1`] = `
     -
     
       <code
-        class="svelte-1u02mha"
+        class="svelte-142bri5"
       >
         20
       </code>
@@ -2302,7 +2302,7 @@ exports[`Storyshots Pagination Default 1`] = `
     on
     
       <code
-        class="svelte-1u02mha"
+        class="svelte-142bri5"
       >
         210
       </code>
@@ -2312,10 +2312,10 @@ exports[`Storyshots Pagination Default 1`] = `
   </div>
    
   <div
-    class="pagination-bar svelte-1u02mha"
+    class="pagination-bar svelte-142bri5"
   >
     <div
-      class="pagination-button current-page svelte-1u02mha"
+      class="pagination-button current-page svelte-142bri5"
     >
       <svg
         class="feather feather-chevron-left w-6 h-6"
@@ -2336,34 +2336,34 @@ exports[`Storyshots Pagination Default 1`] = `
     </div>
      
     <div
-      class="pages svelte-1u02mha"
+      class="pages svelte-142bri5"
     >
       <div
-        class="page current-page svelte-1u02mha"
+        class="page current-page svelte-142bri5"
       >
         1
          
       </div>
       <div
-        class="page  svelte-1u02mha"
+        class="page  svelte-142bri5"
       >
         2
          
       </div>
       <div
-        class="page  svelte-1u02mha"
+        class="page  svelte-142bri5"
       >
         3
          
       </div>
       <div
-        class="page  svelte-1u02mha"
+        class="page  svelte-142bri5"
       >
         ...
          
       </div>
       <div
-        class="page  svelte-1u02mha"
+        class="page  svelte-142bri5"
       >
         11
          
@@ -2371,7 +2371,7 @@ exports[`Storyshots Pagination Default 1`] = `
     </div>
      
     <div
-      class="pagination-button  svelte-1u02mha"
+      class="pagination-button  svelte-142bri5"
     >
       <svg
         class="feather feather-chevron-right w-6 h-6"
@@ -2400,45 +2400,45 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="schema-viewer svelte-i7idum"
+    class="schema-viewer svelte-a5udfx"
   >
     <div
-      class="svelte-ggdpb7"
+      class="svelte-150ybko"
     >
       <input
-        class="svelte-ggdpb7"
+        class="svelte-150ybko"
         id="filter-input"
         type="search"
       />
     </div>
      
     <div
-      class="schema-browser svelte-i7idum"
+      class="schema-browser svelte-a5udfx"
     >
       <p
-        class="svelte-i7idum"
+        class="svelte-a5udfx"
       >
         <div
-          class="svelte-1e1t6vx"
+          class="svelte-1f521da"
           style=""
         >
           <p
-            class="node svelte-1e1t6vx"
+            class="node svelte-1f521da"
           >
             <span
-              class="parent-node svelte-1e1t6vx"
+              class="parent-node svelte-1f521da"
             >
               
               
             </span>
             <span
-              class="svelte-1e1t6vx"
+              class="svelte-1f521da"
             >
               additional_properties
             </span>
              
             <p
-              class="node-description svelte-1e1t6vx"
+              class="node-description svelte-1f521da"
             >
               A JSON string containing any payload properties not present in the schema
             </p>
@@ -2448,20 +2448,20 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
          
         
         <div
-          class="svelte-1e1t6vx"
+          class="svelte-1f521da"
           style=""
         >
           <p
-            class="node svelte-1e1t6vx"
+            class="node svelte-1f521da"
           >
             <span
-              class="parent-node svelte-1e1t6vx"
+              class="parent-node svelte-1f521da"
             >
               
               
             </span>
             <span
-              class="svelte-1e1t6vx"
+              class="svelte-1f521da"
             >
               client_info
             </span>
@@ -2471,26 +2471,26 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
         </div>
          
         <div
-          class="svelte-1e1t6vx"
+          class="svelte-1f521da"
           style=""
         >
           <p
-            class="node svelte-1e1t6vx"
+            class="node svelte-1f521da"
           >
             <span
-              class="parent-node svelte-1e1t6vx"
+              class="parent-node svelte-1f521da"
             >
               client_info
               .
             </span>
             <span
-              class="svelte-1e1t6vx"
+              class="svelte-1f521da"
             >
               os_version
             </span>
              
             <p
-              class="node-description svelte-1e1t6vx"
+              class="node-description svelte-1f521da"
             >
               The user-visible version of the operating system (e.g. "1.2.3"). If the version detection fails, this metric gets set to \`Unknown\`.
             </p>
@@ -2500,26 +2500,26 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
          
         
         <div
-          class="svelte-1e1t6vx"
+          class="svelte-1f521da"
           style=""
         >
           <p
-            class="node svelte-1e1t6vx"
+            class="node svelte-1f521da"
           >
             <span
-              class="parent-node svelte-1e1t6vx"
+              class="parent-node svelte-1f521da"
             >
               client_info
               .
             </span>
             <span
-              class="svelte-1e1t6vx"
+              class="svelte-1f521da"
             >
               telemetry_sdk_build
             </span>
              
             <p
-              class="node-description svelte-1e1t6vx"
+              class="node-description svelte-1f521da"
             >
               The version of the Glean SDK
             </p>
@@ -2531,26 +2531,26 @@ exports[`Storyshots Schema Viewer Basic 1`] = `
         
         
         <div
-          class="svelte-1e1t6vx"
+          class="svelte-1f521da"
           style=""
         >
           <p
-            class="node svelte-1e1t6vx"
+            class="node svelte-1f521da"
           >
             <span
-              class="parent-node svelte-1e1t6vx"
+              class="parent-node svelte-1f521da"
             >
               
               
             </span>
             <span
-              class="svelte-1e1t6vx"
+              class="svelte-1f521da"
             >
               document_id
             </span>
              
             <p
-              class="node-description svelte-1e1t6vx"
+              class="node-description svelte-1f521da"
             >
               The document ID specified in the URI when the client sent this message
             </p>
@@ -2570,24 +2570,24 @@ exports[`Storyshots Sub-heading Default 1`] = `
   class="storybook-snapshot-container"
 >
   <h2
-    class="svelte-1kj38jp"
+    class="svelte-1hwa112"
   >
     Commentary
      
     <div
-      class="main svelte-rmkku3"
+      class="main svelte-1q4i4i8"
     >
       <span
-        class="svelte-rmkku3"
+        class="svelte-1q4i4i8"
       >
         <svg
-          class="w-5 inline-block svelte-1recnuw"
+          class="w-5 inline-block svelte-iwm6zn"
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            class="svelte-1recnuw"
+            class="svelte-iwm6zn"
             clip-rule="evenodd"
             d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
             fill-rule="evenodd"
@@ -2604,25 +2604,25 @@ exports[`Storyshots Tab Basic 1`] = `
   class="storybook-snapshot-container"
 >
   <div
-    class="tabs svelte-i763c8"
+    class="tabs svelte-6hpzgj"
   />
    
   <div
-    class="tab-content svelte-i763c8"
+    class="tab-content svelte-6hpzgj"
   >
     <div
-      class="title svelte-ghko3k active"
+      class="title svelte-bym1mj active"
     >
       A
     </div>
     <div
-      class="title svelte-ghko3k"
+      class="title svelte-bym1mj"
     >
       B
     </div>
      
     <div
-      class="box svelte-16teq9t"
+      class="box svelte-d478du"
     >
       Content for Tab A
     </div>
