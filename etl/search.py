@@ -21,7 +21,7 @@ def create_metrics_search_js(metrics, app_name=None, legacy=False):
     """
 
     search_keys = (
-        ["type", "description", "id", "active"] if legacy else ["type", "description", "expires"]
+        ["type", "description", "active"] if legacy else ["type", "description", "expires"]
     )
     metric_data = {metric["name"]: {k: metric[k] for k in search_keys} for metric in metrics}
 

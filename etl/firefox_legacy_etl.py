@@ -4,6 +4,7 @@ import os
 import requests
 
 from .search import create_metrics_search_js
+from .utils import snake_case
 
 PROBES_URL = os.getenv(
     "PROBES_URL", "https://probeinfo.telemetry.mozilla.org/firefox/all/main/all_probes"
@@ -31,6 +32,12 @@ def _get_legacy_firefox_metric_summary(probe_data, activity_mapping):
             most_recent_metadata = probe["history"]["beta"][0]
 
         normalized_probe_name = probe["name"].lower().replace(".", "_")
+        if probe_id.startswith("scalar/"):
+            # scalar names are camelCased, but we want snake_case
+            # to match the convention used in bigquery-etl
+            # see: https://github.com/mozilla/glam/issues/1956
+            normalized_probe_name = snake_case(probe_id.split("/")[1]).lower().replace(".", "_")
+
         probe_summary[normalized_probe_name] = {
             "name": normalized_probe_name,
             "id": probe_id,
