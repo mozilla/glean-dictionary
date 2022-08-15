@@ -68,7 +68,7 @@
   }
 
   function getMetricDocumentationURI(type) {
-    const sourceDocs = "https://mozilla.github.io/glean/book/user/metrics/";
+    const sourceDocs = "https://mozilla.github.io/glean/book/reference/metrics/";
     const links = {
       memory_distribution: "memory_distribution.html",
       quantity: "quantity.html",
@@ -85,9 +85,12 @@
       counter: "counter.html",
       event: "event.html",
       jwe: "jwe.html",
+      url: "url.html",
+      rate: "rate.html",
+      text: "text.html",
     };
 
-    return `${sourceDocs}${links[type]}` || sourceDocs;
+    return links[type] ? `${sourceDocs}${links[type]}` : sourceDocs;
   }
 </script>
 
