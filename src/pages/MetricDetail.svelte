@@ -85,9 +85,12 @@
       counter: "counter.html",
       event: "event.html",
       jwe: "jwe.html",
+      url: "url.html",
+      rate: "rate.html",
+      text: "text.html",
     };
 
-    return `${sourceDocs}${links[type]}` || sourceDocs;
+    return links[type] ? `${sourceDocs}${links[type]}` : sourceDocs;
   }
 </script>
 
