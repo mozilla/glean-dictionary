@@ -6,6 +6,7 @@ GLAM_PRODUCT_MAPPINGS = {
     "org.mozilla.fenix": ("fenix", ""),
     "org.mozilla.firefox_beta": ("fenix", "beta"),
     "org.mozilla.firefox": ("fenix", "release"),
+    "firefox.desktop": ("fog", ""),
 }
 
 # supported glam metric types, from:
