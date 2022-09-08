@@ -87,7 +87,7 @@ def get_looker_explore_metadata_for_metric(
         _get_looker_event_explore(
             looker_namespaces, app.app_name, app.app.get("app_channel"), app_group
         )
-        if metric_type == "event"
+        if metric_type == "event" and app.app_name != "firefox_desktop"
         else _get_looker_ping_explore(
             looker_namespaces,
             app.app_name,
@@ -101,7 +101,7 @@ def get_looker_explore_metadata_for_metric(
     # we deliberately don't show looker information for deprecated applications
     if not app.app.get("deprecated") and base_looker_explore:
         looker_metric_link = None
-        if metric_type == "event":
+        if metric_type == "event" and app.app_name != "firefox_desktop":
             (metric_category, metric_name) = metric.identifier.split(".", 1)
             if base_looker_explore["name"] == "event_counts":
                 looker_metric_link = furl(base_looker_explore["url"]).add(
