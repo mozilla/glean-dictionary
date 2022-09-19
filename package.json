@@ -29,7 +29,7 @@
     "@mozilla/glean": "^1.1.0",
     "@playwright/test": "^1.25.1",
     "@rollup/plugin-commonjs": "21.0.1",
-    "@rollup/plugin-node-resolve": "14.0.1",
+    "@rollup/plugin-node-resolve": "14.1.0",
     "@rollup/plugin-replace": "^4.0.0",
     "@storybook/addon-knobs": "6.4.0",
     "@storybook/addon-storyshots": "6.5.10",
