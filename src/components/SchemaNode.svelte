@@ -9,6 +9,16 @@
     <span class="parent-node"
       >{parentFields.join(".")}{parentFields.length ? "." : ""}</span
     ><span>{node.name}</span>
+    <!-- See: github.com/mozilla/glean-dictionary/issues/1450 -->
+    {#if ["url", "text", "jwe", "labeled_rate"].includes(parentFields[1])}
+      <p class="node-description">
+        (<code> {parentFields[0]}.{parentFields[1]}2.{node.name}</code> if
+        querying live/stable tables. See
+        <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1737656#c21"
+          >this bug</a
+        > for more details.)
+      </p>
+    {/if}
     {#if node.description}
       <p class="node-description">{node.description}</p>
     {/if}
