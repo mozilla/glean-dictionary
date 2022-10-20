@@ -26,11 +26,15 @@ export const fullTextSearch = (query, searchItems) => {
   let unlabeledsearchTerms = [];
 
   const searchTerms = query.match(/(?:(?:tags:)?".+")|"?[^ ]+"?/g);
-  const labels = { tags: [], origin: [] };
+  const labels = { tags: [], origin: [], type: [] };
   const searchIndex = generateSearchIndex(searchItems);
 
   searchTerms.forEach((term) => {
-    if (term.startsWith("tags:") || term.startsWith("origin:")) {
+    if (
+      term.startsWith("tags:") ||
+      term.startsWith("origin:") ||
+      term.startsWith("type:")
+    ) {
       const splitter = term.indexOf(":");
       const labelType = term.slice(0, splitter);
       labels[labelType] = [

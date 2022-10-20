@@ -29,4 +29,7 @@
     border-radius: 15px;
     border: 1px solid #000;
   }
+  input::placeholder {
+    font-size: 13px;
+  }
 </style>
