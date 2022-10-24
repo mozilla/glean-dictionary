@@ -37,7 +37,7 @@
     "@storybook/svelte": "6.5.10",
     "@testing-library/svelte": "^3.2.2",
     "autoprefixer": "^10.4.8",
-    "babel-jest": "^29.2.0",
+    "babel-jest": "^29.2.1",
     "babel-loader": "8.2.5",
     "eslint": "8.25.0",
     "eslint-config-airbnb-base": "15.0.0",
