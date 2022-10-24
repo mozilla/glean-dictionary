@@ -1,10 +1,18 @@
 <script>
   import { pageState, updateURLState } from "../state/stores";
+  import tippy from "./tippy";
 
   export let placeHolder;
+  export let tooltipped = false;
+
+  const props = {
+    content: placeHolder,
+    allowHTML: true,
+    placement: "top",
+  };
 </script>
 
-<div>
+<div use:tippy={tooltipped ? props : null}>
   <input
     {placeHolder}
     type="search"
