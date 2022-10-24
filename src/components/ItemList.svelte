@@ -142,7 +142,9 @@
     </span>
   {/if}
   {#if showFilter}
-    <FilterInput placeHolder="Search {itemType}" />
+    <FilterInput
+      placeHolder="To search by metric type, tag, or origin: use [type:], [tags:] , or [origin:]. Example: `type:event addons`, `tags:Sync account, `origin:glean-core`"
+    />
   {/if}
   {#if !filteredItems.length}
     <div class="items-not-found">
