@@ -70,7 +70,7 @@
     "sass-loader": "^10.1.1",
     "sirv-cli": "1.0.14",
     "svelte": "3.52.0",
-    "svelte-jester": "^1.6.0",
+    "svelte-jester": "^2.3.2",
     "svelte-loader": "2.13.6",
     "svelte-preprocess": "^4.10.7",
     "tippy.js": "^6.3.7"
