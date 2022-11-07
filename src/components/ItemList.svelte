@@ -143,7 +143,8 @@
   {/if}
   {#if showFilter}
     <FilterInput
-      placeHolder="To search by metric type, tag, or origin: use [type:], [tags:] , or [origin:]. Example: `type:event addons`, `tags:Sync account, `origin:glean-core`"
+      tooltipped={true}
+      placeHolder="To search by metric type, tag, or origin: use [type:], [tags:] , or [origin:]. Example: `type:event addons`, `tags:Sync account`"
     />
   {/if}
   {#if !filteredItems.length}
