@@ -1,18 +1,13 @@
-import datetime
-
-
-def _validate(date_text):
-    try:
-        datetime.datetime.strptime(str(date_text), "%Y-%m-%d")
-        return True
-    except ValueError:
-        return False
-
-
-def get_expiry_date(expiry, app_name, product_details):
+def get_mapped_expiry(expiry, app_name, product_details):
+    # For Desktop we can map expiry versions to dates.
     if app_name == "firefox_desktop":
         return product_details.get(f"{expiry}.0")
-    return expiry if _validate(expiry) else None
+
+    # Other's might be either a date, a version or "never"
+    if expiry == "never":
+        return None
+    else:
+        return expiry
 
 
 def get_expiry_text(expiry, app_name, product_details):
