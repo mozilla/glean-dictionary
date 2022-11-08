@@ -47,7 +47,7 @@ considerably. For example, to build a metadata index for Fenix (Firefox for
 Android) only, try:
 
 ```bash
-./scripts/build-metadata fenix
+./scripts/gd build-metadata fenix
 ```
 
 ## Search Service
