@@ -18,8 +18,7 @@
     "storybook": "start-storybook --static-dir ./public -p 6006",
     "test": "npm-run-all format:check lint lint-glean test:jest test:playwright",
     "test:jest": "jest tests src --no-cache",
-    "test:playwright": "npx playwright test",
-    "build-glean-metadata": "node scripts/build-glean-metadata.js"
+    "test:playwright": "npx playwright test"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
