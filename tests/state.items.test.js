@@ -10,6 +10,9 @@ describe("checking if a date has expired", () => {
   it("returns False if input is a date from the future", () => {
     expect(isExpired({ expires: "3021-01-01" })).toBe(false);
   });
+  it("returns False if input does not look like a date (but a version)", () => {
+    expect(isExpired({ expires: "103" })).toBe(false);
+  });
 });
 
 describe("isRemoved works as expected", () => {

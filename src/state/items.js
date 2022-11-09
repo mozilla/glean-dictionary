@@ -7,6 +7,11 @@ export const isExpired = (item) => {
   if (item.expires === "never" || !item.expires) {
     return false;
   }
+  // Expiry can be by version. We can't check their expiry.
+  // Valid dates are in YYYY-MM-DD format.
+  if (item.expires.indexOf("-") == -1) {
+    return false;
+  }
   return new Date() > new Date(item.expires);
 };
 
