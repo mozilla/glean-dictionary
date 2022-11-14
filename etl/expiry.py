@@ -15,7 +15,10 @@ def get_expiry_text(expiry, app_name, product_details):
 
     if expiry == "never" or expiry is None:
         return expiry
-    elif app_name == "firefox_desktop":
+    if type(expiry) == int and (app_name in ["firefox_desktop", "fenix", "firefox_ios"]):
+        # We only have expiry versions for Firefox Desktop and Mobile currently.
+        # Let's update this when version-based expiry are available for other apps.
+        # See: https://github.com/mozilla/glean-dictionary/issues/1513
         return f"{expiry}. Latest release is \
      [{latest_release_version}](https://wiki.mozilla.org/Release_Management/Calendar)."
 
