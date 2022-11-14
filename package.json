@@ -68,7 +68,7 @@
     "sass": "^1.50.0",
     "sass-loader": "^10.1.1",
     "sirv-cli": "1.0.14",
-    "svelte": "3.52.0",
+    "svelte": "3.53.1",
     "svelte-jester": "^1.6.0",
     "svelte-loader": "2.13.6",
     "svelte-preprocess": "^4.10.7",
