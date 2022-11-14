@@ -15,7 +15,7 @@ def get_expiry_text(expiry, app_name, product_details):
 
     if expiry == "never" or expiry is None:
         return expiry
-    elif app_name == "firefox_desktop":
+    if type(expiry) == int and (app_name in ["firefox_desktop", "fenix", "firefox_ios"]):
         return f"{expiry}. Latest release is \
      [{latest_release_version}](https://wiki.mozilla.org/Release_Management/Calendar)."
 

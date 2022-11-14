@@ -127,6 +127,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
     annotations_index = requests.get(ANNOTATIONS_URL).json()
     looker_namespaces = yaml.safe_load(requests.get(NAMESPACES_URL).text)
     product_details = requests.get(FIREFOX_PRODUCT_DETAIL_URL).json()
+    latest_fx_release_version = list(product_details)[-1]
 
     # Then, get the apps we're using
     apps = [app for app in GleanApp.get_apps()]
@@ -315,6 +316,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             description=metric.description,
                             tags=metric.tags,
                             in_source=metric.definition["in_source"],
+                            latest_fx_release_version=latest_fx_release_version,
                             extra_keys=metric.definition["extra_keys"]
                             if "extra_keys" in metric.definition
                             else None,
@@ -352,6 +354,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                                 repo_url=app.app["url"],
                                 variants=[],
                                 expires=base_definition["expires"],
+                                latest_fx_release_version=latest_fx_release_version,
                                 expiry_text=base_definition["expiry_text"],
                                 canonical_app_name=app.app["canonical_app_name"],
                                 app_tags=app_tags_for_app,
