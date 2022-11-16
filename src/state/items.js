@@ -10,7 +10,7 @@ export const isExpired = (item) => {
   // if expires is a number, ie a version number, then compare it
   // to the latest release version (only applied to Fx products)
   if (!Number.isNaN(item.expires) && item.latest_fx_release_version) {
-    return Number(item.latest_fx_release_version) > item.expires;
+    return Number(item.latest_fx_release_version) >= item.expires;
   }
   return new Date() > new Date(item.expires);
 };
