@@ -1,11 +1,14 @@
 import {
   filterUncollectedItems,
   filterItemsByLabels,
+  filterItemsByExpiration,
 } from "../src/state/filter";
 
 const today = new Date();
 const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
 const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
+const sixMonthsFromNow = dateObj.setMonth(today.getMonth() + 6);
+const twelveMonthsFromNow = dateObj.setMonth(today.getMonth() + 12);
 
 function getDateStr(date) {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -51,6 +54,43 @@ const items = [
     origin: "sync",
     in_source: false,
   },
+  {
+    name: "metric.1",
+    expires: 99,
+    tags: [],
+    latest_fx_release_version: 100,
+    in_source: false,
+  },
+  {
+    name: "metric.2",
+    expires: getDateStr(sixMonthsFromNow),
+    tags: [],
+    origin: "sync",
+    latest_fx_release_version: 100,
+    in_source: false,
+  },
+  {
+    name: "metric.3",
+    expires: getDateStr(twelveMonthsFromNow),
+    tags: [],
+    origin: "sync",
+    latest_fx_release_version: 100,
+    in_source: false,
+  },
+  {
+    name: "metric.4",
+    expires: 105,
+    tags: [],
+    origin: "sync",
+    in_source: false,
+  },
+  {
+    name: "metric.5",
+    expires: "never",
+    tags: [],
+    origin: "sync",
+    in_source: false,
+  },
 ];
 
 describe("expiry", () => {
@@ -67,5 +107,24 @@ describe("filter items by labels", () => {
     expect(getNames(filterItemsByLabels(items, labels))).toEqual([
       "metric.foo",
       "metric.baz",
+    ]));
+});
+
+describe("filter items by expiration", () => {
+  it("returns items that will expire in 6 versions/months", () =>
+    expect(getNames(filterItemsByExpirationDate(items, 6))).toEqual([
+      "metric.2",
+      "metric.4",
+    ]));
+
+  it("returns items that will expire in 12 versions/months", () =>
+    expect(getNames(filterItemsByExpirationDate(items, 6))).toEqual([
+      "metric.2",
+      "metric.3",
+      "metric.4",
+    ]));
+  it("returns items that never expire", () =>
+    expect(getNames(filterItemsByExpirationDate(items, "never"))).toEqual([
+      "metric.5",
     ]));
 });
