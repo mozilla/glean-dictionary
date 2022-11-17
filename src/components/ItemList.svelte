@@ -174,17 +174,22 @@
         <!-- We have to do inline styling here to override Protocol CSS rules -->
         <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
         <col width="35%" />
-        <col
-          width={itemType === "metrics" || itemType === "tags" ? "20%" : "65%"}
-        />
-        <col
-          width={itemType === "metrics" || itemType === "tags" ? "45%" : "0"}
-        />
+        {#if itemType === "metrics"}
+          <col width="15%" />
+          <col width="15%" />
+          <col width="35%" />
+        {:else if itemType === "tags"}
+          <col width="20%" />
+          <col width="45%" />
+        {:else}
+          <col width="65%" />
+        {/if}
         <thead>
           <tr>
             <th scope="col" style="text-align: center;">Name</th>
             {#if itemType === "metrics"}
               <th scope="col" style="text-align: center;">Type</th>
+              <th scope="col" style="text-align: center;">Expiration</th>
             {:else if itemType === "tags"}
               <th scope="col" style="text-align: center;">Metric Count</th>
             {/if}
@@ -268,6 +273,11 @@
                 <td style="text-align: center;">
                   <div class="item-property">
                     <code>{@html highlightSearch(item.type, search)}</code>
+                  </div>
+                </td>
+                <td style="text-align: center;">
+                  <div class="item-property">
+                    {item.expires ? item.expires : "never"}
                   </div>
                 </td>
               {:else if itemType === "tags"}
