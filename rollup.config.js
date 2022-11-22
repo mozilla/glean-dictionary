@@ -70,7 +70,9 @@ export default {
       // we'll extract any component CSS out into
       // a separate file - better for performance
       preprocess: sveltePreprocess({
-        postcss: true,
+        postcss: {
+          plugins: [require("autoprefixer"), require("postcss-import")],
+        },
         scss: {
           prependData: `@import 'src/protocol-tokens.scss';`,
         },
