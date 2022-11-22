@@ -9,6 +9,8 @@ import { spawn, execSync } from "child_process";
 import sveltePreprocess from "svelte-preprocess";
 import copy from "rollup-plugin-copy";
 import css from "rollup-plugin-css-only";
+import postCssImport from "postcss-import";
+import autoPrefixer from "autoprefixer";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -71,7 +73,7 @@ export default {
       // a separate file - better for performance
       preprocess: sveltePreprocess({
         postcss: {
-          plugins: [require("autoprefixer"), require("postcss-import")],
+          plugins: [autoPrefixer, postCssImport],
         },
         scss: {
           prependData: `@import 'src/protocol-tokens.scss';`,

@@ -1,5 +1,6 @@
 const sveltePreprocess = require("svelte-preprocess");
 const autoPrefixer = require("autoprefixer");
+const postCssImport = require("postcss-import");
 
 module.exports = {
   preprocess: sveltePreprocess({
@@ -10,7 +11,7 @@ module.exports = {
       prependData: `@import 'node_modules/@mozilla-protocol/core/protocol/css/protocol.scss';`,
     },
     postcss: {
-      plugins: [autoPrefixer, require("postcss-import")],
+      plugins: [autoPrefixer, postCssImport],
     },
   }),
 };
