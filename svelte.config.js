@@ -10,7 +10,7 @@ module.exports = {
       prependData: `@import 'node_modules/@mozilla-protocol/core/protocol/css/protocol.scss';`,
     },
     postcss: {
-      plugins: [autoPrefixer],
+      plugins: [autoPrefixer, require("postcss-import")],
     },
   }),
 };
