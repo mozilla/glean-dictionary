@@ -44,6 +44,7 @@ def _get_legacy_firefox_metric_summary(probe_data, activity_mapping):
             "type": probe["type"],
             "description": most_recent_metadata["description"],
             "bug_numbers": most_recent_metadata["bug_numbers"],
+            "details": most_recent_metadata["details"],
             "optout": most_recent_metadata["optout"],
             "kind": most_recent_metadata["details"]["kind"],
             "versions": {
