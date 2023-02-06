@@ -5,6 +5,7 @@
   import VariantSelector from "../components/VariantSelector.svelte";
   import AuthenticatedLink from "../components/AuthenticatedLink.svelte";
   import Commentary from "../components/Commentary.svelte";
+  import CopyButton from "../components/CopyButton.svelte";
   import Label from "../components/Label.svelte";
   import Markdown from "../components/Markdown.svelte";
   import NotFound from "../components/NotFound.svelte";
@@ -300,6 +301,9 @@
               >
                 {selectedAppVariant.etl.bigquery_column_name}
               </a>
+              <CopyButton
+                textToCopy={selectedAppVariant.etl.bigquery_column_name}
+              />
             {/if}
           </div>
         </td>
