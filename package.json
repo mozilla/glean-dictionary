@@ -70,7 +70,7 @@
     "sirv-cli": "1.0.14",
     "svelte": "3.53.1",
     "svelte-jester": "^1.6.0",
-    "svelte-loader": "3.1.4",
+    "svelte-loader": "3.1.6",
     "svelte-preprocess": "^4.10.7",
     "tippy.js": "^6.3.7"
   }
