@@ -50,7 +50,7 @@
           <a href="https://blog.mozilla.org/data/">read our blog</a>.
         </p>
         <p class="mzp-c-footer-license">
-          © 2020 - 2021 Mozilla and other contributors.
+          © 2020 - 2023 Mozilla and other contributors.
         </p>
       </div>
     </nav>
