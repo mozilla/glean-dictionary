@@ -94,7 +94,6 @@
 
     return links[type] ? `${sourceDocs}${links[type]}` : sourceDocs;
   }
-  $: console.log(metricDataPromise);
 </script>
 
 {#await metricDataPromise then metric}
@@ -257,7 +256,7 @@
               content={"Explore this metric in Mozilla's instance of Looker."}
             />
           </td>
-          {#if metric.send_in_pings[0] === "events" && metric.type !== "event"}
+          {#if metric.send_in_pings.length === 1 && metric.send_in_pings[0] === "events" && metric.type !== "event"}
             <td
               >This metric is a <code>{metric.type}</code> metric. Currently,
               event count explores only support <code>event</code> metrics.</td
@@ -278,7 +277,6 @@
           {/if}
         </tr>
       {/if}
-
       <tr>
         <td>
           BigQuery
