@@ -257,7 +257,7 @@
               content={"Explore this metric in Mozilla's instance of Looker."}
             />
           </td>
-          {#if metric.send_in_pings[0] == "events" && metric.type !== "event"}
+          {#if metric.send_in_pings[0] === "events" && metric.type !== "event"}
             <td
               >This metric is a <code>{metric.type}</code> metric. Currently,
               event count explores only support <code>event</code> metrics.</td
