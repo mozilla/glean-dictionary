@@ -43,13 +43,26 @@ def _get_looker_ping_explore(
 
 
 def _get_looker_event_explore(looker_namespaces, app_name, app_channel, app_group):
-    if _looker_explore_exists(looker_namespaces, app_name, "events"):
+    # firefox_desktop has an "events" explore that is for legacy telemetry,
+    # not Glean
+    if (
+        _looker_explore_exists(looker_namespaces, app_name, "events")
+        and app_name != "firefox_desktop"
+    ):
         url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/event_counts").add(
             {"fields": "events.event_count,events.client_count"}
         )
         if len(app_group["app_ids"]) > 1 and app_channel:
             url.add({"f[events.normalized_channel]": app_channel})
         return {"name": "event_counts", "url": url.url}
+    # firefox_desktop Glean events explore is glean_event_counts
+    elif _looker_explore_exists(looker_namespaces, app_name, "glean_event_counts"):
+        url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/glean_event_counts").add(
+            {"fields": "glean_events.event_count,glean_events.client_count"}
+        )
+        if len(app_group["app_ids"]) > 1 and app_channel:
+            url.add({"f[events.normalized_channel]": app_channel})
+        return {"name": "glean_event_counts", "url": url.url}
     elif _looker_explore_exists(looker_namespaces, app_name, "funnel_analysis"):
         url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/funnel_analysis").add(
             {"fields": "funnel_analysis.count_completed_step_1"}
@@ -87,7 +100,7 @@ def get_looker_explore_metadata_for_metric(
         _get_looker_event_explore(
             looker_namespaces, app.app_name, app.app.get("app_channel"), app_group
         )
-        if metric_type == "event" and app.app_name != "firefox_desktop"
+        if metric_type == "event"
         else _get_looker_ping_explore(
             looker_namespaces,
             app.app_name,
@@ -101,9 +114,16 @@ def get_looker_explore_metadata_for_metric(
     # we deliberately don't show looker information for deprecated applications
     if not app.app.get("deprecated") and base_looker_explore:
         looker_metric_link = None
-        if metric_type == "event" and app.app_name != "firefox_desktop":
+        if metric_type == "event":
             (metric_category, metric_name) = metric.identifier.split(".", 1)
-            if base_looker_explore["name"] == "event_counts":
+            if base_looker_explore["name"] == "glean_event_counts":
+                looker_metric_link = furl(base_looker_explore["url"]).add(
+                    {
+                        "f[glean_events.event_name]": f'"{metric_name}"',
+                        "f[glean_events.event_category]": f'"{metric_category}"',
+                    }
+                )
+            elif base_looker_explore["name"] == "event_counts":
                 looker_metric_link = furl(base_looker_explore["url"]).add(
                     {
                         "f[events.event_name]": f'"{metric_name}"',
