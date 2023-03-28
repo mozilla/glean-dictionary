@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "npm run build-glean && rollup --config",
-    "build-storybook": "build-storybook --static-dir ./public --config-dir .storybook",
+    "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider build-storybook --static-dir ./public --config-dir .storybook",
     "build-glean": "VIRTUAL_ENV=venv glean translate src/telemetry/metrics.yaml src/telemetry/pings.yaml -f javascript -o src/telemetry/generated",
     "dev": "npm run build-glean && rollup --config --watch",
     "format": "prettier --plugin-search-dir=. --write .",
