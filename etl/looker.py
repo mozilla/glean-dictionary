@@ -201,7 +201,7 @@ def get_looker_explore_metadata_for_metric(
         elif metric_type in SUPPORTED_LOOKER_METRIC_TYPES:
             base_looker_dimension_name = "{}.{}".format(
                 ping_name_snakecase, get_bigquery_column_name(metric).replace(".", "__")
-            )
+            ) + ("_date" if metric_type == "datetime" else "")
             # For distribution types, we'll aggregate the sum of all distributions per
             # day. In most cases, this isn't super meaningful, but provides a starting
             # place for further analysis
