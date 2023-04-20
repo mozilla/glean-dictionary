@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "npm run build-glean && rollup --config",
-    "build-storybook": "NODE_OPTIONS=--openssl-legacy-provider build-storybook --static-dir ./public --config-dir .storybook",
+    "build-storybook": "storybook build --static-dir ./public --config-dir .storybook",
     "build-glean": "VIRTUAL_ENV=venv glean translate src/telemetry/metrics.yaml src/telemetry/pings.yaml -f javascript -o src/telemetry/generated",
     "dev": "npm run build-glean && rollup --config --watch",
     "format": "prettier --plugin-search-dir=. --write .",
@@ -15,7 +15,7 @@
     "lint": "eslint .",
     "lint-glean": "VIRTUAL_ENV=venv glean glinter src/telemetry/metrics.yaml src/telemetry/pings.yaml",
     "start": "sirv public",
-    "storybook": "start-storybook --static-dir ./public -p 6006",
+    "storybook": "storybook dev --static-dir ./public -p 6006",
     "test": "npm-run-all format:check lint lint-glean test:jest test:playwright",
     "test:jest": "jest tests src --no-cache",
     "test:playwright": "npx playwright test"
@@ -33,7 +33,7 @@
     "@storybook/addon-knobs": "6.4.0",
     "@storybook/addon-storyshots": "6.5.10",
     "@storybook/addon-storysource": "6.5.10",
-    "@storybook/svelte": "6.5.10",
+    "@storybook/svelte": "7.0.5",
     "@testing-library/svelte": "^3.2.2",
     "autoprefixer": "^10.4.8",
     "babel-jest": "^29.3.1",
