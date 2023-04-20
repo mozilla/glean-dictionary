@@ -1,5 +1,5 @@
 <script>
-  import { chunk } from "lodash";
+  import { chunk, escapeRegExp } from "lodash";
   import { Document } from "flexsearch";
 
   import { getItemURL } from "../state/urls";
@@ -66,7 +66,7 @@
   function highlightSearch(text, query) {
     return query.length
       ? text.replace(
-          new RegExp(query, "gi"),
+          new RegExp(escapeRegExp(query), "gi"),
           (match) => `<mark>${match}</mark>`
         )
       : text;
