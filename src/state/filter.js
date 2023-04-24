@@ -9,7 +9,7 @@ export const filterUncollectedItems = (items, showUncollected) =>
 export const filterItemsByLabels = (items, labels) => {
   let itemsFilteredByLabels = items;
   // we don't need to filter by "expires" in this method
-  let labelsToFilter = omit(labels, "expires");
+  const labelsToFilter = omit(labels, "expires");
   // filter items that match every value of a label type
   // (e.g. an item can have multiple tags)
   const getItemsByLabel = (label) =>
@@ -36,17 +36,19 @@ export const filterItemsByExpiration = (items, monthsOrVersionFromNow) => {
   // filter items that will expire by comparing the expiration date/version
   // to the target date/version in X months
   // the assumption is that there's a new version release every month
-  let today = new Date();
-  let targetDate = today.setMonth(
+  const today = new Date();
+  const targetDate = today.setMonth(
     today.getMonth() + Number(monthsOrVersionFromNow)
   );
-  const willExpireItems = items.filter((item) => item.expires);
 
-  let filteredByDate = willExpireItems.filter(
+  // don't include items that don't expire
+  const itemsWithAnExpirationDate = items.filter((item) => item.expires);
+
+  const filteredByDate = itemsWithAnExpirationDate.filter(
     (item) => Date.parse(item.expires) && new Date(item.expires) < targetDate
   );
 
-  let filteredByVersion = willExpireItems.filter(
+  const filteredByVersion = itemsWithAnExpirationDate.filter(
     (item) =>
       item.expires &&
       item.latest_fx_release_version &&
