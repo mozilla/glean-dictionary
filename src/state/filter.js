@@ -34,8 +34,11 @@ export const filterItemsByLabels = (items, labels) => {
 
 export const filterItemsByExpiration = (items, monthsOrVersionFromNow) => {
   // filter items that will expire by comparing the expiration date/version
-  // to the target date/version in X months
-  // the assumption is that there's a new version release every month
+  // to the target date/version in n = monthsOrVersionFromNow months
+  // the assumption is that there's a new version released every month
+  if (monthsOrVersionFromNow === "never") {
+    return items.filter((item) => !item.expires || item.expires === "never");
+  }
   const today = new Date();
   const targetDate = today.setMonth(
     today.getMonth() + Number(monthsOrVersionFromNow)
@@ -50,13 +53,11 @@ export const filterItemsByExpiration = (items, monthsOrVersionFromNow) => {
 
   const filteredByVersion = itemsWithAnExpirationDate.filter(
     (item) =>
-      item.expires &&
+      !Number.isNaN(item.expires) &&
       item.latest_fx_release_version &&
-      Number(item.expires) <=
+      item.expires <=
         Number(item.latest_fx_release_version) + Number(monthsOrVersionFromNow)
   );
-  if (monthsOrVersionFromNow === "never") {
-    return items.filter((item) => !item.expires);
-  }
+
   return [...filteredByDate, ...filteredByVersion];
 };
