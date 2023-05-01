@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { UBLOCK_ORIGIN_PRIVACY_FILTER } from "../formatters/adblocker";
 
 export async function fetchJSON(uri) {
   const res = await fetch(uri);
@@ -20,7 +21,19 @@ export async function getPingData(appName, pingName) {
 export async function getMetricData(appName, metricName) {
   // we added data to metric names to avoid the JSON resource
   // calls being blocked by uBlock Origin
-  return fetchJSON(`/data/${appName}/metrics/data_${metricName}.json`);
+
+  Object.keys(UBLOCK_ORIGIN_PRIVACY_FILTER).forEach((filter) => {
+    if (metricName.includes(filter)) {
+      const newMetricName = metricName.replace(
+        filter,
+        UBLOCK_ORIGIN_PRIVACY_FILTER[filter]
+      );
+      console.log(newMetricName);
+      return fetchJSON(`/data/${appName}/metrics/data_${newMetricName}.json`);
+    } else return fetchJSON(`/data/${appName}/metrics/data_${metricName}.json`);
+  });
+  console.log("barb");
+  return;
 }
 
 export async function getTableData(appName, appId, pingName) {
