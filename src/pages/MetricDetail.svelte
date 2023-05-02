@@ -42,6 +42,19 @@
   let selectedPingVariant;
   let pingData = {};
 
+  const STMO_GLEAN_QUERY_URL =
+    "https://sql.telemetry.mozilla.org/queries/91729/source";
+  const STMO_GLEAN_EVENT_QUERY_URL =
+    "https://sql.telemetry.mozilla.org/queries/91780/source";
+
+  const getSTMOQueryURL = (type, columnName, eventName, table) => {
+    if (type === "event") {
+      const [category, name] = eventName ? eventName.split(".") : [];
+      return `${STMO_GLEAN_EVENT_QUERY_URL}?p_event_category=${category}&p_event_name=${name}&p_table=${table}`;
+    }
+    return `${STMO_GLEAN_QUERY_URL}?p_metric%20location=${columnName}&p_table=${table}`;
+  };
+
   const metricDataPromise = getMetricData(params.app, params.metric).then(
     (metricData) => {
       updateBreadcrumbs([
@@ -312,6 +325,28 @@
                 textToCopy={selectedAppVariant.etl.bigquery_column_name}
               />
             {/if}
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          STMO
+          <HelpHoverable
+            content={"Query this metric in Mozilla's instance of Redash."}
+            link={"https://docs.telemetry.mozilla.org/tools/stmo.html"}
+          />
+        </td>
+        <td>
+          <div>
+            Start a query in
+            <a
+              href={getSTMOQueryURL(
+                metric.type,
+                selectedAppVariant.etl.bigquery_column_name,
+                pingData.looker.metric.name,
+                pingData.bigquery_table
+              )}>STMO</a
+            >
           </div>
         </td>
       </tr>
