@@ -19,21 +19,20 @@ export async function getPingData(appName, pingName) {
 }
 
 export async function getMetricData(appName, metricName) {
-  // we added data to metric names to avoid the JSON resource
-  // calls being blocked by uBlock Origin
+  let updatedMetricName = metricName;
 
   Object.keys(UBLOCK_ORIGIN_PRIVACY_FILTER).forEach((filter) => {
-    if (metricName.includes(filter)) {
-      const newMetricName = metricName.replace(
+    if (updatedMetricName.includes(filter)) {
+      updatedMetricName = updatedMetricName.replace(
         filter,
         UBLOCK_ORIGIN_PRIVACY_FILTER[filter]
       );
-      console.log(newMetricName);
-      return fetchJSON(`/data/${appName}/metrics/data_${newMetricName}.json`);
-    } else return fetchJSON(`/data/${appName}/metrics/data_${metricName}.json`);
+    }
   });
-  console.log("barb");
-  return;
+
+  // we added data to metric names to avoid the JSON resource
+  // calls being blocked by uBlock Origin
+  return fetchJSON(`/data/${appName}/metrics/data_${updatedMetricName}.json`);
 }
 
 export async function getTableData(appName, appId, pingName) {
