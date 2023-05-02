@@ -22,12 +22,10 @@ export async function getMetricData(appName, metricName) {
   let updatedMetricName = metricName;
 
   Object.keys(UBLOCK_ORIGIN_PRIVACY_FILTER).forEach((filter) => {
-    if (updatedMetricName.includes(filter)) {
-      updatedMetricName = updatedMetricName.replace(
-        filter,
-        UBLOCK_ORIGIN_PRIVACY_FILTER[filter]
-      );
-    }
+    updatedMetricName = updatedMetricName.replace(
+      filter,
+      UBLOCK_ORIGIN_PRIVACY_FILTER[filter]
+    );
   });
 
   // we added data to metric names to avoid the JSON resource
