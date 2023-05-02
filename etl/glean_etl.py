@@ -29,11 +29,20 @@ METRIC_CHANNEL_PRIORITY = {"nightly": 1, "beta": 2, "release": 3, "esr": 4}
 # Priority for sorting app ids in the UI (of anticipated relevance to the suer)
 USER_CHANNEL_PRIORITY = {"release": 1, "beta": 2, "nightly": 3, "esr": 4}
 
+# Certain words are blocked by uBlock Origin, so we need to map them to something else
+# to avoid the page being blocked
+# See: https://github.com/mozilla/glean-dictionary/issues/1682
+UBLOCK_ORIGIN_PRIVACY_FILTER = {"ad_impression": "advert_impression"}
+
 
 def _normalize_metrics(name):
     # replace . with _ so sirv doesn't think that
     # a metric is a file
     metric_name = name.replace(".", "_")
+
+    for key, value in UBLOCK_ORIGIN_PRIVACY_FILTER.items():
+        if key in metric_name:
+            metric_name = metric_name.replace(key, value)
 
     # if a metric name starts with "metrics", uBlock Origin
     # will block the network call to get the JSON resource
