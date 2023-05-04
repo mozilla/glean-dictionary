@@ -47,10 +47,9 @@
   const STMO_GLEAN_EVENT_QUERY_URL =
     "https://sql.telemetry.mozilla.org/queries/91780/source";
 
-  const getSTMOQueryURL = (type, columnName, eventName, table) => {
+  const getSTMOQueryURL = (type, columnName, eventInfo, table) => {
     if (type === "event") {
-      const [category, name] = eventName ? eventName.split(".") : [];
-      return `${STMO_GLEAN_EVENT_QUERY_URL}?p_event_category=${category}&p_event_name=${name}&p_table=${table}`;
+      return `${STMO_GLEAN_EVENT_QUERY_URL}?p_event_category=${eventInfo.category}&p_event_name=${eventInfo.name}&p_table=${table}`;
     }
     return `${STMO_GLEAN_QUERY_URL}?p_metric%20location=${columnName}&p_table=${table}`;
   };
@@ -153,6 +152,13 @@
     {/each}
     ping{metric.send_in_pings.length > 1 ? "s" : ""}.
   </p>
+
+  {#if metric.type === "event"}
+    <p>
+      The event category is <code>{metric.event_info.category}</code> and event
+      name is <code>{metric.event_info.name}.</code>
+    </p>
+  {/if}
 
   <MetadataTable
     appName={params.app}
@@ -324,6 +330,12 @@
               <CopyButton
                 textToCopy={selectedAppVariant.etl.bigquery_column_name}
               />
+            {:else}
+              (event.category=<code>{metric.event_info.category}</code>
+              <CopyButton textToCopy={metric.event_info.category} /> and event.name=<code
+                >{metric.event_info.name}</code
+              >
+              <CopyButton textToCopy={metric.event_info.name} />)
             {/if}
           </div>
         </td>
@@ -343,7 +355,7 @@
               href={getSTMOQueryURL(
                 metric.type,
                 selectedAppVariant.etl.bigquery_column_name,
-                pingData.looker.metric.name,
+                metric.event_info,
                 pingData.bigquery_table
               )}>STMO</a
             >

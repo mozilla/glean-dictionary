@@ -3,6 +3,8 @@ import json
 import stringcase
 from furl import furl
 
+from etl.utils import get_event_name_and_category
+
 from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
 from .glean import GLEAN_DISTRIBUTION_TYPES
 
@@ -115,7 +117,7 @@ def get_looker_explore_metadata_for_metric(
     if not app.app.get("deprecated") and base_looker_explore:
         looker_metric_link = None
         if metric_type == "event":
-            (metric_category, metric_name) = metric.identifier.split(".", 1)
+            (metric_name, metric_category) = get_event_name_and_category(metric.identifier)
             if base_looker_explore["name"] == "glean_event_counts":
                 looker_metric_link = furl(base_looker_explore["url"]).add(
                     {
