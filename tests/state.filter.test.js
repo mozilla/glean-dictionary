@@ -74,11 +74,11 @@ const items = [
   },
   {
     name: "metric.meh",
-    expires: 129,
+    expires: 110,
     tags: [],
     origin: "sync",
     in_source: true,
-    latest_fx_release_version: 120,
+    latest_fx_release_version: 100,
   },
   {
     name: "metric.test",
@@ -114,7 +114,7 @@ describe("filter items by labels", () => {
 
 describe("filter items by expiration", () => {
   it("returns items that will expire in 6 versions/months", () =>
-    expect(getNames(filterItemsByExpiration(unCollectedMetrics, "6"))).toEqual([
+    expect(getNames(filterItemsByExpiration(unCollectedMetrics, 6))).toEqual([
       "metric.bestsitez",
       "metric.camel",
       "metric.blah",

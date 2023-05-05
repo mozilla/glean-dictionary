@@ -44,20 +44,17 @@ export const filterItemsByExpiration = (items, monthsOrVersionFromNow) => {
     today.getMonth() + Number(monthsOrVersionFromNow)
   );
 
-  // don't include items that don't expire
-  const itemsWithAnExpirationDate = items.filter((item) => item.expires);
+  return items.filter((item) => {
+    if (item.expires === "never") return false;
 
-  const filteredByDate = itemsWithAnExpirationDate.filter(
-    (item) => Date.parse(item.expires) && new Date(item.expires) < targetDate
-  );
+    const expirationVersion = Number(item.expires);
+    if (Number.isNaN(expirationVersion)) {
+      const expirationDate = Date.parse(item.expires);
+      return expirationDate < targetDate;
+    }
 
-  const filteredByVersion = itemsWithAnExpirationDate.filter(
-    (item) =>
-      !Number.isNaN(item.expires) &&
-      item.latest_fx_release_version &&
-      item.expires <=
-        Number(item.latest_fx_release_version) + Number(monthsOrVersionFromNow)
-  );
-
-  return [...filteredByDate, ...filteredByVersion];
+    const targetVersion =
+      Number(item.latest_fx_release_version) + Number(monthsOrVersionFromNow);
+    return expirationVersion < targetVersion;
+  });
 };
