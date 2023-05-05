@@ -343,7 +343,7 @@
               href={getSTMOQueryURL(
                 metric.type,
                 selectedAppVariant.etl.bigquery_column_name,
-                pingData.looker.metric.name,
+                pingData.looker?.metric.name,
                 pingData.bigquery_table
               )}>STMO</a
             >
