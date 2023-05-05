@@ -41,3 +41,19 @@ def dump_json(data):
     2. We dump the data without spaces (since we want things as small as possible)
     """
     return json.dumps(data, separators=(",", ":"), default=_serialize_sets)
+
+
+def get_event_name_and_category(event_identifier: str):
+    """Get the event name and category from an event identifier.
+
+    Event names cannot contain dots, only the category, so
+    splitting at the right most '.' will extract the category
+    and name, i.e. the name is the last part of the event
+    identifier, and the event category is everything before the
+    event name.
+
+    e.g. "newtab.search.ad.click_metric" ->
+    category = "newtab.search.ad"
+    name = "click_metric"
+    """
+    return event_identifier.rsplit(".", maxsplit=1)

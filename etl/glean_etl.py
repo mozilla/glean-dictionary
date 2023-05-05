@@ -10,7 +10,7 @@ from .glam import SUPPORTED_GLAM_METRIC_TYPES, get_glam_metadata_for_metric
 from .glean import GleanApp
 from .looker import get_looker_explore_metadata_for_metric, get_looker_explore_metadata_for_ping
 from .search import create_metrics_search_js
-from .utils import dump_json
+from .utils import dump_json, get_event_name_and_category
 
 # Various additional sources of metadata
 ANNOTATIONS_URL = os.getenv(
@@ -373,6 +373,12 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                         ),
                         app_tags_for_objects,
                     )
+
+                    if metric.definition["type"] == "event":
+                        app_metrics[metric.identifier]["event_info"] = {
+                            "name": get_event_name_and_category(metric.identifier)[1],
+                            "category": get_event_name_and_category(metric.identifier)[0],
+                        }
 
                     # sort "send in pings" alphanumerically, except that `metrics`
                     # should always be first if present and `deletion-request`
