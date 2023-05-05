@@ -376,8 +376,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
 
                     if metric.definition["type"] == "event":
                         app_metrics[metric.identifier]["event_info"] = {
-                            "name": get_event_name_and_category(metric.identifier)[0],
-                            "category": get_event_name_and_category(metric.identifier)[1],
+                            "name": get_event_name_and_category(metric.identifier)[1],
+                            "category": get_event_name_and_category(metric.identifier)[0],
                         }
 
                     # sort "send in pings" alphanumerically, except that `metrics`

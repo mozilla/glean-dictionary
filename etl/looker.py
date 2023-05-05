@@ -117,7 +117,7 @@ def get_looker_explore_metadata_for_metric(
     if not app.app.get("deprecated") and base_looker_explore:
         looker_metric_link = None
         if metric_type == "event":
-            (metric_name, metric_category) = get_event_name_and_category(metric.identifier)
+            (metric_category, metric_name) = get_event_name_and_category(metric.identifier)
             if base_looker_explore["name"] == "glean_event_counts":
                 looker_metric_link = furl(base_looker_explore["url"]).add(
                     {
