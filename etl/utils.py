@@ -56,6 +56,4 @@ def get_event_name_and_category(event_identifier: str):
     name = "click_metric".
     category = "newtab.search.ad".
     """
-    name = event_identifier.split(".")[-1]
-    category = event_identifier.replace(f".{name}", "")
-    return name, category
+    return event_identifier.rsplit(".", maxsplit=1)
