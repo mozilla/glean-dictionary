@@ -39,14 +39,17 @@ export const filterItemsByExpiration = (items, monthsOrVersionFromNow) => {
   if (monthsOrVersionFromNow === "never") {
     return items.filter((item) => !item.expires || item.expires === "never");
   }
+
+  const itemsWithAnExpirationDate = items.filter(
+    (item) => item.expires || !item.expires === "never"
+  );
+
   const today = new Date();
   const targetDate = today.setMonth(
     today.getMonth() + Number(monthsOrVersionFromNow)
   );
 
-  return items.filter((item) => {
-    if (item.expires === "never") return false;
-
+  return itemsWithAnExpirationDate.filter((item) => {
     const expirationVersion = Number(item.expires);
     if (Number.isNaN(expirationVersion)) {
       const expirationDate = Date.parse(item.expires);
