@@ -277,7 +277,9 @@
                 </td>
                 <td style="text-align: center;">
                   <div class="item-property">
-                    {item.expires ? item.expires : "never"}
+                    <Markdown
+                      text={item.expires ? item.expiry_text : "never"}
+                    />
                   </div>
                 </td>
               {:else if itemType === "tags"}
