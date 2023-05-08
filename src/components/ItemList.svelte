@@ -144,7 +144,7 @@
   {#if showFilter}
     <FilterInput
       tooltipped={true}
-      placeHolder="To search by metric type, tag, or origin: use [type:], [tags:] , or [origin:]. Example: `type:event addons`, `tags:Sync account`"
+      placeHolder="To search by metric type, tag, origin, or expiration date: use [type:], [tags:], [origin:], [expires:<number of months/versions from now>]. Example: `type:event addons`, `tags:Sync account`, `expires:6`, `expires:never`"
     />
   {/if}
   {#if !filteredItems.length}
@@ -277,7 +277,9 @@
                 </td>
                 <td style="text-align: center;">
                   <div class="item-property">
-                    {item.expires ? item.expires : "never"}
+                    <Markdown
+                      text={item.expires ? item.expiry_text : "never"}
+                    />
                   </div>
                 </td>
               {:else if itemType === "tags"}

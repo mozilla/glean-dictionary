@@ -1,6 +1,6 @@
 import { Document } from "flexsearch";
 
-import { filterItemsByLabels } from "./filter";
+import { filterItemsByLabels, filterItemsByExpiration } from "./filter";
 
 const generateSearchIndex = (items) => {
   const searchIndex = new Document({
@@ -15,6 +15,7 @@ const generateSearchIndex = (items) => {
       tags: item.tags,
       origin: item.origin,
       description: item.description,
+      expires: item.expires,
     });
   });
 
@@ -26,14 +27,15 @@ export const fullTextSearch = (query, searchItems) => {
   let unlabeledsearchTerms = [];
 
   const searchTerms = query.match(/(?:(?:tags:)?".+")|"?[^ ]+"?/g);
-  const labels = { tags: [], origin: [], type: [] };
+  const labels = { tags: [], origin: [], type: [], expires: [] };
   const searchIndex = generateSearchIndex(searchItems);
 
   searchTerms.forEach((term) => {
     if (
       term.startsWith("tags:") ||
       term.startsWith("origin:") ||
-      term.startsWith("type:")
+      term.startsWith("type:") ||
+      term.startsWith("expires:")
     ) {
       const splitter = term.indexOf(":");
       const labelType = term.slice(0, splitter);
@@ -47,6 +49,13 @@ export const fullTextSearch = (query, searchItems) => {
     }
   });
   itemsFilteredByLabels = filterItemsByLabels(searchItems, labels);
+
+  if (labels.expires && labels.expires.length) {
+    itemsFilteredByLabels = filterItemsByExpiration(
+      itemsFilteredByLabels,
+      labels.expires[0]
+    );
+  }
 
   if (!unlabeledsearchTerms.length) return itemsFilteredByLabels;
 
