@@ -7,8 +7,8 @@ import {
 const today = new Date();
 const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
 const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000);
-const fiveMonthsFromNow = new Date(today.getTime() + 24 * 60 * 60 * 150 * 1000);
-const elevenMonthsFromNow = today.setMonth(today.getMonth() + 11);
+const sixMonthsFromNow = new Date(today.getTime() + 24 * 60 * 60 * 180 * 1000);
+const twelveMonthsFromNow = today.setMonth(today.getMonth() + 12);
 
 function getDateStr(date) {
   const newDate = new Date(date);
@@ -59,14 +59,14 @@ const items = [
   },
   {
     name: "metric.blah",
-    expires: getDateStr(fiveMonthsFromNow),
+    expires: getDateStr(sixMonthsFromNow),
     tags: [],
     origin: "sync",
     in_source: true,
   },
   {
     name: "metric.freh",
-    expires: getDateStr(elevenMonthsFromNow),
+    expires: getDateStr(twelveMonthsFromNow),
     tags: [],
     origin: "sync",
     in_source: true,

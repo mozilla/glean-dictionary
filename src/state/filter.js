@@ -53,11 +53,11 @@ export const filterItemsByExpiration = (items, monthsOrVersionFromNow) => {
     const expirationVersion = Number(item.expires);
     if (Number.isNaN(expirationVersion)) {
       const expirationDate = Date.parse(item.expires);
-      return expirationDate < targetDate;
+      return expirationDate <= targetDate;
     }
 
     const targetVersion =
       Number(item.latest_fx_release_version) + Number(monthsOrVersionFromNow);
-    return expirationVersion < targetVersion;
+    return expirationVersion <= targetVersion;
   });
 };
