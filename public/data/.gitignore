@@ -4,3 +4,6 @@ apps.json
 **/pings/*.json
 **/tables/**/*.json
 **/metrics/*.json
+# Ignore app logos
+**/*.svg
+**/*.png
