@@ -31,6 +31,7 @@ venv/bin/pip install -r requirements.txt
 
 # Build data needed by dashboard
 ./scripts/gd build-metadata
+# Or, on Windows: python3 -m etl build-metadata
 
 # Install npm dependencies and start a local
 # instance of the GUI
