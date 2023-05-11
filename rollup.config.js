@@ -93,7 +93,12 @@ export default {
         "",
       __LAST_UPDATED_TIME__: extractLastUpdatedTime(
         execSync(
-          "curl --compressed https://probeinfo.telemetry.mozilla.org/firefox/general"
+          // Don't request a compressed payload on Windows as the default
+          // shipped version of curl does not support gzip. To simplify
+          // things, only request a compressed payload in production.
+          `curl ${
+            process.env.CONTEXT === "production" ? "--compressed" : ""
+          } https://probeinfo.telemetry.mozilla.org/firefox/general`
         )
           .toString()
           .trim()
