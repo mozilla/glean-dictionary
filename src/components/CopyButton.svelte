@@ -3,6 +3,7 @@
   import CopyIcon from "./icons/CopyIcon.svelte";
 
   export let textToCopy;
+  export let tooltipText = "Copy to clipboard";
 
   function updateClipboard() {
     navigator.clipboard.writeText(textToCopy);
@@ -13,7 +14,7 @@
   class="mzp-c-button mzp-t-secondary mzp-t-md"
   on:click={updateClipboard}
   use:tippy={{
-    content: "Copy to clipboard",
+    content: tooltipText,
     placement: "top",
   }}><CopyIcon /></button
 >
