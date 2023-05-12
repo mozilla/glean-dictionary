@@ -1,4 +1,5 @@
 .circleci
+.netlify
 public/build/bundle.js
 public/build/bundle.css
 public/data/*
