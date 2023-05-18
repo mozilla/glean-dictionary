@@ -129,6 +129,19 @@
           </a>
         </td>
       </tr>
+      <td>
+        Data Catalog
+        <HelpHoverable
+          content={"View this table in Mozilla's instance of DataHub"}
+        />
+      </td>
+      <td>
+        <AuthenticatedLink
+          href={`https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.${selectedAppVariant.table},PROD)`}
+        >
+          {selectedAppVariant.table}
+        </AuthenticatedLink>
+      </td>
       {#if selectedAppVariant.looker_explore}
         <tr>
           <td>
