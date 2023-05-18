@@ -13,6 +13,7 @@
   import PageHeader from "../components/PageHeader.svelte";
   import SubHeading from "../components/SubHeading.svelte";
   import MetadataTable from "../components/MetadataTable.svelte";
+  import SqlModal from "../components/SqlModal.svelte";
   import {
     METRIC_DEFINITION_SCHEMA,
     METRIC_METADATA_SCHEMA,
@@ -36,23 +37,28 @@
 
   import { isExpired, isRemoved, isRecent } from "../state/items";
 
+  import { getGleanQuery, getGleanEventQuery } from "../data/gleanSql";
+
   export let params;
 
   let selectedAppVariant;
   let selectedPingVariant;
   let pingData = {};
 
-  const STMO_GLEAN_QUERY_URL =
-    "https://sql.telemetry.mozilla.org/queries/91729/source";
-  const STMO_GLEAN_EVENT_QUERY_URL =
-    "https://sql.telemetry.mozilla.org/queries/91780/source";
+  const STMO_NEW_QUERY_URL = "https://sql.telemetry.mozilla.org/queries/new";
 
-  const getSTMOQueryURL = (type, columnName, eventInfo, table) => {
-    if (type === "event") {
-      return `${STMO_GLEAN_EVENT_QUERY_URL}?p_event_category=${eventInfo.category}&p_event_name=${eventInfo.name}&p_table=${table}`;
+  function getSampleSQLQueryCode(
+    metricType,
+    table,
+    columnName,
+    additionalInfo
+  ) {
+    if (metricType === "event") {
+      return getGleanEventQuery(table, columnName, additionalInfo);
     }
-    return `${STMO_GLEAN_QUERY_URL}?p_metric%20location=${columnName}&p_table=${table}`;
-  };
+
+    return getGleanQuery(columnName, table);
+  }
 
   const metricDataPromise = getMetricData(params.app, params.metric).then(
     (metricData) => {
@@ -348,18 +354,22 @@
             link={"https://docs.telemetry.mozilla.org/tools/stmo.html"}
           />
         </td>
-        <td>
+        <td class="stmo">
           <div>
             Start a query in
-            <a
-              href={getSTMOQueryURL(
-                metric.type,
-                selectedAppVariant.etl.bigquery_column_name,
-                metric.event_info,
-                pingData.bigquery_table
-              )}>STMO</a
-            >
+            <AuthenticatedLink href={STMO_NEW_QUERY_URL} target="_blank"
+              >STMO</AuthenticatedLink
+            > with the following SQL ➡ &nbsp;
           </div>
+          <SqlModal
+            openModalText="Generate SQL"
+            sqlContent={getSampleSQLQueryCode(
+              metric.type,
+              pingData.bigquery_table,
+              selectedAppVariant.etl.bigquery_column_name,
+              metric.event_info
+            )}
+          />
         </td>
       </tr>
     </table>
@@ -378,5 +388,8 @@
     display: grid;
     grid-template-columns: min-content min-content;
     grid-gap: $spacing-md;
+  }
+  .stmo {
+    display: flex;
   }
 </style>

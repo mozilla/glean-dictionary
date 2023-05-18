@@ -344,7 +344,6 @@
     margin: auto;
 
     thead {
-      position: sticky;
       top: 0;
       background-color: $color-light-gray-05;
     }
