@@ -139,7 +139,7 @@
         <AuthenticatedLink
           href={`https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:Glean,${ping.origin}.${params.ping},PROD)`}
         >
-          {selectedAppVariant.table}
+          {ping.origin}.{params.ping}
         </AuthenticatedLink>
       </td>
       {#if selectedAppVariant.looker_explore}
