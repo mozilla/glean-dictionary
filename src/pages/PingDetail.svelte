@@ -137,7 +137,7 @@
       </td>
       <td>
         <AuthenticatedLink
-          href={`https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.${selectedAppVariant.table},PROD)`}
+          href={`https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:Glean,${ping.origin}.${params.ping},PROD)`}
         >
           {selectedAppVariant.table}
         </AuthenticatedLink>
