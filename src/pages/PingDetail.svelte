@@ -19,6 +19,7 @@
   import PageHeader from "../components/PageHeader.svelte";
   import SubHeading from "../components/SubHeading.svelte";
   import AppAlert from "../components/AppAlert.svelte";
+  import SqlModal from "../components/SqlModal.svelte";
   import {
     getLibraryDescription,
     getRecentlyAddedItemDescription,
@@ -29,6 +30,7 @@
   import { getMetricSearchURL } from "../state/urls";
   import { isRecent } from "../state/items";
   import { getAppBreadcrumbs } from "./AppDetail.svelte";
+  import { getGleanPingQuery } from "../data/gleanSql";
 
   export let params;
 
@@ -157,6 +159,26 @@
           </td>
         </tr>
       {/if}
+      <td>
+        STMO
+        <HelpHoverable
+          content={"Query this metric in Mozilla's instance of Redash."}
+          link={"https://docs.telemetry.mozilla.org/tools/stmo.html"}
+        />
+      </td>
+      <td class="stmo">
+        <div>
+          Start a query in
+          <AuthenticatedLink
+            href="https://sql.telemetry.mozilla.org/queries/new"
+            target="_blank">STMO</AuthenticatedLink
+          > with the following SQL ➡ &nbsp;
+        </div>
+        <SqlModal
+          openModalText="Generate SQL"
+          sqlContent={getGleanPingQuery(selectedAppVariant.table)}
+        />
+      </td>
     </table>
   {/if}
 
@@ -178,4 +200,8 @@
   @import "../main.scss";
 
   @include metadata-table;
+
+  .stmo {
+    display: flex;
+  }
 </style>
