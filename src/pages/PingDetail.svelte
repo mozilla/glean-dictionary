@@ -139,9 +139,9 @@
       </td>
       <td>
         <AuthenticatedLink
-          href={`https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:Glean,${ping.origin}.${params.ping},PROD)`}
+          href={`https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:Glean,${params.app}.${params.ping},PROD)`}
         >
-          {ping.origin}.{params.ping}
+          {params.app}.{params.ping}
         </AuthenticatedLink>
       </td>
       {#if selectedAppVariant.looker_explore}
