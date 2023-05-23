@@ -54,7 +54,7 @@
     additionalInfo
   ) {
     if (metricType === "event") {
-      return getGleanEventQuery(table, columnName, additionalInfo);
+      return getGleanEventQuery(table, additionalInfo);
     }
 
     return getGleanQuery(columnName, table);
