@@ -320,6 +320,15 @@
                 selectedPingVariant.id
               )}>{pingData.bigquery_table}</a
             >
+            and <AuthenticatedLink
+              href={`https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.${params.app}.${selectedPingVariant.id},PROD)`}
+            >
+              {params.app}.{selectedPingVariant.id}
+              <HelpHoverable
+                content={"The result table of UNION-ing all the per-app_id datasets."}
+                link={"https://github.com/mozilla/bigquery-etl/tree/main/sql_generators/glean_usage#glean-usage"}
+              />
+            </AuthenticatedLink>
             <!-- Skip search string for event metrics as we can't directly lookup the columns in events tables -->
             {#if metric.type !== "event"}
               as
