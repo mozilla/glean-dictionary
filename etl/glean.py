@@ -36,7 +36,10 @@ class _Cache:
         return resp
 
     def get_json(self, url: str):
-        return self.get(url).json()
+        try:
+            return self.get(url).json()
+        except Exception as e:
+            logger.exception(f"Failed to fetch {url} as JSON: {e}")
 
 
 _cache = _Cache()
