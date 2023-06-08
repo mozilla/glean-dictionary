@@ -1,7 +1,9 @@
 def get_mapped_expiry(expiry, app_name, product_details):
     # For Desktop we can map expiry versions to dates.
     if app_name == "firefox_desktop":
-        return product_details.get(f"{expiry}.0")
+        details = product_details.get(f"{expiry}.0")
+        if details:
+            return details
 
     # Other's might be either a date, a version or "never"
     if expiry == "never":
