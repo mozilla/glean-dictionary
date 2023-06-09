@@ -10,7 +10,7 @@ def fake_product_details():
 
 def test_get_mapped_expiry(fake_product_details):
     assert get_mapped_expiry("1", "firefox_desktop", fake_product_details) == "2004-11-09"
-    assert get_mapped_expiry("0", "firefox_desktop", fake_product_details) is None
+    assert get_mapped_expiry("0", "firefox_desktop", fake_product_details) == "0"
     assert get_mapped_expiry("never", "fenix", fake_product_details) is None
     assert get_mapped_expiry(97, "fenix", fake_product_details) == 97
 
