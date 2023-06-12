@@ -32,7 +32,7 @@
     "@rollup/plugin-replace": "^5.0.0",
     "@storybook/addon-knobs": "6.4.0",
     "@storybook/addon-storyshots": "6.5.10",
-    "@storybook/addon-storysource": "6.5.10",
+    "@storybook/addon-storysource": "7.0.20",
     "@storybook/svelte": "6.5.10",
     "@testing-library/svelte": "^3.2.2",
     "autoprefixer": "^10.4.8",
