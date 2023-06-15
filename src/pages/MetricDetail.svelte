@@ -321,7 +321,7 @@
               )}>{pingData.bigquery_table}</a
             >
             and <AuthenticatedLink
-              href={`https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.${params.app}.${selectedPingVariant.id},PROD)`}
+              href={`https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,mozdata.${params.app}.${selectedPingVariant.id},PROD)`}
             >
               {params.app}.{selectedPingVariant.id}
               <HelpHoverable
