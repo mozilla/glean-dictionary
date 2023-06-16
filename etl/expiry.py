@@ -24,4 +24,4 @@ def get_expiry_text(expiry, app_name, product_details):
         return f"{expiry}. Latest release is \
      [{latest_release_version}](https://wiki.mozilla.org/Release_Management/Calendar)."
 
-    return expiry
+    return str(expiry)
