@@ -17,7 +17,8 @@ const isDNTEnabled =
   navigator.doNotTrack === "yes" ||
   navigator.doNotTrack === "1" ||
   navigator.msDoNotTrack === "1" ||
-  ("msTrackingProtectionEnabled" in window.external &&
+  (typeof window.external !== "undefined" &&
+    "msTrackingProtectionEnabled" in window.external &&
     window.external.msTrackingProtectionEnabled());
 
 /**
