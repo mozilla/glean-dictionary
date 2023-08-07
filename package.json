@@ -36,7 +36,7 @@
     "@storybook/svelte": "6.5.10",
     "@testing-library/svelte": "^3.2.2",
     "autoprefixer": "^10.4.8",
-    "babel-jest": "^29.3.1",
+    "babel-jest": "^29.6.2",
     "babel-loader": "8.2.5",
     "cross-env": "^7.0.3",
     "eslint": "8.41.0",
