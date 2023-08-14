@@ -23,7 +23,7 @@
   "devDependencies": {
     "@babel/core": "^7.22.9",
     "@babel/plugin-transform-runtime": "7.19.6",
-    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-env": "^7.22.10",
     "@mozilla-protocol/core": "^17.0.1",
     "@mozilla/glean": "https://gitpkg.now.sh/mozilla/glean.js/glean?release-v2.0.0-alpha.0",
     "@playwright/test": "^1.36.1",
