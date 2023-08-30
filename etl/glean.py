@@ -235,14 +235,15 @@ class GleanApp(object):
             for key, metricdict in data.items()
         ]
         for dependency in self.get_dependencies():
-            dependency_metrics = _cache.get_json(
-                GleanApp.METRICS_URL_TEMPLATE.format(dependency["v1_name"])
-            )
-            # augment these dependency names with the library_name where they came from
-            metrics += [
-                (d[0], {**d[1], "origin": dependency["library_name"]})
-                for d in dependency_metrics.items()
-            ]
+            if "v1_name" in dependency:
+                dependency_metrics = _cache.get_json(
+                    GleanApp.METRICS_URL_TEMPLATE.format(dependency["v1_name"])
+                )
+                # augment these dependency names with the library_name where they came from
+                metrics += [
+                    (d[0], {**d[1], "origin": dependency["library_name"]})
+                    for d in dependency_metrics.items()
+                ]
 
         ping_names = set(self._get_ping_data().keys())
         processed = []
@@ -274,15 +275,16 @@ class GleanApp(object):
         )
 
         for dependency in self.get_dependencies():
-            dependency_pings = dict(
-                [
-                    (p[0], {**p[1], "origin": dependency["library_name"]})
-                    for p in _cache.get_json(
-                        GleanApp.PING_URL_TEMPLATE.format(dependency["v1_name"])
-                    ).items()
-                ]
-            )
-            ping_data.update(dependency_pings)
+            if "v1_name" in dependency:
+                dependency_pings = dict(
+                    [
+                        (p[0], {**p[1], "origin": dependency["library_name"]})
+                        for p in _cache.get_json(
+                            GleanApp.PING_URL_TEMPLATE.format(dependency["v1_name"])
+                        ).items()
+                    ]
+                )
+                ping_data.update(dependency_pings)
 
         return ping_data
 
