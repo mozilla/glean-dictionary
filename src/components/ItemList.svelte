@@ -37,6 +37,7 @@
   let filteredItems = items.filter((item) => !isExpired(item));
   let pagedItems;
   let paginated = true;
+  let showAppMetricsOnly = false;
   let search;
   let showUncollected;
   let topElement;
@@ -89,6 +90,11 @@
     filteredItems = search ? fullTextSearch(search, items) : items;
     totalItems = filteredItems.length;
 
+    // filter out metrics that do not belong to the application
+    filteredItems = showAppMetricsOnly ? filteredItems.filter(
+      (item) => !item.origin
+    ) : filteredItems
+
     // now filter for uncollected items (if applicable)
     filteredItems = showUncollected
       ? filteredItems
@@ -124,6 +130,10 @@
   {#if itemType === "metrics"}
     <span class="expire-checkbox">
       <label>
+        <input type="checkbox" bind:checked={showAppMetricsOnly} />
+        Only show app metrics
+      </label>
+      <label>
         <input
           type="checkbox"
           bind:checked={showUncollected}
@@ -155,7 +165,7 @@
       </h3>
       {#if totalItems > 0}
         <p>
-          {totalItems} expired or removed {itemType} found.
+          {totalItems} expired, removed or hidden {itemType} found.
         </p>
         <button
           class="mzp-c-button mzp-t-secondary mzp-t-md"
