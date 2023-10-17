@@ -21,7 +21,7 @@
     getLibraryDescription,
   } from "../data/help";
 
-  import { adjustDataTypes } from "./iOSThirdPartyData.svelte";
+  import { adjustDataTypes } from "./AdjustDataTypes.svelte";
 
   import { fullTextSearch } from "../state/search";
 
