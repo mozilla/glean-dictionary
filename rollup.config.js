@@ -85,6 +85,7 @@ export default {
     css({ output: "bundle.css" }),
     // only use google analytics on production builds
     replace({
+      preventAssignment: true,
       __GLEAN_APPLICATION_ID__:
         process.env.GLEAN_APPLICATION_ID || "glean-dictionary-dev",
       __GOOGLE_ANALYTICS_ID__:
