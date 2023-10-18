@@ -10,7 +10,7 @@ module.exports = {
   globals: {
     ga: "readonly",
   },
-  extends: ["airbnb-base"],
+  extends: ["airbnb-base", "plugin:storybook/recommended"],
   plugins: ["jest", "svelte3"],
   rules: {
     "import/prefer-default-export": "off",
