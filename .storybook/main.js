@@ -36,7 +36,7 @@ module.exports = {
     config.module.rules.push({
       // this is for both less and scss
       test: /.*\.(?:le|c|sc)ss$/,
-      loaders: ["style-loader", "css-loader", "sass-loader"],
+      use: ["style-loader", "css-loader", "sass-loader"],
       include: path.resolve(__dirname, "../"),
     });
 
