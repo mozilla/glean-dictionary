@@ -91,9 +91,9 @@
     totalItems = filteredItems.length;
 
     // filter out metrics that do not belong to the application
-    filteredItems = showAppMetricsOnly ? filteredItems.filter(
-      (item) => !item.origin
-    ) : filteredItems
+    filteredItems = showAppMetricsOnly
+      ? filteredItems.filter((item) => !item.origin)
+      : filteredItems;
 
     // now filter for uncollected items (if applicable)
     filteredItems = showUncollected
