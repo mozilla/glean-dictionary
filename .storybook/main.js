@@ -13,7 +13,6 @@ module.exports = {
     svelteLoader.options = {
       ...svelteLoader.options,
       preprocess: sveltePreprocess({
-        postcss: true,
         scss: {
           prependData: `@import 'src/protocol-tokens.scss';`,
         },
