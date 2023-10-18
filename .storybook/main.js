@@ -4,7 +4,7 @@ const path = require("path");
 
 module.exports = {
   stories: ["../stories/**/*.stories.js"],
-  addons: ["@storybook/addon-knobs"],
+  addons: ["@storybook/addon-controls"],
 
   webpackFinal: async (config) => {
     const svelteLoader = config.module.rules.find(
