@@ -74,5 +74,8 @@
     "svelte-loader": "3.1.4",
     "svelte-preprocess": "^4.10.7",
     "tippy.js": "^6.3.7"
+  },
+  "overrides": {
+    "react-test-renderer": "18.2.0"
   }
 }
