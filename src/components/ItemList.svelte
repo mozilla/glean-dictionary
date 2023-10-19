@@ -315,8 +315,8 @@
     {#if totalItems - filteredItems.length > 0}
       <div class="items-not-found">
         <p>
-          {totalItems - filteredItems.length} additional expired or removed {itemType}
-          found.
+          {totalItems - filteredItems.length} additional expired, removed or hidden
+          {itemType} found.
         </p>
       </div>
     {/if}
