@@ -21,7 +21,7 @@
     getLibraryDescription,
   } from "../data/help";
 
-  import { adjustDataTypes } from "./iOSThirdPartyData.svelte";
+  import { adjustDataTypes } from "./AdjustDataTypes.svelte";
 
   import { fullTextSearch } from "../state/search";
 
@@ -37,6 +37,7 @@
   let filteredItems = items.filter((item) => !isExpired(item));
   let pagedItems;
   let paginated = true;
+  let showAppMetricsOnly = false;
   let search;
   let showUncollected;
   let topElement;
@@ -89,6 +90,11 @@
     filteredItems = search ? fullTextSearch(search, items) : items;
     totalItems = filteredItems.length;
 
+    // filter out metrics that do not belong to the application
+    filteredItems = showAppMetricsOnly
+      ? filteredItems.filter((item) => !item.origin)
+      : filteredItems;
+
     // now filter for uncollected items (if applicable)
     filteredItems = showUncollected
       ? filteredItems
@@ -124,6 +130,10 @@
   {#if itemType === "metrics"}
     <span class="expire-checkbox">
       <label>
+        <input type="checkbox" bind:checked={showAppMetricsOnly} />
+        Only show app metrics
+      </label>
+      <label>
         <input
           type="checkbox"
           bind:checked={showUncollected}
@@ -155,7 +165,7 @@
       </h3>
       {#if totalItems > 0}
         <p>
-          {totalItems} expired or removed {itemType} found.
+          {totalItems} expired, removed or hidden {itemType} found.
         </p>
         <button
           class="mzp-c-button mzp-t-secondary mzp-t-md"
@@ -305,8 +315,8 @@
     {#if totalItems - filteredItems.length > 0}
       <div class="items-not-found">
         <p>
-          {totalItems - filteredItems.length} additional expired or removed {itemType}
-          found.
+          {totalItems - filteredItems.length} additional expired, removed or hidden
+          {itemType} found.
         </p>
       </div>
     {/if}
