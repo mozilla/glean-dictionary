@@ -45,10 +45,10 @@ module.exports = {
 
   framework: {
     name: "@storybook/svelte-webpack5",
-    options: {}
+    options: {},
   },
 
   docs: {
-    autodocs: true
-  }
+    autodocs: true,
+  },
 };
