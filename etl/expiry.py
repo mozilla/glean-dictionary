@@ -22,6 +22,6 @@ def get_expiry_text(expiry, app_name, product_details):
         # Let's update this when version-based expiry are available for other apps.
         # See: https://github.com/mozilla/glean-dictionary/issues/1513
         return f"{expiry}. Latest release is \
-     [{latest_release_version}](https://wiki.mozilla.org/Release_Management/Calendar)."
+     [{latest_release_version}](https://whattrainisitnow.com/)."
 
     return str(expiry)
