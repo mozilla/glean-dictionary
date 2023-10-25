@@ -52,7 +52,7 @@ def _get_looker_event_explore(looker_namespaces, app_name, app_channel, app_grou
         and app_name != "firefox_desktop"
     ):
         url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/event_counts").add(
-            {"fields": "events.event_count,events.client_count"}
+            {"fields": "events.submission_date,events.event_count,events.client_count"}
         )
         if len(app_group["app_ids"]) > 1 and app_channel:
             url.add({"f[events.normalized_channel]": app_channel})
@@ -60,7 +60,10 @@ def _get_looker_event_explore(looker_namespaces, app_name, app_channel, app_grou
     # firefox_desktop Glean events explore is glean_event_counts
     elif _looker_explore_exists(looker_namespaces, app_name, "glean_event_counts"):
         url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/glean_event_counts").add(
-            {"fields": "glean_events.event_count,glean_events.client_count"}
+            {
+                "fields": "glean_events.submission_date,"
+                + "glean_events.event_count,glean_events.client_count"
+            }
         )
         if len(app_group["app_ids"]) > 1 and app_channel:
             url.add({"f[events.normalized_channel]": app_channel})
