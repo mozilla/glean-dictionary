@@ -1,4 +1,3 @@
-import { text } from "@storybook/addon-knobs";
 import Pagination from "./Pagination.svelte";
 
 const items = {
@@ -8,12 +7,21 @@ const items = {
 
 export default {
   title: "Pagination",
+  component: Pagination,
+  argTypes: {
+    itemsPerPage: {
+      control: "number",
+    },
+    totalItems: {
+      control: "number",
+      description: "Total number of items",
+    },
+  },
 };
 
-export const Default = () => ({
-  Component: Pagination,
-  props: {
+export const Default = {
+  args: {
     itemsPerPage: items.perPage,
-    totalItems: text("Total number of items", items.total),
+    totalItems: items.total,
   },
-});
+};

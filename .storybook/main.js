@@ -4,7 +4,7 @@ const path = require("path");
 
 module.exports = {
   stories: ["../stories/**/*.stories.js"],
-  addons: ["@storybook/addon-knobs"],
+  addons: ["@storybook/addon-controls"],
 
   webpackFinal: async (config) => {
     const svelteLoader = config.module.rules.find(
@@ -13,7 +13,6 @@ module.exports = {
     svelteLoader.options = {
       ...svelteLoader.options,
       preprocess: sveltePreprocess({
-        postcss: true,
         scss: {
           prependData: `@import 'src/protocol-tokens.scss';`,
         },
@@ -37,10 +36,19 @@ module.exports = {
     config.module.rules.push({
       // this is for both less and scss
       test: /.*\.(?:le|c|sc)ss$/,
-      loaders: ["style-loader", "css-loader", "sass-loader"],
+      use: ["style-loader", "css-loader", "sass-loader"],
       include: path.resolve(__dirname, "../"),
     });
 
     return config;
+  },
+
+  framework: {
+    name: "@storybook/svelte-webpack5",
+    options: {},
+  },
+
+  docs: {
+    autodocs: true,
   },
 };

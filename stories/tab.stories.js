@@ -1,4 +1,3 @@
-import { withKnobs } from "@storybook/addon-knobs";
 import Tabs from "./Tabs.svelte";
 
 const tabs = [
@@ -13,12 +12,11 @@ const tabs = [
 ];
 export default {
   title: "Tab",
-  decorators: [withKnobs],
+  component: Tabs,
 };
 
-export const Basic = () => ({
-  Component: Tabs,
-  props: {
+export const Basic = {
+  args: {
     tabs,
   },
-});
+};

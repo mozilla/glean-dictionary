@@ -1,4 +1,3 @@
-import { text, boolean } from "@storybook/addon-knobs";
 import Markdown from "../src/components/Markdown.svelte";
 
 const mark =
@@ -10,23 +9,22 @@ const inline = false;
 
 export default {
   title: "Markdown",
+  component: Markdown,
 };
 
-export const Text = () => ({
-  Component: Markdown,
-  props: {
-    text: text("text", mark),
-    inline: boolean("inline", inline),
+export const Text = {
+  args: {
+    text: mark,
+    inline,
   },
-});
+};
 
-export const TextWithHTML = () => ({
-  Component: Markdown,
+export const TextWithHTML = {
   parameters: {
     knobs: { escapeHTML: false },
   },
-  props: {
+  args: {
     text: markdownWithHTML, // knobs don't allow unescaped text
-    inline: boolean("inline", inline),
+    inline,
   },
-});
+};
