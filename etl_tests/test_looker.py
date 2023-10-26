@@ -86,7 +86,7 @@ def test_get_looker_explore_metadata_for_timespan_metric(
 def test_get_looker_explore_metadata_for_metric_unioned_app(
     fake_namespaces, fake_app, fake_ping, fake_timespan_metric
 ):
-    # The application needs an "app channel" to trigger thie relevant
+    # The application needs an "app channel" to trigger the relevant
     # code path.
     fake_app.app["app_channel"] = "nightly"
 
