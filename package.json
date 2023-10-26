@@ -27,7 +27,7 @@
     "@mozilla-protocol/core": "^17.0.1",
     "@mozilla/glean": "^2.0.5",
     "@playwright/test": "^1.36.1",
-    "@rollup/plugin-commonjs": "24.1.0",
+    "@rollup/plugin-commonjs": "25.0.7",
     "@rollup/plugin-node-resolve": "15.0.0",
     "@rollup/plugin-replace": "^5.0.0",
     "@storybook/addon-controls": "7.4.6",
