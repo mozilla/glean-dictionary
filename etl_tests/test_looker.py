@@ -81,3 +81,44 @@ def test_get_looker_explore_metadata_for_timespan_metric(
             "url": "https://mozilla.cloud.looker.com/explore/fenix/metrics?fields=metrics.submission_date%2Cmedian_of_mytimespan&dynamic_fields=%5B%7B%22measure%22%3A+%22median_of_mytimespan%22%2C+%22label%22%3A+%22Median+of+mytimespan%22%2C+%22based_on%22%3A+%22metrics.metrics__timespan__mytimespan__value%22%2C+%22expression%22%3A+%22%22%2C+%22type%22%3A+%22median%22%7D%5D&toggle=vis",  # noqa
         },
     }
+
+
+def test_get_looker_explore_metadata_for_metric_unioned_app(
+    fake_namespaces, fake_app, fake_ping, fake_timespan_metric
+):
+    # The application needs an "app channel" to trigger thie relevant
+    # code path.
+    fake_app.app["app_channel"] = "nightly"
+
+    FAKE_APP_GROUP = {
+        "app_description": "Fenix for iOS",
+        "app_ids": [
+            {
+                "channel": "nightly",
+                "name": "org.mozilla.ios.Fennec",
+            },
+            {
+                "channel": "release",
+                "name": "org.mozilla.ios.Firefox",
+            },
+        ],
+        "app_name": "fenix",
+    }
+
+    assert get_looker_explore_metadata_for_metric(
+        fake_namespaces,
+        fake_app,
+        FAKE_APP_GROUP,
+        fake_timespan_metric,
+        fake_ping.identifier,
+        False,
+    ) == {
+        "base": {
+            "name": "metrics",
+            "url": "https://mozilla.cloud.looker.com/explore/fenix/metrics?f%5Bmetrics.channel%5D=nightly",  # noqa
+        },
+        "metric": {
+            "name": "mytimespan",
+            "url": "https://mozilla.cloud.looker.com/explore/fenix/metrics?f%5Bmetrics.channel%5D=nightly&fields=metrics.submission_date%2Cmedian_of_mytimespan&dynamic_fields=%5B%7B%22measure%22%3A+%22median_of_mytimespan%22%2C+%22label%22%3A+%22Median+of+mytimespan%22%2C+%22based_on%22%3A+%22metrics.metrics__timespan__mytimespan__value%22%2C+%22expression%22%3A+%22%22%2C+%22type%22%3A+%22median%22%7D%5D&toggle=vis",  # noqa
+        },
+    }

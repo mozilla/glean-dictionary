@@ -31,15 +31,14 @@ def _looker_explore_exists(looker_namespaces, app_name, explore_name):
 
 
 def _get_looker_ping_explore(
-    looker_namespaces, app_name, ping_name, table_name, app_channel, app_group
+    looker_namespaces, app_name, ping_name, _table_name, app_channel, app_group
 ):
     ping_name_snakecase = stringcase.snakecase(ping_name)
     if _looker_explore_exists(looker_namespaces, app_name, ping_name_snakecase):
         url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}")
         # if there are multiple channels, we need a channel identifier
         if len(app_group["app_ids"]) > 1 and app_channel:
-            channel_identifier = "mozdata." + table_name.replace("_", "^_")
-            url = url.add({f"f[{ping_name_snakecase}.channel]": channel_identifier})
+            url = url.add({f"f[{ping_name_snakecase}.channel]": app_channel})
         return {"name": ping_name_snakecase, "url": url.url}
     return None
 
