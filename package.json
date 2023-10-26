@@ -37,7 +37,7 @@
     "@storybook/cli": "7.4.6",
     "@storybook/svelte": "7.4.6",
     "@storybook/svelte-webpack5": "^7.4.6",
-    "@testing-library/svelte": "^3.2.2",
+    "@testing-library/svelte": "^4.0.4",
     "autoprefixer": "^10.4.8",
     "babel-jest": "^29.3.1",
     "babel-loader": "8.2.5",
