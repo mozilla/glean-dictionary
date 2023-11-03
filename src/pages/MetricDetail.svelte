@@ -381,6 +381,28 @@
           />
         </td>
       </tr>
+      {#if pingData.event_monitoring}
+        <tr>
+          <td
+            >Monitoring <HelpHoverable
+              content={"Show real-time monitoring for this event in Mozilla's instance of Looker."}
+            />
+          </td>
+          <td>
+            <div>
+              In the
+              <AuthenticatedLink href={pingData.event_monitoring.base}>
+                Event Monitoring Dashboard
+              </AuthenticatedLink>
+              for the
+              <AuthenticatedLink href={pingData.event_monitoring.event.url}>
+                {pingData.event_monitoring.event.name}
+              </AuthenticatedLink>
+              event
+            </div>
+          </td>
+        </tr>
+      {/if}
     </table>
   {/if}
 {:catch}
