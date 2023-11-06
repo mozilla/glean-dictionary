@@ -4,6 +4,11 @@ updates:
     directory: "/"
     schedule:
       interval: weekly
+    groups:
+      storybook:
+        patterns:
+          - ^@storybook/.*
+          - ^storybook$
     open-pull-requests-limit: 99
   - package-ecosystem: pip
     directory: /
