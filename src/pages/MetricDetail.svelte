@@ -281,13 +281,11 @@
               content={"Explore this metric in Mozilla's instance of Looker."}
             />
           </td>
-          {#if metric.send_in_pings.length === 1 && metric.send_in_pings[0] === "events" && metric.type !== "event"}
-            <td
-              >This metric is a <code>{metric.type}</code> metric. Currently,
-              event count explores only support <code>event</code> metrics.</td
-            >
-          {:else}
-            <td>
+          <td>
+            {#if metric.send_in_pings.length === 1 && metric.send_in_pings[0] === "events" && metric.type !== "event"}
+              This metric is a <code>{metric.type}</code> metric. Currently,
+              event count explores only support <code>event</code> metrics.
+            {:else}
               <div>
                 In
                 <AuthenticatedLink href={pingData.looker.base.url}>
@@ -298,8 +296,18 @@
                   {pingData.looker.metric.name}
                 </AuthenticatedLink>
               </div>
-            </td>
-          {/if}
+            {/if}
+            {#if pingData.event_monitoring}
+              <div>
+                On the 
+                <AuthenticatedLink href={pingData.event_monitoring.event.url}>
+                  Event Monitoring Dashboard for the
+                  {pingData.event_monitoring.event.name}
+                </AuthenticatedLink>
+                event
+              </div>
+            {/if}
+          </td>
         </tr>
       {/if}
       <tr>
@@ -381,28 +389,6 @@
           />
         </td>
       </tr>
-      {#if pingData.event_monitoring}
-        <tr>
-          <td
-            >Monitoring <HelpHoverable
-              content={"Show real-time monitoring for this event in Mozilla's instance of Looker."}
-            />
-          </td>
-          <td>
-            <div>
-              In the
-              <AuthenticatedLink href={pingData.event_monitoring.base}>
-                Event Monitoring Dashboard
-              </AuthenticatedLink>
-              for the
-              <AuthenticatedLink href={pingData.event_monitoring.event.url}>
-                {pingData.event_monitoring.event.name}
-              </AuthenticatedLink>
-              event
-            </div>
-          </td>
-        </tr>
-      {/if}
     </table>
   {/if}
 {:catch}
