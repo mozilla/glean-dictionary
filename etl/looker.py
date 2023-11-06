@@ -284,7 +284,6 @@ def get_looker_monitoring_metadata_for_event(app, app_group, metric, ping_name):
         url.add({"Channel": app_channel})
 
     return {
-        "base": EVENT_MONITORING_DASHBOARD_URL,
         "event": {
             "name": metric_name,
             "url": url.url,
