@@ -185,7 +185,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
 
     # Process each grouping of apps into a set of summaries, app details, and all the rest
     app_summaries = []
-    for (app_name, app_group) in app_groups.items():
+    for app_name, app_group in app_groups.items():
         app_dir = os.path.join(output_dir, app_name)
         (app_id_dir, app_ping_dir, app_table_dir, app_metrics_dir) = (
             os.path.join(app_dir, subtype) for subtype in ("app_ids", "pings", "tables", "metrics")
