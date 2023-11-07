@@ -8,7 +8,11 @@ from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
 from .expiry import get_expiry_text, get_mapped_expiry
 from .glam import SUPPORTED_GLAM_METRIC_TYPES, get_glam_metadata_for_metric
 from .glean import GleanApp
-from .looker import get_looker_explore_metadata_for_metric, get_looker_explore_metadata_for_ping
+from .looker import (
+    get_looker_explore_metadata_for_metric,
+    get_looker_explore_metadata_for_ping,
+    get_looker_monitoring_metadata_for_event,
+)
 from .search import create_metrics_search_js
 from .utils import dump_json, get_event_name_and_category
 
@@ -411,6 +415,12 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                         ping_data[ping_name].update({"looker": looker_metadata})
                     glam_metadata = get_glam_metadata_for_metric(app, metric, ping_name)
                     ping_data[ping_name].update(glam_metadata)
+
+                    event_monitoring_metadata = get_looker_monitoring_metadata_for_event(
+                        app, app_group, metric, ping_name
+                    )
+                    if event_monitoring_metadata:
+                        ping_data[ping_name].update({"event_monitoring": event_monitoring_metadata})
 
                 etl = dict(
                     ping_data=ping_data,

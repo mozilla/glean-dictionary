@@ -20,6 +20,7 @@ SUPPORTED_LOOKER_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
     "timespan",
     "uuid",
 }
+EVENT_MONITORING_DASHBOARD_URL = "https://mozilla.cloud.looker.com/dashboards/1452"
 
 
 def _looker_explore_exists(looker_namespaces, app_name, explore_name):
@@ -262,3 +263,29 @@ def get_looker_explore_metadata_for_metric(
             }
 
     return None
+
+
+def get_looker_monitoring_metadata_for_event(app, app_group, metric, ping_name):
+    if ping_name != "events":
+        return None
+
+    metric_type = metric.definition["type"]
+    if metric_type != "event":
+        return None
+
+    (_, metric_name) = get_event_name_and_category(metric.identifier)
+
+    url = furl(EVENT_MONITORING_DASHBOARD_URL).add(
+        {"App Name": app.app["canonical_app_name"], "Event Name": metric_name}
+    )
+
+    app_channel = app.app.get("app_channel")
+    if len(app_group["app_ids"]) > 1 and app_channel:
+        url.add({"Channel": app_channel})
+
+    return {
+        "event": {
+            "name": metric_name,
+            "url": url.url,
+        },
+    }
