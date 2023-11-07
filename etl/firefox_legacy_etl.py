@@ -21,7 +21,7 @@ def _get_legacy_firefox_metric_summary(probe_data, activity_mapping):
     """
     probe_summary = {}
 
-    for (probe_id, probe) in probe_data.items():
+    for probe_id, probe in probe_data.items():
         if probe["type"] == "event":
             # let's just skip legacy firefox events, since we're just doing
             # this for GLAM's benefit (which doesn't display events)
