@@ -172,6 +172,62 @@
     schema={METRIC_DEFINITION_SCHEMA}
   />
 
+  {#if !isEmpty(metric.sampling_info)}
+    <h2>
+      Metric sampling
+      <HelpHoverable
+        content={"Information about the sampling state and rate."}
+        link={"https://mozilla.github.io/glean/book/user/metrics/data-control-plane/index.html"}
+      />
+    </h2>
+    {#each Object.entries(metric.sampling_info) as [keyName, definition]}
+      <table>
+        <col />
+        <col />
+        <tr>
+          <td>Channel</td>
+          <td><code>{keyName}</code></td>
+        </tr>
+        <tr>
+          <td>Sample size</td>
+          <td>
+            <code>{definition.sample_size * 100 || 0}%</code>
+          </td>
+        </tr>
+        <tr>
+          <td>Experiment id</td>
+          <td>
+            <code>{definition.experiment_id || ""}</code>
+          </td>
+        </tr>
+        <tr>
+          <td>Experiment start date</td>
+          <td>
+            <code>{definition.start_date || ""}</code>
+          </td>
+        </tr>
+        <tr>
+          <td>Experiment end date</td>
+          <td>
+            <code>{definition.end_date || ""}</code>
+          </td>
+        </tr>
+        <tr>
+          <td>Experiment targeting</td>
+          <td>
+            <code>{definition.targeting || ""}</code>
+          </td>
+        </tr>
+        <tr>
+          <td>Experimenter link</td>
+          <td>
+            <code>{definition.experimenter_link || ""}</code>
+          </td>
+        </tr>
+      </table>
+    {/each}
+  {/if}
+
   {#if metric.extra_keys && !isEmpty(metric.extra_keys)}
     <h2>
       Extra keys

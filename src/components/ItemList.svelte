@@ -185,8 +185,9 @@
         <!-- https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity -->
         <col width="35%" />
         {#if itemType === "metrics"}
-          <col width="15%" />
-          <col width="15%" />
+          <col width="10%" />
+          <col width="10%" />
+          <col width="10%" />
           <col width="35%" />
         {:else if itemType === "tags"}
           <col width="20%" />
@@ -200,6 +201,7 @@
             {#if itemType === "metrics"}
               <th scope="col" style="text-align: center;">Type</th>
               <th scope="col" style="text-align: center;">Expiration</th>
+              <th scope="col" style="text-align: center;">Sampled</th>
             {:else if itemType === "tags"}
               <th scope="col" style="text-align: center;">Metric Count</th>
             {/if}
@@ -290,6 +292,11 @@
                     <Markdown
                       text={item.expires ? item.expiry_text : "never"}
                     />
+                  </div>
+                </td>
+                <td style="text-align: center;">
+                  <div class="item-property">
+                    <Markdown text={item.sampled ? "Yes" : "No"} />
                   </div>
                 </td>
               {:else if itemType === "tags"}
