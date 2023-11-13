@@ -375,7 +375,11 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                         annotations_index, metric.definition["origin"], "metrics", metric.identifier
                     )
 
-                    metric_sample_info = app_sampling_info.get(metric.identifier)
+                    metric_sample_info = (
+                        None
+                        if app_sampling_info is None
+                        else app_sampling_info.get(metric.identifier)
+                    )
                     is_sampled = metric_sample_info is not None
 
                     base_definition = _incorporate_annotation(
