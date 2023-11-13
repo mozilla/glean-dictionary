@@ -221,7 +221,9 @@
         <tr>
           <td>Experimenter link</td>
           <td>
-            <code>{definition.experimenter_link || ""}</code>
+            <a href={definition.experimenter_link || ""}>
+              <code>{definition.experimenter_link || ""}</code>
+            </a>
           </td>
         </tr>
       </table>
