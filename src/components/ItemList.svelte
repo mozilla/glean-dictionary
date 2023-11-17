@@ -296,7 +296,7 @@
                 </td>
                 <td style="text-align: center;">
                   <div class="item-property">
-                    <Markdown text={item.sampled ? "Yes" : "No"} />
+                    <Markdown text={item.sampled_text} />
                   </div>
                 </td>
               {:else if itemType === "tags"}

@@ -185,62 +185,76 @@
         <col />
         <col />
         <tr>
-          <td>Channel</td>
-          <HelpHoverable
-            content={"Indicates the delivery channel being sampled"}
-          />
+          <td>
+            Channel
+            <HelpHoverable
+              content={"Indicates the delivery channel being sampled"}
+            />
+          </td>
           <td>
             <code>{keyName}</code>
           </td>
         </tr>
         <tr>
-          <td>Sample size</td>
-          <HelpHoverable
-            content={"The percentage of the population being sampled"}
-          />
           <td>
-            <code>{definition.sample_size * 100 || 0}%</code>
+            Sample size
+            <HelpHoverable
+              content={"The percentage of the population being sampled"}
+            />
+          </td>
+          <td>
+            <code>{definition.sampled_text}</code>
           </td>
         </tr>
         <tr>
-          <td>Sample configuration id</td>
-          <HelpHoverable
-            content={"The unique identfier for the sampling configuration"}
-          />
+          <td>
+            Sample configuration id
+            <HelpHoverable
+              content={"The unique identfier for the sampling configuration"}
+            />
+          </td>
           <td>
             <code>{definition.experiment_id || "ID not available"}</code>
           </td>
         </tr>
         <tr>
-          <td>Start date</td>
-          <HelpHoverable
-            content={"Date sampling was started or 'enrolling' if still in uptake"}
-          />
+          <td>
+            Start date
+            <HelpHoverable
+              content={"Date sampling was started or 'enrolling' if still in uptake"}
+            />
+          </td>
           <td>
             <code>{definition.start_date || "Currently enrolling"}</code>
           </td>
         </tr>
         <tr>
-          <td>End date</td>
-          <HelpHoverable
-            content={"Date sampling ended, or 'active' if sampling is still live"}
-          />
+          <td>
+            End date
+            <HelpHoverable
+              content={"Date sampling ended, or 'active' if sampling is still live"}
+            />
+          </td>
           <td>
             <code>{definition.end_date || "Currently active"}</code>
           </td>
         </tr>
         <tr>
-          <td>Sample audience targeting</td>
-          <HelpHoverable content={"JEXL encoded custom audience targeting"} />
+          <td>
+            Sample audience targeting
+            <HelpHoverable content={"JEXL encoded custom audience targeting"} />
+          </td>
           <td>
             <code>{definition.targeting || "No custom targeting"}</code>
           </td>
         </tr>
         <tr>
-          <td>Sampling config link</td>
-          <HelpHoverable
-            content={"Link to the sampling configuration definition (NDA Only)"}
-          />
+          <td>
+            Sampling config link
+            <HelpHoverable
+              content={"Link to the sampling configuration definition (NDA Only)"}
+            />
+          </td>
           <td>
             <AuthenticatedLink href={definition.experimenter_link || ""}>
               <code>{definition.experimenter_link || "Link not available"}</code

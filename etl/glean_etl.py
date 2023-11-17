@@ -375,12 +375,27 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                         annotations_index, metric.definition["origin"], "metrics", metric.identifier
                     )
 
-                    metric_sample_info = (
-                        None
-                        if app_sampling_info is None
-                        else app_sampling_info.get(metric.identifier)
+                    metric_sample_info: dict | None = (
+                        dict(app_sampling_info.get(metric.identifier))
+                        if app_sampling_info is not None
+                        and app_sampling_info.get(metric.identifier) is not None
+                        else None
                     )
                     is_sampled = metric_sample_info is not None
+
+                    sampled_text = "Not sampled"
+                    if is_sampled:
+                        if metric_sample_info.get("release") is not None:
+                            sampled_text = (
+                                str(metric_sample_info.get("release")["sample_size"] * 100)
+                                + "% "
+                                + "on"
+                                if metric.definition["disabled"] is True
+                                else str(metric_sample_info.get("release")["sample_size"] * 100)
+                                + "% "
+                                + "off"
+                            )
+                            metric_sample_info["release"]["sampled_text"] = sampled_text
 
                     base_definition = _incorporate_annotation(
                         dict(
@@ -400,6 +415,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                                 metric.definition["expires"], app_name, product_details
                             ),
                             sampled=is_sampled,
+                            sampled_text=sampled_text,
                         ),
                         metric_annotation,
                     )
