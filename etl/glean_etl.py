@@ -137,9 +137,8 @@ def _get_app_variant_description(app):
     return description
 
 
-def _get_metric_sample_data() -> dict:
+def _get_metric_sample_data(experiment_data) -> dict:
     # get experiment metric sampling data to enrich metric definitions
-    experiment_data = requests.get(EXPERIMENT_DATA_URL).json()
     interesting_experiments = [
         experiment for experiment in experiment_data if "glean" in experiment["featureIds"]
     ]
@@ -155,7 +154,7 @@ def _get_metric_sample_data() -> dict:
         bucket_config = experiment["bucketConfig"]
         sample_size = bucket_config["count"] / bucket_config["total"]
         channel = experiment["channel"]
-        sampling_data[app_name] = {}
+        sampling_data[app_name] = sampling_data.get(app_name, {})
         for branch in experiment["branches"]:
             feature_configs = branch["features"]
             filtered_configs = [
@@ -168,8 +167,10 @@ def _get_metric_sample_data() -> dict:
             ]
             for entry in metric_config:
                 for key in entry:
-                    sampling_data[app_name][key] = {}
-                    sampling_data[app_name][key][channel] = {}
+                    sampling_data[app_name][key] = sampling_data[app_name].get(key, {})
+                    sampling_data[app_name][key][channel] = sampling_data[app_name][key].get(
+                        channel, {}
+                    )
                     sampling_data[app_name][key][channel]["sample_size"] = sample_size
                     sampling_data[app_name][key][channel]["experiment_id"] = experiment["slug"]
                     sampling_data[app_name][key][channel]["start_date"] = experiment["startDate"]
@@ -191,7 +192,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
     looker_namespaces = yaml.safe_load(requests.get(NAMESPACES_URL).text)
     product_details = requests.get(FIREFOX_PRODUCT_DETAIL_URL).json()
     latest_fx_release_version = list(product_details)[-1]
-    metrics_sampling_info = _get_metric_sample_data()
+    metrics_sampling_info = _get_metric_sample_data(requests.get(EXPERIMENT_DATA_URL).json())
 
     # Then, get the apps we're using
     apps = [app for app in GleanApp.get_apps()]
