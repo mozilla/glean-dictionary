@@ -172,6 +172,100 @@
     schema={METRIC_DEFINITION_SCHEMA}
   />
 
+  {#if !isEmpty(metric.sampling_info)}
+    <h2>
+      Metric sampling
+      <HelpHoverable
+        content={"Information about the sampling state and rate."}
+        link={"https://mozilla.github.io/glean/book/user/metrics/data-control-plane/index.html"}
+      />
+    </h2>
+    {#each Object.entries(metric.sampling_info) as [keyName, definition]}
+      <table>
+        <col />
+        <col />
+        <tr>
+          <td>
+            Channel
+            <HelpHoverable
+              content={"Indicates the delivery channel being sampled"}
+            />
+          </td>
+          <td>
+            <code>{keyName}</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Sample size
+            <HelpHoverable
+              content={"The percentage of the population being sampled"}
+            />
+          </td>
+          <td>
+            <code>{definition.sampled_text}</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Sample configuration id
+            <HelpHoverable
+              content={"The unique identfier for the sampling configuration"}
+            />
+          </td>
+          <td>
+            <code>{definition.experiment_id || "ID not available"}</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Start date
+            <HelpHoverable
+              content={"Date sampling was started or 'enrolling' if still in uptake"}
+            />
+          </td>
+          <td>
+            <code>{definition.start_date || "Currently enrolling"}</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            End date
+            <HelpHoverable
+              content={"Date sampling ended, or 'active' if sampling is still live"}
+            />
+          </td>
+          <td>
+            <code>{definition.end_date || "Currently active"}</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Sample audience targeting
+            <HelpHoverable content={"JEXL encoded custom audience targeting"} />
+          </td>
+          <td>
+            <code>{definition.targeting || "No custom targeting"}</code>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Sampling config link
+            <HelpHoverable
+              content={"Link to the sampling configuration definition (NDA Only)"}
+            />
+          </td>
+          <td>
+            <AuthenticatedLink href={definition.experimenter_link || ""}>
+              <code>{definition.experimenter_link || "Link not available"}</code
+              >
+            </AuthenticatedLink>
+          </td>
+        </tr>
+      </table>
+    {/each}
+  {/if}
+
   {#if metric.extra_keys && !isEmpty(metric.extra_keys)}
     <h2>
       Extra keys

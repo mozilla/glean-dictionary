@@ -27,6 +27,11 @@ FIREFOX_PRODUCT_DETAIL_URL = os.getenv(
     "FIREFOX_PRODUCT_DETAIL_URL",
     "https://product-details.mozilla.org/1.0/firefox_history_major_releases.json",
 )
+EXPERIMENT_DATA_URL = os.getenv(
+    "EXPERIMENT_DATA_URL",
+    "https://experimenter.services.mozilla.com/api/v6/experiments/",
+)
+EXPERIMENTER_URL_TEMPLATE = "https://experimenter.services.mozilla.com/nimbus/{}/summary"
 
 # Priority for getting metric data (use the later definitions of nightly over release)
 METRIC_CHANNEL_PRIORITY = {"nightly": 1, "beta": 2, "release": 3, "esr": 4}
@@ -132,6 +137,52 @@ def _get_app_variant_description(app):
     return description
 
 
+def _get_metric_sample_data(experiment_data) -> dict:
+    # get experiment metric sampling data to enrich metric definitions
+    interesting_experiments = [
+        experiment for experiment in experiment_data if "glean" in experiment["featureIds"]
+    ]
+    active_experiments = [
+        experiment
+        for experiment in interesting_experiments
+        if (experiment["startDate"] is not None or experiment["isEnrollmentPaused"] is False)
+        and experiment["endDate"] is None
+    ]
+    sampling_data = {}
+    for experiment in active_experiments:
+        app_name = experiment["appName"]
+        bucket_config = experiment["bucketConfig"]
+        sample_size = bucket_config["count"] / bucket_config["total"]
+        channel = experiment["channel"]
+        sampling_data[app_name] = sampling_data.get(app_name, {})
+        for branch in experiment["branches"]:
+            feature_configs = branch["features"]
+            filtered_configs = [
+                config for config in feature_configs if config["featureId"] == "glean"
+            ]
+            metric_config = [
+                config["value"]["gleanMetricConfiguration"]
+                for config in filtered_configs
+                if not config["value"].get("gleanMetricConfiguration") is None
+            ]
+            for entry in metric_config:
+                for key in entry:
+                    sampling_data[app_name][key] = sampling_data[app_name].get(key, {})
+                    sampling_data[app_name][key][channel] = sampling_data[app_name][key].get(
+                        channel, {}
+                    )
+                    sampling_data[app_name][key][channel]["sample_size"] = sample_size
+                    sampling_data[app_name][key][channel]["experiment_id"] = experiment["slug"]
+                    sampling_data[app_name][key][channel]["start_date"] = experiment["startDate"]
+                    sampling_data[app_name][key][channel]["end_date"] = experiment["endDate"]
+                    sampling_data[app_name][key][channel]["targeting"] = experiment["targeting"]
+                    sampling_data[app_name][key][channel][
+                        "experimenter_link"
+                    ] = EXPERIMENTER_URL_TEMPLATE.format(experiment["slug"])
+
+    return sampling_data
+
+
 def write_glean_metadata(output_dir, functions_dir, app_names=None):
     """
     Writes out the metadata for use by the dictionary
@@ -141,6 +192,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
     looker_namespaces = yaml.safe_load(requests.get(NAMESPACES_URL).text)
     product_details = requests.get(FIREFOX_PRODUCT_DETAIL_URL).json()
     latest_fx_release_version = list(product_details)[-1]
+    metrics_sampling_info = _get_metric_sample_data(requests.get(EXPERIMENT_DATA_URL).json())
 
     # Then, get the apps we're using
     apps = [app for app in GleanApp.get_apps()]
@@ -314,6 +366,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
 
             # metrics data
             metrics = app.get_metrics()
+            app_sampling_info = metrics_sampling_info.get(app_name)
             for metric in metrics:
                 if metric.identifier not in metric_identifiers_seen:
                     metric_identifiers_seen.add(metric.identifier)
@@ -322,6 +375,28 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                     metric_annotation = _get_annotation(
                         annotations_index, metric.definition["origin"], "metrics", metric.identifier
                     )
+
+                    metric_sample_info: dict | None = (
+                        dict(app_sampling_info.get(metric.identifier))
+                        if app_sampling_info is not None
+                        and app_sampling_info.get(metric.identifier) is not None
+                        else None
+                    )
+                    is_sampled = metric_sample_info is not None
+
+                    sampled_text = "Not sampled"
+                    if is_sampled:
+                        if metric_sample_info.get("release") is not None:
+                            sampled_text = (
+                                str(metric_sample_info.get("release")["sample_size"] * 100)
+                                + "% "
+                                + "on"
+                                if metric.definition["disabled"] is True
+                                else str(metric_sample_info.get("release")["sample_size"] * 100)
+                                + "% "
+                                + "off"
+                            )
+                            metric_sample_info["release"]["sampled_text"] = sampled_text
 
                     base_definition = _incorporate_annotation(
                         dict(
@@ -340,6 +415,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             expiry_text=get_expiry_text(
                                 metric.definition["expires"], app_name, product_details
                             ),
+                            sampled=is_sampled,
+                            sampled_text=sampled_text,
                         ),
                         metric_annotation,
                     )
@@ -371,6 +448,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                                 expiry_text=base_definition["expiry_text"],
                                 canonical_app_name=app.app["canonical_app_name"],
                                 app_tags=app_tags_for_app,
+                                sampling_info=metric_sample_info,
                             ),
                             metric_annotation,
                             full=True,

@@ -1,6 +1,7 @@
 import pytest
 
 from etl.glean import GleanMetric
+from etl.glean_etl import _get_metric_sample_data
 
 
 @pytest.fixture
@@ -81,3 +82,257 @@ def test_glean_metric(activeticks_metric_definition):
     assert metric.definition.get("metadata") == {"tags": ["Firefox :: General"]}
     # first seen should be the *earliest* revision
     assert metric.definition["date_first_seen"] == "2021-11-22 20:07:38"
+
+
+@pytest.fixture
+def sample_data_definition() -> dict:
+    return {
+        "experimentList": [
+            {
+                "schemaVersion": "1.12.0",
+                "slug": "pocket-newtab-spocs-cache-rollout-50",
+                "id": "pocket-newtab-spocs-cache-rollout-50",
+                "arguments": {},
+                "application": "firefox-desktop",
+                "appName": "firefox_desktop",
+                "appId": "firefox-desktop",
+                "channel": "release",
+                "userFacingName": "Pocket Newtab Spocs Cache Rollout 50",
+                "userFacingDescription": "A Pocket new tab cache duration change.",
+                "isEnrollmentPaused": False,
+                "isRollout": True,
+                "bucketConfig": {
+                    "randomizationUnit": "normandy_id",
+                    "namespace": "firefox-desktop-pocketNewtab-release-pocket_common-rollout-1",
+                    "start": 0,
+                    "count": 2500,
+                    "total": 10000,
+                },
+                "featureIds": ["pocketNewtab"],
+                "probeSets": [],
+                "outcomes": [{"slug": "pocket_newtab", "priority": "primary"}],
+                "branches": [
+                    {
+                        "slug": "rollout",
+                        "ratio": 1,
+                        "feature": {
+                            "featureId": "this-is-included-for-desktop-pre-95-support",
+                            "enabled": False,
+                            "value": {},
+                        },
+                        "features": [
+                            {
+                                "featureId": "pocketNewtab",
+                                "enabled": True,
+                                "value": {"spocsCacheTimeout": 15},
+                            }
+                        ],
+                    }
+                ],
+                "targeting": "",
+                "startDate": "2023-03-01",
+                "enrollmentEndDate": {},
+                "endDate": "2023-07-25",
+                "proposedDuration": 28,
+                "proposedEnrollment": 7,
+                "referenceBranch": "rollout",
+                "featureValidationOptOut": False,
+                "localizations": {},
+                "locales": ["en-GB", "en-CA", "en-US"],
+            },
+            {
+                "schemaVersion": "1.12.0",
+                "slug": "pocket-newtab-topics-widget",
+                "id": "pocket-newtab-topics-widget",
+                "arguments": {},
+                "application": "firefox-desktop",
+                "appName": "firefox_desktop",
+                "appId": "firefox-desktop",
+                "channel": "release",
+                "userFacingName": "Pocket Newtab Topics Widget",
+                "userFacingDescription": "A Pocket new tab visual change.",
+                "isEnrollmentPaused": True,
+                "isRollout": False,
+                "bucketConfig": {
+                    "randomizationUnit": "normandy_id",
+                    "namespace": "firefox-desktop-pocketNewtab-release-1",
+                    "start": 4000,
+                    "count": 200,
+                    "total": 10000,
+                },
+                "featureIds": ["pocketNewtab"],
+                "probeSets": [],
+                "outcomes": [{"slug": "pocket_newtab", "priority": "primary"}],
+                "branches": [
+                    {
+                        "slug": "control",
+                        "ratio": 1,
+                        "feature": {
+                            "featureId": "this-is-included-for-desktop-pre-95-support",
+                            "enabled": False,
+                            "value": {},
+                        },
+                        "features": [{"featureId": "pocketNewtab", "enabled": True, "value": {}}],
+                    },
+                    {
+                        "slug": "treatment-a",
+                        "ratio": 1,
+                        "feature": {
+                            "featureId": "this-is-included-for-desktop-pre-95-support",
+                            "enabled": False,
+                            "value": {},
+                        },
+                        "features": [
+                            {
+                                "featureId": "pocketNewtab",
+                                "enabled": True,
+                                "value": {"widgetPositions": "2"},
+                            }
+                        ],
+                    },
+                ],
+                "targeting": "",
+                "startDate": "2022-08-04",
+                "enrollmentEndDate": "2022-08-12",
+                "endDate": "2022-09-01",
+                "proposedDuration": 28,
+                "proposedEnrollment": 7,
+                "referenceBranch": "control",
+                "featureValidationOptOut": False,
+                "localizations": {},
+                "locales": ["en-GB", "en-CA", "en-US"],
+            },
+            {
+                "schemaVersion": "1.12.0",
+                "slug": "product-insight-telemetry-via-server-knobs-rollout-100",
+                "id": "product-insight-telemetry-via-server-knobs-rollout-100",
+                "arguments": {},
+                "application": "firefox-desktop",
+                "appName": "firefox_desktop",
+                "appId": "firefox-desktop",
+                "channel": "nightly",
+                "userFacingName": "Product Insight Telemetry via Server Knobs - Rollout - 100%",
+                "userFacingDescription": "Testing out the data and insights capture in the awesome bar.",  # noqa: E501
+                "isEnrollmentPaused": False,
+                "isRollout": True,
+                "bucketConfig": {
+                    "randomizationUnit": "normandy_id",
+                    "namespace": "firefox-desktop-glean-nightly-no_targeting-rollout-1",
+                    "start": 0,
+                    "count": 5000,
+                    "total": 10000,
+                },
+                "featureIds": ["glean"],
+                "probeSets": [],
+                "outcomes": [{"slug": "firefox_suggest", "priority": "primary"}],
+                "branches": [
+                    {
+                        "slug": "control-rollout",
+                        "ratio": 1,
+                        "feature": {
+                            "featureId": "this-is-included-for-desktop-pre-95-support",
+                            "enabled": False,
+                            "value": {},
+                        },
+                        "features": [
+                            {
+                                "featureId": "glean",
+                                "enabled": True,
+                                "value": {
+                                    "gleanMetricConfiguration": {
+                                        "urlbar.abandonment": True,
+                                        "urlbar.engagement": True,
+                                        "urlbar.impression": True,
+                                    }
+                                },
+                            }
+                        ],
+                    }
+                ],
+                "targeting": "",
+                "startDate": "2023-05-03",
+                "enrollmentEndDate": {},
+                "endDate": None,
+                "proposedDuration": 28,
+                "proposedEnrollment": 28,
+                "referenceBranch": "control-rollout",
+                "featureValidationOptOut": False,
+                "localizations": {},
+                "locales": ["en-US"],
+            },
+            {
+                "schemaVersion": "1.12.0",
+                "slug": "product-insight-telemetry-via-server-knobs-rollout-release",
+                "id": "product-insight-telemetry-via-server-knobs-rollout-release",
+                "arguments": {},
+                "application": "firefox-desktop",
+                "appName": "firefox_desktop",
+                "appId": "firefox-desktop",
+                "channel": "release",
+                "userFacingName": "Product Insight Telemetry via Server Knobs - Rollout - Release",
+                "userFacingDescription": "Testing out the data and insights capture in the awesome bar.",  # noqa: E501
+                "isEnrollmentPaused": False,
+                "isRollout": True,
+                "bucketConfig": {
+                    "randomizationUnit": "normandy_id",
+                    "namespace": "firefox-desktop-glean-release-no_targeting-rollout-1",
+                    "start": 0,
+                    "count": 10000,
+                    "total": 10000,
+                },
+                "featureIds": ["glean"],
+                "probeSets": [],
+                "outcomes": [{"slug": "firefox_suggest", "priority": "primary"}],
+                "branches": [
+                    {
+                        "slug": "control-rollout",
+                        "ratio": 1,
+                        "feature": {
+                            "featureId": "this-is-included-for-desktop-pre-95-support",
+                            "enabled": False,
+                            "value": {},
+                        },
+                        "features": [
+                            {
+                                "featureId": "glean",
+                                "enabled": True,
+                                "value": {
+                                    "gleanMetricConfiguration": {
+                                        "urlbar.abandonment": True,
+                                        "urlbar.engagement": True,
+                                        "urlbar.impression": True,
+                                    }
+                                },
+                            }
+                        ],
+                    }
+                ],
+                "targeting": "",
+                "startDate": "2023-06-06",
+                "enrollmentEndDate": {},
+                "endDate": None,
+                "proposedDuration": 28,
+                "proposedEnrollment": 28,
+                "referenceBranch": "control-rollout",
+                "featureValidationOptOut": False,
+                "localizations": {},
+                "locales": ["en-US"],
+            },
+        ]
+    }
+
+
+def test_metric_sampling(sample_data_definition: dict):
+    sampling_data: dict = _get_metric_sample_data(sample_data_definition.get("experimentList"))
+
+    print("Sampling data:" + str(sampling_data))
+
+    test_data: dict = sampling_data.get("firefox_desktop")
+    expected_metric: dict = test_data.get("urlbar.abandonment")
+    nightly_channel: dict = expected_metric.get("nightly")
+    release_channel: dict = expected_metric.get("release")
+
+    assert nightly_channel is not None
+    assert release_channel is not None
+    assert nightly_channel.get("sample_size") == 0.5
+    assert release_channel.get("sample_size") == 1

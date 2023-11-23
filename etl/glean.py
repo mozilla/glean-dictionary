@@ -47,6 +47,7 @@ class GleanObject(object):
     ORIGIN_KEY = "origin"
     HISTORY_KEY = "history"
     IN_SOURCE_KEY = "in-source"
+    SAMPLING_INFO_KEY = "sampling_info"
 
 
 class GleanMetric(GleanObject):
@@ -91,6 +92,7 @@ class GleanMetric(GleanObject):
         self.definition["name"] = full_defn[self.NAME_KEY]
         self.definition["origin"] = full_defn[self.ORIGIN_KEY]
         self.definition["in_source"] = full_defn[self.IN_SOURCE_KEY]
+        self.definition["sampling_info"] = full_defn.get(self.SAMPLING_INFO_KEY)
 
         # first seen is the earliest date in the history
         self.definition["date_first_seen"] = self.definition_history[-1]["dates"]["first"]
