@@ -384,19 +384,19 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                     )
                     is_sampled = metric_sample_info is not None
 
-                    sampled_text = "Not sampled"
                     if is_sampled:
-                        if metric_sample_info.get("release") is not None:
+                        for channel in metric_sample_info:
+                            sampled_text = "Not sampled"
                             sampled_text = (
-                                str(metric_sample_info.get("release")["sample_size"] * 100)
+                                str(metric_sample_info.get(channel)["sample_size"] * 100)
                                 + "% "
                                 + "on"
                                 if metric.definition["disabled"] is True
-                                else str(metric_sample_info.get("release")["sample_size"] * 100)
+                                else str(metric_sample_info.get(channel)["sample_size"] * 100)
                                 + "% "
                                 + "off"
                             )
-                            metric_sample_info["release"]["sampled_text"] = sampled_text
+                            metric_sample_info.get(channel)["sampled_text"] = sampled_text
 
                     base_definition = _incorporate_annotation(
                         dict(
@@ -416,7 +416,9 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                                 metric.definition["expires"], app_name, product_details
                             ),
                             sampled=is_sampled,
-                            sampled_text=sampled_text,
+                            sampled_text=(metric_sample_info.get("release")["sampled_text"])
+                            if metric_sample_info is not None
+                            else "Not sampled",
                         ),
                         metric_annotation,
                     )
