@@ -1,8 +1,0 @@
-.circleci
-public/build/bundle.js
-public/build/bundle.css
-public/data/*
-storybook-static/*
-venv
-src/telemetry/ga.js
-src/telemetry/generated/*

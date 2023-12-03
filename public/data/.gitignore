@@ -1,9 +1,0 @@
-apps.json
-**/index.json
-**/app_ids/*.json
-**/pings/*.json
-**/tables/**/*.json
-**/metrics/*.json
-# Ignore app logos
-**/*.svg
-**/*.png
