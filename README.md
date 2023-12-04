@@ -40,7 +40,7 @@ npm run dev
 ```
 
 If that worked, you should be able to see a local version of Glean at
-http://localhost:5000
+http://localhost:5555
 
 You can speed up the "build data" step by appending the name of a set of
 application(s) you want to build metadata for. This can speed up the process
