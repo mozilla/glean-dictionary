@@ -386,7 +386,6 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
 
                     if is_sampled:
                         for channel in metric_sample_info:
-                            sampled_text = "Not sampled"
                             sampled_text = (
                                 str(metric_sample_info.get(channel)["sample_size"] * 100)
                                 + "% "
