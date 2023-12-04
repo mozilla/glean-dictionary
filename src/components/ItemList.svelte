@@ -9,6 +9,7 @@
   import FilterInput from "./FilterInput.svelte";
   import Markdown from "./Markdown.svelte";
   import Label from "./Label.svelte";
+  import HelpHoverable from "./HelpHoverable.svelte";
 
   import { filterUncollectedItems } from "../state/filter";
   import { isExpired, isRemoved } from "../state/items";
@@ -38,6 +39,7 @@
   let pagedItems;
   let paginated = true;
   let showAppMetricsOnly = false;
+  let showSampled;
   let search;
   let showUncollected;
   let topElement;
@@ -79,6 +81,7 @@
 
   $: {
     showUncollected = $pageState.showUncollected;
+    showSampled = $pageState.showSampled || false;
     search = $pageState.search || "";
   }
 
@@ -99,6 +102,10 @@
     filteredItems = showUncollected
       ? filteredItems
       : filterUncollectedItems(filteredItems);
+
+    filteredItems = showSampled
+      ? filteredItems.filter((item) => item.sampled)
+      : filteredItems;
 
     // update pagination
     const currentPage = $pageState.page || 1;
@@ -132,6 +139,17 @@
       <label>
         <input type="checkbox" bind:checked={showAppMetricsOnly} />
         Only show app metrics
+      </label>
+      <label>
+        <input
+          title="Show the base rate of currently sampled metrics"
+          type="checkbox"
+          bind:checked={showSampled}
+          on:change={() => {
+            updateURLState({ showSampled: !showSampled });
+          }}
+        />
+        Show sampled metrics
       </label>
       <label>
         <input
@@ -187,8 +205,10 @@
         {#if itemType === "metrics"}
           <col width="10%" />
           <col width="10%" />
-          <col width="10%" />
-          <col width="35%" />
+          {#if showSampled}
+            <col width="10%" />
+          {/if}
+          <col width={showSampled ? "35%" : "45%"} />
         {:else if itemType === "tags"}
           <col width="20%" />
           <col width="45%" />
@@ -201,7 +221,11 @@
             {#if itemType === "metrics"}
               <th scope="col" style="text-align: center;">Type</th>
               <th scope="col" style="text-align: center;">Expiration</th>
-              <th scope="col" style="text-align: center;">Sampled</th>
+              {#if showSampled}
+                <span>
+                  <th scope="col" style="text-align: center;">Sampling Rate</th>
+                </span>
+              {/if}
             {:else if itemType === "tags"}
               <th scope="col" style="text-align: center;">Metric Count</th>
             {/if}
@@ -294,11 +318,18 @@
                     />
                   </div>
                 </td>
-                <td style="text-align: center;">
-                  <div class="item-property">
-                    <Markdown text={item.sampled_text} />
-                  </div>
-                </td>
+                {#if showSampled}
+                  <td style="text-align: center;">
+                    <div class="item-property">
+                      <Markdown text={item.sampled_text} />
+                      <HelpHoverable
+                        placement="left"
+                        content={"Information about the sampling state and rate."}
+                        link={"https://mozilla.github.io/glean/book/user/metrics/data-control-plane/index.html"}
+                      />
+                    </div>
+                  </td>
+                {/if}
               {:else if itemType === "tags"}
                 <td style="text-align: center;">
                   <div class="item-property">
