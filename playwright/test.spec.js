@@ -1,12 +1,12 @@
 const { test, expect } = require("@playwright/test");
 
 test("first playwright test", async ({ page }) => {
-  await page.goto("http://localhost:5000");
+  await page.goto("http://localhost:5555");
   await expect(page).toHaveTitle(/Glean Dictionary/);
 });
 
 test("metrics ping page", async ({ page }) => {
-  await page.goto("http://localhost:5000/apps/fenix/pings/metrics");
+  await page.goto("http://localhost:5555/apps/fenix/pings/metrics");
   await expect(page).toHaveTitle("metrics | Firefox for Android");
 
   // we expect a selector starting with our looker URL, directing to an explore
@@ -18,7 +18,7 @@ test("metrics ping page", async ({ page }) => {
 
 test("activation id metric page", async ({ page }) => {
   await page.goto(
-    "http://localhost:5000/apps/fenix/metrics/activation_activation_id"
+    "http://localhost:5555/apps/fenix/metrics/activation_activation_id"
   );
   await expect(page).toHaveTitle(
     "activation.activation_id | Firefox for Android"
@@ -32,13 +32,13 @@ test("activation id metric page", async ({ page }) => {
 });
 
 test("org.mozilla.fenix app id page", async ({ page }) => {
-  await page.goto("http://localhost:5000/apps/fenix/app_ids/org_mozilla_fenix");
+  await page.goto("http://localhost:5555/apps/fenix/app_ids/org_mozilla_fenix");
   await expect(page).toHaveTitle("org.mozilla.fenix | Firefox for Android");
 });
 
 test("activation table page", async ({ page }) => {
   await page.goto(
-    "http://localhost:5000/apps/fenix/app_ids/org_mozilla_fenix/tables/activation"
+    "http://localhost:5555/apps/fenix/app_ids/org_mozilla_fenix/tables/activation"
   );
   await expect(page).toHaveTitle(
     "org_mozilla_fenix.activation | org.mozilla.fenix | Firefox for Android"
