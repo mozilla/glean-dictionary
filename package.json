@@ -35,7 +35,7 @@
     "@storybook/addon-storyshots": "7.5.3",
     "@storybook/addon-storysource": "7.5.3",
     "@storybook/cli": "7.6.3",
-    "@storybook/svelte": "7.5.3",
+    "@storybook/svelte": "7.6.3",
     "@storybook/svelte-webpack5": "^7.5.3",
     "@testing-library/svelte": "^4.0.5",
     "autoprefixer": "^10.4.16",
