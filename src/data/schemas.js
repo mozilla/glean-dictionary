@@ -35,7 +35,7 @@ export const APPLICATION_DEFINITION_SCHEMA = [
     linkFormatter: getEmailLink,
   },
   {
-    title: "Rentention Period",
+    title: "Retention Period",
     id: "retention_days",
     displayNull: true,
     type: "value",
@@ -225,6 +225,7 @@ export const PING_SCHEMA = [
   {
     title: "Includes Client Identifier",
     id: "include_client_id",
+    type: "boolean",
     helpText: "Whether this ping includes the client_id field.",
     valueFormatter: (v) => (v ? "Yes" : "No"),
   },

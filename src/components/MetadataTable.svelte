@@ -16,7 +16,7 @@
   <col />
   <col />
   {#each schema as schemaEntry}
-    {#if !isUndefined(item[schemaEntry.id]) && ((!isNull(item[schemaEntry.id]) && !isEmpty(item[schemaEntry.id])) || schemaEntry.displayNull)}
+    {#if (!isUndefined(item[schemaEntry.id]) && ((!isNull(item[schemaEntry.id]) && !isEmpty(item[schemaEntry.id])) || schemaEntry.displayNull)) || schemaEntry.type === "boolean"}
       <tr>
         <td>
           {schemaEntry.title}
