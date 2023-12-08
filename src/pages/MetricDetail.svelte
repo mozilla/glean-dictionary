@@ -172,14 +172,14 @@
     schema={METRIC_DEFINITION_SCHEMA}
   />
 
+  <h2>
+    Metric sampling
+    <HelpHoverable
+      content={"Information about the sampling state and rate."}
+      link={"https://mozilla.github.io/glean/book/user/metrics/data-control-plane/index.html"}
+    />
+  </h2>
   {#if !isEmpty(metric.sampling_info)}
-    <h2>
-      Metric sampling
-      <HelpHoverable
-        content={"Information about the sampling state and rate."}
-        link={"https://mozilla.github.io/glean/book/user/metrics/data-control-plane/index.html"}
-      />
-    </h2>
     {#each Object.entries(metric.sampling_info) as [keyName, definition]}
       <table>
         <col />
@@ -264,7 +264,33 @@
         </tr>
       </table>
     {/each}
+  {:else}
+    <table>
+      <col />
+      <col />
+      <tr>
+        <td> Not Sampled </td>
+        <td>
+          This metric is not currently affected by any sampling configuration
+          and is operating based on its defaults in the metrics.yaml file
+        </td>
+      </tr>
+    </table>
   {/if}
+  <table>
+    <col />
+    <col />
+    <tr>
+      <td> Sampling Configuration Snippet </td>
+      <td>
+        Click the link to copy a configuration snippet for this metric to the
+        clipboard
+        <CopyButton
+          textToCopy="{'{\n  "gleanMetricConfiguration": {\n    "'}{metric.name}{'": true\n  }\n}'}"
+        />
+      </td>
+    </tr>
+  </table>
 
   {#if metric.extra_keys && !isEmpty(metric.extra_keys)}
     <h2>
