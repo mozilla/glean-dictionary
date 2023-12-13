@@ -288,7 +288,7 @@
           >configuration snippet</a
         >
         for this metric to the clipboard. This would be used in the branch configuration
-        of an <a href="https://experimenter.info">Mozilla Experimenter</a>
+        of a <a href="https://experimenter.info">Mozilla Experimenter</a>
         experiment or rollout.
         <CopyButton
           textToCopy="{'{\n  "gleanMetricConfiguration": {\n    "'}{metric.name}{'": true\n  }\n}'}"
