@@ -280,16 +280,24 @@
   <table>
     <col />
     <col />
+    <col />
     <tr>
-      <td> Sampling Configuration Snippet </td>
       <td>
-        Click the link to copy a <a
+        Sampling Configuration Snippet
+        <HelpHoverable
+          content={"Click the button to copy a configuration snippet for use in Mozilla Experimenter configuration"}
+          link={"https://mozilla.github.io/glean/book/user/metrics/data-control-plane/experimenter-configuration.html"}
+        />
+      </td>
+      <td>
+        Click the button to copy a snippet for use in a
+        <a
           href="https://mozilla.github.io/glean/book/user/metrics/data-control-plane/experimenter-configuration.html"
-          >configuration snippet</a
         >
-        for this metric to the clipboard. This would be used in the branch configuration
-        of a <a href="https://experimenter.info">Mozilla Experimenter</a>
-        experiment or rollout.
+          Mozilla Experimenter configuration.
+        </a>
+      </td>
+      <td>
         <CopyButton
           textToCopy="{'{\n  "gleanMetricConfiguration": {\n    "'}{metric.name}{'": true\n  }\n}'}"
         />
