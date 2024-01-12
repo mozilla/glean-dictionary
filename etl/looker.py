@@ -276,7 +276,7 @@ def get_looker_monitoring_metadata_for_event(app, app_group, metric, ping_name):
     (_, metric_name) = get_event_name_and_category(metric.identifier)
 
     url = furl(EVENT_MONITORING_DASHBOARD_URL).add(
-        {"App Name": app.app["canonical_app_name"], "Event Name": metric_name}
+        {"App Name": app.app["canonical_app_name"], "Event Name": '"' + metric_name + '"'}
     )
 
     app_channel = app.app.get("app_channel")
