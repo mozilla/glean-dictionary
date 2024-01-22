@@ -13,6 +13,15 @@
         start ? `start="${start}"` : ""
       } class="mzp-u-list-styled">${body}</${outerEl}>`;
     },
+    heading(text, level, raw) {
+      const id = raw
+        .toLowerCase()
+        .trim()
+        .replace(/<[!/a-z].*?>/gi, "")
+        .replace(/ +/g, "-");
+
+      return `<h${level} class="annotation-header-link" id="${id}"><a href="#${id}">${text}</a></h${level}>\n`;
+    },
   };
   use({ renderer });
 
