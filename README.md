@@ -157,6 +157,9 @@ GLEAN_DEBUG_VIEW_TAG=my-tag npm run dev
 
 ## Deployment
 
+A version of the Glean Dictionary running the development branch (`main`) is
+accessible at https://glean-dictionary-dev.netlify.app/ .
+
 The production version of the Glean Dictionary
 (https://dictionary.telemetry.mozilla.org) is deployed from the `production`
 branch on this repository, which usually corresponds to the latest GitHub
@@ -165,16 +168,25 @@ procedure:
 
 - Do a quick test of https://glean-dictionary-dev.netlify.app to make sure it's
   working as expected.
-- Create a new release, typically off of the `main` branch (use the
-  [auto-generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes),
-  omitting dependency updates).
-- From a local checkout, update the `production` branch to be in sync with the
-  tag you just created, then push to the production branch. After the
-  integration tests pass, dictionary.telemetry.mozilla.org should be
-  automatically updated to the latest version.
-
-A version of the Glean Dictionary running the development branch (`main`) is
-accessible at https://glean-dictionary-dev.netlify.app/
+- Create a new release off of the `main` branch:
+  - use the
+    [auto-generated release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes),
+    omitting dependency updates, unless it's `glean.js`;
+  - use the format `vX.Y.Z` for the tag, where `X.Y.Z` is the new version
+    number.
+- From a local checkout (assuming `origin` is the name of the remote):
+  - fetch the newly created tags, `git fetch --tags origin`;
+  - switch to the `production`, `git checkout production`;
+  - make it in sync with the tag you just created, `git merge tags/vX.Y.Z`
+    (where `X.Y.Z` is the new version number).
+  - push to the production branch, `git push origin production`.
+- Wait for the integration tests to pass by monitoring
+  [CircleCi](https://app.circleci.com/pipelines/github/mozilla/glean-dictionary?branch=production).
+- Ensure that https://dictionary.telemetry.mozilla.org is automatically updated
+  to the released version by checking that `<HASH>` in
+  `Built from revision: <HASH>` at the bottom of the Glean Dictionary page
+  matches the one reported at the top right of the release page
+  `https://github.com/mozilla/glean-dictionary/releases/tag/vX.Y.Z`.
 
 ## Contributing
 
