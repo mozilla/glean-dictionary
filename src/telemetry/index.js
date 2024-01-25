@@ -43,17 +43,6 @@ export function initializeTelemetry() {
   });
 
   /* eslint-disable no-undef, no-constant-condition */
-
-  // GLEAN_LOG_PINGS is a boolean value,
-  // thus it should not have quotes around it.
-  if (GLEAN_LOG_PINGS === true) {
-    Glean.setLogPings(true);
-  }
-
-  if ("GLEAN_DEBUG_VIEW_TAG") {
-    Glean.setDebugViewTag("GLEAN_DEBUG_VIEW_TAG");
-  }
-
   if ("GLEAN_SOURCE_TAGS") {
     // GLEAN_SOURCE_TAGS is supposed to be a comma separated string of tags
     const sourceTags = "GLEAN_SOURCE_TAGS".split(",").map((tag) => tag.trim());
