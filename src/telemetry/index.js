@@ -39,6 +39,7 @@ export function initializeTelemetry() {
   Glean.initialize("__GLEAN_APPLICATION_ID__", !isDNTEnabled, {
     appBuild: "__VERSION__",
     appDisplayVersion: "__DISPLAY_VERSION__",
+    enableAutoPageLoadEvents: true,
   });
 
   /* eslint-disable no-undef, no-constant-condition */
