@@ -1,8 +1,10 @@
 // ESlint does not support subpath exports, which are used by Glean.
 // https://github.com/import-js/eslint-plugin-import/issues/1868
 //
-// eslint-disable-next-line import/no-unresolved
+/* eslint-disable import/no-unresolved */
 import Glean from "@mozilla/glean/web";
+import GleanMetrics from "@mozilla/glean/metrics";
+/* eslint-enable import/no-unresolved */
 
 import { googleAnalytics } from "./ga";
 
@@ -42,17 +44,6 @@ export function initializeTelemetry() {
   });
 
   /* eslint-disable no-undef, no-constant-condition */
-
-  // GLEAN_LOG_PINGS is a boolean value,
-  // thus it should not have quotes around it.
-  if (GLEAN_LOG_PINGS === true) {
-    Glean.setLogPings(true);
-  }
-
-  if ("GLEAN_DEBUG_VIEW_TAG") {
-    Glean.setDebugViewTag("GLEAN_DEBUG_VIEW_TAG");
-  }
-
   if ("GLEAN_SOURCE_TAGS") {
     // GLEAN_SOURCE_TAGS is supposed to be a comma separated string of tags
     const sourceTags = "GLEAN_SOURCE_TAGS".split(",").map((tag) => tag.trim());
@@ -73,6 +64,9 @@ export function submitPageViewTelemetry(path) {
     ga("set", "page", path);
     ga("send", "pageview");
   }
+
+  // Use the standard events.
+  GleanMetrics.pageLoad({ url: path });
 
   // Send telemetry to Glean.
   pageMetrics.loaded.set();
