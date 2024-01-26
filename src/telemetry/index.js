@@ -1,8 +1,10 @@
 // ESlint does not support subpath exports, which are used by Glean.
 // https://github.com/import-js/eslint-plugin-import/issues/1868
 //
-// eslint-disable-next-line import/no-unresolved
+/* eslint-disable import/no-unresolved */
 import Glean from "@mozilla/glean/web";
+import GleanMetrics from "@mozilla/glean/metrics";
+/* eslint-enable import/no-unresolved */
 
 import { googleAnalytics } from "./ga";
 
@@ -39,7 +41,6 @@ export function initializeTelemetry() {
   Glean.initialize("__GLEAN_APPLICATION_ID__", !isDNTEnabled, {
     appBuild: "__VERSION__",
     appDisplayVersion: "__DISPLAY_VERSION__",
-    enableAutoPageLoadEvents: true,
   });
 
   /* eslint-disable no-undef, no-constant-condition */
@@ -63,6 +64,9 @@ export function submitPageViewTelemetry(path) {
     ga("set", "page", path);
     ga("send", "pageview");
   }
+
+  // Use the standard events.
+  GleanMetrics.pageLoad({ url: path });
 
   // Send telemetry to Glean.
   pageMetrics.loaded.set();
