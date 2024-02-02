@@ -67,11 +67,11 @@ export function initializeTelemetry() {
  * @param {string} path The current page path.
  */
 export function submitPageViewTelemetry(path) {
-  // Send telemetry to Google Analytics.
-  if (window.ga) {
-    // `ga` will not be set if not using google analytics
-    ga("set", "page", path);
-    ga("send", "pageview");
+  // Send page view event to GA4.
+  if (window.gtag) {
+    window.gtag("event", "page_view", {
+      page_path: path,
+    });
   }
 
   // Send telemetry to Glean.
