@@ -33,7 +33,7 @@
     "@storybook/addon-controls": "7.6.13",
     "@storybook/addon-docs": "7.6.13",
     "@storybook/addon-storyshots": "7.6.13",
-    "@storybook/addon-storysource": "7.5.3",
+    "@storybook/addon-storysource": "7.6.13",
     "@storybook/cli": "7.6.13",
     "@storybook/svelte": "7.6.12",
     "@storybook/svelte-webpack5": "^7.6.13",
