@@ -33,5 +33,26 @@
 {#if inline}
   {@html parseInline(text)}
 {:else}
-  {@html parse(text)}
+  <div>
+    {@html parse(text)}
+  </div>
 {/if}
+
+<style lang="scss">
+  div :global(h1 a),
+  div :global(h2 a),
+  div :global(h3 a),
+  div :global(h4 a),
+  div :global(h5 a) {
+    color: black;
+    text-decoration: none;
+  }
+
+  div :global(h1 a:hover),
+  div :global(h2 a:hover),
+  div :global(h3 a:hover),
+  div :global(h4 a:hover),
+  div :global(h5 a:hover) {
+    text-decoration: underline;
+  }
+</style>
