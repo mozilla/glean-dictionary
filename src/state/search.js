@@ -27,7 +27,7 @@ export const fullTextSearch = (query, searchItems) => {
   let unlabeledsearchTerms = [];
 
   const searchTerms = query.match(/(?:(?:tags:)?".+")|"?[^ ]+"?/g);
-  const labels = { tags: [], origin: [], type: [], expires: [] };
+  const labels = { tags: [], origin: [], type: [], expires: [], name: [] };
   const searchIndex = generateSearchIndex(searchItems);
 
   searchTerms.forEach((term) => {
@@ -35,7 +35,8 @@ export const fullTextSearch = (query, searchItems) => {
       term.startsWith("tags:") ||
       term.startsWith("origin:") ||
       term.startsWith("type:") ||
-      term.startsWith("expires:")
+      term.startsWith("expires:") ||
+      term.startsWith("name:")
     ) {
       const splitter = term.indexOf(":");
       const labelType = term.slice(0, splitter);
@@ -54,6 +55,12 @@ export const fullTextSearch = (query, searchItems) => {
     itemsFilteredByLabels = filterItemsByExpiration(
       itemsFilteredByLabels,
       labels.expires[0]
+    );
+  }
+
+  if (labels.name.length) {
+    itemsFilteredByLabels = itemsFilteredByLabels.filter((item) =>
+      item.name.includes(labels.name[0])
     );
   }
 

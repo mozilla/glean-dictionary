@@ -172,7 +172,7 @@
   {#if showFilter}
     <FilterInput
       tooltipped={true}
-      placeHolder="To search by metric type, tag, origin, or expiration date: use [type:], [tags:], [origin:], [expires:<number of months/versions from now>]. Example: `type:event addons`, `tags:Sync account`, `expires:6`, `expires:never`"
+      placeHolder="To search by metric name, type, tag, origin, or expiration date: use [name:], [type:], [tags:], [origin:], [expires:<number of months/versions from now>]. Example: `type:event addons`, `tags:Sync account`, `expires:6`, `expires:never`"
     />
   {/if}
   {#if !filteredItems.length}
