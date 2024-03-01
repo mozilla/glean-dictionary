@@ -21,7 +21,7 @@
     "test:playwright": "npx playwright test"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.9",
+    "@babel/core": "^7.24.0",
     "@babel/plugin-transform-runtime": "7.23.9",
     "@babel/preset-env": "^7.23.9",
     "@mozilla-protocol/core": "^17.0.1",
