@@ -176,9 +176,9 @@ def _get_metric_sample_data(experiment_data) -> dict:
                     sampling_data[app_name][key][channel]["start_date"] = experiment["startDate"]
                     sampling_data[app_name][key][channel]["end_date"] = experiment["endDate"]
                     sampling_data[app_name][key][channel]["targeting"] = experiment["targeting"]
-                    sampling_data[app_name][key][channel][
-                        "experimenter_link"
-                    ] = EXPERIMENTER_URL_TEMPLATE.format(experiment["slug"])
+                    sampling_data[app_name][key][channel]["experimenter_link"] = (
+                        EXPERIMENTER_URL_TEMPLATE.format(experiment["slug"])
+                    )
 
     return sampling_data
 
