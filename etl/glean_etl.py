@@ -163,7 +163,7 @@ def _get_metric_sample_data(experiment_data) -> dict:
             metric_config = [
                 config["value"]["gleanMetricConfiguration"]
                 for config in filtered_configs
-                if not config["value"].get("gleanMetricConfiguration") is None
+                if config["value"].get("gleanMetricConfiguration") is not None
             ]
             for entry in metric_config:
                 for key in entry:
