@@ -84,8 +84,9 @@
             class="mzp-c-card-block-link"
             href="/apps/{app.app_name}"
             id="media-block"
+            data-glean-label="Applist: {app.app_name}"
           >
-            <div class="mzp-c-card-media-wrapper" id="media-wrapper">
+            <div class="mzp-c-card-media-wrapper" id="media-wrapper" style="pointer-events:none">
               <img
                 class="mzp-c-card-imgage"
                 src={app.logo || "/img/app-logos/mozilla.png"}
@@ -101,7 +102,7 @@
                 />
               {/if}
             </div>
-            <div class="mzp-c-card-content">
+            <div class="mzp-c-card-content" style="pointer-events:none">
               <h2 class="mzp-c-card-title">{app.canonical_app_name}</h2>
               {#if app.deprecated}
                 <Label text="deprecated" />
