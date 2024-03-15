@@ -84,8 +84,17 @@
             class="mzp-c-card-block-link"
             href="/apps/{app.app_name}"
             id="media-block"
+            data-glean-label="Home page: {app.app_name}"
           >
-            <div class="mzp-c-card-media-wrapper" id="media-wrapper">
+            <div
+              class="mzp-c-card-media-wrapper"
+              id="media-wrapper"
+              style="pointer-events:none"
+            >
+              <!-- Setting style attribute is required above to allow capturing clicks on all nested elements
+                via Glean. Once https://bugzilla.mozilla.org/show_bug.cgi?id=1885504 is fixed it can be removed
+                from div tag above.
+              -->
               <img
                 class="mzp-c-card-imgage"
                 src={app.logo || "/img/app-logos/mozilla.png"}
@@ -101,7 +110,11 @@
                 />
               {/if}
             </div>
-            <div class="mzp-c-card-content">
+            <div class="mzp-c-card-content" style="pointer-events:none">
+              <!-- Setting style attribute is required above to allow capturing clicks on all nested elements
+                via Glean. Once https://bugzilla.mozilla.org/show_bug.cgi?id=1885504 is fixed it can be removed
+                from div tag above.
+              -->
               <h2 class="mzp-c-card-title">{app.canonical_app_name}</h2>
               {#if app.deprecated}
                 <Label text="deprecated" />
