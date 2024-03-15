@@ -84,7 +84,7 @@
             class="mzp-c-card-block-link"
             href="/apps/{app.app_name}"
             id="media-block"
-            data-glean-label="Applist: {app.app_name}"
+            data-glean-label="Home page: {app.app_name}"
           >
             <div class="mzp-c-card-media-wrapper" id="media-wrapper" style="pointer-events:none">
               <img
