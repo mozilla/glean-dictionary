@@ -86,7 +86,11 @@
             id="media-block"
             data-glean-label="Home page: {app.app_name}"
           >
-            <div class="mzp-c-card-media-wrapper" id="media-wrapper" style="pointer-events:none">
+            <div
+              class="mzp-c-card-media-wrapper"
+              id="media-wrapper"
+              style="pointer-events:none"
+            >
               <img
                 class="mzp-c-card-imgage"
                 src={app.logo || "/img/app-logos/mozilla.png"}
