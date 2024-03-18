@@ -89,7 +89,6 @@
             <div
               class="mzp-c-card-media-wrapper"
               id="media-wrapper"
-              style="pointer-events:none"
             >
               <!-- Setting style attribute is required above to allow capturing clicks on all nested elements
                 via Glean. Once https://bugzilla.mozilla.org/show_bug.cgi?id=1885504 is fixed it can be removed
@@ -110,7 +109,7 @@
                 />
               {/if}
             </div>
-            <div class="mzp-c-card-content" style="pointer-events:none">
+            <div class="mzp-c-card-content">
               <!-- Setting style attribute is required above to allow capturing clicks on all nested elements
                 via Glean. Once https://bugzilla.mozilla.org/show_bug.cgi?id=1885504 is fixed it can be removed
                 from div tag above.
