@@ -8,6 +8,10 @@ import GleanMetrics from "@mozilla/glean/metrics";
 
 import { googleAnalytics } from "./ga";
 
+// Glean generated metrics and pings files
+import * as pageMetrics from "./generated/page";
+import { pageView as pageViewPing } from "./generated/pings";
+
 // detecting "do not track" via these instructions:
 // https://dev.to/corbindavenport/how-to-correctly-check-for-do-not-track-with-javascript-135d
 const isDNTEnabled =
@@ -62,6 +66,12 @@ export function submitPageViewTelemetry(path) {
     });
   }
 
-  // Use the Glean's standard page load event.
+  // Use the standard events.
   GleanMetrics.pageLoad({ url: path });
+
+  // Send telemetry to Glean.
+  pageMetrics.loaded.set();
+  // Remove query params and trailing `/` characters.
+  pageMetrics.path.set(path.split("?")[0].replace(/\/$/, ""));
+  pageViewPing.submit();
 }

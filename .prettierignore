@@ -5,3 +5,4 @@ public/data/*
 storybook-static/*
 venv
 src/telemetry/ga.js
+src/telemetry/generated/*

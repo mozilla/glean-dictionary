@@ -6,15 +6,17 @@
     "npm": ">=8.0.0"
   },
   "scripts": {
-    "build": "rollup --config",
+    "build": "npm run build-glean && rollup --config",
     "build-storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider storybook build --static-dir ./public --config-dir .storybook",
-    "dev": "rollup --config --watch",
+    "build-glean": "cross-env VIRTUAL_ENV=venv glean translate src/telemetry/metrics.yaml src/telemetry/pings.yaml -f javascript -o src/telemetry/generated",
+    "dev": "npm run build-glean && rollup --config --watch",
     "format": "prettier --plugin-search-dir=. --write .",
     "format:check": "prettier --plugin-search-dir=. --check .",
     "lint": "eslint .",
+    "lint-glean": "cross-env VIRTUAL_ENV=venv glean glinter src/telemetry/metrics.yaml src/telemetry/pings.yaml",
     "start": "sirv public --watch --port 5555",
     "storybook": "storybook dev --static-dir ./public -p 6006",
-    "test": "npm-run-all format:check lint test:jest test:playwright",
+    "test": "npm-run-all format:check lint lint-glean test:jest test:playwright",
     "test:jest": "jest tests src --no-cache",
     "test:playwright": "npx playwright test"
   },
