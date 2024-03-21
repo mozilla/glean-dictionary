@@ -4,16 +4,3 @@
 
 ---
 $schema: moz://mozilla.org/schemas/glean/pings/2-0-0
-
-page-view:
-  description: |
-    A ping that will be sent everytime a new page is visited.
-  include_client_id: true
-  send_if_empty: false
-  bugs:
-    - https://bugzilla.mozilla.org/show_bug.cgi?id=1741582
-  data_reviews:
-    - https://github.com/mozilla/glean-dictionary/pull/1015#issuecomment-996051009
-  notification_emails:
-    - brizental@mozilla.com
-    - glean-team@mozilla.com
