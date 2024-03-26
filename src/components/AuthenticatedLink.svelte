@@ -2,8 +2,8 @@
   import tippy from "./tippy";
 
   export let href;
-  export let label = undefined; // a prop for glean click events
-  export let type = undefined; // a prop for glean click events
+  export let label = ""; // a prop for glean click events
+  export let type = ""; // a prop for glean click events
 </script>
 
 <a {href} data-glean-label={label} data-glean-type={type}><slot /></a>
