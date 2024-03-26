@@ -402,7 +402,11 @@
         </td>
         <td>
           {#if pingData.glam_url}
-            <AuthenticatedLink href={pingData.glam_url}>
+            <AuthenticatedLink
+              href={pingData.glam_url}
+              label={params.metric}
+              type="MetricDetail.Access.GLAM.PingData.GlamURL"
+            >
               {params.metric}
             </AuthenticatedLink>
           {:else}
@@ -427,7 +431,7 @@
                 <AuthenticatedLink
                   href={pingData.looker.base.url}
                   label={pingData.looker.base.name}
-                  type="MetricDetail.Access.Looker.PingData.Base.URL"
+                  type="MetricDetail.Access.Looker.PingData.BaseURL"
                 >
                   {pingData.looker.base.name}
                 </AuthenticatedLink>
@@ -435,7 +439,7 @@
                 <AuthenticatedLink
                   href={pingData.looker.metric.url}
                   label={pingData.looker.metric.name}
-                  type="MetricDetail.Access.Looker.PingData.Metric.URL"
+                  type="MetricDetail.Access.Looker.PingData.MetricURL"
                 >
                   {pingData.looker.metric.name}
                 </AuthenticatedLink>
@@ -447,7 +451,7 @@
                 <AuthenticatedLink
                   href={pingData.event_monitoring.event.url}
                   label={pingData.event_monitoring.event.name}
-                  type="MetricDetail.Access.Looker.EventMonitoring.Event.URL"
+                  type="MetricDetail.Access.Looker.EventMonitoring.EventURL"
                 >
                   Event Monitoring Dashboard for the
                   {pingData.event_monitoring.event.name}
@@ -539,7 +543,8 @@
               href={STMO_NEW_QUERY_URL}
               target="_blank"
               label="STMO"
-              type="MetricDetail.Access.STMO.NewQueryURL">STMO</AuthenticatedLink
+              type="MetricDetail.Access.STMO.NewQueryURL"
+              >STMO</AuthenticatedLink
             > with the following SQL ➡ &nbsp;
           </div>
           <SqlModal
