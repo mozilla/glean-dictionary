@@ -421,11 +421,19 @@
             {:else}
               <div>
                 In
-                <AuthenticatedLink href={pingData.looker.base.url} label={pingData.looker.base.name} type="MetricDetail.Access.Looker.PingData.Base.URL">
+                <AuthenticatedLink
+                  href={pingData.looker.base.url}
+                  label={pingData.looker.base.name}
+                  type="MetricDetail.Access.Looker.PingData.Base.URL"
+                >
                   {pingData.looker.base.name}
                 </AuthenticatedLink>
                 as
-                <AuthenticatedLink href={pingData.looker.metric.url} label={pingData.looker.metric.name} type="MetricDetail.Access.Looker.PingData.Metric.URL">
+                <AuthenticatedLink
+                  href={pingData.looker.metric.url}
+                  label={pingData.looker.metric.name}
+                  type="MetricDetail.Access.Looker.PingData.Metric.URL"
+                >
                   {pingData.looker.metric.name}
                 </AuthenticatedLink>
               </div>
@@ -433,7 +441,11 @@
             {#if pingData.event_monitoring}
               <div>
                 On the
-                <AuthenticatedLink href={pingData.event_monitoring.event.url} label={pingData.event_monitoring.event.name} type="MetricDetail.Access.Looker.EventMonitoring.Event.URL">
+                <AuthenticatedLink
+                  href={pingData.event_monitoring.event.url}
+                  label={pingData.event_monitoring.event.name}
+                  type="MetricDetail.Access.Looker.EventMonitoring.Event.URL"
+                >
                   Event Monitoring Dashboard for the
                   {pingData.event_monitoring.event.name}
                 </AuthenticatedLink>
