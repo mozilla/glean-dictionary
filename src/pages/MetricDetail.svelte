@@ -293,6 +293,8 @@
         Click the button to copy a snippet for use in a
         <a
           href="https://mozilla.github.io/glean/book/user/metrics/data-control-plane/experimenter-configuration.html"
+          data-glean-label="Mozilla Experimenter configuration"
+          data-glean-type="MetricDetail.MetricSampling.MozillaExperimenterConfigurationURL"
         >
           Mozilla Experimenter configuration.
         </a>
@@ -300,6 +302,7 @@
       <td>
         <CopyButton
           textToCopy="{'{\n  "gleanMetricConfiguration": {\n    "'}{metric.name}{'": true\n  }\n}'}"
+          type="MetricDetail.MetricSampling.CopySamplingConfigurationSnippet"
         />
       </td>
     </tr>
@@ -471,11 +474,17 @@
                 params.app,
                 selectedAppVariant.id,
                 selectedPingVariant.id
-              )}>{pingData.bigquery_table}</a
+              )}
+              data-glean-label={pingData.bigquery_table}
+              data-glean-type="MetricDetail.Access.BigQuery.AppVariant.TableURL"
+              >{pingData.bigquery_table}</a
             >
             and <AuthenticatedLink
               href={`https://mozilla.acryl.io/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,mozdata.${params.app}.${selectedPingVariant.id},PROD)`}
-            >
+              label="{params.app}.{selectedPingVariant.id}"
+              type="MetricDetail.Access.BigQuery.Union.TableURL"
+              >{pingData.bigquery_table}
+              >
               {params.app}.{selectedPingVariant.id}
               <HelpHoverable
                 content={"The result table of UNION-ing all the per-app_id datasets."}
@@ -492,18 +501,25 @@
                   selectedPingVariant.id,
                   selectedAppVariant.etl.bigquery_column_name
                 )}
+                data-glean-label={selectedAppVariant.etl.bigquery_column_name}
+                data-glean-type="MetricDetail.Access.BigQuery.AppVariant.Table.NonEventMetricURL"
               >
                 {selectedAppVariant.etl.bigquery_column_name}
               </a>
               <CopyButton
                 textToCopy={selectedAppVariant.etl.bigquery_column_name}
+                type="MetricDetail.Access.BigQuery.AppVariant.Table.NonEventMetricURL.Copy"
               />
             {:else}
               (event.category=<code>{metric.event_info.category}</code>
-              <CopyButton textToCopy={metric.event_info.category} /> and event.name=<code
-                >{metric.event_info.name}</code
-              >
-              <CopyButton textToCopy={metric.event_info.name} />)
+              <CopyButton
+                textToCopy={metric.event_info.category}
+                type="MetricDetail.Access.BigQuery.AppVariant.Table.EventMetric.Category.Copy"
+              /> and event.name=<code>{metric.event_info.name}</code>
+              <CopyButton
+                textToCopy={metric.event_info.name}
+                type="MetricDetail.Access.BigQuery.AppVariant.Table.EventMetric.Name.Copy"
+              />)
             {/if}
           </div>
         </td>
@@ -519,12 +535,16 @@
         <td class="stmo">
           <div>
             Start a query in
-            <AuthenticatedLink href={STMO_NEW_QUERY_URL} target="_blank"
-              >STMO</AuthenticatedLink
+            <AuthenticatedLink
+              href={STMO_NEW_QUERY_URL}
+              target="_blank"
+              label="STMO"
+              type="MetricDetail.Access.STMO.NewQueryURL">STMO</AuthenticatedLink
             > with the following SQL ➡ &nbsp;
           </div>
           <SqlModal
             openModalText="Generate SQL"
+            type="MetricDetail.Access.STMO.GenerateSQL"
             sqlContent={getSampleSQLQueryCode(
               metric.type,
               pingData.bigquery_table,
