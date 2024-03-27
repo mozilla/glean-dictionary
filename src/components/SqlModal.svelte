@@ -6,6 +6,8 @@
 
   export let sqlContent = "";
 
+  export let type = null; // a prop for glean click events
+
   let isOpen = false;
 
   const open = () => {
@@ -23,7 +25,7 @@
 </script>
 
 <div name="trigger" {open}>
-  <button on:click={open}>{openModalText}</button>
+  <button on:click={open} data-glean-type={type}>{openModalText}</button>
 </div>
 
 {#if isOpen}
@@ -50,6 +52,7 @@
                   <CopyButton
                 tooltipText="Copy the SQL code"
                 textToCopy={sqlContent}
+                type="MetricDetail.Access.STMO.CopyGeneratedSQL"
               />
                   </div>
               </pre>
