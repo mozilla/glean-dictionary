@@ -32,7 +32,11 @@
     updateURLState,
     updateBreadcrumbs,
   } from "../state/stores";
-  import { getBigQueryURL, getMetricSearchURL } from "../state/urls";
+  import {
+    getBigQueryURL,
+    getDataCatalogMetricURL,
+    getMetricSearchURL,
+  } from "../state/urls";
   import { getAppBreadcrumbs } from "./AppDetail.svelte";
 
   import { isExpired, isRemoved, isRecent } from "../state/items";
@@ -526,6 +530,25 @@
               />)
             {/if}
           </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Data Catalog
+          <HelpHoverable
+            content={"View this metric in Mozilla's instance of DataHub"}
+          />
+        </td>
+        <td>
+          <AuthenticatedLink
+            href={getDataCatalogMetricURL(
+              selectedAppVariant.id,
+              selectedPingVariant.id,
+              selectedAppVariant.etl.bigquery_column_name
+            )}
+          >
+            {selectedAppVariant.etl.bigquery_column_name}
+          </AuthenticatedLink>
         </td>
       </tr>
       <tr>

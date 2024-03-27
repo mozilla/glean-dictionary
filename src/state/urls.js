@@ -23,3 +23,11 @@ export function getBigQueryURL(appName, appId, pingName, metricName) {
 export function getMetricSearchURL(app, search) {
   return `/apps/${app}?search=${search}`;
 }
+
+export function getDataCatalogMetricURL(appId, pingId, bigQueryColumn) {
+  const DATA_CATALOG_URL = "https://mozilla.acryl.io";
+  return `${DATA_CATALOG_URL}/dataset/urn:li:dataset:(urn:li:dataPlatform:bigquery,moz-fx-data-shared-prod.${appId.replace(
+    /\./g,
+    "_"
+  )}.${pingId},PROD)/Lineage?column=${bigQueryColumn}`;
+}
