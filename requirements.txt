@@ -158,9 +158,9 @@ pytest-isort==3.1.0 \
     --hash=sha256:067801dc5e54a474330d074d521c815948ff6d5cf0ed3b9d057b78216851186c \
     --hash=sha256:13e68d84b35d4f79d20d3d165f491bffc9e4b9509f420381a4186118c4454bd3
     # via -r requirements.in
-pytest-ruff==0.3 \
-    --hash=sha256:625d142fa65855cd2d6edae395287829eea91a951d2b77cbe824463680b35760 \
-    --hash=sha256:798fafcee34dff6055c9082b394a5f314d6db2a562fb560da29cfe4e1996eb77
+pytest-ruff==0.3.1 \
+    --hash=sha256:008556576fb1bda93a432ad381432bfd5575cc94627d22bfdece46561b8e4f7f \
+    --hash=sha256:c9f7392a3384af73a6a72741a4035a605480a7a8e7a4bd8da05a98e6664cffb5
     # via -r requirements.in
 pyyaml==6.0.1 \
     --hash=sha256:04ac92ad1925b2cff1db0cfebffb6ffc43457495c9b3c39d3fcae417d7125dc5 \
