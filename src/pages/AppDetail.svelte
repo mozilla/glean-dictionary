@@ -91,15 +91,17 @@
       });
     }}
   >
-    <Tab key="metrics">Metrics</Tab>
-    <Tab key="pings">Pings</Tab>
+    <Tab key="metrics" label="AppDetail.MetricsTab">Metrics</Tab>
+    <Tab key="pings" label="AppDetail.PingsTab">Pings</Tab>
     {#if app.tags && app.tags.length}
-      <Tab key="tags">Tags</Tab>
+      <Tab key="tags" label="AppDetail.TagsTab">Tags</Tab>
     {/if}
-    <Tab key="app_ids">Application IDs</Tab>
+    <Tab key="app_ids" label="AppDetail.ApplicationIdsTab">Application IDs</Tab>
     {#if app.app_name === "firefox_ios"}
       <!-- for now, only Firefox iOS uses third-party data collection -->
-      <Tab key="third_party_data">Third-Party Data</Tab>
+      <Tab key="third_party_data" label="AppDetail.ThirdPartyDataTab"
+        >Third-Party Data</Tab
+      >
     {/if}
 
     <TabContent key="tags">
