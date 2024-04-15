@@ -1,5 +1,6 @@
 <script>
   export let key;
+  export let label = null; // a prop for glean click events
   import { getContext } from "svelte";
 
   const activeTab = getContext("activeTab");
@@ -12,6 +13,7 @@
 <div
   class="title"
   on:click={() => selectTab(key)}
+  data-glean-label={label}
   class:active={$activeTab === key}
 >
   <slot />
