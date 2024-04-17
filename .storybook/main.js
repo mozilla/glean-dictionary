@@ -3,6 +3,9 @@ const autoPrefixer = require("autoprefixer");
 const path = require("path");
 
 module.exports = {
+  core: {
+    disableTelemetry: true,
+  },
   staticDirs: ["../public"],
   stories: ["../stories/**/*.stories.js"],
   addons: ["@storybook/addon-controls", "@storybook/addon-docs"],
