@@ -8,7 +8,7 @@ command = """
     wget https://bootstrap.pypa.io/get-pip.py
     venv/bin/python get-pip.py
     venv/bin/pip install wheel
-    npm install
+    npm ci
     npm run build
     if [ "$STORYBOOK" ]; then
       npm run build-storybook
