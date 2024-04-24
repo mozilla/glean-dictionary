@@ -61,7 +61,7 @@
       // Although events might come from other pings, we override that and
       // generate SQL just for the `events_stream`. This changes
       // `some_database.table` to `some_database.events_stream`.
-      const tableNameParts = table.split('.');
+      const tableNameParts = table.split(".");
       const override = `${tableNameParts[0]}.events_stream`;
       return tableNameParts[1] === "events"
         ? getGleanEventQuery(override, additionalInfo)
