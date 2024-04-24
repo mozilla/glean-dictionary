@@ -41,7 +41,11 @@
 
   import { isExpired, isRemoved, isRecent } from "../state/items";
 
-  import { getGleanQuery, getGleanEventQuery } from "../data/gleanSql";
+  import {
+    getGleanQuery,
+    getGleanEventQuery,
+    getGleanLegacyEventQuery,
+  } from "../data/gleanSql";
 
   export let params;
 
