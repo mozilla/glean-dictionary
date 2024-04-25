@@ -316,7 +316,7 @@
       </td>
       <td>
         <CopyButton
-          textToCopy="{'{\n  "gleanMetricConfiguration": {\n    "'}{metric.name}{'": true\n  }\n}'}"
+          textToCopy="{'{\n  "gleanMetricConfiguration": {\n    "metrics_enabled": {\n      "'}{metric.name}{'": true\n    }\n  }\n}'}"
           type="MetricDetail.MetricSampling.CopySamplingConfigurationSnippet"
         />
       </td>
