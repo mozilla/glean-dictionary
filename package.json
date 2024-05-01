@@ -75,7 +75,7 @@
     "sass": "^1.72.0",
     "sass-loader": "^14.1.1",
     "sirv-cli": "1.0.14",
-    "storybook": "^8.0.8",
+    "storybook": "^8.0.9",
     "svelte": "3.59.1",
     "svelte-jester": "^1.6.0",
     "svelte-loader": "3.2.0",
