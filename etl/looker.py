@@ -265,10 +265,7 @@ def get_looker_explore_metadata_for_metric(
     return None
 
 
-def get_looker_monitoring_metadata_for_event(app, app_group, metric, ping_name):
-    if ping_name != "events":
-        return None
-
+def get_looker_monitoring_metadata_for_event(app, app_group, metric):
     metric_type = metric.definition["type"]
     if metric_type != "event":
         return None
