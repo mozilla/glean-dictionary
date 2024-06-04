@@ -10,6 +10,7 @@
   import VariantSelector from "../components/VariantSelector.svelte";
   import AuthenticatedLink from "../components/AuthenticatedLink.svelte";
   import Commentary from "../components/Commentary.svelte";
+  import CopyButton from "../components/CopyButton.svelte";
   import HelpHoverable from "../components/HelpHoverable.svelte";
   import ItemList from "../components/ItemList.svelte";
   import Label from "../components/Label.svelte";
@@ -87,6 +88,41 @@
     helpText={"Reviewed commentary from Mozilla data practitioners on this ping."}
   />
   <Commentary item={ping} itemType={"ping"} />
+
+  <SubHeading
+    title={"Server Knobs Configuration"}
+    helpText={"Information about Server Knobs configuration for this ping."}
+  />
+  <table>
+    <col />
+    <col />
+    <col />
+    <tr>
+      <td>
+        Sampling Configuration Snippet
+        <HelpHoverable
+          content={"Click the button to copy a configuration snippet for use in Mozilla Experimenter configuration"}
+          link={"https://mozilla.github.io/glean/book/user/pings/data-control-plane/experimenter-configuration.html"}
+        />
+      </td>
+      <td>
+        Click the button to copy a snippet for use in a
+        <a
+          href="https://mozilla.github.io/glean/book/user/pings/data-control-plane/experimenter-configuration.html"
+          data-glean-label="Mozilla Experimenter configuration"
+          data-glean-type="PingDetail.PingSampling.MozillaExperimenterConfigurationURL"
+        >
+          Mozilla Experimenter configuration.
+        </a>
+      </td>
+      <td>
+        <CopyButton
+          textToCopy="{'{\n  "gleanMetricConfiguration": {\n    "pings_enabled": {\n      "'}{ping.name}{'": true\n    }\n  }\n}'}"
+          type="PingDetail.PingSampling.CopySamplingConfigurationSnippet"
+        />
+      </td>
+    </tr>
+  </table>
 
   <SubHeading
     title={"Access"}

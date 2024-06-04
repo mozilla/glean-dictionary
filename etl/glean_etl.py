@@ -496,7 +496,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                     ping_data[ping_name].update(glam_metadata)
 
                     event_monitoring_metadata = get_looker_monitoring_metadata_for_event(
-                        app, app_group, metric, ping_name
+                        app, app_group, metric
                     )
                     if event_monitoring_metadata:
                         ping_data[ping_name].update({"event_monitoring": event_monitoring_metadata})
