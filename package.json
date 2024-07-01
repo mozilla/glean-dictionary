@@ -77,7 +77,7 @@
     "sirv-cli": "1.0.14",
     "storybook": "^8.0.8",
     "svelte": "3.59.1",
-    "svelte-jester": "^1.6.0",
+    "svelte-jester": "^5.0.0",
     "svelte-loader": "3.2.0",
     "svelte-preprocess": "^5.1.1",
     "tippy.js": "^6.3.7"
