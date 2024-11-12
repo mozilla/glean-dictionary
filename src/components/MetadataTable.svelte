@@ -8,7 +8,7 @@
   export let item = {};
 
   function format(ref, formatter) {
-    return formatter ? formatter(ref, appName) : ref;
+    return formatter ? formatter(ref, appName, item) : ref;
   }
 </script>
 
