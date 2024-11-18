@@ -78,7 +78,7 @@ export const METRIC_DEFINITION_SCHEMA = [
     type: "link",
     helpText:
       "Finds uses of this metric using simple matching. Metrics used dynamically may not appear in the results, only metrics defined in the application will be found.",
-    linkFormatter: (metricId, appName) => getCodeSearchLink(appName, metricId),
+    linkFormatter: getCodeSearchLink,
   },
 ];
 export const METRIC_METADATA_SCHEMA = [
