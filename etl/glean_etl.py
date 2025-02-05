@@ -15,6 +15,7 @@ from .looker import (
 )
 from .search import create_metrics_search_js
 from .utils import dump_json, get_event_name_and_category
+from .glean_auto_events import get_auto_events_for_app
 
 # Various additional sources of metadata
 ANNOTATIONS_URL = os.getenv(
@@ -543,7 +544,14 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                 )
             )
 
+        auto_events_for_app = get_auto_events_for_app(app_name)
         # write metrics, resorting the app-specific parts in user preference order
+        element_click_base = app_metrics["glean.element_click"].copy()
+        for auto_event in auto_events_for_app:
+            element_click_base["name"] = auto_event["name"]
+            element_click_base["description"] = auto_event["description"]
+            element_click_base["event_info"].update(auto_event["event_info"])
+            app_metrics[auto_event["name"]] = element_click_base.copy()
         for metric_data in app_metrics.values():
             metric_data["variants"].sort(key=lambda v: USER_CHANNEL_PRIORITY[v["channel"]])
             open(
