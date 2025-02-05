@@ -1,12 +1,4 @@
 import stringcase
-from google.cloud import bigquery
-
-def _get_bq_client():
-    return bigquery.Client()
-
-
-def query_bigquery(query):
-    return _get_bq_client().query(query).result()
 
 
 def get_bigquery_ping_table_name(dataset_name, ping_name):

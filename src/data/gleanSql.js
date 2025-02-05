@@ -87,9 +87,6 @@ WITH events AS (
     -- https://docs.telemetry.mozilla.org/cookbooks/bigquery/querying.html#table-layout-and-naming
     date(submission_timestamp) >= DATE_SUB(CURRENT_DATE(), INTERVAL 2 DAY)
     AND event = '${additionalInfo.category}.${additionalInfo.name}'
-    -- Event extras can be queried as a JSON object. Here is an example
-    -- to only fetch events that carry an extra property named 'the_name'
-    -- with a value of 'the_value'.
     AND JSON_VALUE(event_extra.id) = '${additionalInfo.auto_event_id}'
 )
 SELECT event_timestamp, event, event_extra FROM events
