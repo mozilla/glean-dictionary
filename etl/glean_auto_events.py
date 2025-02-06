@@ -23,9 +23,12 @@ _auto_event_template = {
 
 def _get_auto_events_names(app):
     """Get the automatic events names for the app"""
-    query = f"""SELECT *
-                FROM `moz-fx-data-shared-prod.glean_dictionary_derived.auto_events_metadata`
-                WHERE app = '{app}' """
+    query = f"""SELECT
+                    app,
+                    name
+                FROM `moz-fx-data-shared-prod.glean_dictionary_derived.auto_events_metadata_v1`
+                WHERE app = '{app}'
+                GROUP BY app, name"""
     return _query_bigquery(query)
 
 

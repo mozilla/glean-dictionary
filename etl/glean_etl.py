@@ -576,6 +576,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
         # sort the information in the app-level summary, then write it out
         # (we don't sort application id information, that's already handled
         # above)
+        app_data["metrics"].extend(auto_events_for_app)
         for key in ["tags", "metrics", "pings"]:
             if app_data.get(key):
                 app_data[key].sort(key=lambda v: v["name"])
