@@ -41,7 +41,7 @@ def get_auto_events_for_app(app):
         event_template = _auto_event_template.copy()
         event_template["name"] = row.name
         event_template["description"] = (
-            f"A event triggered whenever the {auto_event_id} element is clicked on a page."
+            f"An event triggered whenever the {auto_event_id} element is clicked on a page."
         )
         event_template["event_info"]["auto_event_id"] = auto_event_id
         auto_events.append(event_template)
