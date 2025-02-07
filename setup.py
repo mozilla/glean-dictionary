@@ -11,7 +11,7 @@ readme = open("README.md").read()
 
 setup(
     name="glean-dictionary",
-    python_requires=">=3.8.0",
+    python_requires=">=3.9.0",
     version="0.0.0",
     description="Glean Dictionary Python support.",
     long_description=readme,
@@ -27,6 +27,6 @@ setup(
     classifiers=[
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
 )
