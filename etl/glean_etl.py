@@ -544,15 +544,19 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                     )
                 )
             )
-        auto_events_all_apps = get_auto_events_names()
-        auto_events_for_app = get_auto_events_for_app(app_name, auto_events_all_apps)
+
+        if "glean.element_click" in app_metrics:
+            auto_events_all_apps = get_auto_events_names()
+            auto_events_for_app = get_auto_events_for_app(app_name, auto_events_all_apps)
+            app_data["metrics"].extend(auto_events_for_app)
+            element_click_base = copy.deepcopy(app_metrics["glean.element_click"])
+            for auto_event in auto_events_for_app:
+                element_click_base["name"] = auto_event["name"]
+                element_click_base["description"] = auto_event["description"]
+                element_click_base["event_info"].update(auto_event["event_info"])
+                app_metrics[auto_event["name"]] = copy.deepcopy(element_click_base)
+
         # write metrics, resorting the app-specific parts in user preference order
-        element_click_base = copy.deepcopy(app_metrics["glean.element_click"])
-        for auto_event in auto_events_for_app:
-            element_click_base["name"] = auto_event["name"]
-            element_click_base["description"] = auto_event["description"]
-            element_click_base["event_info"].update(auto_event["event_info"])
-            app_metrics[auto_event["name"]] = copy.deepcopy(element_click_base)
         for metric_data in app_metrics.values():
             metric_data["variants"].sort(key=lambda v: USER_CHANNEL_PRIORITY[v["channel"]])
             open(
@@ -577,7 +581,6 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
         # sort the information in the app-level summary, then write it out
         # (we don't sort application id information, that's already handled
         # above)
-        app_data["metrics"].extend(auto_events_for_app)
         for key in ["tags", "metrics", "pings"]:
             if app_data.get(key):
                 app_data[key].sort(key=lambda v: v["name"])
