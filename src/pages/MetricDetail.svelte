@@ -71,12 +71,10 @@
       if (tableNameParts[1] === "events") {
         if (additionalInfo.is_auto) {
           return getGleanAutoEventQuery(override, additionalInfo);
-        } else {
-          return getGleanEventQuery(override, additionalInfo);
         }
-      } else {
-        return getGleanLegacyEventQuery(table, additionalInfo);
+        return getGleanEventQuery(override, additionalInfo);
       }
+      return getGleanLegacyEventQuery(table, additionalInfo);
     }
 
     return getGleanQuery(columnName, table);
