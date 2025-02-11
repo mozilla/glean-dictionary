@@ -42,9 +42,9 @@ def get_auto_events_for_app(app, auto_events):
     event_names = [event for event in auto_events if event["app"] == app]
     auto_events = []
     for row in event_names:
-        auto_event_id = row["name"].split(".")[-1]
+        auto_event_id = row["event_name"].split(".")[-1]
         event_template = copy.deepcopy(_auto_event_template)
-        event_template["name"] = row["name"]
+        event_template["name"] = row["event_name"]
         event_template["description"] = (
             f"An event triggered whenever the {auto_event_id} element is clicked on a page."
         )
