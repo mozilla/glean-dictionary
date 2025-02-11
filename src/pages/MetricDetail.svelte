@@ -70,10 +70,10 @@
       const override = `${tableNameParts[0]}.events_stream`;
       if (tableNameParts[1] === "events") {
         if (additionalInfo.is_auto) {
-            return getGleanAutoEventQuery(override, additionalInfo);
-          } else {
-            return getGleanEventQuery(override, additionalInfo);
-          }
+          return getGleanAutoEventQuery(override, additionalInfo);
+        } else {
+          return getGleanEventQuery(override, additionalInfo);
+        }
       } else {
         return getGleanLegacyEventQuery(table, additionalInfo);
       }
