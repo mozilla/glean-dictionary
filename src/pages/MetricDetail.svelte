@@ -45,6 +45,7 @@
     getGleanQuery,
     getGleanEventQuery,
     getGleanLegacyEventQuery,
+    getGleanAutoEventQuery,
   } from "../data/gleanSql";
 
   export let params;
@@ -67,9 +68,13 @@
       // `some_database.table` to `some_database.events_stream`.
       const tableNameParts = table.split(".");
       const override = `${tableNameParts[0]}.events_stream`;
-      return tableNameParts[1] === "events"
-        ? getGleanEventQuery(override, additionalInfo)
-        : getGleanLegacyEventQuery(table, additionalInfo);
+      if (tableNameParts[1] === "events") {
+        if (additionalInfo.is_auto) {
+          return getGleanAutoEventQuery(override, additionalInfo);
+        }
+        return getGleanEventQuery(override, additionalInfo);
+      }
+      return getGleanLegacyEventQuery(table, additionalInfo);
     }
 
     return getGleanQuery(columnName, table);
