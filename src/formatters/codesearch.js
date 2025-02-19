@@ -1,4 +1,5 @@
 import { camelCase, upperFirst, snakeCase } from "lodash";
+import { getGithubRepoName } from "./links";
 
 const searchfoxMap = {
   fenix: "fenix",
@@ -48,7 +49,7 @@ const sourcegraphMap = {
   mozilla_vpn: "mozilla-vpn-client",
 };
 
-export const getCodeSearchLink = (app, metric) => {
+export function getCodeSearchLink(metric, app, item) {
   const [category, name] = metric.split(/\.(?=[^.]+$)/);
 
   // Generate all possible casings for a search query:
@@ -79,9 +80,12 @@ export const getCodeSearchLink = (app, metric) => {
   /* eslint no-else-return: "error" */
 
   if (searchfoxMap[app]) {
+    const repoName = getGithubRepoName(item.source_url);
+    const searchFoxPath =
+      repoName === "application-services" ? repoName : searchfoxMap[app];
     return app === "firefox_desktop"
       ? `https://searchfox.org/mozilla-central/search?q=${allLanguagePatterns}&regexp=true`
-      : `https://searchfox.org/mozilla-mobile/search?q=${allLanguagePatterns}&path=${searchfoxMap[app]}&regexp=true`;
+      : `https://searchfox.org/mozilla-mobile/search?q=${allLanguagePatterns}&path=${searchFoxPath}&regexp=true`;
   } else if (sourcegraphMap[app]) {
     return (
       `https://sourcegraph.com/search?q=repo:%5Egithub%5C.com%5C/%5BMm%5Dozilla%28.*%29%5C/` +
@@ -90,4 +94,4 @@ export const getCodeSearchLink = (app, metric) => {
   }
 
   return undefined;
-};
+}

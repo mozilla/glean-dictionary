@@ -37,3 +37,16 @@ export function getSourceUrlTitle(url) {
   }
   return url;
 }
+
+export function getGithubRepoName(url) {
+  const urlObj = new URL(url);
+  if (!urlObj.hostname.endsWith("github.com")) {
+    return null;
+  }
+  // Segments without falsy values that can be introduced by things like '//'
+  const pathSegments = urlObj.pathname.split("/").filter(Boolean);
+  if (pathSegments.length < 2) {
+    return null;
+  }
+  return pathSegments[1];
+}
