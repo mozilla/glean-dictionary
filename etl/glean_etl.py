@@ -189,10 +189,7 @@ def _is_metric_in_ping(metric, ping_data):
     if metric["name"] == "client_id":
         return ping_data["include_client_id"]
     if metric["is_part_of_info_section"]:
-        try:
-            return ping_data["include_info_sections"]
-        except KeyError:
-            return True
+        return ping_data.get("include_info_sections", True)
     return True
 
 
