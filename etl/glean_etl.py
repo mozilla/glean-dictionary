@@ -72,7 +72,6 @@ def _get_annotation(annotations_index, origin, item_type, identifier=None):
 
 def _incorporate_annotation(item, item_annotation, app=False, full=False):
     incorporated = dict(item, has_annotation=len(item_annotation) > 0)
-
     if app:
         # app annotations have some special properties
         if item_annotation.get("logo"):
@@ -102,7 +101,6 @@ def _incorporate_annotation(item, item_annotation, app=False, full=False):
         for annotation_type in ["commentary", "warning"]:
             if item_annotation.get(annotation_type):
                 incorporated[annotation_type] = item_annotation[annotation_type]
-
     return incorporated
 
 
@@ -183,6 +181,19 @@ def _get_metric_sample_data(experiment_data) -> dict:
                     )
 
     return sampling_data
+
+
+def _is_metric_in_ping(metric, ping_data):
+    if not ping_data["name"] in metric["pings"]:
+        return False
+    if metric["name"] == "client_id":
+        return ping_data['include_client_id']
+    if metric["is_part_of_info_section"]:
+        try:
+            return ping_data["include_info_sections"]
+        except KeyError:
+            return True
+    return True
 
 
 def write_glean_metadata(output_dir, functions_dir, app_names=None):
@@ -420,6 +431,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             sampled_text=(metric_sample_info.get("release")["sampled_text"])
                             if metric_sample_info is not None
                             else "Not sampled",
+                            is_part_of_info_section=metric.bq_prefix == "client_info",
                         ),
                         metric_annotation,
                     )
@@ -529,7 +541,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                                 metrics=[
                                     metric
                                     for metric in metric_pings["data"]
-                                    if ping_data["name"] in metric["pings"]
+                                    if _is_metric_in_ping(metric, ping_data)
                                 ],
                                 tag_descriptions=app_tags_for_objects,
                                 canonical_app_name=app.app["canonical_app_name"],
