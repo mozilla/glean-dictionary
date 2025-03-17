@@ -428,7 +428,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             sampled_text=(metric_sample_info.get("release")["sampled_text"])
                             if metric_sample_info is not None
                             else "Not sampled",
-                            is_part_of_info_section=metric.bq_prefix == "client_info",
+                            is_part_of_info_section=metric.bq_prefix
+                            in ["client_info", "ping_info"],
                         ),
                         metric_annotation,
                     )
