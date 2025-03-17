@@ -1,7 +1,7 @@
 import pytest
 
 from etl.glean import GleanMetric
-from etl.glean_etl import _get_metric_sample_data
+from etl.glean_etl import _get_metric_sample_data, _is_metric_in_ping
 
 
 @pytest.fixture
@@ -336,3 +336,40 @@ def test_metric_sampling(sample_data_definition: dict):
     assert release_channel is not None
     assert nightly_channel.get("sample_size") == 0.5
     assert release_channel.get("sample_size") == 1
+
+
+@pytest.fixture
+def metric():
+    return {"name": "test_metric", "pings": ["test_ping"], "is_part_of_info_section": False}
+
+
+@pytest.fixture
+def ping_data():
+    return {"name": "test_ping", "include_client_id": False, "include_info_sections": True}
+
+
+def test_is_metric_in_ping_included(metric, ping_data):
+    """A metric that is not client_id and is not part of
+    the info section should be included"""
+    assert _is_metric_in_ping(metric, ping_data) is True
+
+
+def test_is_metric_in_ping_not_included(metric, ping_data):
+    """A metric that does not include the ping in the ping list should not be included"""
+    metric["pings"] = ["other_ping"]
+    assert _is_metric_in_ping(metric, ping_data) is False
+
+
+def test_is_metric_in_ping_client_id(metric, ping_data):
+    """client_id should be included in a ping that includes client_id"""
+    metric["name"] = "client_id"
+    ping_data["include_client_id"] = True
+    assert _is_metric_in_ping(metric, ping_data) is True
+
+
+def test_is_metric_in_ping_info_section(metric, ping_data):
+    """A metric that is part of the info section should not be included
+    in a ping that does not include info sections"""
+    metric["is_part_of_info_section"] = True
+    ping_data["include_info_sections"] = False
+    assert _is_metric_in_ping(metric, ping_data) is False

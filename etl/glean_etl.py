@@ -1,6 +1,6 @@
+import copy
 import os
 
-import copy
 import requests
 import stringcase
 import yaml
@@ -9,6 +9,7 @@ from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
 from .expiry import get_expiry_text, get_mapped_expiry
 from .glam import SUPPORTED_GLAM_METRIC_TYPES, get_glam_metadata_for_metric
 from .glean import GleanApp
+from .glean_auto_events import get_auto_events_for_app, get_auto_events_names
 from .looker import (
     get_looker_explore_metadata_for_metric,
     get_looker_explore_metadata_for_ping,
@@ -16,7 +17,6 @@ from .looker import (
 )
 from .search import create_metrics_search_js
 from .utils import dump_json, get_event_name_and_category
-from .glean_auto_events import get_auto_events_for_app, get_auto_events_names
 
 # Various additional sources of metadata
 ANNOTATIONS_URL = os.getenv(
@@ -184,15 +184,12 @@ def _get_metric_sample_data(experiment_data) -> dict:
 
 
 def _is_metric_in_ping(metric, ping_data):
-    if not ping_data["name"] in metric["pings"]:
+    if ping_data["name"] not in metric["pings"]:
         return False
     if metric["name"] == "client_id":
-        return ping_data['include_client_id']
+        return ping_data["include_client_id"]
     if metric["is_part_of_info_section"]:
-        try:
-            return ping_data["include_info_sections"]
-        except KeyError:
-            return True
+        return ping_data.get("include_info_sections", True)
     return True
 
 
@@ -431,7 +428,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             sampled_text=(metric_sample_info.get("release")["sampled_text"])
                             if metric_sample_info is not None
                             else "Not sampled",
-                            is_part_of_info_section=metric.bq_prefix == "client_info",
+                            is_part_of_info_section=metric.bq_prefix
+                            in ["client_info", "ping_info"],
                         ),
                         metric_annotation,
                     )
