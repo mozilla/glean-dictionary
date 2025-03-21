@@ -422,13 +422,13 @@
         </td>
         <td>
           {#if pingData.glam_url}
-            <AuthenticatedLink
+            <a
               href={pingData.glam_url}
-              label={params.metric}
-              type="MetricDetail.Access.GLAM.PingData.GlamURL"
+              data-glean-label={params.metric}
+              data-glean-type="MetricDetail.Access.GLAM.PingData.GlamURL"
             >
               {params.metric}
-            </AuthenticatedLink>
+            </a>
           {:else}
             <Markdown text={pingData.glam_unsupported_reason} inline={true} />
           {/if}
