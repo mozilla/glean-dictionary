@@ -16,6 +16,21 @@ GLEAN_DISTRIBUTION_TYPES = {
 }
 
 
+def _merge_latest_ping(pings, ping_name, ping_data):
+    """
+    Merge data for the latest `ping_name` into `pings` (by history date).
+    If `pings` already contains the ping with newer data it is not overwritten.
+    """
+    if ping_name not in pings:
+        pings[ping_name] = ping_data
+        return
+
+    latest = pings[ping_name]["history"][-1]["dates"]["last"]
+    new = ping_data["history"][-1]["dates"]["last"]
+    if new >= latest:
+        pings[ping_name] = ping_data
+
+
 class _Cache:
     """
     Simple cache manager so we can avoid refetching the same dependency data
@@ -267,26 +282,19 @@ class GleanApp(object):
         return processed
 
     def _get_ping_data(self) -> dict:
-        ping_data = dict(
-            [
-                (p[0], {**p[1], "origin": self.app["app_name"]})
-                for p in _cache.get_json(
-                    GleanApp.PING_URL_TEMPLATE.format(self.app["v1_name"])
-                ).items()
-            ]
-        )
+        ping_data = dict()
+
+        for p in _cache.get_json(GleanApp.PING_URL_TEMPLATE.format(self.app["v1_name"])).items():
+            _merge_latest_ping(ping_data, p[0], {**p[1], "origin": self.app["app_name"]})
 
         for dependency in self.get_dependencies():
             if "v1_name" in dependency:
-                dependency_pings = dict(
-                    [
-                        (p[0], {**p[1], "origin": dependency["library_name"]})
-                        for p in _cache.get_json(
-                            GleanApp.PING_URL_TEMPLATE.format(dependency["v1_name"])
-                        ).items()
-                    ]
-                )
-                ping_data.update(dependency_pings)
+                for p in _cache.get_json(
+                    GleanApp.PING_URL_TEMPLATE.format(dependency["v1_name"])
+                ).items():
+                    _merge_latest_ping(
+                        ping_data, p[0], {**p[1], "origin": dependency["library_name"]}
+                    )
 
         return ping_data
 
