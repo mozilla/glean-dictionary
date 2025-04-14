@@ -19,6 +19,7 @@ def fake_ping():
             "history": [
                 {"dates": {"first": "2020-01-01", "last": "2021-01-01"}, "metadata": {"tags": []}}
             ],
+            "in-source": True,
         },
     )
 

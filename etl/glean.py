@@ -136,6 +136,7 @@ class GleanPing(GleanObject):
         self.definition["name"] = full_defn[self.NAME_KEY]
         self.definition["origin"] = full_defn[self.ORIGIN_KEY]
         self.definition["date_first_seen"] = self.definition_history[-1]["dates"]["first"]
+        self.definition["in_source"] = full_defn[self.IN_SOURCE_KEY]
 
 
 class GleanTag(GleanObject):
