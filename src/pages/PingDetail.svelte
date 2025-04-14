@@ -24,12 +24,13 @@
   import {
     getLibraryDescription,
     getRecentlyAddedItemDescription,
+    getRemovedItemDescription,
   } from "../data/help";
   import { PING_SCHEMA } from "../data/schemas";
   import { getLibraryName } from "../formatters/library";
   import { stripLinks } from "../formatters/markdown";
   import { getMetricSearchURL } from "../state/urls";
-  import { isRecent } from "../state/items";
+  import { isRemoved, isRecent } from "../state/items";
   import { getAppBreadcrumbs } from "./AppDetail.svelte";
   import { getGleanPingQuery } from "../data/gleanSql";
 
@@ -55,6 +56,10 @@
 </script>
 
 {#await pingDataPromise then ping}
+  {#if isRemoved(ping)}
+    <AppAlert status="warning" message={getRemovedItemDescription("ping")} />
+  {/if}
+
   <PageHeader title={ping.name}>
     <svelte:fragment slot="tags">
       {#if ping.origin && ping.origin !== params.app}
