@@ -169,6 +169,22 @@
       </label>
     </span>
   {/if}
+  {#if itemType === "pings"}
+    <span class="expire-checkbox">
+      <label>
+        <input
+          type="checkbox"
+          bind:checked={showUncollected}
+          on:change={() => {
+            // the binding changes *after* this callback is called, so use
+            // the inverse value
+            updateURLState({ showUncollected: !showUncollected });
+          }}
+        />
+        Show removed pings
+      </label>
+    </span>
+  {/if}
   {#if showFilter}
     <FilterInput
       tooltipped={true}
