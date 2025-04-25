@@ -45,6 +45,17 @@ USER_CHANNEL_PRIORITY = {"release": 1, "beta": 2, "nightly": 3, "esr": 4}
 # See: https://github.com/mozilla/glean-dictionary/issues/1682
 UBLOCK_ORIGIN_PRIVACY_FILTER = {"ad_impression": "advert_impression"}
 
+# Handle these apps as having no external dependencies.
+# This marks all metrics coming from an external dependency as `in-source=false`.
+#
+# Reason:
+# Some apps disable all telemetry except some minimal builtin ones.
+# We can't remove the dependencies in probe-scraper,
+# because MSG does not track history of dependencies.
+# A dependency removal would result in incompatible schema changes
+# (because columns would be deleted).
+APPS_DEPENDENCIES_REMOVED = ["focus_ios", "klar_ios", "focus_android", "klar_android"]
+
 
 def _normalize_metrics(name):
     # replace . with _ so sirv doesn't think that
@@ -406,6 +417,11 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                                 + "off"
                             )
                             metric_sample_info.get(channel)["sampled_text"] = sampled_text
+
+                    # Force all outside metrics as removed.
+                    if app_name in APPS_DEPENDENCIES_REMOVED:
+                        if metric.definition["origin"] != app_name:
+                            metric.definition.update({"in_source": False})
 
                     base_definition = _incorporate_annotation(
                         dict(
