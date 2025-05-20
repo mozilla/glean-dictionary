@@ -16,7 +16,11 @@ export const filterItemsByLabels = (items, labels) => {
     items.filter(
       (item) =>
         item[label] &&
-        labelsToFilter[label].every((el) => item[label].includes(el))
+        (labelsToFilter[label].every((el) => item[label].includes(el)) ||
+          (label === "bugs" &&
+            labelsToFilter.bugs.every((el) =>
+              item.bugs.some((bug) => bug.endsWith(el))
+            )))
     );
 
   // for each label type, get an array of items that match all labels of that type

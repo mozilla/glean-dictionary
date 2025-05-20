@@ -5,7 +5,7 @@ import { filterItemsByLabels, filterItemsByExpiration } from "./filter";
 const generateSearchIndex = (items) => {
   const searchIndex = new Document({
     tokenize: "forward",
-    index: ["id", "type", "tags", "origin", "description"],
+    index: ["id", "type", "tags", "origin", "description", "bugs"],
   });
 
   items.forEach((item) => {
@@ -16,6 +16,7 @@ const generateSearchIndex = (items) => {
       origin: item.origin,
       description: item.description,
       expires: item.expires,
+      bugs: item.bugs,
     });
   });
 
@@ -26,8 +27,15 @@ export const fullTextSearch = (query, searchItems) => {
   let itemsFilteredByLabels = searchItems;
   let unlabeledsearchTerms = [];
 
-  const searchTerms = query.match(/(?:(?:tags:)?".+")|"?[^ ]+"?/g);
-  const labels = { tags: [], origin: [], type: [], expires: [], name: [] };
+  const searchTerms = query.toString().match(/(?:(?:tags:)?".+")|"?[^ ]+"?/g);
+  const labels = {
+    tags: [],
+    origin: [],
+    type: [],
+    expires: [],
+    name: [],
+    bugs: [],
+  };
   const searchIndex = generateSearchIndex(searchItems);
 
   searchTerms.forEach((term) => {
@@ -36,7 +44,8 @@ export const fullTextSearch = (query, searchItems) => {
       term.startsWith("origin:") ||
       term.startsWith("type:") ||
       term.startsWith("expires:") ||
-      term.startsWith("name:")
+      term.startsWith("name:") ||
+      term.startsWith("bugs:")
     ) {
       const splitter = term.indexOf(":");
       const labelType = term.slice(0, splitter);

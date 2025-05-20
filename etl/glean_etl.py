@@ -1,12 +1,12 @@
 import copy
+import json
 import os
+import shutil
+import tempfile
 
 import git
-import json
 import requests
-import shutil
 import stringcase
-import tempfile
 import yaml
 
 from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
@@ -475,6 +475,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             else "Not sampled",
                             is_part_of_info_section=metric.bq_prefix
                             in ["client_info", "ping_info"],
+                            bugs=metric.definition["bugs"],
                         ),
                         metric_annotation,
                     )
