@@ -345,21 +345,25 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
             for ping in app.get_pings():
                 if ping.identifier not in ping_identifiers_seen:
                     ping_identifiers_seen.add(ping.identifier)
-                    app_data["pings"].append(
-                        _incorporate_annotation(
-                            dict(
-                                ping.definition,
-                                tags=ping.tags,
-                                variants=[],
-                            ),
-                            _get_annotation(
-                                annotations_index,
-                                ping.definition["origin"],
-                                "pings",
-                                ping.identifier,
-                            ),
-                        )
+                    ping_data = _incorporate_annotation(
+                        dict(
+                            ping.definition,
+                            tags=ping.tags,
+                            variants=[],
+                        ),
+                        _get_annotation(
+                            annotations_index,
+                            ping.definition["origin"],
+                            "pings",
+                            ping.identifier,
+                        ),
                     )
+                    # Force all outside pings as removed.
+                    if app_name in APPS_DEPENDENCIES_REMOVED:
+                        if ping_data["origin"] != app_name:
+                            ping_data.update({"in_source": False})
+
+                    app_data["pings"].append(ping_data)
 
                 ping_data = next(pd for pd in app_data["pings"] if pd["name"] == ping.identifier)
 
