@@ -1,8 +1,12 @@
 import copy
 import os
 
+import git
+import json
 import requests
+import shutil
 import stringcase
+import tempfile
 import yaml
 
 from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
@@ -55,6 +59,28 @@ UBLOCK_ORIGIN_PRIVACY_FILTER = {"ad_impression": "advert_impression"}
 # A dependency removal would result in incompatible schema changes
 # (because columns would be deleted).
 APPS_DEPENDENCIES_REMOVED = ["focus_ios", "klar_ios", "focus_android", "klar_android"]
+
+
+def _clone_mps():
+    repo_path = tempfile.mkdtemp(suffix="_mps")
+    git.Repo.clone_from(
+        "https://github.com/mozilla-services/mozilla-pipeline-schemas",
+        repo_path,
+        bare=False,
+        branch="generated-schemas",
+        depth=1,
+    )
+    return repo_path
+
+
+def _remove_mps_path(path):
+    shutil.rmtree(path)
+
+
+def _pipeline_schema(schema_repo_path, bq_path):
+    full_path = os.path.join(schema_repo_path, "schemas", bq_path)
+    with open(full_path, "r") as fp:
+        return json.load(fp)
 
 
 def _normalize_metrics(name):
@@ -215,6 +241,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
     latest_fx_release_version = list(product_details)[-1]
     metrics_sampling_info = _get_metric_sample_data(requests.get(EXPERIMENT_DATA_URL).json())
 
+    mps_repo_path = _clone_mps()
+
     # Then, get the apps we're using
     apps = [app for app in GleanApp.get_apps()]
     if app_names:
@@ -351,10 +379,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                     "https://github.com/mozilla-services/mozilla-pipeline-schemas/blob/generated-schemas/schemas/"  # noqa
                     + bq_path
                 )
-                bq_schema = requests.get(
-                    "https://raw.githubusercontent.com/mozilla-services/mozilla-pipeline-schemas/generated-schemas/schemas/"  # noqa
-                    + bq_path
-                ).json()
+                bq_schema = _pipeline_schema(mps_repo_path, bq_path)
                 app_channel = app.app.get("app_channel")
                 variant_data = dict(
                     id=app_id,
@@ -650,3 +675,5 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
     open(os.path.join(functions_dir, "supported_glam_metric_types.json"), "w").write(
         dump_json(list(SUPPORTED_GLAM_METRIC_TYPES))
     )
+
+    _remove_mps_path(mps_repo_path)
