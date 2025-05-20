@@ -16,9 +16,13 @@ click==8.1.7
     # via
     #   -r requirements.in
     #   pip-tools
-exceptiongroup==1.2.2
+exceptiongroup==1.3.0
     # via pytest
 furl==2.1.3
+    # via -r requirements.in
+gitdb==4.0.12
+    # via gitpython
+gitpython==3.1.41
     # via -r requirements.in
 google-api-core[grpc]==2.24.1
     # via
@@ -59,7 +63,7 @@ grpcio-status==1.70.0
     # via google-api-core
 idna==3.3
     # via requests
-importlib-metadata==8.6.1
+importlib-metadata==8.7.0
     # via build
 iniconfig==1.1.1
     # via pytest
@@ -128,6 +132,8 @@ six==1.16.0
     #   furl
     #   orderedmultidict
     #   python-dateutil
+smmap==5.0.2
+    # via gitdb
 stringcase==1.2.0
     # via -r requirements.in
 tomli==2.2.1
@@ -136,6 +142,8 @@ tomli==2.2.1
     #   pip-tools
     #   pyproject-hooks
     #   pytest
+typing-extensions==4.13.2
+    # via exceptiongroup
 urllib3==1.26.7
     # via requests
 wheel==0.37.0
