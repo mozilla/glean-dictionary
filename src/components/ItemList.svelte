@@ -1,6 +1,5 @@
 <script>
   import { chunk, escapeRegExp } from "lodash";
-  import { Document } from "flexsearch";
 
   import { getItemURL } from "../state/urls";
   import { stripLinks } from "../formatters/markdown";
@@ -24,7 +23,7 @@
 
   import { adjustDataTypes } from "./AdjustDataTypes.svelte";
 
-  import { fullTextSearch } from "../state/search";
+  import { generateSearchIndex, fullTextSearch } from "../state/search";
 
   let DEFAULT_ITEMS_PER_PAGE = 20;
 
@@ -46,20 +45,7 @@
   let scrollY;
   let totalItems;
 
-  const searchIndex = new Document({
-    tokenize: "forward",
-    index: ["id", "type", "tags", "origin", "description"],
-  });
-
-  items.forEach((item) => {
-    searchIndex.add({
-      id: item.name,
-      type: item.type,
-      tags: item.tags,
-      origin: item.origin,
-      description: item.description,
-    });
-  });
+  const searchIndex = generateSearchIndex(items);
 
   function getItemTypeSingular(pluralized) {
     // cut off the trailing 's'
@@ -90,7 +76,7 @@
   $: {
     // after filtering for text, but before filtering for uncollected
     // (expired or removed)
-    filteredItems = search ? fullTextSearch(search, items) : items;
+    filteredItems = search ? fullTextSearch(searchIndex, search, items) : items;
     totalItems = filteredItems.length;
 
     // filter out metrics that do not belong to the application

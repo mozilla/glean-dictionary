@@ -1,4 +1,4 @@
-import { fullTextSearch } from "../src/state/search";
+import { generateSearchIndex, fullTextSearch } from "../src/state/search";
 
 const getNames = (items) => items.map((i) => i.name);
 
@@ -58,44 +58,44 @@ const items = [
   },
 ];
 
+const searchIndex = generateSearchIndex(items);
+
 describe("search", () => {
   it("returns items of Foo tags and sync origin", () =>
-    expect(getNames(fullTextSearch("tags:Foo origin:sync", items))).toEqual([
-      "metric.three",
-      "metric.four",
-      "metric.five",
-    ]));
+    expect(
+      getNames(fullTextSearch(searchIndex, "tags:Foo origin:sync", items))
+    ).toEqual(["metric.three", "metric.four", "metric.five"]));
 
   it("returns items of Foo tags, sync origin, with search word 'three'", () =>
     expect(
-      getNames(fullTextSearch("three tags:Foo origin:sync", items))
+      getNames(fullTextSearch(searchIndex, "three tags:Foo origin:sync", items))
     ).toEqual(["metric.three"]));
 
   it("returns the items that match the description `abc`", () =>
-    expect(getNames(fullTextSearch("abc", items))).toEqual([
+    expect(getNames(fullTextSearch(searchIndex, "abc", items))).toEqual([
       "metric.one",
       "metric.five",
     ]));
 
   it("returns only type string items", () =>
-    expect(getNames(fullTextSearch("string", items))).toEqual([
+    expect(getNames(fullTextSearch(searchIndex, "string", items))).toEqual([
       "metric.one",
       "metric.two",
       "metric.four",
     ]));
 
   it("works correctly with tags that has a `:` in its name", () =>
-    expect(getNames(fullTextSearch("tags:A:Tag", items))).toEqual([
+    expect(getNames(fullTextSearch(searchIndex, "tags:A:Tag", items))).toEqual([
       "metric.six",
     ]));
 
   it("works correctly with tags with spaces", () =>
-    expect(getNames(fullTextSearch('tags:"Tag with spaces"', items))).toEqual([
-      "metric.seven",
-    ]));
+    expect(
+      getNames(fullTextSearch(searchIndex, 'tags:"Tag with spaces"', items))
+    ).toEqual(["metric.seven"]));
 
   it("exact match non-tokenized", () =>
-    expect(getNames(fullTextSearch('"mno pqr stu"', items))).toEqual([
-      "metric.eight",
-    ]));
+    expect(
+      getNames(fullTextSearch(searchIndex, '"mno pqr stu"', items))
+    ).toEqual(["metric.eight"]));
 });

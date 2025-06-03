@@ -2,7 +2,7 @@ import { Document } from "flexsearch";
 
 import { filterItemsByLabels, filterItemsByExpiration } from "./filter";
 
-const generateSearchIndex = (items) => {
+export const generateSearchIndex = (items) => {
   const searchIndex = new Document({
     tokenize: "forward",
     index: ["id", "type", "tags", "origin", "description", "bugs"],
@@ -23,7 +23,7 @@ const generateSearchIndex = (items) => {
   return searchIndex;
 };
 
-export const fullTextSearch = (query, searchItems) => {
+export const fullTextSearch = (searchIndex, query, searchItems) => {
   let itemsFilteredByLabels = searchItems;
   let unlabeledsearchTerms = [];
 
@@ -36,7 +36,6 @@ export const fullTextSearch = (query, searchItems) => {
     name: [],
     bugs: [],
   };
-  const searchIndex = generateSearchIndex(searchItems);
 
   searchTerms.forEach((term) => {
     if (
