@@ -1,8 +1,10 @@
 function getResourceName(name) {
   // workaround servers that incorrectly interpret url resources with a "." in
   // them as having an extension (this is common for metrics and application ids) -- the glean
-  // schema doesn't allow `-`'s in metrics, so this should be ok
-  return name.replace(/\./g, "_");
+  // schema doesn't allow `-`'s in metrics, so this should be ok.
+  // Also replace square brackets, which are not valid in URLs, and slashes, for the case
+  // of page_loag auto-events.
+  return name.replace(/[.\[\]\/]/g, "_");
 }
 
 export function getItemURL(appName, itemType, itemName) {
