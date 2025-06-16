@@ -4,7 +4,7 @@ function getResourceName(name) {
   // schema doesn't allow `-`'s in metrics, so this should be ok.
   // Also replace square brackets, which are not valid in URLs, and slashes, for the case
   // of page_loag auto-events.
-  return name.replace(/[.\[\]\/]/g, "_");
+  return name.replace(/[.[\]/]/g, "_");
 }
 
 export function getItemURL(appName, itemType, itemName) {
