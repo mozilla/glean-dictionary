@@ -45,9 +45,16 @@ def get_auto_events_for_app(app, auto_events):
         auto_event_id = row["event_name"].split(".")[-1]
         event_template = copy.deepcopy(_auto_event_template)
         event_template["name"] = row["event_name"]
-        event_template["description"] = (
-            f"An event triggered whenever the {auto_event_id} element is clicked on a page."
-        )
+        auto_event_type_prefix = event_template["name"].split(".")[1]
+        if auto_event_type_prefix.startswith("element_click"):
+            event_template["description"] = (
+                f"An event triggered whenever the {auto_event_id} element is clicked on a page."
+            )
+        elif auto_event_type_prefix.startswith("page_load"):
+            page_name = auto_event_type_prefix.split("/")[1][:-1]
+            event_template["description"] = (
+                f"An event triggered whenever the page /{page_name} is loaded."
+            )
         event_template["event_info"]["auto_event_id"] = auto_event_id
         auto_events.append(event_template)
     return auto_events
