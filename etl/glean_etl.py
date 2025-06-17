@@ -1,3 +1,4 @@
+import re
 import copy
 import json
 import os
@@ -84,10 +85,9 @@ def _pipeline_schema(schema_repo_path, bq_path):
 
 
 def _normalize_metrics(name):
-    # replace . with _ so sirv doesn't think that
-    # a metric is a file
-    metric_name = name.replace(".", "_")
-
+    # replace ., [, ], / with _ so sirv doesn't think that a metric is a file
+    # or directory
+    metric_name = re.sub(r"[.\[\]/]", "_", name)
     for key, value in UBLOCK_ORIGIN_PRIVACY_FILTER.items():
         if key in metric_name:
             metric_name = metric_name.replace(key, value)
@@ -601,16 +601,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                 )
             )
 
-        if "glean.element_click" in app_metrics:
-            auto_events_all_apps = get_auto_events_names()
-            auto_events_for_app = get_auto_events_for_app(app_name, auto_events_all_apps)
-            app_data["metrics"].extend(auto_events_for_app)
-            element_click_base = copy.deepcopy(app_metrics["glean.element_click"])
-            for auto_event in auto_events_for_app:
-                element_click_base["name"] = auto_event["name"]
-                element_click_base["description"] = auto_event["description"]
-                element_click_base["event_info"].update(auto_event["event_info"])
-                app_metrics[auto_event["name"]] = copy.deepcopy(element_click_base)
+        extract_auto_event("glean.element_click", app_name, app_data, app_metrics)
+        extract_auto_event("glean.page_load", app_name, app_data, app_metrics)
 
         # write metrics, resorting the app-specific parts in user preference order
         for metric_data in app_metrics.values():
@@ -682,3 +674,16 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
     )
 
     _remove_mps_path(mps_repo_path)
+
+
+def extract_auto_event(auto_event_name, app_name, app_data, app_metrics):
+    if auto_event_name in app_metrics:
+        auto_events_all_apps = get_auto_events_names()
+        auto_events_for_app = get_auto_events_for_app(app_name, auto_events_all_apps)
+        app_data["metrics"].extend(auto_events_for_app)
+        element_click_base = copy.deepcopy(app_metrics[auto_event_name])
+        for auto_event in auto_events_for_app:
+            element_click_base["name"] = auto_event["name"]
+            element_click_base["description"] = auto_event["description"]
+            element_click_base["event_info"].update(auto_event["event_info"])
+            app_metrics[auto_event["name"]] = copy.deepcopy(element_click_base)

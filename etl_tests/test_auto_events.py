@@ -4,7 +4,7 @@ from etl.glean_auto_events import get_auto_events_for_app
 
 # ruff: noqa: E501
 @pytest.fixture
-def mock_auto_events():
+def mock_auto_click_events():
     return [
         {
             "app": "accounts_frontend",
@@ -134,10 +134,62 @@ def mock_auto_events():
     ]
 
 
+@pytest.fixture
+def mock_auto_pageload_events():
+    """Mock data for auto page_load events."""
+    return [
+        {
+            "app": "accounts_frontend",
+            "event_name": "glean.page_load[/account_recovery_reset_password]",
+            "count": "1932",
+        },
+        {
+            "app": "accounts_frontend",
+            "event_name": "glean.page_load[/force_auth]",
+            "count": "2032",
+        },
+        {
+            "app": "accounts_frontend",
+            "event_name": "glean.page_load[/settings/recovery_phone/setup]",
+            "count": "2098",
+        },
+        {
+            "app": "accounts_frontend",
+            "event_name": "glean.page_load[/signin_bounced]",
+            "count": "2140",
+        },
+        {
+            "app": "accounts_frontend",
+            "event_name": "glean.page_load[/reset_password]",
+            "count": "2149",
+        },
+        {
+            "app": "accounts_frontend",
+            "event_name": "glean.page_load[/settings/clients]",
+            "count": "2533",
+        },
+        {
+            "app": "accounts_frontend",
+            "event_name": "glean.page_load[/settings/avatar/change]",
+            "count": "2725",
+        },
+        {
+            "app": "accounts_frontend",
+            "event_name": "glean.page_load[/inline_totp_setup]",
+            "count": "2811",
+        },
+        {
+            "app": "accounts_frontend",
+            "event_name": "glean.page_load[/reset_password_verified]",
+            "count": "3438",
+        },
+    ]
+
+
 # ruff: noqa: E501
-def test_get_auto_events_for_app(mock_auto_events):
+def test_get_auto_click_events_for_app(mock_auto_click_events):
     app_name = "accounts_frontend"
-    auto_events = get_auto_events_for_app(app_name, mock_auto_events)
+    auto_events = get_auto_events_for_app(app_name, mock_auto_click_events)
 
     assert len(auto_events) == 25
     assert (
@@ -163,3 +215,31 @@ def test_get_auto_events_for_app(mock_auto_events):
         == "An event triggered whenever the cad_redirect_mobile_download element is clicked on a page."
     )
     assert auto_events[-1]["event_info"]["auto_event_id"] == "cad_redirect_mobile_download"
+
+
+# ruff: noqa: E501
+def test_get_auto_pageload_events_for_app(mock_auto_pageload_events):
+    app_name = "accounts_frontend"
+    auto_events = get_auto_events_for_app(app_name, mock_auto_pageload_events)
+
+    assert len(auto_events) == 9
+    assert auto_events[0]["name"] == "glean.page_load[/account_recovery_reset_password]"
+    assert (
+        auto_events[0]["description"]
+        == "An event triggered whenever the page /account_recovery_reset_password is loaded."
+    )
+    assert (
+        auto_events[0]["event_info"]["auto_event_id"]
+        == "page_load[/account_recovery_reset_password]"
+    )
+    assert auto_events[1]["name"] == "glean.page_load[/force_auth]"
+    assert (
+        auto_events[1]["description"]
+        == "An event triggered whenever the page /force_auth is loaded."
+    )
+    assert auto_events[-1]["name"] == "glean.page_load[/reset_password_verified]"
+    assert (
+        auto_events[-1]["description"]
+        == "An event triggered whenever the page /reset_password_verified is loaded."
+    )
+    assert auto_events[-1]["event_info"]["auto_event_id"] == "page_load[/reset_password_verified]"

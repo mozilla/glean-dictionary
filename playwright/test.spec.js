@@ -17,18 +17,14 @@ test("metrics ping page", async ({ page }) => {
 });
 
 test("activation id metric page", async ({ page }) => {
-  await page.goto(
-    "http://localhost:5555/apps/fenix/metrics/activation_activation_id"
-  );
-  await expect(page).toHaveTitle(
-    "activation.activation_id | Firefox for Android"
-  );
+  await page.goto("http://localhost:5555/apps/fenix/metrics/addresses_deleted");
+  await expect(page).toHaveTitle("addresses.deleted | Firefox for Android");
 
   // we expect a selector starting with our looker URL, directing to an explore
   // containing the word "metrics" corresponding to the metric
   await expect(
     page.locator('a[href^="https://mozilla.cloud.looker"]').last()
-  ).toContainText("activation_id");
+  ).toContainText("addresses.deleted");
 });
 
 test("org.mozilla.fenix app id page", async ({ page }) => {
