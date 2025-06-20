@@ -90,8 +90,8 @@
       : filterUncollectedItems(filteredItems);
 
     filteredItems = showSampled
-      ? filteredItems.filter((item) => item.sampled)
-      : filteredItems;
+      ? filteredItems
+      : filteredItems.filter((item) => !item.sampled);
 
     // update pagination
     const currentPage = $pageState.page || 1;
