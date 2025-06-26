@@ -4,6 +4,25 @@ const SUPPORTED_GLAM_METRIC_TYPES = new Set(
   require("./supported_glam_metric_types.json")
 );
 
+const GLAM_METRICS_BLOCKLIST = require("./glam_metrics_blocklist.json");
+
+function glamFilterWithBlocklist(rawResults) {
+  const regex = new RegExp(GLAM_METRICS_BLOCKLIST.regex);
+  const confidentialMetricsFenix =
+    GLAM_METRICS_BLOCKLIST.confidentialMetricsFenix;
+  const confidentialMetricsFog = GLAM_METRICS_BLOCKLIST.confidentialMetricsFog;
+
+  const filtered = rawResults.filter(
+    (item) =>
+      !regex.test(item.name) &&
+      !confidentialMetricsFenix
+        .concat(confidentialMetricsFog)
+        .includes(item.name)
+  );
+
+  return filtered;
+}
+
 // (duplicates `src/state/items.js`: included here because netlify functions do not yet support
 // ES6 modules)
 function isExpired(item) {
@@ -38,6 +57,10 @@ exports.getSearchFunction = function (metricData, legacy) {
       .search(search || "", parseInt(limit) || 10)
       .map((id) => ({ name: id, ...metricData[id] }));
 
+    const filteredResults = glamMode
+      ? glamFilterWithBlocklist(searchResults)
+      : searchResults;
+
     const getScore = legacy
       ? (item) => {
           let score = 0;
@@ -56,7 +79,7 @@ exports.getSearchFunction = function (metricData, legacy) {
           return score;
         };
 
-    searchResults.sort((a, b) => {
+    filteredResults.sort((a, b) => {
       return getScore(b) - getScore(a);
     });
 
@@ -66,7 +89,7 @@ exports.getSearchFunction = function (metricData, legacy) {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(searchResults),
+      body: JSON.stringify(filteredResults),
     };
   };
 };
