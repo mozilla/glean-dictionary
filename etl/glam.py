@@ -36,8 +36,8 @@ REV_WORD_BOUND_PAT = re.compile(
 
 GLAM_METRICS_BLOCKLIST = {
     "regex": (
-        "/search_counts|browser_search|event_counts|browser_engagement_navigation|"
-        "manager_message_size|dropped_frames_proportion/"
+        "search_counts|browser_search|event_counts|browser_engagement_navigation|"
+        "manager_message_size|dropped_frames_proportion"
     ),
     "confidentialMetricsFenix": [
         "characteristics.color_depth",
