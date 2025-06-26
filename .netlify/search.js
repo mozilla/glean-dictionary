@@ -8,7 +8,8 @@ const GLAM_METRICS_BLOCKLIST = require("./glam_metrics_blocklist.json");
 
 function glamFilterWithBlocklist(rawResults) {
   const regex = new RegExp(GLAM_METRICS_BLOCKLIST.regex);
-  const confidentialMetricsFenix = GLAM_METRICS_BLOCKLIST.confidentialMetricsFenix;
+  const confidentialMetricsFenix =
+    GLAM_METRICS_BLOCKLIST.confidentialMetricsFenix;
   const confidentialMetricsFog = GLAM_METRICS_BLOCKLIST.confidentialMetricsFog;
 
   const filtered = rawResults.filter(
