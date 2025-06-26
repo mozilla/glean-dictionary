@@ -12,7 +12,7 @@ import yaml
 
 from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
 from .expiry import get_expiry_text, get_mapped_expiry
-from .glam import SUPPORTED_GLAM_METRIC_TYPES, get_glam_metadata_for_metric
+from .glam import GLAM_METRICS_BLOCKLIST, SUPPORTED_GLAM_METRIC_TYPES, get_glam_metadata_for_metric
 from .glean import GleanApp
 from .glean_auto_events import get_auto_events_for_app, get_auto_events_names
 from .looker import (
@@ -671,6 +671,9 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
     # also write some metadata for use by the netlify functions
     open(os.path.join(functions_dir, "supported_glam_metric_types.json"), "w").write(
         dump_json(list(SUPPORTED_GLAM_METRIC_TYPES))
+    )
+    open(os.path.join(functions_dir, "glam_metrics_blocklist.json"), "w").write(
+        dump_json(GLAM_METRICS_BLOCKLIST)
     )
 
     _remove_mps_path(mps_repo_path)

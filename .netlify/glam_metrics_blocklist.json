@@ -1,0 +1,38 @@
+{
+  "regex": "/search_counts|browser_search|event_counts|browser_engagement_navigation|manager_message_size|dropped_frames_proportion/",
+  "confidentialMetricsFenix": [
+    "characteristics.color_depth",
+    "characteristics.color_gamut",
+    "characteristics.color_scheme",
+    "characteristics.inverted_colors",
+    "characteristics.max_touch_points",
+    "characteristics.missing_fonts",
+    "characteristics.prefers_contrast",
+    "characteristics.prefers_reduced_motion",
+    "characteristics.prefers_reduced_transparency",
+    "characteristics.prefs_media_eme_enabled",
+    "characteristics.prefs_zoom_text_only",
+    "characteristics.processor_count",
+    "characteristics.screen_height",
+    "characteristics.screen_width",
+    "characteristics.submission_schema",
+    "characteristics.target_frame_rate",
+    "characteristics.video_dynamic_range",
+    "pocket.shim",
+    "shopping.product_page_visits"
+  ],
+  "confidentialMetricsFog": [
+    "browser.search.ad_clicks",
+    "browser.search.in_content",
+    "browser.search.with_ads",
+    "fx_suggest.block_id",
+    "metrics.search_count",
+    "nimbus_health.fetch_experiments_time",
+    "shopping.product_page_visits",
+    "shopping.settings.component_opted_out",
+    "shopping.settings.disabled_ads",
+    "shopping.settings.nimbus_disabled_shopping",
+    "shopping.settings.user_has_onboarded",
+    "top_sites.contile_tile_id"
+  ]
+}
