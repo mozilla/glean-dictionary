@@ -162,6 +162,20 @@ export const METRIC_METADATA_SCHEMA = [
       "Only used for labeled metrics. If provided, the labels are enforced at runtime, and recording to an unknown label is recorded to the special label `__other__`.",
   },
   {
+    title: "Keys",
+    id: "keys",
+    type: "list",
+    helpText:
+      "Only used for dual labeled metrics. If provided, the keys are enforced at runtime, and recording to an unknown key is recorded to the special key `__other__`",
+  },
+  {
+    title: "Categories",
+    id: "categories",
+    type: "list",
+    helpText:
+      "Only used for dual labeled metrics. If provided, the categories are enforced at runtime, and recording to an unknown category is recorded to the special category `__other__`",
+  },
+  {
     title: "Version",
     id: "version",
     type: "value",
