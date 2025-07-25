@@ -476,7 +476,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             is_part_of_info_section=metric.bq_prefix
                             in ["client_info", "ping_info"],
                             bugs=metric.definition["bugs"],
-                            monitor=metric.definition.get("metadata", {}).get("monitor", {})
+                            monitor=metric.definition.get("metadata", {}).get("monitor", {}),
                         ),
                         metric_annotation,
                     )
