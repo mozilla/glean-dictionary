@@ -31,5 +31,7 @@ export function formatMonitor(monitor) {
     changeDetectionTechnique: change_detection_technique || null,
     changeDetectionArgs: change_detection_args,
   };
-  return ["<pre><code>", JSON.stringify(json, null, 2), "</code></pre>"].join("");
+  return ["<pre><code>", JSON.stringify(json, null, 2), "</code></pre>"].join(
+    ""
+  );
 }

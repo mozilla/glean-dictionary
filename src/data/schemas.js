@@ -16,7 +16,8 @@ const OPTIONAL_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#optional-metric-parameters";
 const PING_REASONS_DOCS =
   "https://mozilla.github.io/glean/book/reference/yaml/pings.html#reasons";
-const METRIC_MONITOR_DOCS = "https://firefox-source-docs.mozilla.org/testing/perfdocs/telemetry-alerting.html#probe-setup"
+const METRIC_MONITOR_DOCS =
+  "https://firefox-source-docs.mozilla.org/testing/perfdocs/telemetry-alerting.html#probe-setup";
 
 const getFirstAddedText = (itemType) =>
   `The date when this ${itemType} was first added to the product source code. If it was added recently, it may take some time before the software is released to users and data starts showing up.`;

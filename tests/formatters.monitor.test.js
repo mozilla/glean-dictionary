@@ -27,11 +27,17 @@ describe("formatMonitor", () => {
     const result = formatMonitor(monitor);
     expect(result).toContain("<pre><code>");
     expect(result).toContain('"alert": "Enabled"');
-    expect(result).toContain('"platforms": [\n    "Windows",\n    "Linux"\n  ]');
-    expect(result).toContain('"notificationEmails": [\n    "a@b.com",\n    "c@d.com"\n  ]');
+    expect(result).toContain(
+      '"platforms": [\n    "Windows",\n    "Linux"\n  ]'
+    );
+    expect(result).toContain(
+      '"notificationEmails": [\n    "a@b.com",\n    "c@d.com"\n  ]'
+    );
     expect(result).toContain('"lowerIsBetter": true');
     expect(result).toContain('"changeDetectionTechnique": "cdf-squared"');
-    expect(result).toContain('"changeDetectionArgs": [\n    "threshold=0.85"\n  ]');
+    expect(result).toContain(
+      '"changeDetectionArgs": [\n    "threshold=0.85"\n  ]'
+    );
     expect(result).toContain("</code></pre>");
   });
 
