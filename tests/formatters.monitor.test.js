@@ -31,7 +31,7 @@ describe("formatMonitor", () => {
       '"platforms": [\n    "Windows",\n    "Linux"\n  ]'
     );
     expect(result).toContain(
-      '"notificationEmails": [\n    "a@b.com",\n    "c@d.com"\n  ]'
+      '"bugzillaNotificationEmails": [\n    "a@b.com",\n    "c@d.com"\n  ]'
     );
     expect(result).toContain('"lowerIsBetter": true');
     expect(result).toContain('"changeDetectionTechnique": "cdf-squared"');
@@ -46,7 +46,7 @@ describe("formatMonitor", () => {
     const result = formatMonitor(monitor);
     expect(result).toContain('"alert": "Disabled"');
     expect(result).toContain('"platforms": []');
-    expect(result).toContain('"notificationEmails": []');
+    expect(result).toContain('"bugzillaNotificationEmails": []');
     expect(result).toContain('"lowerIsBetter": null');
     expect(result).toContain('"changeDetectionTechnique": null');
     expect(result).toContain('"changeDetectionArgs": []');
