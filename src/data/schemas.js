@@ -8,6 +8,7 @@ import {
 } from "../formatters/links";
 import { getCodeSearchLink } from "../formatters/codesearch";
 import { getPingReasons } from "../formatters/text";
+import { formatMonitor } from "../formatters/monitor";
 
 const REQUIRED_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#required-metric-parameters";
@@ -15,6 +16,8 @@ const OPTIONAL_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#optional-metric-parameters";
 const PING_REASONS_DOCS =
   "https://mozilla.github.io/glean/book/reference/yaml/pings.html#reasons";
+const METRIC_MONITOR_DOCS =
+  "https://firefox-source-docs.mozilla.org/testing/perfdocs/telemetry-alerting.html#probe-setup";
 
 const getFirstAddedText = (itemType) =>
   `The date when this ${itemType} was first added to the product source code. If it was added recently, it may take some time before the software is released to users and data starts showing up.`;
@@ -220,6 +223,15 @@ export const METRIC_METADATA_SCHEMA = [
       "When the metric is set to expire. After a metric expires, an application will no longer collect or send data related to it.",
     helpLink: REQUIRED_METRIC_PARAMS_DOCS,
     valueFormatter: getExpiryInfo,
+  },
+  {
+    title: "Monitor",
+    id: "monitor",
+    type: "boolean",
+    helpText:
+      "Information about telemetry alerting monitoring for this metric. Click to read more.",
+    helpLink: METRIC_MONITOR_DOCS,
+    valueFormatter: formatMonitor,
   },
 ];
 export const PING_SCHEMA = [
