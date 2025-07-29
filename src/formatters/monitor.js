@@ -18,7 +18,7 @@ export function formatMonitor(monitor) {
     change_detection_technique,
     change_detection_args = [],
   } = monitor;
-  const notificationEmails =
+  const bugzillaNotificationEmails =
     Array.isArray(bugzilla_notification_emails) &&
     bugzilla_notification_emails.length > 0
       ? bugzilla_notification_emails
@@ -26,7 +26,7 @@ export function formatMonitor(monitor) {
   const json = {
     alert: alert ? "Enabled" : "Disabled",
     platforms: platforms.length ? platforms : [],
-    notificationEmails,
+    bugzillaNotificationEmails,
     lowerIsBetter: lower_is_better === undefined ? null : !!lower_is_better,
     changeDetectionTechnique: change_detection_technique || null,
     changeDetectionArgs: change_detection_args,
