@@ -43,6 +43,7 @@
 
   import {
     getGleanQuery,
+    getGleanLabeledCounterQuery,
     getGleanDualLabeledCounterQuery,
     getGleanEventQuery,
     getGleanLegacyEventQuery,
@@ -76,6 +77,9 @@
         return getGleanEventQuery(override, additionalInfo);
       }
       return getGleanLegacyEventQuery(table, additionalInfo);
+    }
+    if (metricType === "labeled_counter") {
+      return getGleanLabeledCounterQuery(columnName, table);
     }
     if (metricType === "dual_labeled_counter") {
       return getGleanDualLabeledCounterQuery(columnName, table);
