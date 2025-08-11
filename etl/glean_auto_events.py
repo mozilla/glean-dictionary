@@ -42,9 +42,12 @@ def get_auto_events_for_app(app, auto_events):
     event_names = [event for event in auto_events if event["app"] == app]
     auto_events = []
     for row in event_names:
-        auto_event_id = row["event_name"].split(".")[-1]
+        event_name = row.get("event_name")
+        if not event_name:
+            continue
+        auto_event_id = event_name.split(".")[-1]
         event_template = copy.deepcopy(_auto_event_template)
-        event_template["name"] = row["event_name"]
+        event_template["name"] = event_name
         auto_event_type_prefix = event_template["name"].split(".")[1]
         if auto_event_type_prefix.startswith("element_click"):
             event_template["description"] = (

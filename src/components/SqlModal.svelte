@@ -73,6 +73,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
   }
   .gp-modal__backdrop {
     position: absolute;
@@ -82,7 +83,6 @@
   }
   .gp-modal__wrapper {
     position: relative;
-    z-index: 1000;
     border-radius: 0.5rem;
     background-color: $color-light-gray-10;
     overflow: hidden;
