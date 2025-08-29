@@ -64,8 +64,9 @@ exports.getSearchFunction = function (metricData, legacy) {
     const getScore = legacy
       ? (item) => {
           let score = 0;
-          // the only criteria for legacy data is if it's "active" or not
           score += item.active || item.active === undefined ? 1 : 0;
+          // for glam searches, glean metrics take precedence over legacy metrics
+          score += glamMode && item.glean ? 1 : 0;
           return score;
         }
       : (item) => {
@@ -75,7 +76,9 @@ exports.getSearchFunction = function (metricData, legacy) {
           // if in glam mode, we want to move unsupported metrics right to the bottom
           // (do this by adding a higher score to these types of metrics)
           score +=
-            glamMode && SUPPORTED_GLAM_METRIC_TYPES.has(item.type) ? 10 : 0;
+            glamMode && SUPPORTED_GLAM_METRIC_TYPES.has(item.type) ? 1 : 0;
+          // for glam searches, glean metrics take precedence over legacy metrics
+          score += glamMode && item.glean ? 1 : 0;
           return score;
         };
 
