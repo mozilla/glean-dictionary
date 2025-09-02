@@ -434,6 +434,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                     )
                     is_sampled = metric_sample_info is not None
 
+                    metric_sampled_text = None
                     if is_sampled:
                         for channel in metric_sample_info:
                             sampled_text = (
@@ -447,11 +448,17 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             )
                             metric_sample_info.get(channel)["sampled_text"] = sampled_text
 
+                            # We prefer the release channel text, but if it's
+                            # not available, we use the first available
+                            if not metric_sampled_text:
+                                metric_sampled_text = sampled_text
+                            if channel == "release":
+                                metric_sampled_text = sampled_text
+
                     # Force all outside metrics as removed.
                     if app_name in APPS_DEPENDENCIES_REMOVED:
                         if metric.definition["origin"] != app_name:
                             metric.definition.update({"in_source": False})
-
                     base_definition = _incorporate_annotation(
                         dict(
                             name=metric.identifier,
@@ -470,8 +477,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                                 metric.definition["expires"], app_name, product_details
                             ),
                             sampled=is_sampled,
-                            sampled_text=(metric_sample_info.get("release")["sampled_text"])
-                            if metric_sample_info is not None
+                            sampled_text=metric_sampled_text
+                            if metric_sampled_text
                             else "Not sampled",
                             is_part_of_info_section=metric.bq_prefix
                             in ["client_info", "ping_info"],
