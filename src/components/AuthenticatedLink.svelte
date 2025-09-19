@@ -2,11 +2,12 @@
   import tippy from "./tippy";
 
   export let href;
+  export let target = "";
   export let label = null; // a prop for glean click events
   export let type = null; // a prop for glean click events
 </script>
 
-<a {href} data-glean-label={label} data-glean-type={type}><slot /></a>
+<a {href} {target} data-glean-label={label} data-glean-type={type}><slot /></a>
 <a
   class="lock-link"
   href="https://docs.telemetry.mozilla.org/concepts/gaining_access.html"

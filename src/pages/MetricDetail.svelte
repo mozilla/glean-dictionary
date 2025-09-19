@@ -42,12 +42,13 @@
   import { isExpired, isRemoved, isRecent } from "../state/items";
 
   import {
-    getGleanQuery,
-    getGleanLabeledCounterQuery,
-    getGleanDualLabeledCounterQuery,
-    getGleanEventQuery,
-    getGleanLegacyEventQuery,
-    getGleanAutoEventQuery,
+    getGleanAutoEventQuerySTMOTemplateUrl,
+    getGleanEventQuerySTMOTemplateUrl,
+    getGleanLegacyEventQuerySTMOTemplateUrl,
+    getGleanLabeledCounterQuerySTMOTemplateUrl,
+    getGleanDualLabeledCounterQuerySTMOTemplateUrl,
+    getGleanQuerySTMOTemplateUrl,
+    getGleanPingQuerySTMOTemplateUrl,
   } from "../data/gleanSql";
 
   export let params;
@@ -56,9 +57,7 @@
   let selectedPingVariant;
   let pingData = {};
 
-  const STMO_NEW_QUERY_URL = "https://sql.telemetry.mozilla.org/queries/new";
-
-  function getSampleSQLQueryCode(
+  function getSQLTemplateURL(
     metricType,
     table,
     columnName,
@@ -72,20 +71,20 @@
       const override = `${tableNameParts[0]}.events_stream`;
       if (tableNameParts[1] === "events") {
         if (additionalInfo.is_auto) {
-          return getGleanAutoEventQuery(override, additionalInfo);
+          return getGleanAutoEventQuerySTMOTemplateUrl(override, additionalInfo);
         }
-        return getGleanEventQuery(override, additionalInfo);
+        return getGleanEventQuerySTMOTemplateUrl(override, additionalInfo);
       }
-      return getGleanLegacyEventQuery(table, additionalInfo);
+      return getGleanLegacyEventQuerySTMOTemplateUrl(table, additionalInfo);
     }
     if (metricType === "labeled_counter") {
-      return getGleanLabeledCounterQuery(columnName, table);
+      return getGleanLabeledCounterQuerySTMOTemplateUrl(columnName, table);
     }
     if (metricType === "dual_labeled_counter") {
-      return getGleanDualLabeledCounterQuery(columnName, table);
+      return getGleanDualLabeledCounterQuerySTMOTemplateUrl(columnName, table);
     }
 
-    return getGleanQuery(columnName, table);
+    return getGleanQuerySTMOTemplateUrl(columnName, table);
   }
 
   const metricDataPromise = getMetricData(params.app, params.metric).then(
@@ -585,25 +584,19 @@
         </td>
         <td class="stmo">
           <div>
-            Start a query in
             <AuthenticatedLink
-              href={STMO_NEW_QUERY_URL}
-              target="_blank"
+              href={getSQLTemplateURL(
+                metric.type,
+                pingData.bigquery_table,
+                selectedAppVariant.etl.bigquery_column_name,
+                metric.event_info
+              )}
               label="STMO"
               type="MetricDetail.Access.STMO.NewQueryURL"
-              >STMO</AuthenticatedLink
-            > with the following SQL ➡ &nbsp;
+              target="_blank"
+              >Explore this metric on STMO</AuthenticatedLink
+            >
           </div>
-          <SqlModal
-            openModalText="Generate SQL"
-            type="MetricDetail.Access.STMO.GenerateSQL"
-            sqlContent={getSampleSQLQueryCode(
-              metric.type,
-              pingData.bigquery_table,
-              selectedAppVariant.etl.bigquery_column_name,
-              metric.event_info
-            )}
-          />
         </td>
       </tr>
     </table>
