@@ -32,7 +32,7 @@
   import { getMetricSearchURL } from "../state/urls";
   import { isRemoved, isRecent } from "../state/items";
   import { getAppBreadcrumbs } from "./AppDetail.svelte";
-  import { getGleanPingQuerySTMOTemplateUrl } from "../data/gleanSql";
+  import { getGleanPingQuery, getGleanPingQuerySTMOTemplateUrl } from "../data/gleanSql";
 
   export let params;
 
@@ -210,11 +210,18 @@
         </td>
         <td class="stmo">
           <div>
+            Explore this ping in
             <AuthenticatedLink
               href={getGleanPingQuerySTMOTemplateUrl(selectedAppVariant.table)}
-              target="_blank">Explore this ping on STMO</AuthenticatedLink
-            >
+              target="_blank">STMO</AuthenticatedLink
+            > or use the following SQL ➡ &nbsp;
           </div>
+          <div>
+            <SqlModal
+              openModalText="Generate SQL"
+              sqlContent={getGleanPingQuery(selectedAppVariant.table)}
+            />
+            </div>
         </td>
       </tr>
     </table>
