@@ -48,6 +48,12 @@
     getGleanEventQuery,
     getGleanLegacyEventQuery,
     getGleanAutoEventQuery,
+    getGleanAutoEventQuerySTMOTemplateUrl,
+    getGleanEventQuerySTMOTemplateUrl,
+    getGleanLegacyEventQuerySTMOTemplateUrl,
+    getGleanLabeledCounterQuerySTMOTemplateUrl,
+    getGleanDualLabeledCounterQuerySTMOTemplateUrl,
+    getGleanQuerySTMOTemplateUrl,
   } from "../data/gleanSql";
 
   export let params;
@@ -56,13 +62,12 @@
   let selectedPingVariant;
   let pingData = {};
 
-  const STMO_NEW_QUERY_URL = "https://sql.telemetry.mozilla.org/queries/new";
-
-  function getSampleSQLQueryCode(
+  function getSQLResource(
     metricType,
     table,
     columnName,
-    additionalInfo
+    additionalInfo,
+    isSTMOTemplate
   ) {
     if (metricType === "event") {
       // Although events might come from other pings, we override that and
@@ -72,20 +77,32 @@
       const override = `${tableNameParts[0]}.events_stream`;
       if (tableNameParts[1] === "events") {
         if (additionalInfo.is_auto) {
-          return getGleanAutoEventQuery(override, additionalInfo);
+          return isSTMOTemplate
+            ? getGleanAutoEventQuerySTMOTemplateUrl(override, additionalInfo)
+            : getGleanAutoEventQuery(override, additionalInfo);
         }
-        return getGleanEventQuery(override, additionalInfo);
+        return isSTMOTemplate
+          ? getGleanEventQuerySTMOTemplateUrl(override, additionalInfo)
+          : getGleanEventQuery(override, additionalInfo);
       }
-      return getGleanLegacyEventQuery(table, additionalInfo);
+      return isSTMOTemplate
+        ? getGleanLegacyEventQuerySTMOTemplateUrl(table, additionalInfo)
+        : getGleanLegacyEventQuery(table, additionalInfo);
     }
     if (metricType === "labeled_counter") {
-      return getGleanLabeledCounterQuery(columnName, table);
+      return isSTMOTemplate
+        ? getGleanLabeledCounterQuerySTMOTemplateUrl(columnName, table)
+        : getGleanLabeledCounterQuery(columnName, table);
     }
     if (metricType === "dual_labeled_counter") {
-      return getGleanDualLabeledCounterQuery(columnName, table);
+      return isSTMOTemplate
+        ? getGleanDualLabeledCounterQuerySTMOTemplateUrl(columnName, table)
+        : getGleanDualLabeledCounterQuery(columnName, table);
     }
 
-    return getGleanQuery(columnName, table);
+    return isSTMOTemplate
+      ? getGleanQuerySTMOTemplateUrl(columnName, table)
+      : getGleanQuery(columnName, table);
   }
 
   const metricDataPromise = getMetricData(params.app, params.metric).then(
@@ -587,7 +604,13 @@
           <div>
             Start a query in
             <AuthenticatedLink
-              href={STMO_NEW_QUERY_URL}
+              href={getSQLResource(
+                metric.type,
+                pingData.bigquery_table,
+                selectedAppVariant.etl.bigquery_column_name,
+                metric.event_info,
+                true
+              )}
               target="_blank"
               label="STMO"
               type="MetricDetail.Access.STMO.NewQueryURL"
@@ -597,11 +620,12 @@
           <SqlModal
             openModalText="Generate SQL"
             type="MetricDetail.Access.STMO.GenerateSQL"
-            sqlContent={getSampleSQLQueryCode(
+            sqlContent={getSQLResource(
               metric.type,
               pingData.bigquery_table,
               selectedAppVariant.etl.bigquery_column_name,
-              metric.event_info
+              metric.event_info,
+              false
             )}
           />
         </td>
