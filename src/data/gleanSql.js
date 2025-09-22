@@ -93,7 +93,10 @@ SELECT * FROM events
 -- IMPORTANT: Remove the limit clause when the query is ready.
 LIMIT 10`;
 
-export const getGleanLegacyEventQuerySTMOTemplateUrl = (table, additionalInfo) =>
+export const getGleanLegacyEventQuerySTMOTemplateUrl = (
+  table,
+  additionalInfo
+) =>
   `https://sql.telemetry.mozilla.org/queries/110679/source?p_table=${table}&p_eventCategory=${additionalInfo.category}&p_eventName=${additionalInfo.name}`;
 
 export const getGleanEventQuery = (table, additionalInfo) => `

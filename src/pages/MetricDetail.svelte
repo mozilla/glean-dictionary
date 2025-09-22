@@ -54,7 +54,6 @@
     getGleanLabeledCounterQuerySTMOTemplateUrl,
     getGleanDualLabeledCounterQuerySTMOTemplateUrl,
     getGleanQuerySTMOTemplateUrl,
-    getGleanPingQuerySTMOTemplateUrl,
   } from "../data/gleanSql";
 
   export let params;
@@ -62,7 +61,6 @@
   let selectedAppVariant;
   let selectedPingVariant;
   let pingData = {};
-
 
   function getSQLResource(
     metricType,
@@ -79,20 +77,32 @@
       const override = `${tableNameParts[0]}.events_stream`;
       if (tableNameParts[1] === "events") {
         if (additionalInfo.is_auto) {
-          return isSTMOTemplate ? getGleanAutoEventQuerySTMOTemplateUrl(override, additionalInfo) : getGleanAutoEventQuery(override, additionalInfo);
+          return isSTMOTemplate
+            ? getGleanAutoEventQuerySTMOTemplateUrl(override, additionalInfo)
+            : getGleanAutoEventQuery(override, additionalInfo);
         }
-        return isSTMOTemplate ? getGleanEventQuerySTMOTemplateUrl(override, additionalInfo) : getGleanEventQuery(override, additionalInfo);
+        return isSTMOTemplate
+          ? getGleanEventQuerySTMOTemplateUrl(override, additionalInfo)
+          : getGleanEventQuery(override, additionalInfo);
       }
-      return isSTMOTemplate ? getGleanLegacyEventQuerySTMOTemplateUrl(table, additionalInfo) : getGleanLegacyEventQuery(table, additionalInfo);
+      return isSTMOTemplate
+        ? getGleanLegacyEventQuerySTMOTemplateUrl(table, additionalInfo)
+        : getGleanLegacyEventQuery(table, additionalInfo);
     }
     if (metricType === "labeled_counter") {
-      return isSTMOTemplate ? getGleanLabeledCounterQuerySTMOTemplateUrl(columnName, table) : getGleanLabeledCounterQuery(columnName, table);
+      return isSTMOTemplate
+        ? getGleanLabeledCounterQuerySTMOTemplateUrl(columnName, table)
+        : getGleanLabeledCounterQuery(columnName, table);
     }
     if (metricType === "dual_labeled_counter") {
-      return isSTMOTemplate ? getGleanDualLabeledCounterQuerySTMOTemplateUrl(columnName, table) : getGleanDualLabeledCounterQuery(columnName, table);
+      return isSTMOTemplate
+        ? getGleanDualLabeledCounterQuerySTMOTemplateUrl(columnName, table)
+        : getGleanDualLabeledCounterQuery(columnName, table);
     }
 
-    return isSTMOTemplate ? getGleanQuerySTMOTemplateUrl(columnName, table) : getGleanQuery(columnName, table);
+    return isSTMOTemplate
+      ? getGleanQuerySTMOTemplateUrl(columnName, table)
+      : getGleanQuery(columnName, table);
   }
 
   const metricDataPromise = getMetricData(params.app, params.metric).then(

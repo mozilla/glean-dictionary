@@ -32,7 +32,10 @@
   import { getMetricSearchURL } from "../state/urls";
   import { isRemoved, isRecent } from "../state/items";
   import { getAppBreadcrumbs } from "./AppDetail.svelte";
-  import { getGleanPingQuery, getGleanPingQuerySTMOTemplateUrl } from "../data/gleanSql";
+  import {
+    getGleanPingQuery,
+    getGleanPingQuerySTMOTemplateUrl,
+  } from "../data/gleanSql";
 
   export let params;
 
@@ -221,7 +224,7 @@
               openModalText="Generate SQL"
               sqlContent={getGleanPingQuery(selectedAppVariant.table)}
             />
-            </div>
+          </div>
         </td>
       </tr>
     </table>
