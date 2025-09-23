@@ -32,7 +32,10 @@
   import { getMetricSearchURL } from "../state/urls";
   import { isRemoved, isRecent } from "../state/items";
   import { getAppBreadcrumbs } from "./AppDetail.svelte";
-  import { getGleanPingQuery } from "../data/gleanSql";
+  import {
+    getGleanPingQuery,
+    getGleanPingQuerySTMOTemplateUrl,
+  } from "../data/gleanSql";
 
   export let params;
 
@@ -200,26 +203,30 @@
           </td>
         </tr>
       {/if}
-      <td>
-        STMO
-        <HelpHoverable
-          content={"Query this metric in Mozilla's instance of Redash."}
-          link={"https://docs.telemetry.mozilla.org/tools/stmo.html"}
-        />
-      </td>
-      <td class="stmo">
-        <div>
-          Start a query in
-          <AuthenticatedLink
-            href="https://sql.telemetry.mozilla.org/queries/new"
-            target="_blank">STMO</AuthenticatedLink
-          > with the following SQL ➡ &nbsp;
-        </div>
-        <SqlModal
-          openModalText="Generate SQL"
-          sqlContent={getGleanPingQuery(selectedAppVariant.table)}
-        />
-      </td>
+      <tr>
+        <td>
+          STMO
+          <HelpHoverable
+            content={"Query this metric in Mozilla's instance of Redash."}
+            link={"https://docs.telemetry.mozilla.org/tools/stmo.html"}
+          />
+        </td>
+        <td class="stmo">
+          <div>
+            Explore this ping in
+            <AuthenticatedLink
+              href={getGleanPingQuerySTMOTemplateUrl(selectedAppVariant.table)}
+              target="_blank">STMO</AuthenticatedLink
+            > or use the following SQL ➡ &nbsp;
+          </div>
+          <div>
+            <SqlModal
+              openModalText="Generate SQL"
+              sqlContent={getGleanPingQuery(selectedAppVariant.table)}
+            />
+          </div>
+        </td>
+      </tr>
     </table>
   {/if}
 
