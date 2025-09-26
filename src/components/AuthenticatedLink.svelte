@@ -12,7 +12,7 @@
   class="lock-link"
   href="https://docs.telemetry.mozilla.org/concepts/gaining_access.html"
   use:tippy={{
-    content: "Access to this resource is limited to NDA'd Mozillians",
+    content: "Access to this resource is limited to NDA'd Mozillians who have a demonstrated need to access this data",
     placement: "top",
   }}
 >
