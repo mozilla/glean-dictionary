@@ -188,7 +188,7 @@
           {params.app}.{params.ping}
         </AuthenticatedLink>
       </td>
-      {#if selectedAppVariant.looker_explore}
+      {#if selectedAppVariant.looker_explores}
         <tr>
           <td>
             Looker
@@ -197,9 +197,13 @@
             />
           </td>
           <td>
-            <AuthenticatedLink href={selectedAppVariant.looker_explore.url}>
-              {selectedAppVariant.looker_explore.name}
-            </AuthenticatedLink>
+            {#each selectedAppVariant.looker_explores as explore}
+              <div>
+                <AuthenticatedLink href={explore.url}>
+                  {explore.name}
+                </AuthenticatedLink>
+              </div>
+            {/each}
           </td>
         </tr>
       {/if}

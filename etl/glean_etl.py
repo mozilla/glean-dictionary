@@ -16,8 +16,8 @@ from .glam import GLAM_METRICS_BLOCKLIST, SUPPORTED_GLAM_METRIC_TYPES, get_glam_
 from .glean import GleanApp
 from .glean_auto_events import get_auto_events_for_app, get_auto_events_names
 from .looker import (
-    get_looker_explore_metadata_for_metric,
-    get_looker_explore_metadata_for_ping,
+    get_looker_explores_for_metric,
+    get_looker_explores_for_ping,
     get_looker_monitoring_metadata_for_event,
 )
 from .search import create_metrics_search_js
@@ -391,11 +391,11 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                     table=stable_ping_table_name,
                     channel=app_channel if app_channel else "release",
                 )
-                looker_explore = get_looker_explore_metadata_for_ping(
+                looker_explores = get_looker_explores_for_ping(
                     looker_namespaces, app, app_group, ping
                 )
-                if not app_is_deprecated and looker_explore:
-                    variant_data.update({"looker_explore": looker_explore})
+                if not app_is_deprecated and looker_explores:
+                    variant_data.update({"looker_explores": looker_explores})
                 ping_data["variants"].append(variant_data)
                 app_variant_table_dir = os.path.join(app_table_dir, _get_resource_path(app.app_id))
                 os.makedirs(app_variant_table_dir, exist_ok=True)
@@ -549,7 +549,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                     }
                     # FIXME: if we allow the metadata format to change, we can
                     # just set it up all in one go above
-                    looker_metadata = get_looker_explore_metadata_for_metric(
+                    looker_explores = get_looker_explores_for_metric(
                         looker_namespaces,
                         app,
                         app_group,
@@ -557,8 +557,8 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                         ping_name,
                         ping_name in pings_with_client_id,
                     )
-                    if looker_metadata:
-                        ping_data[ping_name].update({"looker": looker_metadata})
+                    if looker_explores:
+                        ping_data[ping_name].update({"looker_explores": looker_explores})
                     glam_metadata = get_glam_metadata_for_metric(app, metric, ping_name)
                     ping_data[ping_name].update(glam_metadata)
 
