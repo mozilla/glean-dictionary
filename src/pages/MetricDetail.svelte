@@ -459,7 +459,7 @@
           {/if}
         </td>
       </tr>
-      {#if pingData.looker}
+      {#if pingData.looker_explores}
         <tr>
           <td
             >Looker <HelpHoverable
@@ -469,26 +469,28 @@
           <td>
             {#if metric.send_in_pings.length === 1 && metric.send_in_pings[0] === "events" && metric.type !== "event"}
               This metric is a <code>{metric.type}</code> metric. Currently,
-              event count explores only support <code>event</code> metrics.
+              event explores only support <code>event</code> metrics.
             {:else}
-              <div>
-                In
-                <AuthenticatedLink
-                  href={pingData.looker.base.url}
-                  label={pingData.looker.base.name}
-                  type="MetricDetail.Access.Looker.PingData.BaseURL"
-                >
-                  {pingData.looker.base.name}
-                </AuthenticatedLink>
-                as
-                <AuthenticatedLink
-                  href={pingData.looker.metric.url}
-                  label={pingData.looker.metric.name}
-                  type="MetricDetail.Access.Looker.PingData.MetricURL"
-                >
-                  {pingData.looker.metric.name}
-                </AuthenticatedLink>
-              </div>
+              {#each pingData.looker_explores as explore}
+                <div>
+                  In
+                  <AuthenticatedLink
+                    href={explore.base.url}
+                    label={explore.base.name}
+                    type="MetricDetail.Access.Looker.PingData.BaseURL"
+                  >
+                    {explore.base.name}
+                  </AuthenticatedLink>
+                  as
+                  <AuthenticatedLink
+                    href={explore.metric.url}
+                    label={explore.metric.name}
+                    type="MetricDetail.Access.Looker.PingData.MetricURL"
+                  >
+                    {explore.metric.name}
+                  </AuthenticatedLink>
+                </div>
+              {/each}
             {/if}
             {#if pingData.event_monitoring}
               <div>
