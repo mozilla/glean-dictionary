@@ -31,20 +31,39 @@ def _looker_explore_exists(looker_namespaces, app_name, explore_name):
     )
 
 
-def _get_looker_ping_explore(
+def _get_looker_ping_explores(
     looker_namespaces, app_name, ping_name, _table_name, app_channel, app_group
 ):
+    explores = []
     ping_name_snakecase = stringcase.snakecase(ping_name)
     if _looker_explore_exists(looker_namespaces, app_name, ping_name_snakecase):
         url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/{ping_name_snakecase}")
         # if there are multiple channels, we need a channel identifier
         if len(app_group["app_ids"]) > 1 and app_channel:
             url = url.add({f"f[{ping_name_snakecase}.channel]": app_channel})
-        return {"name": ping_name_snakecase, "url": url.url}
-    return None
+        explores.append({"name": ping_name_snakecase, "url": url.url})
+    return explores or None
 
 
-def _get_looker_event_explore(looker_namespaces, app_name, app_channel, app_group):
+def _get_looker_event_explores(looker_namespaces, app_name, app_channel, app_group):
+    explores = []
+
+    if _looker_explore_exists(looker_namespaces, app_name, "events_stream"):
+        url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/events_stream").add(
+            {
+                "fields": ",".join(
+                    (
+                        "events_stream.submission_date",
+                        "events_stream.event_count",
+                        "events_stream.client_count",
+                    )
+                )
+            }
+        )
+        if len(app_group["app_ids"]) > 1 and app_channel:
+            url.add({"f[events_stream.normalized_channel]": app_channel})
+        explores.append({"name": "events_stream", "url": url.url})
+
     # firefox_desktop has an "events" explore that is for legacy telemetry,
     # not Glean
     if (
@@ -56,7 +75,7 @@ def _get_looker_event_explore(looker_namespaces, app_name, app_channel, app_grou
         )
         if len(app_group["app_ids"]) > 1 and app_channel:
             url.add({"f[events.normalized_channel]": app_channel})
-        return {"name": "event_counts", "url": url.url}
+        explores.append({"name": "event_counts", "url": url.url})
     # firefox_desktop Glean events explore is glean_event_counts
     elif _looker_explore_exists(looker_namespaces, app_name, "glean_event_counts"):
         url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/glean_event_counts").add(
@@ -67,24 +86,25 @@ def _get_looker_event_explore(looker_namespaces, app_name, app_channel, app_grou
         )
         if len(app_group["app_ids"]) > 1 and app_channel:
             url.add({"f[events.normalized_channel]": app_channel})
-        return {"name": "glean_event_counts", "url": url.url}
+        explores.append({"name": "glean_event_counts", "url": url.url})
     elif _looker_explore_exists(looker_namespaces, app_name, "funnel_analysis"):
         url = furl(f"https://mozilla.cloud.looker.com/explore/{app_name}/funnel_analysis").add(
             {"fields": "funnel_analysis.count_completed_step_1"}
         )
         if len(app_group["app_ids"]) > 1 and app_channel:
             url.add({"f[funnel_analysis.app_channel]": app_channel})
-        return {"name": "funnel_analysis", "url": url.url}
-    return None
+        explores.append({"name": "funnel_analysis", "url": url.url})
+
+    return explores or None
 
 
-def get_looker_explore_metadata_for_ping(looker_namespaces, app, app_group, ping):
+def get_looker_explores_for_ping(looker_namespaces, app, app_group, ping):
     if ping.identifier == "events":
-        return _get_looker_event_explore(
+        return _get_looker_event_explores(
             looker_namespaces, app.app_name, app.app.get("app_channel"), app_group
         )
 
-    return _get_looker_ping_explore(
+    return _get_looker_ping_explores(
         looker_namespaces,
         app.app_name,
         ping.identifier,
@@ -94,19 +114,23 @@ def get_looker_explore_metadata_for_ping(looker_namespaces, app, app_group, ping
     )
 
 
-def get_looker_explore_metadata_for_metric(
+def get_looker_explores_for_metric(
     looker_namespaces, app, app_group, metric, ping_name, ping_has_client_id
 ):
+    # We deliberately don't show Looker information for deprecated applications
+    if app.app.get("deprecated"):
+        return None
+
     metric_type = metric.definition["type"]
     metric_name_snakecase = stringcase.snakecase(metric.identifier)
     ping_name_snakecase = stringcase.snakecase(ping_name)
 
-    base_looker_explore = (
-        _get_looker_event_explore(
+    base_looker_explores = (
+        _get_looker_event_explores(
             looker_namespaces, app.app_name, app.app.get("app_channel"), app_group
         )
         if metric_type == "event"
-        else _get_looker_ping_explore(
+        else _get_looker_ping_explores(
             looker_namespaces,
             app.app_name,
             ping_name,
@@ -116,8 +140,8 @@ def get_looker_explore_metadata_for_metric(
         )
     )
 
-    # we deliberately don't show looker information for deprecated applications
-    if not app.app.get("deprecated") and base_looker_explore:
+    explores = []
+    for base_looker_explore in base_looker_explores or []:
         looker_metric_link = None
         if metric_type == "event":
             (metric_category, metric_name) = get_event_name_and_category(metric.identifier)
@@ -142,12 +166,19 @@ def get_looker_explore_metadata_for_metric(
                         "f[step_1.category]": f'"{metric_category}"',
                     }
                 )
+            elif base_looker_explore["name"] == "events_stream":
+                looker_metric_link = furl(base_looker_explore["url"]).add(
+                    {
+                        "f[events_stream.event_category]": f'"{metric_category}"',
+                        "f[events_stream.event_name]": f'"{metric_name}"',
+                    }
+                )
             else:
                 # this should never happen (unless we made a mistake in getting the
                 # base looker explore link)
                 raise Exception(f"Unexpected base looker explore {base_looker_explore['name']}")
         # for counters, we can use measures directly
-        if metric_type == "counter":
+        elif metric_type == "counter":
             looker_metric_link = furl(base_looker_explore["url"]).add(
                 {
                     "fields": ",".join(
@@ -254,15 +285,17 @@ def get_looker_explore_metadata_for_metric(
                 )
 
         if looker_metric_link:
-            return {
-                "base": base_looker_explore,
-                "metric": {
-                    "name": metric.identifier,
-                    "url": looker_metric_link.add({"toggle": "vis"}).url,
-                },
-            }
+            explores.append(
+                {
+                    "base": base_looker_explore,
+                    "metric": {
+                        "name": metric.identifier,
+                        "url": looker_metric_link.add({"toggle": "vis"}).url,
+                    },
+                }
+            )
 
-    return None
+    return explores or None
 
 
 def get_looker_monitoring_metadata_for_event(app, app_group, metric):
