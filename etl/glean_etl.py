@@ -36,7 +36,7 @@ FIREFOX_PRODUCT_DETAIL_URL = os.getenv(
 )
 EXPERIMENT_DATA_URL = os.getenv(
     "EXPERIMENT_DATA_URL",
-    "https://experimenter.services.mozilla.com/api/v6/experiments/",
+    "https://experimenter.services.mozilla.com/api/v6/experiments/?feature_config=glean",
 )
 EXPERIMENTER_URL_TEMPLATE = "https://experimenter.services.mozilla.com/nimbus/{}/summary"
 
