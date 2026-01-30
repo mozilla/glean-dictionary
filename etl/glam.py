@@ -14,8 +14,10 @@ GLAM_PRODUCT_MAPPINGS = {
 # https://github.com/mozilla/bigquery-etl/blob/c48ab6649448cdf41191f6c24cb00fe46ca2323d/bigquery_etl/glam/clients_daily_scalar_aggregates.py#L95
 SUPPORTED_GLAM_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
     "boolean",
+    "labeled_boolean",
     "counter",
     "labeled_counter",
+    "dual_labeled_counter",
     "quantity",
     "timespan",
 }
