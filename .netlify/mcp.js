@@ -435,6 +435,26 @@ async function handleToolCall(name, args) {
 }
 
 async function handleJsonRpc(request) {
+  // Validate request structure
+  if (!request || typeof request !== "object") {
+    return {
+      jsonrpc: "2.0",
+      id: null,
+      error: { code: -32700, message: "Parse error: invalid JSON" },
+    };
+  }
+
+  if (typeof request.method !== "string") {
+    return {
+      jsonrpc: "2.0",
+      id: request.id ?? null,
+      error: {
+        code: -32600,
+        message: "Invalid request: method must be a string",
+      },
+    };
+  }
+
   const { id, method, params } = request;
 
   switch (method) {
