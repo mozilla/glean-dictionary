@@ -34,5 +34,11 @@ publish = "public"
   to = "/.netlify/functions/:splat"
   status = 200
 
+# MCP server endpoint
+[[redirects]]
+  from = "/mcp"
+  to = "/.netlify/functions/mcp"
+  status = 200
+
 [functions]
 directory = ".netlify"
