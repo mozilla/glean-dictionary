@@ -9,3 +9,7 @@ __pycache__/
 .probe_cache
 .DS_Store
 src/telemetry/generated/*.js
+
+# Netlify CLI generated files
+deno.lock
+local-run.log

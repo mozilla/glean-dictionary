@@ -75,6 +75,13 @@ http://localhost:8888/api/v1/metrics_search_firefox_legacy?search=ms
 [netlify command line interface]: https://docs.netlify.com/cli/get-started/
 [netlify functions]: https://docs.netlify.com/functions/overview/
 
+## MCP Server
+
+The Glean Dictionary provides an
+[MCP (Model Context Protocol)](https://modelcontextprotocol.io) server for AI
+assistants to query telemetry metadata programmatically. See
+[docs/mcp-server.md](./docs/mcp-server.md) for setup and usage.
+
 ## Storybook
 
 We use [Storybook](https://storybook.js.org/) for developing and validating
