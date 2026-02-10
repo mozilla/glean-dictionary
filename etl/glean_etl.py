@@ -9,6 +9,7 @@ import git
 import requests
 import stringcase
 import yaml
+from requests.adapters import HTTPAdapter, Retry
 
 from .bigquery import get_bigquery_column_name, get_bigquery_ping_table_name
 from .expiry import get_expiry_text, get_mapped_expiry
@@ -230,16 +231,28 @@ def _is_metric_in_ping(metric, ping_data):
     return True
 
 
+def fetch_json(url, tries=5):
+    """
+    Fetch JSON from the given URL
+    and try a total of `tries` times upon failure.
+    """
+
+    s = requests.Session()
+    retries = Retry(total=tries, backoff_factor=0.1, status_forcelist=[500, 502, 503, 504])
+    s.mount("https://", HTTPAdapter(max_retries=retries))
+    return s.get(url).json()
+
+
 def write_glean_metadata(output_dir, functions_dir, app_names=None):
     """
     Writes out the metadata for use by the dictionary
     """
     # first, get the basic metadata from various sources
-    annotations_index = requests.get(ANNOTATIONS_URL).json()
+    annotations_index = fetch_json(ANNOTATIONS_URL)
     looker_namespaces = yaml.safe_load(requests.get(NAMESPACES_URL).text)
-    product_details = requests.get(FIREFOX_PRODUCT_DETAIL_URL).json()
+    product_details = fetch_json(FIREFOX_PRODUCT_DETAIL_URL)
     latest_fx_release_version = list(product_details)[-1]
-    metrics_sampling_info = _get_metric_sample_data(requests.get(EXPERIMENT_DATA_URL).json())
+    metrics_sampling_info = _get_metric_sample_data(fetch_json(EXPERIMENT_DATA_URL))
 
     mps_repo_path = _clone_mps()
 
