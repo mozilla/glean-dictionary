@@ -4,10 +4,8 @@ command = """
     pip install -e .
     ./scripts/gd build-metadata
     # glean.js currently requires a virtual environment
-    python -mvenv venv --without-pip
-    wget https://bootstrap.pypa.io/get-pip.py
-    venv/bin/python get-pip.py
-    venv/bin/pip install wheel
+    python3 -m venv venv
+    venv/bin/pip3 install setuptools wheel
     npm ci
     npm run build
     if [ "$STORYBOOK" ]; then
@@ -21,6 +19,7 @@ publish = "public"
 [context.production]
   [context.production.environment]
   CONTEXT = "production"
+  GLEAN_APPLICATION_ID = "glean-dictionary"
 
 
 [[headers]]

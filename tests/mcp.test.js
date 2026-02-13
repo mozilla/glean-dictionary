@@ -95,6 +95,17 @@ describe("MCP Server request validation", () => {
 });
 
 describe("MCP Server protocol methods", () => {
+  beforeEach(() => {
+    global.fetch.mockReset();
+    // Default: accept telemetry POSTs silently
+    global.fetch.mockImplementation((url) => {
+      if (url.includes("/submit/")) {
+        return Promise.resolve({ ok: true, status: 200 });
+      }
+      return Promise.reject(new Error(`Unexpected URL: ${url}`));
+    });
+  });
+
   it("handles initialize request", async () => {
     const response = await callHandler("POST", {
       jsonrpc: "2.0",
@@ -146,8 +157,11 @@ describe("MCP Server tool calls", () => {
   });
 
   it("handles tools/call for list_apps", async () => {
-    // Mock the API responses
+    // Mock the API responses (including telemetry POST)
     global.fetch.mockImplementation((url) => {
+      if (url.includes("/submit/")) {
+        return Promise.resolve({ ok: true, status: 200 });
+      }
       if (url.includes("app-listings")) {
         return Promise.resolve({
           ok: true,
@@ -191,14 +205,17 @@ describe("MCP Server tool calls", () => {
   });
 
   it("handles tool call errors gracefully", async () => {
-    // Mock a failing API
-    global.fetch.mockImplementation(() =>
-      Promise.resolve({
+    // Mock a failing API (but telemetry POST still succeeds)
+    global.fetch.mockImplementation((url) => {
+      if (url.includes("/submit/")) {
+        return Promise.resolve({ ok: true, status: 200 });
+      }
+      return Promise.resolve({
         ok: false,
         status: 500,
         statusText: "Internal Server Error",
-      })
-    );
+      });
+    });
 
     const response = await callHandler("POST", {
       jsonrpc: "2.0",
@@ -217,6 +234,13 @@ describe("MCP Server tool calls", () => {
   });
 
   it("handles unknown tool name", async () => {
+    global.fetch.mockImplementation((url) => {
+      if (url.includes("/submit/")) {
+        return Promise.resolve({ ok: true, status: 200 });
+      }
+      return Promise.reject(new Error(`Unexpected URL: ${url}`));
+    });
+
     const response = await callHandler("POST", {
       jsonrpc: "2.0",
       id: 12,
@@ -230,5 +254,230 @@ describe("MCP Server tool calls", () => {
 
     const errorData = JSON.parse(response.parsedBody.result.content[0].text);
     expect(errorData.error).toContain("Unknown tool");
+  });
+});
+
+describe("MCP Server telemetry", () => {
+  beforeEach(() => {
+    global.fetch.mockReset();
+  });
+
+  function mockWithTelemetryCapture() {
+    const telemetryCalls = [];
+    global.fetch.mockImplementation((url, options) => {
+      if (url.includes("/submit/")) {
+        telemetryCalls.push({ url, options });
+        return Promise.resolve({ ok: true, status: 200 });
+      }
+      if (url.includes("app-listings")) {
+        return Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve([
+              {
+                app_name: "test_app",
+                app_description: "Test application",
+                canonical_app_name: "Test App",
+                deprecated: false,
+                url: "https://example.com",
+                v1_name: "test-app",
+              },
+            ]),
+        });
+      }
+      if (url.includes("annotations")) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({}),
+        });
+      }
+      return Promise.reject(new Error(`Unexpected URL: ${url}`));
+    });
+    return telemetryCalls;
+  }
+
+  it("sends telemetry on successful tool call", async () => {
+    const telemetryCalls = mockWithTelemetryCapture();
+
+    await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 20,
+      method: "tools/call",
+      params: { name: "list_apps", arguments: {} },
+    });
+
+    expect(telemetryCalls).toHaveLength(1);
+    const { url, options } = telemetryCalls[0];
+    expect(url).toMatch(/\/submit\/.*\/events\/1\//);
+
+    const body = JSON.parse(options.body);
+    expect(body.ping_info).toBeDefined();
+    expect(body.client_info).toBeDefined();
+    expect(body.events).toHaveLength(1);
+
+    const event = body.events[0];
+    expect(event.category).toBe("mcp");
+    expect(event.name).toBe("tool_call");
+    expect(event.extra.tool_name).toBe("list_apps");
+    expect(event.extra.success).toBe("true");
+  });
+
+  it("sends telemetry with success=false on tool error", async () => {
+    const telemetryCalls = [];
+    global.fetch.mockImplementation((url, options) => {
+      if (url.includes("/submit/")) {
+        telemetryCalls.push({ url, options });
+        return Promise.resolve({ ok: true, status: 200 });
+      }
+      return Promise.resolve({
+        ok: false,
+        status: 500,
+        statusText: "Internal Server Error",
+      });
+    });
+
+    const response = await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 21,
+      method: "tools/call",
+      params: { name: "list_apps", arguments: {} },
+    });
+
+    expect(response.parsedBody.result.isError).toBe(true);
+    expect(telemetryCalls).toHaveLength(1);
+
+    const body = JSON.parse(telemetryCalls[0].options.body);
+    expect(body.events[0].extra.success).toBe("false");
+  });
+
+  it("sends telemetry on initialize", async () => {
+    const telemetryCalls = [];
+    global.fetch.mockImplementation((url, options) => {
+      if (url.includes("/submit/")) {
+        telemetryCalls.push({ url, options });
+        return Promise.resolve({ ok: true, status: 200 });
+      }
+      return Promise.reject(new Error(`Unexpected URL: ${url}`));
+    });
+
+    await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 22,
+      method: "initialize",
+      params: {
+        clientInfo: { name: "test-client", version: "1.2.3" },
+      },
+    });
+
+    expect(telemetryCalls).toHaveLength(1);
+    const body = JSON.parse(telemetryCalls[0].options.body);
+    expect(body.events[0].category).toBe("mcp");
+    expect(body.events[0].name).toBe("initialize");
+    expect(body.events[0].extra.client_name).toBe("test-client");
+    expect(body.events[0].extra.client_version).toBe("1.2.3");
+  });
+
+  it("telemetry failure does not break MCP response", async () => {
+    global.fetch.mockImplementation((url) => {
+      if (url.includes("/submit/")) {
+        return Promise.reject(new Error("Telemetry network error"));
+      }
+      if (url.includes("app-listings")) {
+        return Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve([
+              {
+                app_name: "test_app",
+                app_description: "Test",
+                canonical_app_name: "Test",
+                deprecated: false,
+                url: "https://example.com",
+                v1_name: "test-app",
+              },
+            ]),
+        });
+      }
+      if (url.includes("annotations")) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({}),
+        });
+      }
+      return Promise.reject(new Error(`Unexpected URL: ${url}`));
+    });
+
+    const response = await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 23,
+      method: "tools/call",
+      params: { name: "list_apps", arguments: {} },
+    });
+
+    // MCP response should succeed even though telemetry failed
+    expect(response.statusCode).toBe(200);
+    expect(response.parsedBody.result.isError).toBeUndefined();
+    const resultData = JSON.parse(response.parsedBody.result.content[0].text);
+    expect(resultData[0].app_name).toBe("test_app");
+  });
+
+  it("includes app_name in telemetry when provided", async () => {
+    const telemetryCalls = mockWithTelemetryCapture();
+
+    // get_app requires fetching metrics, pings, tags — mock them all
+    global.fetch.mockImplementation((url, options) => {
+      if (url.includes("/submit/")) {
+        telemetryCalls.push({ url, options });
+        return Promise.resolve({ ok: true, status: 200 });
+      }
+      if (url.includes("app-listings")) {
+        return Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve([
+              {
+                app_name: "test_app",
+                app_description: "Test",
+                canonical_app_name: "Test",
+                deprecated: false,
+                url: "https://example.com",
+                v1_name: "test-app",
+                app_id: "org.test",
+                notification_emails: ["test@example.com"],
+              },
+            ]),
+        });
+      }
+      if (url.includes("annotations")) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({}),
+        });
+      }
+      if (
+        url.includes("metrics") ||
+        url.includes("pings") ||
+        url.includes("tags")
+      ) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({}),
+        });
+      }
+      return Promise.reject(new Error(`Unexpected URL: ${url}`));
+    });
+
+    await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 24,
+      method: "tools/call",
+      params: { name: "get_app", arguments: { app_name: "test_app" } },
+    });
+
+    expect(telemetryCalls.length).toBeGreaterThanOrEqual(1);
+    const body = JSON.parse(
+      telemetryCalls[telemetryCalls.length - 1].options.body
+    );
+    expect(body.events[0].extra.app_name).toBe("test_app");
   });
 });
