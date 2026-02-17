@@ -435,9 +435,8 @@ describe("MCP Server telemetry", () => {
   });
 
   it("includes app_name in telemetry when provided", async () => {
-    const telemetryCalls = mockWithTelemetryCapture();
-
     // get_app requires fetching metrics, pings, tags — mock them all
+    const telemetryCalls = [];
     global.fetch.mockImplementation((url, options) => {
       if (url.includes("/submit/")) {
         telemetryCalls.push({ url, options });
