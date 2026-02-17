@@ -279,13 +279,14 @@ describe("MCP Server library dependency resolution", () => {
         });
       }
       // Match dependency and app endpoints: /glean/{v1_name}/{type}
-      for (const [pattern, data] of Object.entries(depEndpoints)) {
-        if (url.includes(pattern)) {
-          return Promise.resolve({
-            ok: true,
-            json: () => Promise.resolve(data),
-          });
-        }
+      const depMatch = Object.entries(depEndpoints).find(([pattern]) =>
+        url.includes(pattern)
+      );
+      if (depMatch) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(depMatch[1]),
+        });
       }
       // App's own endpoints
       if (url.includes("/glean/test-app/metrics")) {
