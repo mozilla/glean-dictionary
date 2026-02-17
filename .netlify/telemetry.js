@@ -100,8 +100,9 @@ async function submitTelemetryEvent(category, name, extra = {}) {
       headers,
       body: JSON.stringify(ping),
     });
-  } catch {
-    // Telemetry must never break MCP responses — silently ignore all errors.
+  } catch (error) {
+    // Telemetry must never break MCP responses — log and continue.
+    console.error("Telemetry submission failed:", error);
   }
 }
 
