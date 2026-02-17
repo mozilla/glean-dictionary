@@ -19,6 +19,7 @@ publish = "public"
 [context.production]
   [context.production.environment]
   CONTEXT = "production"
+  GLEAN_APPLICATION_ID = "glean-dictionary"
 
 
 [[headers]]

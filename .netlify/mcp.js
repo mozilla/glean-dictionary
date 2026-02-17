@@ -3,6 +3,8 @@
  * Implements MCP JSON-RPC protocol for discovering Glean telemetry metadata.
  */
 
+const { submitTelemetryEvent } = require("./telemetry");
+
 const PROBEINFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org";
 const ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json";
 
@@ -10,6 +12,10 @@ const ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json";
 let cachedAnnotations = null;
 let cachedLibraryVariants = null;
 let cachedAppListings = null;
+
+// MCP client info captured during initialize
+let mcpClientName = null;
+let mcpClientVersion = null;
 
 /**
  * Fetch JSON from a URL
@@ -506,8 +512,16 @@ async function handleJsonRpc(request) {
 
   const { id, method, params } = request;
 
+  console.log("MCP request params:", JSON.stringify(params, null, 2));
+
   switch (method) {
     case "initialize":
+      mcpClientName = params?.clientInfo?.name || null;
+      mcpClientVersion = params?.clientInfo?.version || null;
+      await submitTelemetryEvent("mcp", "initialize", {
+        client_name: mcpClientName,
+        client_version: mcpClientVersion,
+      });
       cachedAnnotations = null;
       cachedLibraryVariants = null;
       cachedAppListings = null;
@@ -530,6 +544,11 @@ async function handleJsonRpc(request) {
           params.name,
           params.arguments || {}
         );
+        await submitTelemetryEvent("mcp", "tool_call", {
+          tool_name: params.name,
+          app_name: (params.arguments || {}).app_name,
+          success: "true",
+        });
         return {
           jsonrpc: "2.0",
           id,
@@ -538,6 +557,11 @@ async function handleJsonRpc(request) {
           },
         };
       } catch (error) {
+        await submitTelemetryEvent("mcp", "tool_call", {
+          tool_name: params.name,
+          app_name: (params.arguments || {}).app_name,
+          success: "false",
+        });
         return {
           jsonrpc: "2.0",
           id,
