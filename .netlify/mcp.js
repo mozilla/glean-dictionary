@@ -6,8 +6,10 @@
 const PROBEINFO_BASE_URL = "https://probeinfo.telemetry.mozilla.org";
 const ANNOTATIONS_URL = "https://mozilla.github.io/glean-annotations/api.json";
 
-// Cache for annotations (shared across invocations in same instance)
+// Caches (shared across invocations in same instance)
 let cachedAnnotations = null;
+let cachedLibraryVariants = null;
+let cachedAppListings = null;
 
 /**
  * Fetch JSON from a URL
@@ -36,10 +38,45 @@ async function getAnnotations() {
 }
 
 /**
- * Get all app listings from probeinfo
+ * Get library variants mapping (cached)
+ */
+async function getLibraryVariants() {
+  if (cachedLibraryVariants) return cachedLibraryVariants;
+  try {
+    cachedLibraryVariants = await fetchJson(
+      `${PROBEINFO_BASE_URL}/v2/glean/library-variants`
+    );
+    return cachedLibraryVariants;
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Get v1 names for an app's library dependencies
+ */
+async function getDependencyV1Names(app) {
+  const depNames = app.dependencies || [];
+  if (depNames.length === 0) return [];
+
+  const variants = await getLibraryVariants();
+  const byDepName = {};
+  for (const lib of variants) {
+    byDepName[lib.dependency_name] = lib.v1_name;
+  }
+
+  return depNames.map((name) => byDepName[name]).filter(Boolean);
+}
+
+/**
+ * Get all app listings from probeinfo (cached)
  */
 async function getAppListings() {
-  return fetchJson(`${PROBEINFO_BASE_URL}/v2/glean/app-listings`);
+  if (cachedAppListings) return cachedAppListings;
+  cachedAppListings = await fetchJson(
+    `${PROBEINFO_BASE_URL}/v2/glean/app-listings`
+  );
+  return cachedAppListings;
 }
 
 /**
@@ -56,43 +93,55 @@ async function findApp(appName) {
 }
 
 /**
- * Get v1 API identifier for an app
+ * Fetch a probeinfo endpoint for an app and its library dependencies, merging results.
+ * App-defined entries take precedence over library entries.
  */
-function getV1AppId(app) {
-  return app.v1_name;
-}
-
-/**
- * Get metrics for an app
- */
-async function getMetrics(appName) {
+async function fetchWithDependencies(appName, endpoint) {
   const app = await findApp(appName);
   if (!app) throw new Error(`App not found: ${appName}`);
-  return fetchJson(`${PROBEINFO_BASE_URL}/glean/${getV1AppId(app)}/metrics`);
-}
 
-/**
- * Get pings for an app
- */
-async function getPings(appName) {
-  const app = await findApp(appName);
-  if (!app) throw new Error(`App not found: ${appName}`);
-  return fetchJson(`${PROBEINFO_BASE_URL}/glean/${getV1AppId(app)}/pings`);
-}
+  const [appData, depV1Names] = await Promise.all([
+    fetchJson(
+      `${PROBEINFO_BASE_URL}/glean/${app.v1_name}/${endpoint}`
+    ).catch(() => ({})),
+    getDependencyV1Names(app),
+  ]);
 
-/**
- * Get tags for an app
- */
-async function getTags(appName) {
-  const app = await findApp(appName);
-  if (!app) throw new Error(`App not found: ${appName}`);
-  try {
-    return await fetchJson(
-      `${PROBEINFO_BASE_URL}/glean/${getV1AppId(app)}/tags`
-    );
-  } catch {
-    return {};
+  const merged = { ...appData };
+  const depResults = await Promise.all(
+    depV1Names.map((v1) =>
+      fetchJson(`${PROBEINFO_BASE_URL}/glean/${v1}/${endpoint}`).catch(
+        () => ({})
+      )
+    )
+  );
+  for (const depData of depResults) {
+    for (const [name, def] of Object.entries(depData)) {
+      if (!merged[name]) merged[name] = def;
+    }
   }
+  return merged;
+}
+
+/**
+ * Get metrics for an app (including library dependencies)
+ */
+function getMetrics(appName) {
+  return fetchWithDependencies(appName, "metrics");
+}
+
+/**
+ * Get pings for an app (including library dependencies)
+ */
+function getPings(appName) {
+  return fetchWithDependencies(appName, "pings");
+}
+
+/**
+ * Get tags for an app (including library dependencies)
+ */
+function getTags(appName) {
+  return fetchWithDependencies(appName, "tags");
 }
 
 // ============================================================================
@@ -459,6 +508,9 @@ async function handleJsonRpc(request) {
 
   switch (method) {
     case "initialize":
+      cachedAnnotations = null;
+      cachedLibraryVariants = null;
+      cachedAppListings = null;
       return {
         jsonrpc: "2.0",
         id,
