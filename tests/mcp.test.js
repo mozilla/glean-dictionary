@@ -264,7 +264,14 @@ describe("MCP Server tool calls", () => {
 });
 
 describe("MCP Server telemetry", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    global.fetch.mockReset();
+    // Clear module-level caches between tests
+    await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 0,
+      method: "initialize",
+    });
     global.fetch.mockReset();
   });
 
@@ -289,37 +296,6 @@ describe("MCP Server telemetry", () => {
                 v1_name: "test-app",
               },
             ]),
-describe("MCP Server library dependency resolution", () => {
-  beforeEach(async () => {
-    global.fetch.mockReset();
-    // Clear module-level caches between tests
-    await callHandler("POST", {
-      jsonrpc: "2.0",
-      id: 0,
-      method: "initialize",
-    });
-    global.fetch.mockReset();
-  });
-
-  function mockFetchForDeps({
-    appListings,
-    libraryVariants,
-    appMetrics = {},
-    appPings = {},
-    appTags = {},
-    depEndpoints = {},
-  }) {
-    global.fetch.mockImplementation((url) => {
-      if (url.includes("app-listings")) {
-        return Promise.resolve({
-          ok: true,
-          json: () => Promise.resolve(appListings),
-        });
-      }
-      if (url.includes("library-variants")) {
-        return Promise.resolve({
-          ok: true,
-          json: () => Promise.resolve(libraryVariants),
         });
       }
       if (url.includes("annotations")) {
@@ -371,6 +347,196 @@ describe("MCP Server library dependency resolution", () => {
         status: 500,
         statusText: "Internal Server Error",
       });
+    });
+
+    const response = await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 21,
+      method: "tools/call",
+      params: { name: "list_apps", arguments: {} },
+    });
+
+    expect(response.parsedBody.result.isError).toBe(true);
+    expect(telemetryCalls).toHaveLength(1);
+
+    const body = JSON.parse(telemetryCalls[0].options.body);
+    expect(body.events[0].extra.success).toBe("false");
+  });
+
+  it("sends telemetry on initialize", async () => {
+    const telemetryCalls = [];
+    global.fetch.mockImplementation((url, options) => {
+      if (url.includes("/submit/")) {
+        telemetryCalls.push({ url, options });
+        return Promise.resolve({ ok: true, status: 200 });
+      }
+      return Promise.reject(new Error(`Unexpected URL: ${url}`));
+    });
+
+    await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 22,
+      method: "initialize",
+      params: {
+        clientInfo: { name: "test-client", version: "1.2.3" },
+      },
+    });
+
+    expect(telemetryCalls).toHaveLength(1);
+    const body = JSON.parse(telemetryCalls[0].options.body);
+    expect(body.events[0].category).toBe("mcp");
+    expect(body.events[0].name).toBe("initialize");
+    expect(body.events[0].extra.client_name).toBe("test-client");
+    expect(body.events[0].extra.client_version).toBe("1.2.3");
+  });
+
+  it("telemetry failure does not break MCP response", async () => {
+    global.fetch.mockImplementation((url) => {
+      if (url.includes("/submit/")) {
+        return Promise.reject(new Error("Telemetry network error"));
+      }
+      if (url.includes("app-listings")) {
+        return Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve([
+              {
+                app_name: "test_app",
+                app_description: "Test",
+                canonical_app_name: "Test",
+                deprecated: false,
+                url: "https://example.com",
+                v1_name: "test-app",
+              },
+            ]),
+        });
+      }
+      if (url.includes("annotations")) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({}),
+        });
+      }
+      return Promise.reject(new Error(`Unexpected URL: ${url}`));
+    });
+
+    const response = await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 23,
+      method: "tools/call",
+      params: { name: "list_apps", arguments: {} },
+    });
+
+    // MCP response should succeed even though telemetry failed
+    expect(response.statusCode).toBe(200);
+    expect(response.parsedBody.result.isError).toBeUndefined();
+    const resultData = JSON.parse(response.parsedBody.result.content[0].text);
+    expect(resultData[0].app_name).toBe("test_app");
+  });
+
+  it("includes app_name in telemetry when provided", async () => {
+    const telemetryCalls = mockWithTelemetryCapture();
+
+    // get_app requires fetching metrics, pings, tags — mock them all
+    global.fetch.mockImplementation((url, options) => {
+      if (url.includes("/submit/")) {
+        telemetryCalls.push({ url, options });
+        return Promise.resolve({ ok: true, status: 200 });
+      }
+      if (url.includes("app-listings")) {
+        return Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve([
+              {
+                app_name: "test_app",
+                app_description: "Test",
+                canonical_app_name: "Test",
+                deprecated: false,
+                url: "https://example.com",
+                v1_name: "test-app",
+                app_id: "org.test",
+                notification_emails: ["test@example.com"],
+              },
+            ]),
+        });
+      }
+      if (url.includes("annotations")) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({}),
+        });
+      }
+      if (
+        url.includes("metrics") ||
+        url.includes("pings") ||
+        url.includes("tags")
+      ) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({}),
+        });
+      }
+      return Promise.reject(new Error(`Unexpected URL: ${url}`));
+    });
+
+    await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 24,
+      method: "tools/call",
+      params: { name: "get_app", arguments: { app_name: "test_app" } },
+    });
+
+    expect(telemetryCalls.length).toBeGreaterThanOrEqual(1);
+    const body = JSON.parse(
+      telemetryCalls[telemetryCalls.length - 1].options.body
+    );
+    expect(body.events[0].extra.app_name).toBe("test_app");
+  });
+});
+
+describe("MCP Server library dependency resolution", () => {
+  beforeEach(async () => {
+    global.fetch.mockReset();
+    // Clear module-level caches between tests
+    await callHandler("POST", {
+      jsonrpc: "2.0",
+      id: 0,
+      method: "initialize",
+    });
+    global.fetch.mockReset();
+  });
+
+  function mockFetchForDeps({
+    appListings,
+    libraryVariants,
+    appMetrics = {},
+    appPings = {},
+    appTags = {},
+    depEndpoints = {},
+  }) {
+    global.fetch.mockImplementation((url) => {
+      if (url.includes("/submit/")) {
+        return Promise.resolve({ ok: true, status: 200 });
+      }
+      if (url.includes("app-listings")) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(appListings),
+        });
+      }
+      if (url.includes("library-variants")) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(libraryVariants),
+        });
+      }
+      if (url.includes("annotations")) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({}),
+        });
+      }
       // Match dependency and app endpoints: /glean/{v1_name}/{type}
       const depMatch = Object.entries(depEndpoints).find(([pattern]) =>
         url.includes(pattern)
@@ -524,71 +690,6 @@ describe("MCP Server library dependency resolution", () => {
       jsonrpc: "2.0",
       id: 21,
       method: "tools/call",
-      params: { name: "list_apps", arguments: {} },
-    });
-
-    expect(response.parsedBody.result.isError).toBe(true);
-    expect(telemetryCalls).toHaveLength(1);
-
-    const body = JSON.parse(telemetryCalls[0].options.body);
-    expect(body.events[0].extra.success).toBe("false");
-  });
-
-  it("sends telemetry on initialize", async () => {
-    const telemetryCalls = [];
-    global.fetch.mockImplementation((url, options) => {
-      if (url.includes("/submit/")) {
-        telemetryCalls.push({ url, options });
-        return Promise.resolve({ ok: true, status: 200 });
-      }
-      return Promise.reject(new Error(`Unexpected URL: ${url}`));
-    });
-
-    await callHandler("POST", {
-      jsonrpc: "2.0",
-      id: 22,
-      method: "initialize",
-      params: {
-        clientInfo: { name: "test-client", version: "1.2.3" },
-      },
-    });
-
-    expect(telemetryCalls).toHaveLength(1);
-    const body = JSON.parse(telemetryCalls[0].options.body);
-    expect(body.events[0].category).toBe("mcp");
-    expect(body.events[0].name).toBe("initialize");
-    expect(body.events[0].extra.client_name).toBe("test-client");
-    expect(body.events[0].extra.client_version).toBe("1.2.3");
-  });
-
-  it("telemetry failure does not break MCP response", async () => {
-    global.fetch.mockImplementation((url) => {
-      if (url.includes("/submit/")) {
-        return Promise.reject(new Error("Telemetry network error"));
-      }
-      if (url.includes("app-listings")) {
-        return Promise.resolve({
-          ok: true,
-          json: () =>
-            Promise.resolve([
-              {
-                app_name: "test_app",
-                app_description: "Test",
-                canonical_app_name: "Test",
-                deprecated: false,
-                url: "https://example.com",
-                v1_name: "test-app",
-              },
-            ]),
-        });
-      }
-      if (url.includes("annotations")) {
-        return Promise.resolve({
-          ok: true,
-          json: () => Promise.resolve({}),
-        });
-      }
-      return Promise.reject(new Error(`Unexpected URL: ${url}`));
       params: { name: "get_app", arguments: { app_name: "test_app" } },
     });
 
@@ -671,25 +772,6 @@ describe("MCP Server library dependency resolution", () => {
       jsonrpc: "2.0",
       id: 23,
       method: "tools/call",
-      params: { name: "list_apps", arguments: {} },
-    });
-
-    // MCP response should succeed even though telemetry failed
-    expect(response.statusCode).toBe(200);
-    expect(response.parsedBody.result.isError).toBeUndefined();
-    const resultData = JSON.parse(response.parsedBody.result.content[0].text);
-    expect(resultData[0].app_name).toBe("test_app");
-  });
-
-  it("includes app_name in telemetry when provided", async () => {
-    const telemetryCalls = mockWithTelemetryCapture();
-
-    // get_app requires fetching metrics, pings, tags — mock them all
-    global.fetch.mockImplementation((url, options) => {
-      if (url.includes("/submit/")) {
-        telemetryCalls.push({ url, options });
-        return Promise.resolve({ ok: true, status: 200 });
-      }
       params: {
         name: "get_metric",
         arguments: {
@@ -957,6 +1039,9 @@ describe("MCP Server library dependency resolution", () => {
 
   it("still returns app data when a dependency fetch fails", async () => {
     global.fetch.mockImplementation((url) => {
+      if (url.includes("/submit/")) {
+        return Promise.resolve({ ok: true, status: 200 });
+      }
       if (url.includes("app-listings")) {
         return Promise.resolve({
           ok: true,
@@ -969,26 +1054,6 @@ describe("MCP Server library dependency resolution", () => {
                 deprecated: false,
                 url: "https://example.com",
                 v1_name: "test-app",
-                app_id: "org.test",
-                notification_emails: ["test@example.com"],
-              },
-            ]),
-        });
-      }
-      if (url.includes("annotations")) {
-        return Promise.resolve({
-          ok: true,
-          json: () => Promise.resolve({}),
-        });
-      }
-      if (
-        url.includes("metrics") ||
-        url.includes("pings") ||
-        url.includes("tags")
-      ) {
-        return Promise.resolve({
-          ok: true,
-          json: () => Promise.resolve({}),
                 dependencies: ["glean-core"],
               },
             ]),
@@ -1047,18 +1112,6 @@ describe("MCP Server library dependency resolution", () => {
       return Promise.reject(new Error(`Unexpected URL: ${url}`));
     });
 
-    await callHandler("POST", {
-      jsonrpc: "2.0",
-      id: 24,
-      method: "tools/call",
-      params: { name: "get_app", arguments: { app_name: "test_app" } },
-    });
-
-    expect(telemetryCalls.length).toBeGreaterThanOrEqual(1);
-    const body = JSON.parse(
-      telemetryCalls[telemetryCalls.length - 1].options.body
-    );
-    expect(body.events[0].extra.app_name).toBe("test_app");
     const response = await callHandler("POST", {
       jsonrpc: "2.0",
       id: 27,
