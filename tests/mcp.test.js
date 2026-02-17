@@ -372,7 +372,10 @@ describe("MCP Server library dependency resolution", () => {
       jsonrpc: "2.0",
       id: 20,
       method: "tools/call",
-      params: { name: "get_ping", arguments: { app_name: "test_app", ping_name: "baseline" } },
+      params: {
+        name: "get_ping",
+        arguments: { app_name: "test_app", ping_name: "baseline" },
+      },
     });
 
     expect(response.parsedBody.result.isError).toBeUndefined();
@@ -395,7 +398,13 @@ describe("MCP Server library dependency resolution", () => {
       },
       appMetrics: {
         "app.metric": {
-          history: [{ type: "counter", description: "App metric", send_in_pings: ["events"] }],
+          history: [
+            {
+              type: "counter",
+              description: "App metric",
+              send_in_pings: ["events"],
+            },
+          ],
         },
       },
       depEndpoints: {
@@ -404,7 +413,13 @@ describe("MCP Server library dependency resolution", () => {
         },
         "/glean/glean-core/metrics": {
           "glean.baseline.duration": {
-            history: [{ type: "timespan", description: "Duration", send_in_pings: ["baseline"] }],
+            history: [
+              {
+                type: "timespan",
+                description: "Duration",
+                send_in_pings: ["baseline"],
+              },
+            ],
           },
         },
         "/glean/glean-core/tags": {},
@@ -499,7 +514,10 @@ describe("MCP Server library dependency resolution", () => {
       method: "tools/call",
       params: {
         name: "get_metric",
-        arguments: { app_name: "test_app", metric_name: "glean.baseline.duration" },
+        arguments: {
+          app_name: "test_app",
+          metric_name: "glean.baseline.duration",
+        },
       },
     });
 
@@ -514,7 +532,12 @@ describe("MCP Server library dependency resolution", () => {
       appMetrics: {
         "app.clicks": {
           history: [
-            { type: "counter", description: "App clicks", expires: "never", send_in_pings: ["events"] },
+            {
+              type: "counter",
+              description: "App clicks",
+              expires: "never",
+              send_in_pings: ["events"],
+            },
           ],
         },
       },
@@ -540,7 +563,10 @@ describe("MCP Server library dependency resolution", () => {
       method: "tools/call",
       params: {
         name: "get_metric",
-        arguments: { app_name: "test_app", metric_name: "glean.baseline.duration" },
+        arguments: {
+          app_name: "test_app",
+          metric_name: "glean.baseline.duration",
+        },
       },
     });
 
@@ -695,18 +721,39 @@ describe("MCP Server library dependency resolution", () => {
       ],
       appMetrics: {
         "app.clicks": {
-          history: [{ type: "counter", description: "App clicks", expires: "never", send_in_pings: ["events"] }],
+          history: [
+            {
+              type: "counter",
+              description: "App clicks",
+              expires: "never",
+              send_in_pings: ["events"],
+            },
+          ],
         },
       },
       depEndpoints: {
         "/glean/glean-core/metrics": {
           "glean.baseline.duration": {
-            history: [{ type: "timespan", description: "From glean-core", expires: "never", send_in_pings: ["baseline"] }],
+            history: [
+              {
+                type: "timespan",
+                description: "From glean-core",
+                expires: "never",
+                send_in_pings: ["baseline"],
+              },
+            ],
           },
         },
         "/glean/gecko/metrics": {
           "gecko.page.load_time": {
-            history: [{ type: "timing_distribution", description: "From gecko", expires: "never", send_in_pings: ["metrics"] }],
+            history: [
+              {
+                type: "timing_distribution",
+                description: "From gecko",
+                expires: "never",
+                send_in_pings: ["metrics"],
+              },
+            ],
           },
         },
       },
@@ -768,7 +815,14 @@ describe("MCP Server library dependency resolution", () => {
           json: () =>
             Promise.resolve({
               "app.metric": {
-                history: [{ type: "counter", description: "App metric", expires: "never", send_in_pings: ["events"] }],
+                history: [
+                  {
+                    type: "counter",
+                    description: "App metric",
+                    expires: "never",
+                    send_in_pings: ["events"],
+                  },
+                ],
               },
             }),
         });

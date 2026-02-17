@@ -101,9 +101,9 @@ async function fetchWithDependencies(appName, endpoint) {
   if (!app) throw new Error(`App not found: ${appName}`);
 
   const [appData, depV1Names] = await Promise.all([
-    fetchJson(
-      `${PROBEINFO_BASE_URL}/glean/${app.v1_name}/${endpoint}`
-    ).catch(() => ({})),
+    fetchJson(`${PROBEINFO_BASE_URL}/glean/${app.v1_name}/${endpoint}`).catch(
+      () => ({})
+    ),
     getDependencyV1Names(app),
   ]);
 
