@@ -73,6 +73,42 @@ Once connected, you can ask Claude:
    claude mcp add --transport http glean-dictionary https://dictionary.telemetry.mozilla.org/mcp
    ```
 
+## Telemetry
+
+The MCP server sends lightweight Glean telemetry to track usage. We can't use
+the Glean JS SDK because `@mozilla/glean` only ships browser bundles — there's
+no Node.js entry point. Instead, we handcraft a minimal events ping and POST it
+directly to the ingestion endpoint (see `.netlify/telemetry.js`).
+
+**Events:**
+
+| Event            | Extras                             | Description                    |
+| ---------------- | ---------------------------------- | ------------------------------ |
+| `mcp.initialize` | `client_name`, `client_version`    | Fired on each MCP `initialize` |
+| `mcp.tool_call`  | `tool_name`, `app_name`, `success` | Fired on each `tools/call`     |
+
+Pings are submitted under the same `glean_dictionary` app ID as the frontend,
+with `app_channel` set from the Netlify `CONTEXT` env var (`production`,
+`deploy-preview`, or `development`).
+
+**Environment variables** (all optional):
+
+| Variable               | Default                                  | Description                             |
+| ---------------------- | ---------------------------------------- | --------------------------------------- |
+| `GLEAN_APPLICATION_ID` | `glean-dictionary-dev`                   | App ID in the submission URL            |
+| `GLEAN_INGESTION_URL`  | `https://incoming.telemetry.mozilla.org` | Ingestion endpoint                      |
+| `GLEAN_DEBUG_VIEW_TAG` | _(unset)_                                | Adds `X-Debug-ID` header for debug view |
+| `CONTEXT`              | _(unset)_                                | Netlify build context → `app_channel`   |
+
+**Debug pings locally:**
+
+```bash
+GLEAN_DEBUG_VIEW_TAG=mcp-test npx netlify dev
+```
+
+Then check https://debug-ping-preview.firebaseapp.com/pings/mcp-test after
+making MCP calls.
+
 ## Data Sources
 
 - **Probeinfo API**: `probeinfo.telemetry.mozilla.org` - metrics, pings, apps
