@@ -5,7 +5,15 @@ import { filterItemsByLabels, filterItemsByExpiration } from "./filter";
 export const generateSearchIndex = (items) => {
   const searchIndex = new Document({
     tokenize: "forward",
-    index: ["id", "type", "tags", "origin", "description", "bugs"],
+    index: [
+      "id",
+      "type",
+      "tags",
+      "origin",
+      "description",
+      "bugs",
+      "notification_emails",
+    ],
   });
 
   items.forEach((item) => {
@@ -17,6 +25,7 @@ export const generateSearchIndex = (items) => {
       description: item.description,
       expires: item.expires,
       bugs: item.bugs,
+      notification_emails: item.notification_emails,
     });
   });
 
@@ -35,6 +44,7 @@ export const fullTextSearch = (searchIndex, query, searchItems) => {
     expires: [],
     name: [],
     bugs: [],
+    notification_emails: [],
   };
 
   searchTerms.forEach((term) => {
@@ -44,10 +54,14 @@ export const fullTextSearch = (searchIndex, query, searchItems) => {
       term.startsWith("type:") ||
       term.startsWith("expires:") ||
       term.startsWith("name:") ||
-      term.startsWith("bugs:")
+      term.startsWith("bugs:") ||
+      term.startsWith("email:")
     ) {
       const splitter = term.indexOf(":");
-      const labelType = term.slice(0, splitter);
+      let labelType = term.slice(0, splitter);
+      if (labelType === "email") {
+        labelType = "notification_emails";
+      }
       labels[labelType] = [
         ...labels[labelType],
         term.slice(splitter + 1).replace(/"?(.*?)"?$/, "$1"),

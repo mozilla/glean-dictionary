@@ -1,5 +1,5 @@
 {
-  "regex": "/search_counts|browser_search|event_counts|browser_engagement_navigation|manager_message_size|dropped_frames_proportion/",
+  "regex": "search_counts|browser_search|event_counts|browser_engagement_navigation|manager_message_size|dropped_frames_proportion",
   "confidentialMetricsFenix": [
     "characteristics.color_depth",
     "characteristics.color_gamut",

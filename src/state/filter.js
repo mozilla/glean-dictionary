@@ -20,6 +20,10 @@ export const filterItemsByLabels = (items, labels) => {
           (label === "bugs" &&
             labelsToFilter.bugs.every((el) =>
               item.bugs.some((bug) => bug.endsWith(el))
+            )) ||
+          (label === "notification_emails" &&
+            labelsToFilter.notification_emails.every((el) =>
+              item.notification_emails.some((email) => email.startsWith(el))
             )))
     );
 
