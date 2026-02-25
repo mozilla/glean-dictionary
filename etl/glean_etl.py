@@ -484,6 +484,7 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
                             in ["client_info", "ping_info"],
                             bugs=metric.definition["bugs"],
                             monitor=metric.definition.get("metadata", {}).get("monitor", {}),
+                            notification_emails=metric.definition["notification_emails"],
                         ),
                         metric_annotation,
                     )
