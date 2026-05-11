@@ -24,11 +24,7 @@ EVENT_MONITORING_DASHBOARD_URL = "https://mozilla.cloud.looker.com/dashboards/14
 
 
 def _looker_explore_exists(looker_namespaces, app_name, explore_name):
-    return (
-        looker_namespaces.get(app_name)
-        and looker_namespaces[app_name].get("glean_app")
-        and looker_namespaces[app_name]["explores"].get(explore_name)
-    )
+    return looker_namespaces.get(app_name, {}).get("explores", {}).get(explore_name)
 
 
 def _get_looker_ping_explores(
