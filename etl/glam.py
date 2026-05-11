@@ -20,6 +20,9 @@ SUPPORTED_GLAM_METRIC_TYPES = GLEAN_DISTRIBUTION_TYPES | {
     "dual_labeled_counter",
     "quantity",
     "timespan",
+    "labeled_custom_distribution",
+    "labeled_memory_distribution",
+    "labeled_timing_distribution",
 }
 
 # ETL specific snakecase taken from:
