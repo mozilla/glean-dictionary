@@ -1,6 +1,7 @@
 import re
 import copy
 import json
+import logging
 import os
 import shutil
 import tempfile
@@ -97,6 +98,23 @@ def _normalize_metrics(name):
     # See: https://github.com/mozilla/glean-dictionary/issues/550
     # To get around this, we add "data" to metric names
     return f"data_{metric_name}"
+
+
+def _resolve_metric_collision(existing, candidate):
+    """
+    Pick a winner when two metrics normalize to the same filename (see
+    `_normalize_metrics`).
+    """
+
+    def sort_key(metric):
+        return (
+            1 if metric.get("in_source") else 0,
+            metric.get("date_first_seen") or "",
+        )
+
+    if sort_key(candidate) > sort_key(existing):
+        return candidate, existing
+    return existing, candidate
 
 
 def _get_annotation(annotations_index, origin, item_type, identifier=None):
@@ -615,12 +633,34 @@ def write_glean_metadata(output_dir, functions_dir, app_names=None):
         extract_auto_event("glean.page_load", app_name, app_data, app_metrics)
 
         # write metrics, resorting the app-specific parts in user preference order
+        metrics_by_filename = {}
         for metric_data in app_metrics.values():
             metric_data["variants"].sort(key=lambda v: USER_CHANNEL_PRIORITY[v["channel"]])
-            open(
-                os.path.join(app_metrics_dir, f"{_normalize_metrics(metric_data['name'])}.json"),
-                "w",
-            ).write(dump_json(metric_data))
+            filename = f"{_normalize_metrics(metric_data['name'])}.json"
+            existing = metrics_by_filename.get(filename)
+            if existing is None:
+                metrics_by_filename[filename] = metric_data
+                continue
+            # Resolve metric name collision.
+            winner, loser = _resolve_metric_collision(existing, metric_data)
+            metrics_by_filename[filename] = winner
+            logging.warning(
+                "Metric name collision for app %s: %r and %r both normalize to %s. "
+                "Keeping %r (in_source=%s); dropping %r (in_source=%s). "
+                "The dropped metric will not have its own page in the Glean "
+                "Dictionary or any consumer of its data (e.g. GLAM).",
+                app_name,
+                existing["name"],
+                metric_data["name"],
+                filename,
+                winner["name"],
+                winner.get("in_source"),
+                loser["name"],
+                loser.get("in_source"),
+            )
+
+        for filename, metric_data in metrics_by_filename.items():
+            open(os.path.join(app_metrics_dir, filename), "w").write(dump_json(metric_data))
 
         # write tag metadata (if any)
         if app_tags_for_objects:
