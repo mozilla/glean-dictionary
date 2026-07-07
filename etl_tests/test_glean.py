@@ -1,7 +1,12 @@
 import pytest
 
 from etl.glean import GleanMetric
-from etl.glean_etl import _get_metric_sample_data, _is_metric_in_ping
+from etl.glean_etl import (
+    _get_metric_sample_data,
+    _is_metric_in_ping,
+    _normalize_metrics,
+    _resolve_metric_collision,
+)
 
 
 @pytest.fixture
@@ -373,3 +378,37 @@ def test_is_metric_in_ping_info_section(metric, ping_data):
     metric["is_part_of_info_section"] = True
     ping_data["include_info_sections"] = False
     assert _is_metric_in_ping(metric, ping_data) is False
+
+
+def test_normalize_metrics_collides_on_dots_vs_underscores():
+    assert _normalize_metrics("search.suggestions_latency") == _normalize_metrics(
+        "search.suggestions.latency"
+    )
+
+
+def test_resolve_metric_collision_prefers_in_source():
+    removed = {
+        "name": "search.suggestions_latency",
+        "in_source": False,
+        "date_first_seen": "2025-03-12 15:15:27",
+    }
+    active = {
+        "name": "search.suggestions.latency",
+        "in_source": True,
+        "date_first_seen": "2025-09-18 00:05:24",
+    }
+
+    # the active metric wins regardless of iteration order
+    assert _resolve_metric_collision(removed, active) == (active, removed)
+    assert _resolve_metric_collision(active, removed) == (active, removed)
+
+
+def test_resolve_metric_collision_breaks_ties_on_recency():
+    older = {"name": "a.b", "in_source": True, "date_first_seen": "2024-01-01 00:00:00"}
+    newer = {"name": "a_b", "in_source": True, "date_first_seen": "2025-01-01 00:00:00"}
+    assert _resolve_metric_collision(older, newer)[0] is newer
+    assert _resolve_metric_collision(newer, older)[0] is newer
+
+    old_removed = {"name": "a.b", "in_source": False, "date_first_seen": "2024-01-01 00:00:00"}
+    new_removed = {"name": "a_b", "in_source": False, "date_first_seen": "2025-01-01 00:00:00"}
+    assert _resolve_metric_collision(old_removed, new_removed)[0] is new_removed
