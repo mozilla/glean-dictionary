@@ -153,6 +153,7 @@
       url: "url.html",
       rate: "rate.html",
       text: "text.html",
+      object: "object.html",
     };
 
     return links[type] ? `${sourceDocs}${links[type]}` : sourceDocs;
