@@ -5,6 +5,7 @@ import {
   getBugURL,
   getBugLinkTitle,
   getSourceUrlTitle,
+  getSourceUrl,
 } from "../formatters/links";
 import { getCodeSearchLink } from "../formatters/codesearch";
 import { getPingReasons } from "../formatters/text";
@@ -76,6 +77,7 @@ export const METRIC_DEFINITION_SCHEMA = [
     type: "link",
     helpText:
       "Where the source definition of the metric may be found (referencing the first commit in which it was introduced).",
+    linkFormatter: getSourceUrl,
     valueFormatter: getSourceUrlTitle,
   },
   {
