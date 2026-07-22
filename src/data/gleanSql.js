@@ -189,3 +189,327 @@ LIMIT 10`;
 
 export const getGleanPingQuerySTMOTemplateUrl = (table) =>
   `https://sql.telemetry.mozilla.org/queries/110682/source?p_table=${table}`;
+
+// The Glean Dictionary knows each metric's type, so we can pick a sensible way
+// to surface its value in the investigation query instead of leaving the raw
+// array/struct/JSON column for the user to figure out. Given a metric's type
+// and its BigQuery column, return:
+//   select:    the SELECT statement for the value.
+//   crossJoin: any CROSS JOIN UNNEST needed to examine it or an empty string.
+// The BigQuery shapes below match how etl/looker.py builds its metric explores.
+const HEADER = "  -- Metric under investigation:";
+
+// Object metrics are stored as a single JSON column. When the Dictionary knows
+// the metric's `structure`, exposed by the probe-info service, we can offer the
+// fields as ready-made JSON_VALUE paths. Return { paths, skippedMap, skippedArray }:
+//   paths:        [{ path: "$.a.b", alias: "a_b" }] for scalars reachable by a
+//                 plain object path.
+//   skippedMap:   a Glean {key, value} object was skipped.
+//   skippedArray: an array was skipped because it would need UNNEST/JSON_QUERY_ARRAY.
+const SCALAR_JSON_TYPES = new Set(["string", "number", "boolean", "oneOf"]);
+
+const isObjectMap = (node) => {
+  const props = node.properties ? Object.keys(node.properties) : [];
+  return props.length === 2 && props.includes("key") && props.includes("value");
+};
+
+const collectObjectScalarPaths = (structure) => {
+  const paths = [];
+  const flags = { skippedMap: false, skippedArray: false };
+  const walk = (node, path, aliasParts) => {
+    if (!node || typeof node !== "object") return;
+    if (SCALAR_JSON_TYPES.has(node.type)) {
+      paths.push({ path, alias: aliasParts.join("_") });
+    } else if (node.type === "array") {
+      flags.skippedArray = true;
+    } else if (node.type === "object" && node.properties) {
+      if (isObjectMap(node)) {
+        flags.skippedMap = true;
+      } else {
+        Object.entries(node.properties).forEach(([name, child]) =>
+          walk(child, `${path}.${name}`, [...aliasParts, name])
+        );
+      }
+    }
+  };
+  if (structure && structure.type === "array") {
+    flags.skippedArray = true;
+  } else if (structure && structure.type === "object" && structure.properties) {
+    Object.entries(structure.properties).forEach(([name, child]) =>
+      walk(child, `$.${name}`, [name])
+    );
+  }
+  return { paths, ...flags };
+};
+
+const getMetricValueSql = (metricType, columnName, structure) => {
+  // Alias off the last path segment, e.g. metrics.counter.foo_bar -> foo_bar.
+  const alias = columnName.split(".").pop();
+  const unnest = (label) => `\nCROSS JOIN UNNEST(${columnName}) AS ${label}`;
+
+  switch (metricType) {
+    // SUM and AVG numeric scalar metric types
+    case "counter":
+    case "quantity":
+      return {
+        select: `${HEADER} totalled across the pings in each group.
+  SUM(${columnName}) AS ${alias}_sum,
+  AVG(${columnName}) AS ${alias}_avg,`,
+        crossJoin: "",
+      };
+    case "timespan":
+      // STRUCT<time_unit STRING, value INT64>.
+      return {
+        select: `${HEADER} timespan total per group (units are in ${columnName}.time_unit).
+  SUM(${columnName}.value) AS ${alias}_sum,`,
+        crossJoin: "",
+      };
+    case "rate":
+      // STRUCT<numerator INT64, denominator INT64>.
+      return {
+        select: `${HEADER} rate numerator/denominator totalled per group.
+  SUM(${columnName}.numerator) AS ${alias}_numerator,
+  SUM(${columnName}.denominator) AS ${alias}_denominator,`,
+        crossJoin: "",
+      };
+    case "timing_distribution":
+    case "memory_distribution":
+    case "custom_distribution":
+      // STRUCT<sum INT64, values ARRAY<...>>. Sum is a good starting point;
+      // percentiles need the .values histogram.
+      return {
+        select: `${HEADER} distribution sum per group (a starting point; pull
+  -- percentiles from ${columnName}.values for more detail).
+  SUM(${columnName}.sum) AS ${alias}_sum,`,
+        crossJoin: "",
+      };
+
+    // For low-cardinality metric types, group by the value directly
+    case "boolean":
+    case "string":
+    case "datetime":
+      return {
+        select: `${HEADER} grouped by its value.
+  ${columnName} AS ${alias},`,
+        crossJoin: "",
+      };
+
+    // For metric types likely to have high-cardinality, count distinct rather than group by
+    case "uuid":
+    case "url":
+    case "text":
+      return {
+        select: `${HEADER} high-cardinality ${metricType}; count distinct values
+  -- (swap for "${columnName} AS ${alias}," to list them instead).
+  COUNT(DISTINCT ${columnName}) AS distinct_${alias},`,
+        crossJoin: "",
+      };
+
+    // Labeled metrics we UNNEST and break down by label
+    case "labeled_counter":
+    case "labeled_quantity":
+      return {
+        select: `${HEADER} broken down by label (counts are per ping-label row).
+  ${alias}_label.key AS ${alias}_label,
+  SUM(${alias}_label.value) AS ${alias}_sum,`,
+        crossJoin: unnest(`${alias}_label`),
+      };
+    case "labeled_string":
+    case "labeled_boolean":
+      return {
+        select: `${HEADER} broken down by label (counts are per ping-label row).
+  ${alias}_label.key AS ${alias}_label,
+  ${alias}_label.value AS ${alias}_value,`,
+        crossJoin: unnest(`${alias}_label`),
+      };
+    case "labeled_custom_distribution":
+    case "labeled_timing_distribution":
+    case "labeled_memory_distribution":
+      return {
+        select: `${HEADER} distribution sum per label (counts are per ping-label row).
+  ${alias}_label.key AS ${alias}_label,
+  SUM(${alias}_label.value.sum) AS ${alias}_sum,`,
+        crossJoin: unnest(`${alias}_label`),
+      };
+    case "dual_labeled_counter":
+      // ARRAY<STRUCT<key, value ARRAY<STRUCT<key, value INT64>>>>.
+      return {
+        select: `${HEADER} broken down by both label keys (counts are per row).
+  ${alias}_key.key AS ${alias}_key,
+  ${alias}_category.key AS ${alias}_category,
+  SUM(${alias}_category.value) AS ${alias}_sum,`,
+        crossJoin: `${unnest(
+          `${alias}_key`
+        )}\nCROSS JOIN UNNEST(${alias}_key.value) AS ${alias}_category`,
+      };
+    case "string_list":
+      // ARRAY<STRING>.
+      return {
+        select: `${HEADER} broken down by list item (counts are per ping-item row).
+  ${alias}_item,`,
+        crossJoin: unnest(`${alias}_item`),
+      };
+
+    // Events live in events_stream and thus are handled per-row
+    case "event":
+      return {
+        select: `${HEADER} grouped by the event name.
+  event,
+  -- event_extra is JSON: extract a field with JSON_VALUE(event_extra.the_key)
+  -- and add it here if you need to segment by it.
+  -- event_extra,`,
+        crossJoin: "",
+      };
+
+    // Object is a JSON column type, so we need to look at the structure
+    // to identify scalar fields we can extract with JSON_VALUE. If the structure is
+    // missing or has no scalar fields, fall back to a generic hint.
+    case "object": {
+      const { paths, skippedMap, skippedArray } =
+        collectObjectScalarPaths(structure);
+      if (paths.length) {
+        const options = paths
+          .map(
+            ({ path, alias: leaf }) =>
+              `  -- JSON_VALUE(${columnName}, '${path}') AS ${leaf},`
+          )
+          .join("\n");
+        const skipped = [
+          skippedMap && "map (key/value) fields",
+          skippedArray && "array fields",
+        ].filter(Boolean);
+        const skipNote = skipped.length
+          ? `\n  -- (${skipped.join(
+              " and "
+            )} need UNNEST/JSON_QUERY_ARRAY and are omitted here)`
+          : "";
+        return {
+          select: `${HEADER} object metric is JSON. Uncomment a field below to
+  -- segment by it (scalar fields taken from the metric's structure):${skipNote}
+${options}`,
+          crossJoin: "",
+        };
+      }
+      // This field is a top-level array, a map-only object, or there's no
+      // structure metadata available, so we fall back to a generic hint.
+      const hint = skippedArray
+        ? `object metric is a JSON array; UNNEST JSON_QUERY_ARRAY(${columnName})
+  -- and pull scalars from each element with JSON_VALUE(item, '$.field').`
+        : `object metric is JSON; extract a scalar to segment by
+  -- with JSON_VALUE(${columnName}, '$.field') and add it here.`;
+      return {
+        select: `${HEADER} ${hint}
+  -- ${columnName},`,
+        crossJoin: "",
+      };
+    }
+    default:
+      return {
+        select: `${HEADER} this ${metricType} column can't be summarised
+  -- automatically; adapt the reference below as needed.
+  -- ${columnName},`,
+        crossJoin: "",
+      };
+  }
+};
+
+// Builds a single "starter" query that helps investigate data anomalies by
+// slicing a metric's pings across the diagnostic dimensions described in
+// https://mozilla.github.io/glean/book/user/howto/investigating-data-issues/investigating-data-issues.html
+// The metric value is selected up front (it's what we're investigating). Each
+// diagnostic dimension is included as a commented-out block that the
+// investigator uncomments to segment by. GROUP BY ALL then groups by whatever
+// is selected so there's no separate GROUP BY list to maintain.
+export const getGleanInvestigationQuery = (
+  metricType,
+  table,
+  columnName,
+  eventInfo,
+  structure
+) => {
+  const isEvent = metricType === "event";
+  // Event metrics live in the `events_stream` table rather than the ping table,
+  // matching the behavior of the other event query generators above.
+  let fromTable = table;
+  if (isEvent) {
+    // Change `some_dataset.some_table` to `some_dataset.events_stream`,
+    // matching getSQLResource() in MetricDetail.svelte.
+    const [dataset] = table.split(".");
+    fromTable = `${dataset}.events_stream`;
+  }
+
+  const eventFilter = isEvent
+    ? `\n  AND event = '${eventInfo.category}.${eventInfo.name}'`
+    : `\n  -- Restrict to pings that actually carry this metric.\n  -- AND ${columnName} IS NOT NULL`;
+
+  // The metric value is the main thing we're slicing, so surface it by default
+  // using a strategy chosen from its type (see getMetricValueSql above).
+  const { select: metricSelect, crossJoin: metricCrossJoin } =
+    getMetricValueSql(metricType, columnName, structure);
+
+  return `
+-- Auto-generated by the Glean Dictionary.
+-- Investigate a data anomaly by slicing this metric's pings across the
+-- diagnostic dimensions from the Glean data-investigation guide:
+-- https://mozilla.github.io/glean/book/user/howto/investigating-data-issues/investigating-data-issues.html
+--
+-- To segment by a dimension, uncomment it in the SELECT block below (GROUP BY
+-- ALL picks it up automatically), then look for the segment(s) that explain
+-- the anomaly.
+
+SELECT
+  DATE(submission_timestamp) AS submission_date,
+  COUNT(*) AS ping_count,
+  COUNT(DISTINCT client_info.client_id) AS client_count,
+${metricSelect}
+  -- 1. Countries: geographical patterns (national holidays, bot-prone regions).
+  -- metadata.geo.country,
+  -- 2. ISP: finer-grained than country; a single ISP can indicate automation.
+  --    Tip: uncomment the HAVING clause below to drop small ISPs.
+  -- metadata.isp.name,
+  -- 3. Product version / build: did the anomaly start with a release? An
+  --    unknown build could be a clone, fork, or side-load.
+  -- client_info.app_display_version,
+  -- client_info.app_build,
+  -- 4. Glean SDK version: did the anomaly start after a Glean update?
+  -- client_info.telemetry_sdk_build,
+  -- 6. OS / platform version (Android only: client_info.android_sdk_version).
+  -- client_info.os_version,
+  -- client_info.android_sdk_version,
+  -- 9. Hardware (mobile only): is the issue specific to certain devices?
+  -- client_info.device_manufacturer,
+  -- client_info.device_model,
+  -- 10. Architecture: is the issue specific to a build configuration?
+  -- client_info.architecture,
+  -- 11. Ping reason: is the anomaly tied to a specific submission reason?
+  -- ping_info.reason,
+  -- 7. Time gaps: is the delay from collection to submission reasonable?
+  -- TIMESTAMP_DIFF(submission_timestamp, ping_info.parsed_end_time, HOUR) AS submission_delay_hours,
+  -- ping_info.parsed_start_time,
+  -- ping_info.parsed_end_time,
+FROM
+  ${fromTable} AS m${metricCrossJoin}
+WHERE
+  -- Look at the last two weeks so the anomaly stands out against a baseline.
+  -- https://docs.telemetry.mozilla.org/cookbooks/bigquery/querying.html#table-layout-and-naming
+  DATE(submission_timestamp) >= DATE_SUB(CURRENT_DATE(), INTERVAL 14 DAY)${eventFilter}
+-- GROUP BY ALL groups by every non-aggregated column selected above, so
+-- uncommenting a dimension is all that's needed. Array/JSON/struct columns
+-- (labeled metrics, distributions, string lists, event_extra, ...) can't be
+-- grouped directly: UNNEST or extract a scalar from them first.
+GROUP BY ALL
+-- HAVING filters the grouped rows (it goes after GROUP BY, unlike WHERE).
+-- Uncomment to drop small/noisy segments, e.g. ISPs with very few pings:
+-- HAVING ping_count > 5000
+ORDER BY
+  submission_date DESC
+-- IMPORTANT: Remove the limit clause when the query is ready.
+LIMIT 100
+
+-- Dimensions that aren't simple slices (see the guide for details):
+--  * 5. Other library version changes (Application Services, Gecko, Viaduct, rkv).
+--  * 8. Glean errors: check the *_error_* metrics and network/ingestion errors.
+--    https://mozilla.github.io/glean/book/user/metrics/error-reporting.html
+--  * 12. No data: verify send_in_pings, metric lifetime, active recording code
+--    path, and any Server Knobs experiments/rollouts.`;
+};
