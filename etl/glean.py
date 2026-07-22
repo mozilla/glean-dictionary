@@ -94,23 +94,17 @@ class GleanMetric(GleanObject):
 
     def _set_definition(self, full_defn: dict):
         # sort from latest to earliest
-        self.definition_history = list(
-            sorted(
-                full_defn[self.HISTORY_KEY],
-                key=lambda x: datetime.fromisoformat(x["dates"]["last"]),
-                reverse=True,
-            )
-        )
+        self.definition_history = list(full_defn[self.HISTORY_KEY])
 
         # The canonical definition for up-to-date schemas
-        self.definition = self.definition_history[0]
+        self.definition = self.definition_history[-1]
         self.definition["name"] = full_defn[self.NAME_KEY]
         self.definition["origin"] = full_defn[self.ORIGIN_KEY]
         self.definition["in_source"] = full_defn[self.IN_SOURCE_KEY]
         self.definition["sampling_info"] = full_defn.get(self.SAMPLING_INFO_KEY)
 
         # first seen is the earliest date in the history
-        self.definition["date_first_seen"] = self.definition_history[-1]["dates"]["first"]
+        self.definition["date_first_seen"] = self.definition_history[0]["dates"]["first"]
 
     def _set_dates(self, definition: dict):
         vals = [datetime.fromisoformat(d["dates"]["first"]) for d in definition[self.HISTORY_KEY]]
@@ -138,19 +132,13 @@ class GleanPing(GleanObject):
         self.tags = self.definition["metadata"].get("tags", [])
 
     def _set_definition(self, full_defn: dict):
-        self.definition_history = list(
-            sorted(
-                full_defn[self.HISTORY_KEY],
-                key=lambda x: datetime.fromisoformat(x["dates"]["last"]),
-                reverse=True,
-            )
-        )
+        self.definition_history = list(full_defn[self.HISTORY_KEY])
 
         # The canonical definition for up-to-date schemas
-        self.definition = self.definition_history[0]
+        self.definition = self.definition_history[-1]
         self.definition["name"] = full_defn[self.NAME_KEY]
         self.definition["origin"] = full_defn[self.ORIGIN_KEY]
-        self.definition["date_first_seen"] = self.definition_history[-1]["dates"]["first"]
+        self.definition["date_first_seen"] = self.definition_history[0]["dates"]["first"]
         self.definition["in_source"] = full_defn[self.IN_SOURCE_KEY]
 
 
@@ -162,21 +150,15 @@ class GleanTag(GleanObject):
     def __init__(self, identifier: str, definition: dict):
         self.identifier = identifier
         self._set_definition(definition)
-        self.description = self.definition_history[0].get("description")
+        self.description = self.definition_history[-1].get("description")
 
     def _set_definition(self, full_defn: dict):
-        self.definition_history = list(
-            sorted(
-                full_defn[self.HISTORY_KEY],
-                key=lambda x: datetime.fromisoformat(x["dates"]["last"]),
-                reverse=True,
-            )
-        )
+        self.definition_history = list(full_defn[self.HISTORY_KEY])
 
         # The canonical definition for up-to-date schemas
-        self.definition = self.definition_history[0]
+        self.definition = self.definition_history[-1]
         self.definition["name"] = full_defn[self.NAME_KEY]
-        self.definition["date_first_seen"] = self.definition_history[-1]["dates"]["first"]
+        self.definition["date_first_seen"] = self.definition_history[0]["dates"]["first"]
 
 
 class GleanApp(object):
