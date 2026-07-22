@@ -466,7 +466,7 @@
           {#if (pingData.glam_unsupported_reason || "").includes("use-counters")}
             Dashboards
             <HelpHoverable
-              content={"View this metric in the appropriate Mozilla dashboards"}
+              content={"View this metric in the Mozilla Use Counter dashboards"}
             />
           {:else}
             GLAM
@@ -492,7 +492,7 @@
               Public Dashboard
             </a>
             <HelpHoverable
-              content={"Some use counter metrics are not visible in the public dashboard"}
+              content={"Some Use Counter metrics are not visible in the public dashboard"}
             />
             <br />
             <AuthenticatedLink
@@ -507,7 +507,7 @@
               Looker Dashboard
             </AuthenticatedLink>
             <HelpHoverable
-              content={"Some use counter metrics are not visible in the Looker dashboard"}
+              content={"Some Use Counter metrics are not visible in the Looker dashboard"}
             />
           {:else}
             <Markdown text={pingData.glam_unsupported_reason} inline={true} />
