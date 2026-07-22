@@ -62,6 +62,18 @@
   let selectedPingVariant;
   let pingData = {};
 
+  function lookerNormalizePlatformName(appName) {
+    console.log(appName);
+    switch (appName) {
+      case "fenix":
+        return "Fenix";
+      case "firefox_desktop":
+        return "Firefox";
+      default:
+        return null;
+    }
+  }
+
   function getSQLResource(
     metricType,
     table,
@@ -451,11 +463,18 @@
       <col />
       <tr>
         <td>
-          GLAM
-          <HelpHoverable
-            content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
-            link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
-          />
+          {#if (pingData.glam_unsupported_reason || "").includes("use-counters")}
+            Dashboards
+            <HelpHoverable
+              content={"View this metric in the appropriate Mozilla dashboards"}
+            />
+          {:else}
+            GLAM
+            <HelpHoverable
+              content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
+              link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
+            />
+          {/if}
         </td>
         <td>
           {#if pingData.glam_url}
@@ -466,6 +485,30 @@
             >
               {params.metric}
             </a>
+          {:else if (pingData.glam_unsupported_reason || "").includes("use-counters")}
+            <a
+              href={`https://mozilla.github.io/use-counters/?counter=${metric.name}`}
+            >
+              Public Dashboard
+            </a>
+            <HelpHoverable
+              content={"Some use counter metrics are not visible in the public dashboard"}
+            />
+            <br />
+            <AuthenticatedLink
+              href={`https://mozilla.cloud.looker.com/dashboards/1922?Platform=${lookerNormalizePlatformName(
+                params.app
+              )}&Version+Major=&Metric=%22${
+                metric.name
+              }%22&Submission+Date=30+day&Country=United+States%2CCanada%2CGermany`}
+              label="Internal Dashboard"
+              type="MetricDetail.Access.Looker.UseCounter.BaseURL"
+            >
+              Looker Dashboard
+            </AuthenticatedLink>
+            <HelpHoverable
+              content={"Some use counter metrics are not visible in the Looker dashboard"}
+            />
           {:else}
             <Markdown text={pingData.glam_unsupported_reason} inline={true} />
           {/if}
