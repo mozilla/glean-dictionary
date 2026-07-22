@@ -218,13 +218,15 @@
     schema={METRIC_DEFINITION_SCHEMA}
   />
 
-  <h2>
-    Metric sampling
-    <HelpHoverable
-      content={"Information about the sampling state and rate."}
-      link={"https://mozilla.github.io/glean/book/user/metrics/data-control-plane/index.html"}
-    />
-  </h2>
+  <a href="#metric-sampling"
+    ><h2 id="metric-sampling" class="anchor">
+      Metric sampling
+      <HelpHoverable
+        content={"Information about the sampling state and rate."}
+        link={"https://mozilla.github.io/glean/book/user/metrics/data-control-plane/index.html"}
+      />
+    </h2></a
+  >
   {#if !isEmpty(metric.sampling_info)}
     {#each Object.entries(metric.sampling_info) as [keyName, definition]}
       <table>
@@ -355,20 +357,26 @@
   </table>
 
   {#if metric.extra_keys && !isEmpty(metric.extra_keys)}
-    <h2>
-      Extra keys
-      <HelpHoverable
-        content={'The acceptable keys on the "extra" object sent with events.'}
-        link={"https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys"}
-      />
-    </h2>
+    <a href="#extra-keys"
+      ><h2 id="extra-keys" class="anchor">
+        Extra keys
+        <HelpHoverable
+          content={'The acceptable keys on the "extra" object sent with events.'}
+          link={"https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys"}
+        />
+      </h2></a
+    >
     <table>
       <col />
       <col />
       <col />
       {#each Object.entries(metric.extra_keys) as [keyName, definition]}
         <tr>
-          <td><code>{keyName}</code></td>
+          <td
+            ><a href="#extra-key-{keyName}"
+              ><code id="extra-key-{keyName}" class="anchor">{keyName}</code></a
+            ></td
+          >
           <td>
             <code>{definition.type || "string"}</code>
           </td>
@@ -383,6 +391,7 @@
   <SubHeading
     title={"Metadata"}
     helpText={"Metadata about this metric, as defined by the implementor."}
+    withLink={true}
   />
   <MetadataTable
     appName={params.app}
@@ -393,12 +402,14 @@
   <SubHeading
     title={"Commentary"}
     helpText={"Reviewed commentary from Mozilla data practitioners on this metric."}
+    withLink={true}
   />
   <Commentary item={metric} itemType={"metric"} />
 
   <SubHeading
     title={"Access"}
     helpText={"Ways to access this metric in Mozilla's data warehouse."}
+    withLink={true}
   />
   {#if isRecent(metric)}
     <AppAlert
