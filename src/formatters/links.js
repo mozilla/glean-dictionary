@@ -27,12 +27,28 @@ export function getBugLinkTitle(ref) {
   return url.replace(/^http(s?):\/\//, "");
 }
 
+export function getSourceUrl(ref) {
+  if (ref.includes("github.com/mozilla-firefox/firefox")) {
+    return ref
+      .replace(
+        "github.com/mozilla-firefox/firefox/blob/",
+        "searchfox.org/firefox-main/rev/"
+      )
+      .replace("#L", "#");
+  }
+  return ref;
+}
+
 export function getSourceUrlTitle(url) {
   if (url.includes("github.com")) {
     return url.replace(
       /[^\d]+\/([^\d]+)\/([^\d]+)\/([^\d]+)\/([^/]+)\/(.*)/,
-      (_, orgName, repoName, _blob, _hash, path) =>
-        `${orgName}/${repoName}/${path}`
+      (_, orgName, repoName, _blob, _hash, path) => {
+        if (orgName === "mozilla-firefox" && repoName === "firefox") {
+          return path.replace("#L", "#");
+        }
+        return `${orgName}/${repoName}/${path}`;
+      }
     );
   }
   return url;
