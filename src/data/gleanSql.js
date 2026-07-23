@@ -460,6 +460,7 @@ export const getGleanInvestigationQuery = (
 SELECT
   DATE(submission_timestamp) AS submission_date,
   COUNT(*) AS ping_count,
+  -- Note: pings that omit client_id in their configuration will return 0 for client_count.
   COUNT(DISTINCT client_info.client_id) AS client_count,
 ${metricSelect}
   -- 1. Countries: geographical patterns (national holidays, bot-prone regions).
