@@ -5,15 +5,19 @@ import {
   getBugURL,
   getBugLinkTitle,
   getSourceUrlTitle,
+  getSourceUrl,
 } from "../formatters/links";
 import { getCodeSearchLink } from "../formatters/codesearch";
 import { getPingReasons } from "../formatters/text";
 import { formatMonitor } from "../formatters/monitor";
+import { getStructureMarkdown } from "../formatters/structure";
 
 const REQUIRED_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#required-metric-parameters";
 const OPTIONAL_METRIC_PARAMS_DOCS =
   "https://mozilla.github.io/glean/book/user/metric-parameters.html#optional-metric-parameters";
+const EXAMPLE_OBJECT_DEFINITION_DOC =
+  "https://mozilla.github.io/glean/book/reference/metrics/object.html#example-object-metric-definition";
 const PING_REASONS_DOCS =
   "https://mozilla.github.io/glean/book/reference/yaml/pings.html#reasons";
 const METRIC_MONITOR_DOCS =
@@ -73,6 +77,7 @@ export const METRIC_DEFINITION_SCHEMA = [
     type: "link",
     helpText:
       "Where the source definition of the metric may be found (referencing the first commit in which it was introduced).",
+    linkFormatter: getSourceUrl,
     valueFormatter: getSourceUrlTitle,
   },
   {
@@ -232,6 +237,14 @@ export const METRIC_METADATA_SCHEMA = [
       "Information about telemetry alerting monitoring for this metric. Click to read more.",
     helpLink: METRIC_MONITOR_DOCS,
     valueFormatter: formatMonitor,
+  },
+  {
+    title: "Structure",
+    id: "structure",
+    type: "markdown",
+    helpText: "The defined structure of the object metric.",
+    helpLink: EXAMPLE_OBJECT_DEFINITION_DOC,
+    valueFormatter: getStructureMarkdown,
   },
 ];
 export const PING_SCHEMA = [

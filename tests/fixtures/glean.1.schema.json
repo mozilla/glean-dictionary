@@ -153,6 +153,43 @@
           "name": {
             "type": "string"
           },
+          "session": {
+            "additionalProperties": false,
+            "description": "Session metadata attached to this event. Absent for out-of-session events and events from before sessions were introduced.",
+            "properties": {
+              "event_seq": {
+                "description": "Per-session event counter, reset at each new session.",
+                "minimum": 0,
+                "type": "integer"
+              },
+              "session_id": {
+                "description": "The unique UUID for this session.",
+                "type": "string"
+              },
+              "session_sample_rate": {
+                "description": "The sampling rate in effect for this session.",
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              "session_seq": {
+                "description": "Monotonically increasing session counter, persisted across restarts.",
+                "minimum": 0,
+                "type": "integer"
+              },
+              "session_start_time": {
+                "description": "Wall-clock timestamp at session start (RFC 3339). Absent on events from before this field was introduced.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "session_id",
+              "session_seq",
+              "event_seq",
+              "session_sample_rate"
+            ],
+            "type": "object"
+          },
           "timestamp": {
             "minimum": 0,
             "type": "integer"
@@ -826,8 +863,8 @@
               },
               "description": "Map of metric identifiers (category.name) to boolean values indicating whether the metric is enabled",
               "propertyNames": {
-                "maxLength": 61,
-                "pattern": "^[a-z_][a-z0-9_]{0,29}(\\.[a-z_][a-z0-9_]{0,29})+$",
+                "maxLength": 111,
+                "pattern": "^[a-z_][a-z0-9_\\.]+$",
                 "type": "string"
               },
               "type": "object"
@@ -843,6 +880,12 @@
                 "type": "string"
               },
               "type": "object"
+            },
+            "session_sample_rate": {
+              "description": "Remote override for the session sampling rate (0.0–1.0).",
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "type": ["number", "null"]
             }
           },
           "type": "object"

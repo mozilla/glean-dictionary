@@ -62,6 +62,18 @@
   let selectedPingVariant;
   let pingData = {};
 
+  function lookerNormalizePlatformName(appName) {
+    console.log(appName);
+    switch (appName) {
+      case "fenix":
+        return "Fenix";
+      case "firefox_desktop":
+        return "Firefox";
+      default:
+        return null;
+    }
+  }
+
   function getSQLResource(
     metricType,
     table,
@@ -153,6 +165,7 @@
       url: "url.html",
       rate: "rate.html",
       text: "text.html",
+      object: "object.html",
     };
 
     return links[type] ? `${sourceDocs}${links[type]}` : sourceDocs;
@@ -217,13 +230,15 @@
     schema={METRIC_DEFINITION_SCHEMA}
   />
 
-  <h2>
-    Metric sampling
-    <HelpHoverable
-      content={"Information about the sampling state and rate."}
-      link={"https://mozilla.github.io/glean/book/user/metrics/data-control-plane/index.html"}
-    />
-  </h2>
+  <a href="#metric-sampling"
+    ><h2 id="metric-sampling" class="anchor">
+      Metric sampling
+      <HelpHoverable
+        content={"Information about the sampling state and rate."}
+        link={"https://mozilla.github.io/glean/book/user/metrics/data-control-plane/index.html"}
+      />
+    </h2></a
+  >
   {#if !isEmpty(metric.sampling_info)}
     {#each Object.entries(metric.sampling_info) as [keyName, definition]}
       <table>
@@ -354,20 +369,26 @@
   </table>
 
   {#if metric.extra_keys && !isEmpty(metric.extra_keys)}
-    <h2>
-      Extra keys
-      <HelpHoverable
-        content={'The acceptable keys on the "extra" object sent with events.'}
-        link={"https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys"}
-      />
-    </h2>
+    <a href="#extra-keys"
+      ><h2 id="extra-keys" class="anchor">
+        Extra keys
+        <HelpHoverable
+          content={'The acceptable keys on the "extra" object sent with events.'}
+          link={"https://mozilla.github.io/glean/book/reference/metrics/event.html#extra_keys"}
+        />
+      </h2></a
+    >
     <table>
       <col />
       <col />
       <col />
       {#each Object.entries(metric.extra_keys) as [keyName, definition]}
         <tr>
-          <td><code>{keyName}</code></td>
+          <td
+            ><a href="#extra-key-{keyName}"
+              ><code id="extra-key-{keyName}" class="anchor">{keyName}</code></a
+            ></td
+          >
           <td>
             <code>{definition.type || "string"}</code>
           </td>
@@ -382,6 +403,7 @@
   <SubHeading
     title={"Metadata"}
     helpText={"Metadata about this metric, as defined by the implementor."}
+    withLink={true}
   />
   <MetadataTable
     appName={params.app}
@@ -392,12 +414,14 @@
   <SubHeading
     title={"Commentary"}
     helpText={"Reviewed commentary from Mozilla data practitioners on this metric."}
+    withLink={true}
   />
   <Commentary item={metric} itemType={"metric"} />
 
   <SubHeading
     title={"Access"}
     helpText={"Ways to access this metric in Mozilla's data warehouse."}
+    withLink={true}
   />
   {#if isRecent(metric)}
     <AppAlert
@@ -439,11 +463,18 @@
       <col />
       <tr>
         <td>
-          GLAM
-          <HelpHoverable
-            content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
-            link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
-          />
+          {#if (pingData.glam_unsupported_reason || "").includes("use-counters")}
+            Dashboards
+            <HelpHoverable
+              content={"View this metric in the Mozilla Use Counter dashboards"}
+            />
+          {:else}
+            GLAM
+            <HelpHoverable
+              content={"View this metric in the Glean Aggregated Metrics (GLAM) dashboard"}
+              link={"https://docs.telemetry.mozilla.org/cookbooks/glam.html"}
+            />
+          {/if}
         </td>
         <td>
           {#if pingData.glam_url}
@@ -454,6 +485,30 @@
             >
               {params.metric}
             </a>
+          {:else if (pingData.glam_unsupported_reason || "").includes("use-counters")}
+            <a
+              href={`https://mozilla.github.io/use-counters/?counter=${metric.name}`}
+            >
+              Public Dashboard
+            </a>
+            <HelpHoverable
+              content={"Some Use Counter metrics are not visible in the public dashboard"}
+            />
+            <br />
+            <AuthenticatedLink
+              href={`https://mozilla.cloud.looker.com/dashboards/1922?Platform=${lookerNormalizePlatformName(
+                params.app
+              )}&Version+Major=&Metric=%22${
+                metric.name
+              }%22&Submission+Date=30+day&Country=United+States%2CCanada%2CGermany`}
+              label="Internal Dashboard"
+              type="MetricDetail.Access.Looker.UseCounter.BaseURL"
+            >
+              Looker Dashboard
+            </AuthenticatedLink>
+            <HelpHoverable
+              content={"Some Use Counter metrics are not visible in the Looker dashboard"}
+            />
           {:else}
             <Markdown text={pingData.glam_unsupported_reason} inline={true} />
           {/if}
