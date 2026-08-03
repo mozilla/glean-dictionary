@@ -102,8 +102,7 @@ def get_glam_metadata_for_metric(app, metric, ping_name):
         return {"glam_unsupported_reason": "Internal Glean metrics are not supported by GLAM."}
     elif metric_type not in SUPPORTED_GLAM_METRIC_TYPES:
         return {
-            "glam_unsupported_reason": "Currently GLAM does not support "
-            f"`{metric_type}` metrics."
+            "glam_unsupported_reason": f"Currently GLAM does not support `{metric_type}` metrics."
         }
     elif ping_name != "metrics":
         return {
