@@ -2,10 +2,6 @@
 
 cd "$(dirname "$0")/.."
 
-if [ -e venv ]; then
-  . venv/bin/activate
-fi
-
-ruff check --fix .
-ruff format .
-isort .
+uv run ruff check --fix .
+uv run ruff format .
+uv run isort .
