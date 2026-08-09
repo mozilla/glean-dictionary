@@ -1,11 +1,8 @@
 [build]
 command = """
     set -e
-    pip install -e .
-    ./scripts/gd build-metadata
-    # glean.js currently requires a virtual environment
-    python3 -m venv venv
-    venv/bin/pip3 install setuptools wheel
+    curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH=\"$HOME/.local/bin:$PATH\"
+    uv run gd build-metadata
     npm ci
     npm run build
     if [ "$STORYBOOK" ]; then
@@ -13,7 +10,7 @@ command = """
       mv storybook-static public/storybook
     fi
 """
-environment = { PYTHON_VERSION = "3.9" }
+environment = { PYTHON_VERSION = "3.11" }
 publish = "public"
 
 [context.production]
