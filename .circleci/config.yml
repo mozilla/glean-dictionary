@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5.1.0
+  python: circleci/python@4.0.0
 jobs:
   frontend-build-and-test:
     executor:
@@ -27,8 +28,10 @@ jobs:
       - run: npx playwright install
       - run: npm test
   backend-build-and-test:
-    docker:
-      - image: python:3.9
+    build:
+      executor:
+        name: python/default
+        tag: '3.11'
     steps:
       - checkout
       - restore_cache:
@@ -36,27 +39,20 @@ jobs:
             # when lock files change, use increasingly general
             # patterns to restore cache
             - &cache_key # yamllint disable-line rule:line-length
-              python-3.9-packages-v1-{{ .Branch }}-{{ checksum "requirements.in" }}-{{ checksum "requirements.txt" }}
+              python-3.11-packages-v1-{{ .Branch }}-{{ checksum "uv.lock" }}-{{ checksum "pyproject.toml" }}
               # yamllint disable-line rule:line-length
-            - python-3.9-packages-v1-{{ .Branch }}-{{ checksum "requirements.in" }}-
-            - python-3.9-packages-v1-{{ .Branch }}-
-            - python-3.9-packages-v1-main-
-            - python-3.9-packages-v1-
-      - run:
-          name: Build
-          command: |
-            python3.9 -m venv venv/
-            venv/bin/pip install pip-tools --constraint requirements.in
-            venv/bin/pip-sync
+            - python-3.11-packages-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}-
+            - python-3.11-packages-v1-{{ .Branch }}-
+            - python-3.11-packages-v1-main-
+            - python-3.11-packages-v1-
+      - python/install-packages:
+          pkg-manager: uv
       - run:
           name: PyTest with linters
-          command: venv/bin/pytest
-      - run:
-          name: Install package locally
-          command: venv/bin/pip install -e .
+          command: uv run pytest
       - run:
           name: Build metadata
-          command: scripts/gd build-metadata
+          command: uv run gd build-metadata
       - run: cp -r public /tmp/workspace
       - persist_to_workspace:
           root: /tmp/workspace
@@ -64,7 +60,7 @@ jobs:
             - data
       - save_cache:
           paths:
-            - venv/
+            - .venv/
           key: *cache_key
 
 workflows:
