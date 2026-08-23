@@ -28,25 +28,14 @@ jobs:
       - run: npx playwright install
       - run: npm test
   backend-build-and-test:
-    build:
-      executor:
-        name: python/default
-        tag: '3.11'
+    executor:
+      name: python/default
+      tag: "3.11"
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            # when lock files change, use increasingly general
-            # patterns to restore cache
-            - &cache_key # yamllint disable-line rule:line-length
-              python-3.11-packages-v1-{{ .Branch }}-{{ checksum "uv.lock" }}-{{ checksum "pyproject.toml" }}
-              # yamllint disable-line rule:line-length
-            - python-3.11-packages-v1-{{ .Branch }}-{{ checksum "pyproject.toml" }}-
-            - python-3.11-packages-v1-{{ .Branch }}-
-            - python-3.11-packages-v1-main-
-            - python-3.11-packages-v1-
       - python/install-packages:
           pkg-manager: uv
+          args: --locked
       - run:
           name: PyTest with linters
           command: uv run pytest
@@ -58,10 +47,6 @@ jobs:
           root: /tmp/workspace
           paths:
             - data
-      - save_cache:
-          paths:
-            - .venv/
-          key: *cache_key
 
 workflows:
   build-and-test:
