@@ -18,20 +18,16 @@ https://dictionary.telemetry.mozilla.org
 ## Getting Started
 
 You should be able to create your own local copy of the dictionary so long as
-you have [Python](https://www.python.org/) (version 3.9+) and
-[node.js](https://nodejs.org/) (version 18+) installed. You will also need npm
-v8 or greater: run `npm install -g npm@latest` if you need to upgrade.
+you have [Python](https://www.python.org/) (version 3.11+),
+[uv](https://astral.sh/uv), [node.js](https://nodejs.org/) (version 18+)
+installed. You will also need npm v8 or greater: run `npm install -g npm@latest`
+if you need to upgrade.
 
 Assuming those requirements are met, follow these instructions:
 
 ```bash
-# Create and activate a python virtual environment.
-python3 -m venv venv/
-venv/bin/pip install -r requirements.txt
-
 # Build data needed by dashboard
-./scripts/gd build-metadata
-# Or, on Windows: python3 -m etl build-metadata
+uv run gd build-metadata
 
 # Install npm dependencies and start a local
 # instance of the GUI

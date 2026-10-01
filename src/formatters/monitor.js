@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export function formatMonitor(monitor) {
+export function formatMonitor(monitor, appName, item) {
   if (typeof monitor === "boolean") {
     return monitor ? "Enabled" : "Disabled";
   }
@@ -31,7 +31,16 @@ export function formatMonitor(monitor) {
     changeDetectionTechnique: change_detection_technique || null,
     changeDetectionArgs: change_detection_args,
   };
-  return ["<pre><code>", JSON.stringify(json, null, 2), "</code></pre>"].join(
-    ""
-  );
+
+  const metric_name = item.name.replace(".", "_");
+  const url = `https://alerts.telemetry.moz.tools/?probe=${metric_name}`;
+  return [
+    '<a href="',
+    url,
+    '">Alert Dashboard</a>',
+    "<br><br>",
+    "<pre><code>",
+    JSON.stringify(json, null, 2),
+    "</code></pre>",
+  ].join("");
 }

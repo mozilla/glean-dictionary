@@ -54,6 +54,7 @@
     getGleanLabeledCounterQuerySTMOTemplateUrl,
     getGleanDualLabeledCounterQuerySTMOTemplateUrl,
     getGleanQuerySTMOTemplateUrl,
+    getGleanInvestigationQuery,
   } from "../data/gleanSql";
 
   export let params;
@@ -685,6 +686,52 @@
               false
             )}
           />
+        </td>
+      </tr>
+    </table>
+
+    <SubHeading
+      title={"Investigate data issues"}
+      helpText={"Generate a starter query to diagnose anomalies in this metric's data."}
+      withLink={true}
+    />
+    <table>
+      <col />
+      <col />
+      <tr>
+        <td>
+          Diagnostic query
+          <HelpHoverable
+            content={"Slice this metric's pings across the diagnostic dimensions (country, ISP, version, Glean SDK version, OS, hardware, ping reason, ...) recommended for investigating data anomalies."}
+            link={"https://mozilla.github.io/glean/book/user/howto/investigating-data-issues/investigating-data-issues.html"}
+          />
+        </td>
+        <td class="stmo">
+          <div>
+            Investigating an anomaly? Generate a query that slices this metric's
+            data across the
+            <a
+              href="https://mozilla.github.io/glean/book/user/howto/investigating-data-issues/investigating-data-issues.html"
+              data-glean-label="data-investigation guide"
+              data-glean-type="MetricDetail.Investigate.GuideURL"
+            >
+              recommended diagnostic dimensions
+            </a>
+            ➡ &nbsp;
+          </div>
+          <div>
+            <SqlModal
+              openModalText="Generate investigation SQL"
+              type="MetricDetail.Investigate.GenerateSQL"
+              sqlContent={getGleanInvestigationQuery(
+                metric.type,
+                pingData.bigquery_table,
+                selectedAppVariant.etl.bigquery_column_name,
+                metric.event_info,
+                metric.structure
+              )}
+            />
+          </div>
         </td>
       </tr>
     </table>
