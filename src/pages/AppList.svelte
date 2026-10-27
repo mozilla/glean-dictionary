@@ -90,7 +90,7 @@
               <img
                 class="mzp-c-card-imgage"
                 src={app.logo || "/img/app-logos/mozilla.png"}
-                alt="${app.canonical_app_name} Logo"
+                alt="{app.canonical_app_name} Logo"
                 id="logo-img"
               />
               {#if getAppTagLogo(app)}
