@@ -24,7 +24,7 @@ describe("formatMonitor", () => {
       change_detection_technique: "cdf-squared",
       change_detection_args: ["threshold=0.85"],
     };
-    const result = formatMonitor(monitor);
+    const result = formatMonitor(monitor, "app", { name: "metric" });
     expect(result).toContain("<pre><code>");
     expect(result).toContain('"alert": "Enabled"');
     expect(result).toContain(
@@ -43,7 +43,7 @@ describe("formatMonitor", () => {
 
   it("returns markdown JSON with defaults for missing fields", () => {
     const monitor = { alert: false };
-    const result = formatMonitor(monitor);
+    const result = formatMonitor(monitor, "app", { name: "metric" });
     expect(result).toContain('"alert": "Disabled"');
     expect(result).toContain('"platforms": []');
     expect(result).toContain('"bugzillaNotificationEmails": []');
