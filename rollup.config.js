@@ -112,7 +112,7 @@ export default {
         production ? "production" : "development"
       ),
       GLEAN_SOURCE_TAGS: process.env.GLEAN_SOURCE_TAGS || "",
-      __DISPLAY_VERSION__: execSync("git describe --abbrev=0 --tags")
+      __DISPLAY_VERSION__: execSync("git describe --abbrev=0 --tags --always")
         .toString()
         .trim(),
     }),
