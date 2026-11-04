@@ -25,6 +25,14 @@
       if (modifiedNode.fields) {
         modifiedNode.fields.forEach((field) => {
           let modifiedNodeField = field;
+          // Metric types jwe, labeled_rate, url, and text types
+          // were deployed to BigQuery tables with incorrect structure
+          // so we've had to add the 2 "suffix" for the fields in BQ
+          // The views, however, expose them as they should be, e.g. metrics.url
+          // See: github.com/mozilla/glean-dictionary/issues/1450
+          if (["url2", "text2", "jwe2", "labeled_rate2"].includes(field.name)) {
+            [field.name] = field.name.split("2"); // eslint-disable-line no-param-reassign
+          }
           return addVisibility(modifiedNodeField, parentNames);
         });
       }
