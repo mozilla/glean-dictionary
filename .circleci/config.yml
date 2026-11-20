@@ -8,7 +8,7 @@ jobs:
       name: node/default
       tag: "18"
     docker:
-      - image: mcr.microsoft.com/playwright:focal # https://playwright.dev/docs/ci#circleci
+      - image: mcr.microsoft.com/playwright:v1.64.1-noble # https://playwright.dev/docs/ci#circleci
     steps:
       - checkout
       - node/install-packages
