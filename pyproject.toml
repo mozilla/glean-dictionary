@@ -27,7 +27,7 @@ dependencies = [
   "stringcase==1.2.0",
   "PyYAML==6.0.1",
   "google-cloud-bigquery==3.25.0",
-  "google-cloud-storage==2.16.0",
+  "google-cloud-storage==3.17.1",
   "GitPython==3.2.1",
 ]
 
