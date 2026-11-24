@@ -22,7 +22,7 @@ dependencies = [
   "pytest==9.2.0",
   "pytest-isort==4.0.0",
   "pytest-ruff==0.5.0",
-  "ruff==0.17.5",
+  "ruff==0.17.6",
   "requests==2.34.2",
   "stringcase==1.2.0",
   "PyYAML==6.0.4",
